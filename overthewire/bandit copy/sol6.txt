@@ -1,0 +1,10 @@
+bandit6@bandit:~$ ls -l $(find / -type f -size 33c 2> /dev/null) | grep
+"bandit7 * bandit6"
+ls: cannot access '/home/bandit2/spaces': No such file or directory
+ls: cannot access 'in': No such file or directory
+ls: cannot access 'this': No such file or directory
+ls: cannot access 'filename': No such file or directory
+-rw-r----- 1 bandit7     bandit6     33 Oct  5  2023
+/var/lib/dpkg/info/bandit7.password
+bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
+z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S

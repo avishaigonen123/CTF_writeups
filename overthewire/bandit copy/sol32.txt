@@ -1,0 +1,13 @@
+>> bla
+sh: 1: BLA: Permission denied
+>> $0
+$ /bash
+sh: 1: /bash: not found
+$ /bin/bash
+bandit33@bandit:~$ ls
+uppershell
+bandit33@bandit:~$ cat /etc/bandit_pass/bandit32
+cat: /etc/bandit_pass/bandit32: Permission denied
+bandit33@bandit:~$ cat /etc/bandit_pass/bandit33
+odHo63fHiFqcWWJG9rLiLDtPm45KzUKy
+

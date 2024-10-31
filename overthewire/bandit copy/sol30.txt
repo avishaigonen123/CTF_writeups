@@ -1,0 +1,5 @@
+bandit28@bandit:/tmp/tmp.cZ2TI2PUhR/repo3$ git tag -l
+secret
+bandit28@bandit:/tmp/tmp.cZ2TI2PUhR/repo3$ git show secret
+OoffzGDlzhAlerFJ2cAiz1D41JW1Mhmt
+

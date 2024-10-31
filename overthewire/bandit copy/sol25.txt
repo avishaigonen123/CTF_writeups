@@ -1,0 +1,6 @@
+1. make the windows very small, that the more won't be able to show you the whole
+content in once.
+
+2. type "v"
+
+3. type ":e /etc/bandit_pass/bandit26"

@@ -1,0 +1,12 @@
+behemoth4@gibson:/tmp/tmp.39mN1LlyZb$ ./script_behemoth.sh
+3982819
+Finished sleeping, fgetcing
+g4jEuK9BTU
+behemoth4@gibson:/tmp/tmp.39mN1LlyZb$ cat script_behemoth.sh
+#!/bin/bash
+
+echo $$
+ln -sf /etc/behemoth_pass/behemoth5 /tmp/$$
+
+exec /behemoth/behemoth4
+

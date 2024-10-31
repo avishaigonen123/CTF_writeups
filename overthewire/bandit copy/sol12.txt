@@ -1,0 +1,82 @@
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ cp ~/data.txt .
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ xxd -r data.txt  > data.bin
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file data.bin
+data.bin: gzip compressed data, was "data2.bin", last modified: Thu Oct  5
+06:19:20 2023, max compression, from Unix, original size modulo 2^32 573
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ mv data.bin data.bin.bz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ mv data.bin.bz data.bin.gz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ gunzip data.bin
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file data.bin
+data.bin: bzip2 compressed data, block size = 900k
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ mv data.bin data.bin.bz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ bzip2 -d data.bin.bz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ ls
+data.bin  data.txt
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file data.bin
+data.bin: gzip compressed data, was "data4.bin", last modified: Thu Oct  5
+06:19:20 2023, max compression, from Unix, original size modulo 2^32 20480
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ mv data.bin data.bin.gz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ gunzip data.bin.gz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ ls
+data.bin  data.txt
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file data.bin
+data.bin: POSIX tar archive (GNU)
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ mv data.bin data.bin.tar
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ tar -xf data.bin.tar
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ ls
+data5.bin  data.bin.tar  data.txt
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ cat data5.bin
+J!�1����&�2i6��I�P␦2���@�@4��k�ʀ@��8M|�V1@��P����2[j.�v'�1�␦s���TTI��V�*�A�^Oh91AY&SY������\�A�o���var��
+�
+�⛝���5P�����a��'1�U^Gl~BH��rE8P���bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file
+data5.bin
+data5.bin: POSIX tar archive (GNU)
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ man tar
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ tar -x data.bin
+tar: Refusing to read archive contents from terminal (missing -f option?)
+tar: Error is not recoverable: exiting now
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ tar -xf data.bin
+tar: data.bin: Cannot open: No such file or directory
+tar: Error is not recoverable: exiting now
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ ls
+data5.bin  data.bin.tar  data.txt
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ tar -xf data5.bin
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ ls
+data5.bin  data6.bin  data.bin.tar  data.txt
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ cat data6.bin
+J!�1����&�2i6��I�P␦2���@�@4��k�ʀ@��8M|�V1@��P����2[j.�v'�1�␦s���TTI��V�*�A�^O
+�⛝���5P�����a��'1�U^Gl~BH��rE8P���bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file
+data6.bin
+data6.bin: bzip2 compressed data, block size = 900k
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ mv data6.bin data6.bin.bz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ bzip2 data6.bin.bz
+bzip2: Input file data6.bin.bz already has .bz suffix.
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ bzip2 -d data6.bin.bz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ ls
+data5.bin  data6.bin  data.bin.tar  data.txt
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ filr data6.bin
+Command 'filr' not found, did you mean:
+  command 'file' from deb file (1:5.41-3ubuntu0.1)
+Try: apt install <deb name>
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file data6.bin
+data6.bin: POSIX tar archive (GNU)
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ cat data6.bin
+data8.bin0000644000000000000000000000011714507452550011255 0ustar
+rootroohUedata9.bin
+                                                                                      �HU(H,..�/JQ�,V(O
+O�q�p�,2qNt��I
+              �H,-��7+(�-r)���uG1bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ tar -xf
+data6.bin
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ ls
+data5.bin  data6.bin  data8.bin  data.bin.tar  data.txt
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file data8.bin
+data8.bin: gzip compressed data, was "data9.bin", last modified: Thu Oct  5
+06:19:20 2023, max compression, from Unix, original size modulo 2^32 49
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ mv data8.bin data8.bin.gz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ gunzip data8.bin.gz
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ ls
+data5.bin  data6.bin  data8.bin  data.bin.tar  data.txt
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ file data8.bin
+data8.bin: ASCII text
+bandit12@bandit:/tmp/tmp.MLypfdrfYQ$ cat data8.bin
+The password is wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw

