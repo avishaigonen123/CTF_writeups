@@ -6,9 +6,12 @@ This folder contains solutions for the [Natas](http://overthewire.org/wargames/n
 Each level of Natas is designed to build upon previous web security concepts, gradually increasing in difficulty. Below are the solutions to each level, which include short explanations, key steps, and any necessary code.
 
 ## Level Solutions
-- [Level 1](./level1.md) - Basic authentication bypass
-- [Level 2](./level2.md) - HTML source inspection
-- [Level 3](./level3.md) - Basic encoding and decoding
+- [Level 1](./level1.md) 
+- [Level 2](./level2.md) 
+- [Level 3](./level3.md)
+- [Level 4](./level4.md) 
+- [Level 5](./level5.md) 
+- [Level 6](./level6.md)  
 - ...
 
 Each solution contains:
