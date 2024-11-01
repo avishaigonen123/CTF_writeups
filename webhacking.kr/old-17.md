@@ -1,4 +1,4 @@
-# Webhacking.kr old-17 Solution
+# Webhacking old-17 Solution
 
 calculate this val: 
 ```

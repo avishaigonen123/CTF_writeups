@@ -2,7 +2,7 @@
 
 change the text box to textarea:
 
-![changing the text box](image.png)
+![changing the text box](./images/old-17.png)
 
 then, insert this data:
 ```
