@@ -1,6 +1,0 @@
-git branch -a
-
-switch to dev branch
-
-xbhV3HpNGlTIdnjUrdAlPzc2L6y9EOnS
-

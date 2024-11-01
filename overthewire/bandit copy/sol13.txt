@@ -1,4 +1,0 @@
-bandit13@bandit:~$ ssh -i sshkey.private bandit14@localhost -p 2220
-
-bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
-fGrHPx402xGC7U7rXKDaxiWFTOiF0ENq

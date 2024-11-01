@@ -1,5 +1,0 @@
-bandit17@bandit:~$ diff passwords.new passwords.old
-42c42
-< hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
----
-> p6ggwdNHncnmCNxuAt0KtKVq185ZU7AW

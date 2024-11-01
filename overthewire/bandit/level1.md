@@ -1,6 +1,6 @@
 # Bandit Level 1 Solution
 
-f12, the password is in the source code
+connect to do server, and the password is in the file readme.
 
-Flag: 0nzCigAq7t2iALyvU9xcHlYN4MlkIwlq 
+**Flag:** ***`ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If`*** 
 

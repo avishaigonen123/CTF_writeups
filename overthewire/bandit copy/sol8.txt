@@ -1,2 +1,0 @@
-bandit8@bandit:~$ sort data.txt | uniq -u
-EN632PlfYiZbn3PhVK3XOGSlNInNE00t

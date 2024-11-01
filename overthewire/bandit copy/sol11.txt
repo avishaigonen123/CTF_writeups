@@ -1,2 +1,0 @@
-bandit11@bandit:~$ cat data.txt | tr a-zA-Z n-za-mN-ZA-M
-The password is JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
