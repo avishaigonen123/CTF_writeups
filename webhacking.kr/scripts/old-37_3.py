@@ -8,7 +8,7 @@ cookies = {'PHPSESSID':SESSION_ID}
 # params ={'val':"b UNION database()", 'answer':''}
 # while True:
 while True:
-    filename = "tmp-"+str(int(time.time()))
+    filename = "tmp-"+str(int(time.time())) 
     # files['upfile'] = "hello:("
 
     response = requests.get(URL+"tmp/"+filename, cookies=cookies)

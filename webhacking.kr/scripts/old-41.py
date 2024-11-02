@@ -3,7 +3,7 @@ import time
 
 
 URL = "https://webhacking.kr/challenge/web-19/"
-SESSION_ID = "1234"
+SESSION_ID = "123"
 cookies = {'PHPSESSID':SESSION_ID}
 # params ={'val':"b UNION database()", 'answer':''}
 # while True:

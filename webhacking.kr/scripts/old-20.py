@@ -4,7 +4,7 @@ import time
 
 
 URL = "https://webhacking.kr/challenge/code-4/"
-SESSION_ID = "ct74fpn4hh3ltqejabsebqfn0k"
+SESSION_ID = "123"
 cookies = {'PHPSESSID':SESSION_ID, 'st':str(time.time()) }
 
 data = { "id": "admi", "cmt":"hello", "captcha":"" }
@@ -16,7 +16,7 @@ cookies['st'] = my_cookieee
 captcha_text = response.text.split("captcha_")[1][8:18]
 print(captcha_text)
 params ={}
-
+    
 data['captcha'] = captcha_text
 print(data)
 # cookies["st"] = str(time.time())
