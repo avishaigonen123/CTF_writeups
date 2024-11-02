@@ -2,6 +2,8 @@
 
 i can see that there is base64 encoding here.
 ![alt text](./images/old-42.png)
+
+
 if we will decode this, we will get `test.txt`
 
 so, let's encode the name of the flag file, `flag.docx`
