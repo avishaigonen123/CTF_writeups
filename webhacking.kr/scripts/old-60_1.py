@@ -1,10 +1,8 @@
 import requests
-# import hashlib
-import time
 
 
 URL = "https://webhacking.kr/challenge/web-37/"
-SESSION_ID = "1"
+SESSION_ID = "123"
 cookies = {'PHPSESSID':SESSION_ID}
 
 params ={'mode':'auth'}
