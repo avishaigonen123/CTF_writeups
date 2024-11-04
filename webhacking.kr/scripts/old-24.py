@@ -17,7 +17,7 @@ URL = "https://webhacking.kr/challenge/bonus-4/"
 SESSION_ID = "123"
 cookies = {'PHPSESSID':SESSION_ID, 'REMOTE_ADDR':"17.27.70.12.00.12.00.12.1",'HTTP_USER_AGENT':"" }
 
-response = requests.post(URL,data=data, cookies=cookies)
+response = requests.post(URL, cookies=cookies)
 print(response.text)
 
     
