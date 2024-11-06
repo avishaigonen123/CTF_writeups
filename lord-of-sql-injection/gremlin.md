@@ -1,4 +1,3 @@
-# lord-of-sql-injection gremlin Solution
+# Lord of SQLInjection gremlin Solution
 
-id=bla%27||1--%20&pw=bla
-
+sql injection. the payload will be `' or 1--%0b`
