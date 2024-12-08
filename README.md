@@ -4,8 +4,9 @@ This repository contains concise solutions for various CTF challenges and wargam
 
 ## Contents
 - [OverTheWire](./overthewire/)
+- [trythis0ne](./trythis0ne/)
 - [Webhacking.kr](./webhacking.kr/)
-- [Pwnable.kr/](./webhacking.kr/)
+- [Pwnable.kr](./webhacking.kr/)
 - [Lord of sql injection](./lord-of-sql-injection/)
 - [picoCTF](./picoCTF)
 - Other wargames as they come...
