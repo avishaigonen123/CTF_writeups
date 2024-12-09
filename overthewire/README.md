@@ -7,18 +7,18 @@ This folder contains solutions for the [Over-The-Wire](https://overthewire.org/w
 
 ## Wargames Solutions
 
-- [Bandit](./bandit.md) - 
-- [Natas](./natas.md) - 
-- [Leviathan](./leviathan.md) - 
-- [Krypton](./krypton.md) - 
-- [Narnia](./narnia.md) - 
-- [Behemoth](./behemoth.md) - 
-- [Utumno](./utumno.md) - 
-- [Maze](./maze.md) - 
-- [Vortex](./vortex.md) - 
-- [Manpage](./manpage.md) - 
-- [Drifter](./drifter.md) - 
-- [FormulaOne](./formulaone.md) - 
+- [Bandit](./bandit/README.md)
+- [Natas](./natas/README.md) 
+- [Leviathan](./leviathan/README.md) 
+- [Krypton](./krypton/README.md) 
+- [Narnia](./narnia/README.md) 
+- [Behemoth](./behemoth/README.md) 
+- [Utumno](./utumno/README.md) 
+- [Maze](./maze/README.md) 
+- [Vortex](./vortex/README.md) 
+- [Manpage](./manpage/README.md) 
+- [Drifter](./drifter/README.md) 
+- [FormulaOne](./formulaone/README.md) 
 
 
 Each solution contains:
