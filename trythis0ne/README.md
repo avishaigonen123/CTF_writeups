@@ -6,8 +6,16 @@ This folder contains solutions for the [trythis0ne](http://trythis0ne.com/) webs
 ...
 
 ## Level Solutions
-- [fd](./fd.md) - 
-- ...
+- [1337 Browser](./1337Browser.md)
+- [Channel 5](./Channel5.md)
+- [Lets Drive](./Lets_Drive.md)
+- [Ohno](./Ohno.md)
+- [OS Login](./OSLogin.md)
+- [Premission](./Premission.md)
+- [README](./README.md)
+- [Reverse Me](./Reverse_Me.md)
+- [What Do You Mean](./WhatDoYouMean.md)
+- [With Style](./WithStyle.md)
 
 Each solution contains:
 - A **concise explanation** of the approach.
