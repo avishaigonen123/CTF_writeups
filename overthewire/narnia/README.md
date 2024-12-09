@@ -1,6 +1,6 @@
-# behemoth Write-Ups
+# narnia Write-Ups
 
-This folder contains solutions for the [behemoth](https://overthewire.org/wargames/behemoth/) website. 
+This folder contains solutions for the [narnia](https://overthewire.org/wargames/narnia/) website. 
 
 ## Challenge Overview
 ...
@@ -14,6 +14,7 @@ This folder contains solutions for the [behemoth](https://overthewire.org/wargam
 - [level6](./level6.md) 
 - [level7](./level7.md) 
 - [level8](./level8.md) 
+- [level9](./level9.md) 
 
 
 Each solution contains:
