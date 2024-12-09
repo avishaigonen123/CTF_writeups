@@ -1,8 +1,6 @@
 from pwn import *
 import sys
 
-PATH = '/behemoth/behemoth4'
-
 address_of_puts = 0x0804b218
 address_of_shellcode = 0xffffd510
 

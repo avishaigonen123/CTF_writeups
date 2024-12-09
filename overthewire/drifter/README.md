@@ -1,6 +1,6 @@
-# behemoth Write-Ups
+# drifter Write-Ups
 
-This folder contains solutions for the [behemoth](https://overthewire.org/wargames/behemoth/) website. 
+This folder contains solutions for the [drifter](https://overthewire.org/wargames/drifter/) website. 
 
 ## Challenge Overview
 ...
@@ -13,7 +13,6 @@ This folder contains solutions for the [behemoth](https://overthewire.org/wargam
 - [level5](./level5.md) 
 - [level6](./level6.md) 
 - [level7](./level7.md) 
-- [level8](./level8.md) 
 
 
 Each solution contains:
