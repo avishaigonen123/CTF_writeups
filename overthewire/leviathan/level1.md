@@ -1,7 +1,8 @@
-# behemoth level1 Solution
+# leviathan level1 Solution
 
-the code can be found here [level1.py](./scripts/level1.py)
-here we reversed the file, and saw the password is `eatmyshorts`
+first we check what we have in our folder. we can see the hidden folder `.backup`.
+in the hidden folder we can find html file, let's open it
+![alt text](./images/level1.png)
 
 
-**Flag:** ***`8YpAQCAuKf`*** 
+**Flag:** ***`3QJ3TgzHDq`*** 

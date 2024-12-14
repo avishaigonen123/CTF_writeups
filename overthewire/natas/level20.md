@@ -1,9 +1,13 @@
 # Natas Level 20 Solution
 
-This challenge is almost the same as the previous challenge, the only difference is that the cookie now is `hex(session-username)`
-in this challenge we know there is a session for the admin, and the sessions can be detected using the cookie. so, let's brute force those 640 options until finding the session of the admin.
+here we exploit a logic error in the source code. we give this input 
+```
+hello 
+admin 1
+```
+and after 2 entrances we'll get the password.
 
-this is the source code [level19](./scripts/level19.py)
+`http://natas20.natas.labs.overthewire.org/index.php?name=hello%0Aadmin%201`
 
 
-**Flag:** ***`p5mCvP7GS2K6Bmt3gqhM2Fc1A5T8MVyw`*** 
+**Flag:** ***`BPhv63cKE1lkQl04cE5CuFTzXe15NfiH`*** 
