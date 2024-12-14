@@ -5,8 +5,7 @@ leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ touch "link file"
 leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "link file"
 /bin/cat: link: Permission denied
 /bin/cat: file: Permission denied
-leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "/tmp/tmp.mWLvtmQOXu/link
-file"
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "/tmp/tmp.mWLvtmQOXu/link file"
 /bin/cat: /tmp/tmp.mWLvtmQOXu/link: Permission denied
 /bin/cat: file: Permission denied
 leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "/^Cp/tmp.mWLvtmQOXu/link
