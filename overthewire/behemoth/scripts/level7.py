@@ -1,4 +1,9 @@
+import sys
+
 NOP_SLIDE = 50
+
+# print = lambda *args, **kwargs: None # override print function
+
 
 # Shellcode in Python
 # write(1, "HelloKitty", 11)
@@ -58,3 +63,5 @@ print("".join(f"{byte:02x}" for byte in formatted_shellcode))
 
 # Calculate shellcode length
 print(f"\nLength of shellcode is {len(formatted_shellcode)} bytes")
+
+# sys.stdout.buffer.write(formatted_shellcode)
