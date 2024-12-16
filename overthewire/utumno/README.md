@@ -12,7 +12,9 @@ This folder contains solutions for the [utumno](https://overthewire.org/wargames
 - [level4](./level4.md) 
 - [level5](./level5.md) 
 - [level6](./level6.md) 
-- [level7](./level7.md) 
+- [level7](./level7.md)
+- [level8](./level8.md) 
+
 
 
 Each solution contains:
