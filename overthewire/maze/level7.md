@@ -1,6 +1,6 @@
 # maze level7 Solution
 
-i decompiled maze 6, here you acn see the source code.
+i decompiled maze 6, here you can see the source code.
 
 ![image](./images/level7_1.png)
 
@@ -30,4 +30,4 @@ the code can be found here [level7.py](./scripts/level7.py)
 
 ![image](./images/level7_6.png)
 
-s**Flag:** ***`B6XkM3Syq6`*** 
+**Flag:** ***`B6XkM3Syq6`*** 
