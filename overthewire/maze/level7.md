@@ -30,4 +30,4 @@ the code can be found here [level7.py](./scripts/level7.py)
 
 ![image](./images/level7_6.png)
 
-s**Flag:** ***`B6XkM3Syq6`*** 
+**Flag:** ***`B6XkM3Syq6`*** 
