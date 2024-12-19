@@ -1,7 +1,19 @@
 # maze level1 Solution
 
-the code can be found here [level1.py](./scripts/level1.py)
-here we reversed the file, and saw the password is `eatmyshorts`
+in this level we exploit race condition.
+first it checks access to a file, and then change to higher privileges and print the content of the file. 
+so, we will link it to maze0 privilege, and before it opens the file for reading, we'll change to maze1 privilege.
 
+we can use these two script files, the one that working on links [link_script.sh](./scripts/link_script.sh)
 
-**Flag:** ***`8YpAQCAuKf`*** 
+and the one that tries that runs the file, and tries reading the content [run_script.sh](./scripts/run_script.sh)
+
+then, we'll run this
+```
+./link_script.sh &
+./run_script.sh | grep -av "maze0"
+```
+
+![image](./images/level1.png)
+
+**Flag:** ***`kfL7RRfpkY`*** 
