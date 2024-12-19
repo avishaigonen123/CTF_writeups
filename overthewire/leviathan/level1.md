@@ -1,8 +1,8 @@
 # leviathan level1 Solution
 
-first we check what we have in our folder. we can see the hidden folder `.backup`.
-in the hidden folder we can find html file, let's open it
-![alt text](./images/level1.png)
+using radare2 we can see the password is `sexsecretgodlove`
+![alt text](./images/level1_1.png)
 
+![alt text](./images/level1_2.png)
 
-**Flag:** ***`3QJ3TgzHDq`*** 
+**Flag:** ***`NsN1HwFoyN`*** 

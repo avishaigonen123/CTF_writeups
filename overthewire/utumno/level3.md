@@ -3,18 +3,16 @@
 first we can see there is no protection, and also ASLR disabled.
 ![image](./images/level3_1.png)
 
-then, after analyzing the code i realized that i can pass at the 9th place of envp some content that will be written to a buffer, and also i found out that the ret address is found in the stack after 16 bytes. 
-so, what we need to do is override the ret address and put our shellcode.
-
-because we run with envp, it overrides our regular SHELLCODE environment variable.
-
-we need to find the address of the shellcode, try debugging and find it. for example: 
+i decompiled the file using ghidra, and find out that we can manipulate our input in order to override the return address to our shellcode address. 
 ![image](./images/level3_2.png)
-(here i debug and put breakpoint on where the main of /utumno/utumno2 is find, it won't change because ASLR is turned off)
 
-here is the code [level3.c](./scripts/level3/level3.c), only change the address_of_shellcode variable and this should work. 
+here you can find the shellcode [shellcode.py](./scripts/level3/shellcode.py), that runs: `execve('/bin/cat','/tmp/passwwd')`
+
+this is the solution [level3.py](./scripts/level3/level3.py), you need to change the address of the shellcode based on the address of your environment variable.
+
+also, you need to run this command: `ln -sf /etc/utumno_pass/utumno4 /tmp/passwwd`
 
 
 ![image](./images/level3_3.png)
 
-**Flag:** ***`h3kVKJZuid`*** 
+**Flag:** ***`qHWLExh7C5`*** 

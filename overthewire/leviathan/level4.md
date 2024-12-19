@@ -1,12 +1,13 @@
 # leviathan level4 Solution
 
-using ltrace we can find the password.
 
+here we can find the hidden directory which called ".trash".
+in this directory, we can run the "bin" file and use ltrace to see what it does
 ![alt text](./images/level4_1.png)
-so, the password is `snlprintf\n`
+so, it prints the password in binary,
 
+using online tools we can find the password
 ![alt text](./images/level4_2.png)
 
 
-
-**Flag:** ***`WG1egElCvO`*** 
+**Flag:** ***`0dyxT7F4QD`*** 

@@ -1,4 +1,4 @@
-# krypton level1 Solution
+# krypton level0 Solution
 
 the code can be found here [level1.py](./scripts/level1.py)
 here we reversed the file, and saw the password is `eatmyshorts`

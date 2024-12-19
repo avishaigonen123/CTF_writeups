@@ -1,23 +1,10 @@
 # maze level5 Solution
 
-in this challenge we override one address, and put there value that will fit our needs.
-also, we need to give short script in bash that will open shell, i do it using the following commands:
+simple reverse engineering can show us that for the username: `username`, the password should be `<>A7?B7:`
+![image](./images/level5_1.png)
+so, give these credentials:
+username: `username`
+password: `<>A7?B7:`
+![image](./images/level5_2.png)
 
-* compile [code.c](./scripts/level5/code.c), we will use this file as shebang. 
-
-* then, we need to put the payload into our file, lets say it's input `python3 level5.py > input` and of course, change to executable `chmod +x input`. 
-
-the whole process:
-```
-cat > code.c
-gcc -m32 code.c -o code
-```
-
-```
-python3 level5.py > input
-chmod +x input
-```
-
-![image](./images/level5.png)
-
-**Flag:** ***`fobwgnzRy0`*** 
+**Flag:** ***`dOM2C7ZKlG`*** 
