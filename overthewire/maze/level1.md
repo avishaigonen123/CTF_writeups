@@ -1,19 +1,16 @@
 # maze level1 Solution
 
-in this level we exploit race condition.
-first it checks access to a file, and then change to higher privileges and print the content of the file. 
-so, we will link it to maze0 privilege, and before it opens the file for reading, we'll change to maze1 privilege.
+in this challange, we need to create our own `libc.so.4` that will be used by the program.
 
-we can use these two script files, the one that working on links [link_script.sh](./scripts/link_script.sh)
+the code can be found here [hook.c](./scripts/level1/hook.c), you need to adjust the addresses on the stack of the (maybe) local variables.
 
-and the one that tries that runs the file, and tries reading the content [run_script.sh](./scripts/run_script.sh)
-
-then, we'll run this
+the commands for compiling and linking the so file, here.
 ```
-./link_script.sh &
-./run_script.sh | grep -av "maze0"
+gcc -m32 -shared -fPIC -o libc.so.4 hook.c -ldl
 ```
+
+notice the tmp dir you're working on can't be something that `mktemp` has made, it won't work properly.
 
 ![image](./images/level1.png)
 
-**Flag:** ***`kfL7RRfpkY`*** 
+**Flag:** ***`PBeZRPjetr`*** 

@@ -1,33 +1,19 @@
 # maze level7 Solution
 
-i decompiled maze 6, here you can see the source code.
-
+we will exploit the line marked, and override the ret-address by giving value of 0x44 in the size, while the ret-address is at 0x40.
 ![image](./images/level7_1.png)
 
-in this challenge we use buffer overflow to override the file.
-we make our own File* struct, and put there in the write buffer our address, the address of the exit function in plt, and then we'll write there the shellcode.
-
-* this is a regular FILE* struct, when we open `file` for writing.
-* the words i marked are: *_IO_write_base*, *_IO_write_ptr*, *_IO_write_end*
+in the payload all the staff is \x00, with one exception, when we pass arg4 which contains the size.
+we do it using buffer overflow 
 ![image](./images/level7_2.png)
 
-* we need to find the address of exit in the plt record
+i marked important values: arg1, arg2, arg3, arg4, fd. (in this order), so we can see that *arg4* is found after *46 bytes*.
 ![image](./images/level7_3.png)
+
+ 
+now, all left is to create your shellcode in environment variable and put the address in the code, in `shellcode_address`.
+the code can be found here [level7.py](./scripts/level7/level7.py)
+
 ![image](./images/level7_4.png)
-so, the address of exit function in plt is `0x0804b208`
 
-* we need to inject our shellcode and find its address, we need to find the address of our malware FILE* struct.
-![image](./images/level7_5.png)
-we can see that the address of shellcode is `0xffffd204` and address of our malware FILE* struct `0xffffd158`
-
-for summary, we need to find this values:
-```
-FILE_struct_address  = 0xffffd158
-plt_exit_address = 0x0804b208
-shellcode_address = 0xffffd204
-```
-the code can be found here [level7.py](./scripts/level7.py)
-
-![image](./images/level7_6.png)
-
-**Flag:** ***`B6XkM3Syq6`*** 
+**Flag:** ***`eQdZB1qy6L`*** 

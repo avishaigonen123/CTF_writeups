@@ -1,10 +1,9 @@
 # leviathan level6 Solution
 
-it prints the content of /tmp/file.log
-so, i linked it to the password file: 
-`ln -sf /etc/leviathan_pass/leviathan6 /tmp/file.log`
+here we need to brute force the code, which is only 4 digits. i wrote short script in bash
+[level7.sh](./scripts/level6.sh)
 
 ![alt text](./images/level6.png)
 
 
-**Flag:** ***`szo7HDB88w`*** 
+**Flag:** ***`qEs5Io5yM8`*** 

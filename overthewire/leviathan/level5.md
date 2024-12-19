@@ -1,13 +1,10 @@
 # leviathan level5 Solution
 
+it prints the content of /tmp/file.log
+so, i linked it to the password file: 
+`ln -sf /etc/leviathan_pass/leviathan6 /tmp/file.log`
 
-here we can find the hidden directory which called ".trash".
-in this directory, we can run the "bin" file and use ltrace to see what it does
-![alt text](./images/level5_1.png)
-so, it prints the password in binary,
-
-using online tools we can find the password
-![alt text](./images/level5_2.png)
+![alt text](./images/level5.png)
 
 
-**Flag:** ***`0dyxT7F4QD`*** 
+**Flag:** ***`szo7HDB88w`*** 

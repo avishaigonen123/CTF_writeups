@@ -1,10 +1,23 @@
 # maze level4 Solution
 
-in this challange, we need to give in argv[1] `0x1337c0de`. 
+in this challenge we override one address, and put there value that will fit our needs.
+also, we need to give short script in bash that will open shell, i do it using the following commands:
 
-i simply run this command: `/maze/maze3 $(echo -e '\xde\xc0\x37\x13')`
+* compile [code.c](./scripts/level4/code.c), we will use this file as shebang. 
 
+* then, we need to put the payload into our file, lets say it's input `python3 level5.py > input` and of course, change to executable `chmod +x input`. 
+
+the whole process:
+```
+cat > code.c
+gcc -m32 code.c -o code
+```
+
+```
+python3 level4.py > input
+chmod +x input
+```
 
 ![image](./images/level4.png)
 
-**Flag:** ***`vghylBpihH`*** 
+**Flag:** ***`fobwgnzRy0`*** 

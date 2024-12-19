@@ -6,6 +6,7 @@ This folder contains solutions for the [maze](https://overthewire.org/wargames/m
 ...
 
 ## Level Solutions
+- [level0](./level0.md) 
 - [level1](./level1.md) 
 - [level2](./level2.md) 
 - [level3](./level3.md) 
@@ -13,6 +14,7 @@ This folder contains solutions for the [maze](https://overthewire.org/wargames/m
 - [level5](./level5.md) 
 - [level6](./level6.md) 
 - [level7](./level7.md) 
+- [level8](./level8.md) 
 
 
 Each solution contains:

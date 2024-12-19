@@ -1,16 +1,22 @@
 # utumno level1 Solution
 
-when i run the file, it says to read it, however i don't have read permissions. so, i decided to try hooking the file, using hooking the put function.
+here, we need to put our shellcode after "sh_". there is a small problem that we can't use "\\" in the shell code, because this char can't be in filname
 
-After i saw the hooking works, i read the stack using `printf("%p %p %p %p %p %p %p %p\n")`, and then i saw addresses that starts with `0x804`, maybe indicates on local variables on the stack, that might contain the password.
-the code can be found here [hook.c](./scripts/level1/hook.c), you need to adjust the addresses on the stack of the (maybe) local variables.
+we use this shellcode: [level1.py](./scripts/level1/level1.py)
+and run this script to create the file: [script.sh](./scripts/level1/script.sh)
 
-the commands for compiling and linking the so file, here.
+In the shellcode it tries to execute this command: `system("sh")`, so it means we need to link it to `/bin/sh`.
+
+put the code in the files `cat > script.sh` and `cat > shellcode.py`
+
+these are the commands that you need to run.
 ```
-gcc -m32 -shared -fPIC -o hook.so hook.c -ldl
-LD_PRELOAD=./hook.so /utumno/utumno0
+chmod +x script.sh
+ln -sf /bin/sh sh
+./script.sh
 ```
+lastly, run this: `/utumno/utumno1 .`
 
 ![image](./images/level1.png)
 
-**Flag:** ***`ytvWa6DzmL`*** 
+**Flag:** ***`RdUzprHKSm`*** 

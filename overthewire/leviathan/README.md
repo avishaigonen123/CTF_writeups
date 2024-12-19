@@ -6,13 +6,13 @@ This folder contains solutions for the [leviathan](https://overthewire.org/warga
 ...
 
 ## Level Solutions
+- [level0](./level0.md) 
 - [level1](./level1.md) 
 - [level2](./level2.md) 
 - [level3](./level3.md) 
 - [level4](./level4.md) 
 - [level5](./level5.md) 
 - [level6](./level6.md) 
-- [level7](./level7.md) 
 
 
 Each solution contains:
