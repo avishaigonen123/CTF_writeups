@@ -1,6 +1,6 @@
 # maze level7 Solution
 
-i decompiled maze 6, here you acn see the source code.
+i decompiled maze 6, here you can see the source code.
 
 ![image](./images/level7_1.png)
 
