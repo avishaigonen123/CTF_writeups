@@ -2,7 +2,7 @@
 #include<unistd.h>
 
 // Hooked puts function
-int puts(const char *str) {
+int puts(const char *str) {z
     printf("%p %p %p %p %p %p %p %p %p %p %p\n");
 
     printf("%s\n", 0x804907d);
