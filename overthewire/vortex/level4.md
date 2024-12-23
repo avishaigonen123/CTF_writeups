@@ -1,26 +1,27 @@
 # vortex level4 Solution
+In this challenge, we had a format string attack.
 
-in this challenge we had format string attack. 
 ![image](./images/level4_1.png)
 
-here we need to play more with the stack, in order to find where our stored memories are, we need to use `$` inside format strings, to navigate through the stack. 
+Here, we needed to manipulate the stack to find where our stored memory is. We used `$` inside format strings to navigate through the stack.
 
-i wrote simple solution, as you can see above, that write each time a byte to the memory of the exit_plt_address.
+I wrote a simple solution, as shown above, that writes each byte to the memory of the `exit_plt_address`.
 
-however, the exit_plt_address is `0x804c008`, and the next addresses are: `0x804c009`, `0x804c00a`, `0x804c00b`, which all contains characters that will stop the printf 
+The `exit_plt_address` is `0x804c008`, and the next addresses are: `0x804c009`, `0x804c00a`, `0x804c00b`, which all contain characters, causing the print to stop when using Python.
+
 ![image](./images/level4_2.png)
 
-so, we need to insert to the first address 3 bytes, and to the forth address 1 byte.
+So, we needed to insert 3 bytes into the first address and 1 byte into the fourth address. This results in a long string being printed.
 
-it meant it gonna print a longg string :)
+I wrote this C code to run `/vortex/vortex4` with the payload (`level4.c`).
 
-i wrote this c code that will run `/vortex/vortex4` with the payload [level4.c](./scripts/level4/level4.c)
+The script is located here: [level4.py](./scripts/level4/level4.py). You need to adjust the `address_of_exit` and `address_of_shellcode`, debug, and find them.
 
-the script is here [level4.py](./scripts/level4/level4.py), you need to adjust the `address_of_exit` and the `address_of_shellcode`, debug and find it. 
+![image](./images/level4_4.png)
+![image](./images/level4_5.png)
 
-this is our code [level3.py](./scripts/level3/level3.py)
+**Flag:** ***`heo3EbnS9`***
+
+**Note:** I now noticed that the issue is with the script. You can use [level4_with_payload.c](./scripts/level4/level4_with_payload.c) and just provide the payload inside, the regular payload will work.
 
 ![image](./images/level4_3.png)
-![image](./images/level4_4.png)
-
-**Flag:** ***`heo3EbnS9`*** 
