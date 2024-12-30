@@ -1,0 +1,20 @@
+leviathan2@gibson:/tmp/tmp.s4QhY3Jyek$ cd $(mktemp -d)
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ln -s /etc/leviathan_pass/leviathan3
+link
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ touch "link file"
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "link file"
+/bin/cat: link: Permission denied
+/bin/cat: file: Permission denied
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "/tmp/tmp.mWLvtmQOXu/link file"
+/bin/cat: /tmp/tmp.mWLvtmQOXu/link: Permission denied
+/bin/cat: file: Permission denied
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "/^Cp/tmp.mWLvtmQOXu/link
+file"
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "link file"
+/bin/cat: link: Permission denied
+/bin/cat: file: Permission denied
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ chmod 777 .
+leviathan2@gibson:/tmp/tmp.mWLvtmQOXu$ ~/printfile "link file"
+Q0G8j4sakn
+/bin/cat: file: No such file or directory
+

