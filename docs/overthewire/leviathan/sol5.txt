@@ -1,0 +1,39 @@
+leviathan4@gibson:~/.trash$ ./bin
+01000101 01001011 01001011 01101100 01010100 01000110 00110001 01011000
+01110001 01110011 00001010
+leviathan4@gibson:~/.trash$ ./bin  | xxd
+00000000: 3031 3030 3031 3031 2030 3130 3031 3031  01000101 0100101
+00000010: 3120 3031 3030 3130 3131 2030 3131 3031  1 01001011 01101
+00000020: 3130 3020 3031 3031 3031 3030 2030 3130  100 01010100 010
+00000030: 3030 3131 3020 3030 3131 3030 3031 2030  00110 00110001 0
+00000040: 3130 3131 3030 3020 3031 3131 3030 3031  1011000 01110001
+00000050: 2030 3131 3130 3031 3120 3030 3030 3130   01110011 000010
+00000060: 3130 200a                                10 .
+leviathan4@gibson:~/.trash$ ./bin  | xxd -p
+303130303031303120303130303130313120303130303130313120303131
+303131303020303130313031303020303130303031313020303031313030
+303120303130313130303020303131313030303120303131313030313120
+3030303031303130200a
+leviathan4@gibson:~/.trash$ ./bin  | xxd -p -r
+leviathan4@gibson:~/.trash$ python3
+Python 3.10.12 (main, Jun 11 2023, 05:26:28) [GCC 11.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> binary_string = '01000101 01001011 01001011 01101100 01010100 01000110
+>>> 00110001 01011000 01110001 01110011 00001010'
+>>> list = bin
+bin(           binary_string
+>>> list = binary_string.split()
+>>> list
+['01000101', '01001011', '01001011', '01101100', '01010100', '01000110',
+'00110001', '01011000', '01110001', '01110011', '00001010']
+>>> ascii_chars = ''.join([car(int(binary,2)) for binary in list])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 1, in <listcomp>
+NameError: name 'car' is not defined. Did you mean: 'chr'?
+>>> ascii_chars = ''.join([chr(int(binary,2)) for binary in list])
+>>> ascii
+<built-in function ascii>
+>>> ascii_chars
+'EKKlTF1Xqs\n'
+

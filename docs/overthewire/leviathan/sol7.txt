@@ -1,0 +1,7 @@
+leviathan6@gibson:/tmp/tmp.MtffEM3JJO$ cat script.sh
+#!/bin/bash
+
+for i in {1000..9999}; do
+        ~/leviathan6 $i
+done
+
