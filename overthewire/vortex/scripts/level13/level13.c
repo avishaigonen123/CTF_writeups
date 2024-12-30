@@ -4,9 +4,10 @@
 #define PATH "/vortex/vortex13"
 
 int main() {
-    char *args[] = {NULL};
+    char *argv[] = {NULL};
+    char *path = "/vortex/vortex13";
     char *envp[] = {NULL};
-    execve(PATH,NULL , NULL);
+    execve(path, argv ,envp);
     return 0;
 }
 // gcc -m32 level13.c -o level13
