@@ -1,6 +1,7 @@
 # Natas Level 2 Solution
 
-ctrl+U, same as before
+in the source code there is a pixel.png, then by going to the folder u can find the directory "files".
+then, go to http://natas2.natas.labs.overthewire.org/files/users.txt
 
-**Flag:** ***`TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI`*** 
 
+**Flag:** ***`3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH`*** 

@@ -1,1 +1,0 @@
-http://natas25.natas.labs.overthewire.org

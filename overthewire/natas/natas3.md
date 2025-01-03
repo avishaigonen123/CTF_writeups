@@ -1,7 +1,9 @@
 # Natas Level 3 Solution
 
-in the source code there is a pixel.png, then by going to the folder u can find the directory "files".
-then, go to http://natas2.natas.labs.overthewire.org/files/users.txt
+go to robots.txt
+http://natas3.natas.labs.overthewire.org/robots.txt
+then, go to the secret dir: /s3cr3t/
+there you can find the password in the url:
+http://natas3.natas.labs.overthewire.org//s3cr3t/users.txt
 
-
-**Flag:** ***`3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH`*** 
+**Flag:** ***`QryZXc2e0zahULdHrtHxzyYkj59kUxLQ`*** 

@@ -6,13 +6,11 @@ This folder contains solutions for the [manpage](https://overthewire.org/wargame
 ...
 
 ## Level Solutions
-- [level1](./level1.md) 
-- [level2](./level2.md) 
-- [level3](./level3.md) 
-- [level4](./level4.md) 
-- [level5](./level5.md) 
-- [level6](./level6.md) 
-- [level7](./level7.md) 
+- [level0](./manpage0.md) 
+- [level1](./manpage1.md) 
+- [level2](./manpage2.md) 
+- [level3](./manpage3.md) 
+- [level4](./manpage4.md) 
 
 
 Each solution contains:

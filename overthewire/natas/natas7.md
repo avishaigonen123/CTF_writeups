@@ -1,4 +1,4 @@
-# Natas Level 6 Solution
+# Natas Level 7 Solution
 
 here we can see it prints the content of the file that the param `page` gets. so, let's give him the path to the password which is `/etc/natas_webpass/natas8`
 ```

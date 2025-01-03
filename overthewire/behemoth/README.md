@@ -6,14 +6,14 @@ This folder contains solutions for the [behemoth](https://overthewire.org/wargam
 ...
 
 ## Level Solutions
-- [level1](./level1.md) 
-- [level2](./level2.md) 
-- [level3](./level3.md) 
-- [level4](./level4.md) 
-- [level5](./level5.md) 
-- [level6](./level6.md) 
-- [level7](./level7.md) 
-- [level8](./level8.md) 
+- [level1](./behemoth1.md) 
+- [level2](./behemoth2.md) 
+- [level3](./behemoth3.md) 
+- [level4](./behemoth4.md) 
+- [level5](./behemoth5.md) 
+- [level6](./behemoth6.md) 
+- [level7](./behemoth7.md) 
+- [level8](./behemoth8.md) 
 
 
 Each solution contains:
