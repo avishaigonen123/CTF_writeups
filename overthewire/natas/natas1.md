@@ -1,6 +1,6 @@
 # Natas Level 1 Solution
 
-f12, the password is in the source code
+ctrl+U, same as before
 
-**Flag:** ***`0nzCigAq7t2iALyvU9xcHlYN4MlkIwlq`*** 
+**Flag:** ***`TguMNxKo1DSa1tujBLuZJnDUlCcUAPlI`*** 
 

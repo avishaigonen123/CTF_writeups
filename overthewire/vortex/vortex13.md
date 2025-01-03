@@ -1,8 +1,9 @@
 # vortex level13 Solution
 
+stuck ! 
 
-finally :)
+can't execute with "argc=0"
 
-![image](./images/level12_4.png)
+BAD :(
 
 **Flag:** ***`kklZMRIrj`***

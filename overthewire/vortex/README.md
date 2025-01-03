@@ -6,13 +6,20 @@ This folder contains solutions for the [vortex](https://overthewire.org/wargames
 ...
 
 ## Level Solutions
-- [level1](./level1.md) 
-- [level2](./level2.md) 
-- [level3](./level3.md) 
-- [level4](./level4.md) 
-- [level5](./level5.md) 
-- [level6](./level6.md) 
-- [level7](./level7.md) 
+- [level0](./vortex0.md) 
+- [level1](./vortex1.md) 
+- [level2](./vortex2.md) 
+- [level3](./vortex3.md) 
+- [level4](./vortex4.md) 
+- [level5](./vortex5.md) 
+- [level6](./vortex6.md) 
+- [level7](./vortex7.md) 
+- [level8](./vortex8.md) 
+- [level9](./vortex9.md) 
+- [level10](./vortex10.md) 
+- [level11](./vortex11.md) 
+- [level12](./vortex12.md) 
+- [level13](./vortex13.md) 
 
 
 Each solution contains:
