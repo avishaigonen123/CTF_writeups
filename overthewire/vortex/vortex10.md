@@ -2,6 +2,7 @@
 
 in this level we need to exploit the fact the seed isn't really randomized, and we can find it.
 
+<del>
 the difficulty with this level is the way we solve it, when we need to be fast when input the seed back to /vortex/vortex10.
 
 this is the process:
@@ -20,6 +21,14 @@ fg
 # inside the shell
 cat /etc/vortex_pass/vortex11 
 ```
+</del>
+
+*UPDATE:*
+
+I created script in python that do the whole piping process.
+this will be our c code: [level10.c](./scripts/level10/level10.c) and this will be our script [pipe.py](./scripts/level10/pipe.py).
+
+all you need to do is to execute the piping script :)
 
 ![image](./images/level10.png)
 
