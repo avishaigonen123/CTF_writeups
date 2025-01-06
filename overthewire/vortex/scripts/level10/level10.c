@@ -69,3 +69,4 @@ int main(int argc, char** argv){
     }
     return 0;
 }
+// gcc -m32 level10.c -o level10
