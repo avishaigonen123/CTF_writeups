@@ -12,5 +12,8 @@
     <sitemap>
         <loc>https://avishaigonen123.github.io/CTF_writeups/trythis0ne/sitemap-tryThis0ne.xml</loc>
     </sitemap>
+    <sitemap>
+        <loc>https://avishaigonen123.github.io/CTF_writeups/pwnable.kr/sitemap-pwnableDotKr.xml</loc>
+    </sitemap>
 
 </sitemapindex>
