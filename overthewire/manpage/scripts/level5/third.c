@@ -8,6 +8,7 @@
 int main() {
     pid_t pid = fork();
 
+
     if (pid == 0) {
         // Child process: execute the background task
         printf("Hello from child, executing background task\n");
@@ -26,7 +27,12 @@ int main() {
         union sigval sv;
         sv.sival_int = value_to_send;
 
-        if (sigqueue(pid, SIGINT, sv) == -1) {
+        if (kill(pid, SIGCONT) == -1) {
+            perror("kill (SIGCONT)");
+            exit(EXIT_FAILURE);
+        }
+
+        if (sigqueue(pid, SIGCONT, sv) == -1) {
             perror("sigqueue");
             exit(EXIT_FAILURE);
         }
