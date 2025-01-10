@@ -1,4 +1,4 @@
-# pwnable.kr Write-Ups
+# pwnable.kr - Rookiss Write-Ups
 
 This folder contains solutions for the [Pwnable.kr](https://pwnable.kr/) website. 
 
@@ -6,8 +6,7 @@ This folder contains solutions for the [Pwnable.kr](https://pwnable.kr/) website
 ...
 
 ## Level Solutions
-- [Toddler's-Battle](./Toddler's_Bottle/README.md) - 
-- [Rookiss](./Rookiss/README.md) - 
+- [fix](./fix.md) - 
 - ...
 
 Each solution contains:

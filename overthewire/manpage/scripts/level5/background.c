@@ -31,7 +31,7 @@ int main() {
         }
     }
     printf("start sleeping\n");
-    sleep(10); // Wait for a signal
+    sleep(5); // Wait for a signal
 
     printf("end sleeping\n");
     printf("\n\n\n");

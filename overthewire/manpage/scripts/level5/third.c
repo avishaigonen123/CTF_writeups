@@ -27,11 +27,11 @@ int main() {
         union sigval sv;
         sv.sival_int = value_to_send;
 
-        if (kill(pid, SIGCONT) == -1) {
-            perror("kill (SIGCONT)");
+        if (sigqueue(pid, SIGSTOP, sv) == -1) {
+            perror("sigqueue");
             exit(EXIT_FAILURE);
         }
-
+        
         if (sigqueue(pid, SIGCONT, sv) == -1) {
             perror("sigqueue");
             exit(EXIT_FAILURE);
