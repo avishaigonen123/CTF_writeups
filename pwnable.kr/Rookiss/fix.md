@@ -1,11 +1,13 @@
 # fix Solution
 
-in this challenge we used the way it return from the main, and build the payload.
+in this challenge we replace the `push eax` with `pop esp`, and by this way we push the value of ebx to somewhere in the stack, to *0x62696e2f*, which is equivalent to the string *bin\\*.
 
-we inject in the stack, where ecx will get the address from. then, we make sure that we put the shell function address in [ecx-4].
+if we want to stack to work in *0x62696e2f* we need to enable it, by executing this line: `ulimit -s unlimited`.
 
-this is our script [unlink.py](./scripts/unlink/unlink.py)
+then, we need to push to byte 15 the value 92, which is 0x5c, which is `pop esp`.
 
-![image](./images/unlink.png)
+this is our script [fix.py](./scripts/fix/fix.py)
 
-**Flag:** ***`conditional_write_what_where_from_unl1nk_explo1t`***
+![image](./images/fix.png)
+
+**Flag:** ***`Sorry for blaming shell-strom.org :) it was my ignorance!`***
