@@ -1,7 +1,5 @@
 # krypton level0 Solution
 
-the code can be found here [level1.py](./scripts/level1.py)
-here we reversed the file, and saw the password is `eatmyshorts`
+level0 is only decoding this string: `S1JZUFRPTklTR1JFQVQ=` which gives you `KRYPTONISGREAT`
 
-
-**Flag:** ***`8YpAQCAuKf`*** 
+**Flag:** ***`KRYPTONISGREAT`*** 
