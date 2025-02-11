@@ -8,7 +8,7 @@ This repository contains concise solutions for various CTF challenges and wargam
 - [Webhacking.kr](./webhacking.kr/)
 - [Pwnable.kr](./pwnable.kr/)
 - [Lord of sql injection](./lord-of-sql-injection/)
-- [picoCTF](./picoCTF)
+- [RingZer0](./ringzer0)
 - Other wargames as they come...
 
 - [Other stuff](./stuff)
