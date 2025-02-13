@@ -6,7 +6,7 @@ This folder contains solutions for the [RingZer0](https://ringzer0ctf.com/) webs
 ...
 
 ## Level Solutions
-- [Client side validation is so secure](./Client%20side%20validation%20is%20so%20secure.md) - 
+- [level 1](./level1.md)
 - ...
 
 Each solution contains:
