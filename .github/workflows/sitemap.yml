@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generate Sitemap
-        uses: cicirello/generate-sitemap@v2
+        uses: cicirello/generate-sitemap@v1
         with:
           url-base: https://avishaigonen123.github.io/CTF_writeups
           include-robots-txt: true
