@@ -1,0 +1,20 @@
+name: Generate Sitemap
+
+on:
+  push:
+    branches:
+      - master  # or 'master' if that's your default branch
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Generate Sitemap
+        uses: cicirello/generate-sitemap@v2
+        with:
+          url-base: https://avishaigonen123.github.io/CTF_writeups
+          include-robots-txt: true
