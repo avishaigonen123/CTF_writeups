@@ -7,6 +7,8 @@ This folder contains solutions for the [Pwnable.kr](https://pwnable.kr/) website
 
 ## Level Solutions
 - [fix](./fix.md) - 
+- [brain fuck](./brain_fuck.md) - 
+- [tiny easy](./tiny_easy.md) - 
 - ...
 
 Each solution contains:
