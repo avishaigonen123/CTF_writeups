@@ -1,3 +1,0 @@
-User-agent: *
-Disallow: 
-Sitemap: https://avishaigonen123.github.io/CTF_writeups/sitemap-try.xml
