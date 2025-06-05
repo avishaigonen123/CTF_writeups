@@ -9,6 +9,7 @@ This repository contains concise solutions for various CTF challenges and wargam
 - [Pwnable.kr](./pwnable.kr/)
 - [Lord of sql injection](./lord-of-sql-injection/)
 - [RingZer0](./ringzer0)
+- [AppSec-IL-2025](./AppSec-IL-2025/)
 - Other wargames as they come...
 
 - [Other stuff](./stuff)
