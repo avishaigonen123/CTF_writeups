@@ -10,10 +10,12 @@ cookies = {'PHPSESSID':SESSION_ID}
 while True:
     filename = "tmp-"+str(int(time.time()))
     # files['upfile'] = "hello:("
-    files = {'upfile': (filename, '37.60.42.105')}
+    files = {'upfile': (filename, 'bla')}
 
     response = requests.get(URL,files=files, cookies=cookies)
-    print(response.text)
+    # print(response.text)
     if response.status_code==200:
-       print(response.text)
-
+    #    print(response.text)
+        print(f"File {filename} uploaded successfully.")
+    else:
+        print(f"Failed to upload file {filename}. Status code: {response.status_code}")
