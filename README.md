@@ -1,6 +1,6 @@
 ---
 layout: default
-title: README
+title: Home
 ---
 
 # CTF Write-Ups
