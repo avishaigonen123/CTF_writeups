@@ -5,30 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>narnia level7 Solution | Avishai’s CTF Writeups</title>
+<title>narnia7 | Avishai’s CTF Writeups</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="narnia level7 Solution" />
+<meta property="og:title" content="narnia7" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
-<link rel="canonical" href="http://localhost:4000/overthewire/narnia/narnia7.html" />
-<meta property="og:url" content="http://localhost:4000/overthewire/narnia/narnia7.html" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/narnia/narnia7.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/narnia/narnia7.html" />
 <meta property="og:site_name" content="Avishai’s CTF Writeups" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="narnia level7 Solution" />
+<meta property="twitter:title" content="narnia7" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"narnia level7 Solution","url":"http://localhost:4000/overthewire/narnia/narnia7.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"narnia7","url":"http://localhost:4000/CTF_writeups/overthewire/narnia/narnia7.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=c7717680ee836fb275ca7ab0727bb88d0c432f55">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="/assets/js/respond.js"></script>
+    <script src="/CTF_writeups/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if lt IE 8]>
-    <link rel="stylesheet" href="/assets/css/ie.css">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
@@ -57,7 +57,7 @@
         <h1 id="narnia-level7-solution">narnia level7 Solution</h1>
 
 <p>we can see it doesn’t have ASLR but have stack protection.
-<img src="/overthewire/narnia/images/level7_1.png" alt="alt text" /></p>
+<img src="/CTF_writeups/overthewire/narnia/images/level7_1.png" alt="alt text" /></p>
 
 <p>in this level, we will call the system func with the command:<code class="language-plaintext highlighter-rouge">/bin/sh</code>, then it will execute this: <code class="language-plaintext highlighter-rouge">system("/bin/sh")</code></p>
 
@@ -67,11 +67,13 @@
 <code class="language-plaintext highlighter-rouge">aaa; ood; dcu main</code></p>
 
 <p>then, check the name of the loaded binaries, and finally search for symbols in our load library, and greping for system.
-<img src="/overthewire/narnia/images/level7_2.png" alt="alt text" />
-<img src="/overthewire/narnia/images/level7_3.png" alt="alt text" />
+<img src="/CTF_writeups/overthewire/narnia/images/level7_2.png" alt="alt text" />
+<img src="/CTF_writeups/overthewire/narnia/images/level7_3.png" alt="alt text" />
 so, the (virtual)address of system on the RAM is <code class="language-plaintext highlighter-rouge">0xf7dcd430</code>, let’s put it into the script,</p>
 
-<p><a href="/overthewire/narnia/scripts/level7.py">level7.py</a></p>
+<p>[level7.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level7</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div></div>
 
 <p><img src="./images/level7_4.png" alt="alt text" /></p>
 

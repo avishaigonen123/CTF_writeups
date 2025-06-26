@@ -5,30 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>webhacking old-05 Solution | Avishai’s CTF Writeups</title>
+<title>old-05 | Avishai’s CTF Writeups</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="webhacking old-05 Solution" />
+<meta property="og:title" content="old-05" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
-<link rel="canonical" href="http://localhost:4000/webhacking.kr/old-05.html" />
-<meta property="og:url" content="http://localhost:4000/webhacking.kr/old-05.html" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-05.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-05.html" />
 <meta property="og:site_name" content="Avishai’s CTF Writeups" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="webhacking old-05 Solution" />
+<meta property="twitter:title" content="old-05" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"webhacking old-05 Solution","url":"http://localhost:4000/webhacking.kr/old-05.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-05","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-05.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=c7717680ee836fb275ca7ab0727bb88d0c432f55">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="/assets/js/respond.js"></script>
+    <script src="/CTF_writeups/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if lt IE 8]>
-    <link rel="stylesheet" href="/assets/css/ie.css">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
@@ -56,11 +56,13 @@
 
         <h1 id="webhacking-old-05-solution">webhacking old-05 Solution</h1>
 
-<p>as we can see, the login page redirects us to <code class="language-plaintext highlighter-rouge">./mem/login.php</code>. so, there might be also <code class="language-plaintext highlighter-rouge">./mem/join.php</code>. we will go there:
-<code class="language-plaintext highlighter-rouge">https://webhacking.kr/challenge/web-05/mem/join.php</code></p>
-
-<p>in this page there is js obfuscated, let’s use some online tool like https://beautifier.io/ and achieve more nice looking code. 
-here is the source code: <a href="/webhacking.kr/scripts/old-05.js">old-05</a></p>
+<p>as we can see, the login page redirects us to <code class="language-plaintext highlighter-rouge">./mem/login.php</code>. so, there might be also <code class="language-plaintext highlighter-rouge">./mem/join.php</code>. we will go there:</p>
+<pre><code class="language-https://webhacking.kr/challenge/web-05/mem/join.php```">
+in this page there is js obfuscated, let's use some online tool like https://beautifier.io/ and achieve more nice looking code. 
+here is the source code: [old-05]
+```javascript
+% scripts/old-05.js
+</code></pre>
 
 <p>after research the code, we come to conclusion that there need to be a cookie with the name <code class="language-plaintext highlighter-rouge">oldzombie</code>, and also, we need to set the param <code class="language-plaintext highlighter-rouge">mode</code> to 1.
 so, <code class="language-plaintext highlighter-rouge">https://webhacking.kr/challenge/web-05/mem/join.php?mode=1</code></p>
