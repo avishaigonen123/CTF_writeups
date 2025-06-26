@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Jekyll Sitemap Generator Plugin
 
 *Jekyll plugin to silently generate a sitemaps.org compliant sitemap for your Jekyll site*

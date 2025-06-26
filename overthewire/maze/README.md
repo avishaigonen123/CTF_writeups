@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # maze Write-Ups
 
 This folder contains solutions for the [maze](https://overthewire.org/wargames/maze/) website. 

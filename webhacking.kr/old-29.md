@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-29
+---
+
 # Webhacking old-29 Solution
 
 this is another sql injection challenge.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: CONTRIBUTING
+---
+
 # Contributing
 
 Thanks for using and improving `HTML::Pipeline`!

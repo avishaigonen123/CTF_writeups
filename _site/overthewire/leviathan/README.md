@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # leviathan Write-Ups
 
 This folder contains solutions for the [leviathan](https://overthewire.org/wargames/leviathan/) website. 

@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Mutex_m
 
 When 'mutex_m' is required, any object that extends or includes Mutex_m will be treated like a Mutex.

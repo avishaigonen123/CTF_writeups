@@ -1,3 +1,8 @@
+---
+layout: default
+title: leviathan2
+---
+
 # leviathan level2 Solution
 
 we will create link file for the password file in the name "link"

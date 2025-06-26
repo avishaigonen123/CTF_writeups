@@ -1,3 +1,8 @@
+---
+layout: default
+title: Po po po po postgresql
+---
+
 # Po po po po postgresql Solution
 
 This is the query: 

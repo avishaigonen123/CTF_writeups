@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # behemoth Write-Ups
 
 This folder contains solutions for the [behemoth](https://overthewire.org/wargames/behemoth/) website. 

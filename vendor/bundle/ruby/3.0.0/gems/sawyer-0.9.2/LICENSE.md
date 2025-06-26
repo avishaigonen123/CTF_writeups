@@ -1,3 +1,8 @@
+---
+layout: default
+title: LICENSE
+---
+
 Copyright (c) 2011 rick olson
 
 Permission is hereby granted, free of charge, to any person obtaining

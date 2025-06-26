@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-12
+---
+
 # Webhacking old-12 Solution
 
 first we can see that the js is encoded with aaencode.

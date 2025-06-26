@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-36
+---
+
 # Webhacking old-36 Solution
 
 

@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit18
+---
+
 # Bandit Level 18 Solution
 
 ```

@@ -1,3 +1,8 @@
+---
+layout: default
+title: issue_template
+---
+
 ## System Details
 
 <!--- What platform are you working with? eg. the output of config.guess -->

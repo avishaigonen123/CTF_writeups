@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-54
+---
+
 # Webhacking old-54 Solution
 
 Open the network panel the Developer tools.

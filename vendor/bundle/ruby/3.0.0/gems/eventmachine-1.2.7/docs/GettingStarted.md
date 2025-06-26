@@ -1,3 +1,8 @@
+---
+layout: default
+title: GettingStarted
+---
+
 # @title Getting Started with Ruby EventMachine
 # @markup markdown
 # @author Michael S. Klishin, Dan Sinclair

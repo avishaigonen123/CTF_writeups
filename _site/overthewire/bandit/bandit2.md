@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit2
+---
+
 # Bandit Level 2 Solution
 
 ```

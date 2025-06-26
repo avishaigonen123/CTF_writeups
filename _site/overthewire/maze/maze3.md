@@ -1,3 +1,8 @@
+---
+layout: default
+title: maze3
+---
+
 # maze level3 Solution
 
 in this challange, we need to give in argv[1] `0x1337c0de`. 

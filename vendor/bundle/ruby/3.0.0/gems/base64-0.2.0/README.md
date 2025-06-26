@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Base64
 
 The Base64 module provides for the encoding (`#encode64`, `#strict_encode64`,

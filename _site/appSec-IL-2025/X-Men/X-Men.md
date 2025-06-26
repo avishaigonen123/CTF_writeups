@@ -1,3 +1,8 @@
+---
+layout: default
+title: X-Men
+---
+
 # X-Men
 
 - **Category:** Web  

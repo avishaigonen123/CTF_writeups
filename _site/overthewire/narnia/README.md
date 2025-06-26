@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # narnia Write-Ups
 
 This folder contains solutions for the [narnia](https://overthewire.org/wargames/narnia/) website. 

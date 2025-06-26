@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # rb-inotify
 
 This is a simple wrapper over the [inotify](http://en.wikipedia.org/wiki/Inotify) Linux kernel subsystem

@@ -1,3 +1,8 @@
+---
+layout: default
+title: 1337Browser
+---
+
 # trythis0ne 1337Browser Solution
 
 in this level we need to change the HTTP-header, to fake our web browser.

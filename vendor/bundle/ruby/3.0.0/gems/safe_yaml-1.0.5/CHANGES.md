@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGES
+---
+
 1.0.5
 -----
 

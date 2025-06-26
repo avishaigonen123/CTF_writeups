@@ -1,3 +1,8 @@
+---
+layout: default
+title: LICENSE
+---
+
 The MIT License (MIT)
 
 Copyright (c) 2014-present, GitHub, inc. and the jekyll-sitemap contributors

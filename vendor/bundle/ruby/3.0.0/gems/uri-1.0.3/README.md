@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # URI
 
 [![CI](https://github.com/ruby/uri/actions/workflows/test.yml/badge.svg)](https://github.com/ruby/uri/actions/workflows/test.yml)

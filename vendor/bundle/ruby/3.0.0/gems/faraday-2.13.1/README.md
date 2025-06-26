@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # [![Faraday](./docs/_media/home-logo.svg)][website]
 
 [![Gem Version](https://badge.fury.io/rb/faraday.svg)](https://rubygems.org/gems/faraday)

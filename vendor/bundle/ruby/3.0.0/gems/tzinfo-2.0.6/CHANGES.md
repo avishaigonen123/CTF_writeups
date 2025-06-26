@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGES
+---
+
 # Changes
 
 ## Version 2.0.6 - 28-Jan-2023

@@ -1,8 +1,16 @@
+---
+layout: default
+title: maze1
+---
+
 # maze level1 Solution
 
 in this challange, we need to create our own `libc.so.4` that will be used by the program.
 
-the code can be found here [hook.c](./scripts/level1/hook.c), you need to adjust the addresses on the stack of the (maybe) local variables.
+```c
+% scripts/hook.c
+```
+, you need to adjust the addresses on the stack of the (maybe) local variables.
 
 the commands for compiling and linking the so file, here.
 ```

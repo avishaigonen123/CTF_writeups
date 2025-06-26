@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas25
+---
+
 # Natas Level 24 Solution
 
 

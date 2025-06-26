@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # GitHub Pages Health Check
 
 *Checks your GitHub Pages site for common DNS configuration issues*

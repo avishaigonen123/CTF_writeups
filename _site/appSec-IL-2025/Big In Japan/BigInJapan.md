@@ -1,3 +1,8 @@
+---
+layout: default
+title: BigInJapan
+---
+
 # Big In Japan
 
 - **Category:** Web  

@@ -1,3 +1,8 @@
+---
+layout: default
+title: LICENSE
+---
+
 Copyright (c) 2009-2017 Wynn Netherland, Adam Stacoviak, Erik Michaels-Ober
 
 Permission is hereby granted, free of charge, to any person obtaining

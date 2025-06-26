@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Webhacking.kr Write-Ups
 
 This folder contains solutions for the [Webhacking.kr](https://webhacking.kr/) website. 

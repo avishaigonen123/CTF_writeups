@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 ## Ruby Sass Has Reached End-of-Life
 
 Ruby Sass should no longer be used, and will no longer be receiving any updates.

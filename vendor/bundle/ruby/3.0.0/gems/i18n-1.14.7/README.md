@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Ruby I18n
 
 [![Gem Version](https://badge.fury.io/rb/i18n.svg)](https://badge.fury.io/rb/i18n)

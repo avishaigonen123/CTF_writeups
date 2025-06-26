@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # drifter Write-Ups
 
 This folder contains solutions for the [drifter](https://overthewire.org/wargames/drifter/) website. 

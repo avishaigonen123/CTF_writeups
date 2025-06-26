@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # rubyzip
 
 [![Gem Version](https://badge.fury.io/rb/rubyzip.svg)](http://badge.fury.io/rb/rubyzip)

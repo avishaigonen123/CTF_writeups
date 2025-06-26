@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 # Changelog
 
 ## [Unreleased](https://github.com/gjtorikian/html-pipeline/tree/HEAD)

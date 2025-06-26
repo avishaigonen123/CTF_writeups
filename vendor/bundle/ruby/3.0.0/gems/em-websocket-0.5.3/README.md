@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # EM-WebSocket
 
 [![Gem Version](https://badge.fury.io/rb/em-websocket.png)](http://rubygems.org/gems/em-websocket)

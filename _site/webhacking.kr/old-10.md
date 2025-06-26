@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-10
+---
+
 # webhacking old-10 Solution
 
 

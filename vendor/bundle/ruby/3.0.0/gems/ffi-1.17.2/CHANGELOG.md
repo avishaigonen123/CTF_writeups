@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 1.17.2 / 2025-04-15
 -------------------
 

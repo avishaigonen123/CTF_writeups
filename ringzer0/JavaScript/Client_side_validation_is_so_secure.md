@@ -1,3 +1,8 @@
+---
+layout: default
+title: Client_side_validation_is_so_secure
+---
+
 # Client side validation is so secure Solution
 
 in this challenge i opened the source code and found this code, that generates the password, also the username is `admin`.

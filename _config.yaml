@@ -1,8 +1,22 @@
-# _config.yml
 title: Avishai's CTF Writeups
 description: "..."
 url: "https://avishaigonen123.github.io"
 baseurl: ""  # empty if deploying to username.github.io/CTF_writeups
 remote_theme: pages-themes/midnight@v0.2.0
+
 plugins:
   - jekyll-remote-theme
+
+# 🧠 ADD THIS SECTION 👇
+include:
+  - overthewire
+  - pwnable.kr
+  - ringzer0
+  - pwnable.tw
+  - hackthebox
+  - picoctf
+  - webhacking.kr
+  - lord-of-sql-injection
+  - trythis0ne
+  - appSec-IL-2025
+  # - assets  # if you use an assets folder for CSS, JS, etc.

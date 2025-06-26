@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHILD
+---
+
 # webhacking CHILD Solution
 
 Here we can run scripts only from the subdomain of `*.google.com`.

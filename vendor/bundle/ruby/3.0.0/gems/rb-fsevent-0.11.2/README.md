@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/thibaudgg/rb-fsevent)
 [![endorse](https://api.coderwall.com/ttilley/endorsecount.png)](https://coderwall.com/ttilley)
 

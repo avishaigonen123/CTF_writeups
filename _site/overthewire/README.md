@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Over-The-Wire Write-Ups
 
 This folder contains solutions for the [Over-The-Wire](https://overthewire.org/wargames/)) challanges. 

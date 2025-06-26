@@ -1,3 +1,8 @@
+---
+layout: default
+title: RELEASE_NOTES
+---
+
 # Release Notes
 
 ## v1.72.4

@@ -1,3 +1,8 @@
+---
+layout: default
+title: DocumentationGuidesIndex
+---
+
 # EventMachine documentation guides #
 
 Welcome to the documentation guides for [EventMachine](http://github.com/eventmachine/eventmachine),

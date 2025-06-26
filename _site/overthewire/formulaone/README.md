@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # formulaone Write-Ups
 
 This folder contains solutions for the [formulaone](https://overthewire.org/wargames/formulaone/) website. 

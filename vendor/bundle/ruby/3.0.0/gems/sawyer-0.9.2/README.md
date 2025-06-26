@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Sawyer
 
 Sawyer is an experimental hypermedia agent for Ruby built on top of [Faraday][faraday].

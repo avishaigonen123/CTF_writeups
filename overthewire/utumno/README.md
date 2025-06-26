@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # utumno Write-Ups
 
 This folder contains solutions for the [utumno](https://overthewire.org/wargames/utumno/) website. 

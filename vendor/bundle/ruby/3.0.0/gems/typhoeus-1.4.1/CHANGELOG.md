@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 # Changelog
 
 ## Master

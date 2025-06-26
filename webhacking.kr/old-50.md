@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-50
+---
+
 # Webhacking old-50 Solution
 
 another sql injection.

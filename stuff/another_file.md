@@ -1,3 +1,8 @@
+---
+layout: default
+title: another_file
+---
+
 # 🛡️ WiFi Hacking Recon & Targeting Summary (Without Evil Twin)
 
 ## 🔍 1. Discovering Devices with `arp-scan`

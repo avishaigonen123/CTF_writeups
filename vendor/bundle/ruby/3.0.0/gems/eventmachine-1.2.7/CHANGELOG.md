@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 # Changelog
 
 ## 1.2.7 (May 12, 2018)

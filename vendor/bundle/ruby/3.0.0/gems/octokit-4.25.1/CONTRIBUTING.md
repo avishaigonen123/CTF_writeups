@@ -1,3 +1,8 @@
+---
+layout: default
+title: CONTRIBUTING
+---
+
 ## Submitting a Pull Request
 
 0. Read our [Code of Conduct](CODE_OF_CONDUCT.md).

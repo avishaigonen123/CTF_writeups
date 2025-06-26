@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # manpage Write-Ups
 
 This folder contains solutions for the [manpage](https://overthewire.org/wargames/manpage/) website. 

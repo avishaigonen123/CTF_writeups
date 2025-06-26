@@ -1,3 +1,8 @@
+---
+layout: default
+title: CONTRIBUTING
+---
+
 We love pull requests. Here's a quick guide:
 
 1. Fork the repo.

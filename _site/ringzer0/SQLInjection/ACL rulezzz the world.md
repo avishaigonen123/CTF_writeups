@@ -1,3 +1,8 @@
+---
+layout: default
+title: ACL rulezzz the world
+---
+
 # ACL rulezzz the world Solution
 
 here, i saw it send on post method our user.

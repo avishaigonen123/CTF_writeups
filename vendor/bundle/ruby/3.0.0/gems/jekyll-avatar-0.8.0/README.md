@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Jekyll Avatar
 
 *A Jekyll plugin for rendering GitHub avatars*

@@ -1,3 +1,8 @@
+---
+layout: default
+title: advanced-usage
+---
+
 ## Advanced usage
 
 Jekyll SEO Tag is designed to implement SEO best practices by default and to be the right fit for most sites right out of the box. If for some reason, you need more control over the output, read on:

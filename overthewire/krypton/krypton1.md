@@ -1,3 +1,8 @@
+---
+layout: default
+title: krypton1
+---
+
 # krypton level1 Solution
 
 in this level there is rot13.

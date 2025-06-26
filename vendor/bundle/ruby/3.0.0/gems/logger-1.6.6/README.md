@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Logger
 
 Logger is a simple but powerful logging utility to output messages in your Ruby program.

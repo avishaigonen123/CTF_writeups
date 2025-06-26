@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Public Suffix <small>for Ruby</small>
 
 <tt>PublicSuffix</tt> is a Ruby domain name parser based on the [Public Suffix List](https://publicsuffix.org/).

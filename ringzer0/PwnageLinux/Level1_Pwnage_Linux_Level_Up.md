@@ -1,6 +1,14 @@
+---
+layout: default
+title: Level1_Pwnage_Linux_Level_Up
+---
+
 # Level1 Pwnage Linux Level Up Solution
 
-here, we exploit basic buffer overflow, this is the code we used: [level1.py](./scripts/level1/level1.py)
+```py
+% scripts/level1.py
+```
+
 
 ![image](./images/level1.png)
 

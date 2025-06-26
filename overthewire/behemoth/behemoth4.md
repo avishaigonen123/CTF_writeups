@@ -1,3 +1,8 @@
+---
+layout: default
+title: behemoth4
+---
+
 # behemoth level4 Solution
 
 
@@ -27,7 +32,11 @@ find the address to override:
 so, the address is: `0x0804b218`
 the address we want to insert is: `0xffffd53f` (same as last level, put shellcode on env, and find its address)
 
-the python script for creating the payload can is here: [level4.py](./scripts/level4.py)
+the python script for creating the payload can is here: [level4.py]
+```python
+% scripts/level4.py
+```
+
 
 after building the payload, all left is to run this:
 ```

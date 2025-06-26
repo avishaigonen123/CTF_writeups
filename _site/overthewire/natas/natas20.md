@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas20
+---
+
 # Natas Level 20 Solution
 
 here we exploit a logic error in the source code. we give this input 

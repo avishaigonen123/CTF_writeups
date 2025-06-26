@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit6
+---
+
 # Bandit Level 6 Solution
 
 ## one solution:

@@ -1,3 +1,8 @@
+---
+layout: default
+title: invisible_dragon
+---
+
 # Webhacking Invisible Dragon Solution
 
 Here we can bypass this:
@@ -22,7 +27,11 @@ Next, we will build our payload for Blind SQLi:
 Where each time we find the character, and by this way leak the flag.
 
 ![FLAG image](./images/invisible_dragon.png)
-So, let's write our script: [invisible_dragon.py](./scripts/invisible_dragon.py)
+So, let's write our script: [invisible_dragon.py]
+```python
+% scripts/invisible_dragon.py
+```
+
 
 
 **Flag:** ***`FLAG{recycle_reuse_ecyce}`*** 

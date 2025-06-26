@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas23
+---
+
 # Natas Level 23 Solution
 
 give this as input: `123iloveyou123456`

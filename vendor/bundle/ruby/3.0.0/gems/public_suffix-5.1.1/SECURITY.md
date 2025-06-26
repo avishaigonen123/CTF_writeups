@@ -1,3 +1,8 @@
+---
+layout: default
+title: SECURITY
+---
+
 # Security Policy
 
 ## Supported Versions

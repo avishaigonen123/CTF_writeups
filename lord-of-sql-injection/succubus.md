@@ -1,3 +1,8 @@
+---
+layout: default
+title: succubus
+---
+
 # Lord of SQLInjection succubus Solution
 
 The payload will be for id: `\`

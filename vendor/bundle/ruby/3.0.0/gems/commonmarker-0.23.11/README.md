@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # CommonMarker
 
 ![Build Status](https://github.com/gjtorikian/commonmarker/workflows/CI/badge.svg) [![Gem Version](https://badge.fury.io/rb/commonmarker.svg)](http://badge.fury.io/rb/commonmarker)

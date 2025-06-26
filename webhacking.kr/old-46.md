@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-46
+---
+
 # Webhacking old-46 Solution
 
 another sql injection. this time we can't use 0x, so we use 0b.

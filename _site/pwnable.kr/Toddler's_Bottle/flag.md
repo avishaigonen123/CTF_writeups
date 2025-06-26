@@ -1,3 +1,8 @@
+---
+layout: default
+title: flag
+---
+
 # flag Solution
 
 first i used strings on the file, and found it compressed with UPX32.

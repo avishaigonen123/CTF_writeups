@@ -1,3 +1,8 @@
+---
+layout: default
+title: manpage5
+---
+
 # manpage level5 Solution
 
 I'm stuck :|

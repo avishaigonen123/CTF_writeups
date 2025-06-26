@@ -1,3 +1,8 @@
+---
+layout: default
+title: Changes
+---
+
 # connection_pool Changelog
 
 2.5.3

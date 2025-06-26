@@ -1,3 +1,8 @@
+---
+layout: default
+title: NEWS
+---
+
 # News
 
 ## 3.3.5 - 2025-06-01

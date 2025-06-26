@@ -1,3 +1,8 @@
+---
+layout: default
+title: blackjack
+---
+
 # blackjack Solution
 
 in this challenge, it checks if the bet is bigger than the cash. however, i can give it negative number, it will pass the check, and when i'll loose it will do so: cash = cash - bet, which give me a lot of money.

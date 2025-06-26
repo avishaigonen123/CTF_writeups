@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-30
+---
+
 # Webhacking old-30 Solution
 
 Here we can see it tries to connect to a mySQL server, but doesn't supply parameters to the `mysqli_connect` function:

@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Jekyll::Paginate
 
 Default pagination generator for Jekyll.

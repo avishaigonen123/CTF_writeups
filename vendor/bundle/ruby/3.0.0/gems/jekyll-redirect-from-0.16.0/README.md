@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # JekyllRedirectFrom
 
 Give your Jekyll posts and pages multiple URLs.

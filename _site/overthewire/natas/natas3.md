@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas3
+---
+
 # Natas Level 3 Solution
 
 go to robots.txt

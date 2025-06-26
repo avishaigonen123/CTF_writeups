@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas11
+---
+
 # Natas Level 11 Solution
 
 ```

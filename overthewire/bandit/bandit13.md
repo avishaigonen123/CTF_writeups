@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit13
+---
+
 # Bandit Level 13 Solution
 
 ```

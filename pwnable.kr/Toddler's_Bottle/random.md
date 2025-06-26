@@ -1,3 +1,8 @@
+---
+layout: default
+title: random
+---
+
 # random Solution
 
 here is using rand(), without setting the seed using srand().

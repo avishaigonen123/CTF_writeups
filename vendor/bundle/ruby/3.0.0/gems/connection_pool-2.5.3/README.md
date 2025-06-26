@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 connection\_pool
 =================
 [![Build Status](https://github.com/mperham/connection_pool/actions/workflows/ci.yml/badge.svg)](https://github.com/mperham/connection_pool/actions/workflows/ci.yml)

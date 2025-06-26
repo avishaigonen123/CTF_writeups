@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Lord of sql injection Write-Ups
 
 This folder contains solutions for the [Lord-of-sql-injection](https://los.rubiya.kr/) website. 

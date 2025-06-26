@@ -1,3 +1,8 @@
+---
+layout: default
+title: Hashing_is_more_secure
+---
+
 # Hashing is more secure Solution
 
 here we got the hash `b89356ff6151527e89c4f3e3d30c8e6586c63962`.

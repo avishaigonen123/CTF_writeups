@@ -1,3 +1,8 @@
+---
+layout: default
+title: narnia4
+---
+
 # narnia level4 Solution
 
 we will override the output file, this is the line we'll run

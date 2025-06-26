@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Bandit Write-Ups
 
 This folder contains solutions for the [Bandit](http://overthewire.org/wargames/bandit/) wargame from OverTheWire. 

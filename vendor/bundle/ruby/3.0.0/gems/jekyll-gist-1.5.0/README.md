@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Jekyll::Gist
 
 Liquid tag for displaying GitHub Gists in Jekyll sites: `{% gist %}`.

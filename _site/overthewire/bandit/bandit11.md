@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit11
+---
+
 # Bandit Level 11 Solution
 
 ```

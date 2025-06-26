@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Benchmark
 
 The Benchmark module provides methods for benchmarking Ruby code, giving detailed reports on the time taken for each task.

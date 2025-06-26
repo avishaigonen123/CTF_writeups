@@ -1,3 +1,8 @@
+---
+layout: default
+title: Channel5
+---
+
 # trythis0ne Channel5 Solution
 
 i downloaded the image, and played with the contrast and brightness.

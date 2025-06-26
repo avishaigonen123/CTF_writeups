@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 ## Current
 
 ## Release v1.3.5, edge v0.7.2 (15 January 2025)
