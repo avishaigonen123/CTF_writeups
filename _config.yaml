@@ -1,7 +1,7 @@
 title: Avishai's CTF Writeups
 description: "..."
 url: "https://avishaigonen123.github.io"
-baseurl: ""  # empty if deploying to username.github.io/CTF_writeups
+baseurl: "/CTF_writeups"  
 remote_theme: pages-themes/midnight@v0.2.0
 
 plugins:
