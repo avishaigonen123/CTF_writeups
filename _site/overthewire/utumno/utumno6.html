@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>utumno level6 Solution | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="utumno level6 Solution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/overthewire/utumno/utumno6.html" />
+<meta property="og:url" content="http://localhost:4000/overthewire/utumno/utumno6.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="utumno level6 Solution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"utumno level6 Solution","url":"http://localhost:4000/overthewire/utumno/utumno6.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="utumno-level6-solution">utumno level6 Solution</h1>
+
+<p>first i took the code and decompiled it using ghidra.
+i can see integer overflow, that we can give it negative value and go back in the memory.
+<img src="/overthewire/utumno/images/level6_1.png" alt="image" /></p>
+
+<p>the idea behind the attack is to override where the return address is found, and put our shellcode address.
+<img src="/overthewire/utumno/images/level6_2.png" alt="image" /></p>
+
+<p>we can see that the address of the <code class="language-plaintext highlighter-rouge">auStack_34</code> is located in [ebp-0x34], so if we’ll set <code class="language-plaintext highlighter-rouge">arg1 = -1</code>, we can override the address. than, we need to find where on the stack the return address is found, take this memory location, and this will be the new address of our <code class="language-plaintext highlighter-rouge">auStack_34</code>
+<img src="/overthewire/utumno/images/level6_3.png" alt="image" /></p>
+
+<p>lastly, we need to insert the take the shellcode  <a href="/overthewire/utumno/general/shellcode.py">shellcode.py</a> and also the <a href="/overthewire/utumno/general/get_address.c">get_address.c</a>, and insert the shellcode into the solution, which is <a href="/overthewire/utumno/scripts/level6/level6.py">level6.py</a>.</p>
+
+<p><img src="/overthewire/utumno/images/level6_4.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">VHOuCx7iA5</code></em></strong></p>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

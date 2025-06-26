@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>narnia level9 Solution | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="narnia level9 Solution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/overthewire/narnia/narnia9.html" />
+<meta property="og:url" content="http://localhost:4000/overthewire/narnia/narnia9.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="narnia level9 Solution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"narnia level9 Solution","url":"http://localhost:4000/overthewire/narnia/narnia9.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="narnia-level9-solution">narnia level9 Solution</h1>
+
+<p>we can see it doesn’t have ASLR and no stack protection.
+<img src="/overthewire/narnia/images/level9_1.png" alt="alt text" /></p>
+
+<p>we will generate shellcode using the <a href="/overthewire/narnia/general/shellcode.py">shellcode.py</a> script</p>
+
+<p>now we will load the shellcode into env variable:
+<code class="language-plaintext highlighter-rouge">export SHELLCODE=$(python3 shellcode.py)</code>
+we need to find the address of the env variable, using the <a href="/overthewire/narnia/general/get_address.c">get_address.c</a>. notice to compile it with the <code class="language-plaintext highlighter-rouge">-m32</code> flag, for example: <code class="language-plaintext highlighter-rouge">gcc -m32 get_address.c -o get_address</code></p>
+
+<p>we’ll try to override the address of printf and put there our address of shellcode.
+<img src="/overthewire/narnia/images/level9_2.png" alt="alt text" />
+as you can see, there is the buffer of bluh which is 20 bytes. then, the address of the buffer bok, then the of ebp, and then the ret-address.</p>
+
+<p>after finding the address of the env variable, in our case: <code class="language-plaintext highlighter-rouge">0xffffd511</code>, we need to insert it to the script that solves the challenge <a href="/overthewire/narnia/scripts/level9.py">level9.py</a></p>
+
+<p>we need to play a bit with the script to find the right addres of bok, it might be a little different than the address in the debugger.</p>
+
+<p><img src="/overthewire/narnia/images/level9_3.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">1FFD4HnU4K</code></em></strong></p>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

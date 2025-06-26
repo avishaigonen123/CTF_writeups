@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>uaf Solution | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="uaf Solution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/pwnable.kr/Toddler's_Bottle/uaf.html" />
+<meta property="og:url" content="http://localhost:4000/pwnable.kr/Toddler's_Bottle/uaf.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="uaf Solution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"uaf Solution","url":"http://localhost:4000/pwnable.kr/Toddler's_Bottle/uaf.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="uaf-solution">uaf Solution</h1>
+
+<p>here we exploit the fact we delete Man and Woman, and manage to put our code inside the grave of Man and Woman.
+Then, when we’ll call it’s introduce function, it will execute shell.</p>
+
+<p>this is our script <a href="/pwnable.kr/Toddler's_Bottle/scripts/uaf/payload.py">payload.py</a></p>
+
+<p>we will give as input this values:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3 (for free)
+2 (for put our payload once)
+2 (for put our payload twice)
+1 (for calling "introduce")
+</code></pre></div></div>
+
+<p><img src="/pwnable.kr/Toddler's_Bottle/images/uaf.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">yay_f1ag_aft3r_pwning</code></em></strong></p>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

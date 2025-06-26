@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>vortex level4 Solution | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="vortex level4 Solution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/overthewire/vortex/vortex4.html" />
+<meta property="og:url" content="http://localhost:4000/overthewire/vortex/vortex4.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="vortex level4 Solution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"vortex level4 Solution","url":"http://localhost:4000/overthewire/vortex/vortex4.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="vortex-level4-solution">vortex level4 Solution</h1>
+<p>In this challenge, we had a format string attack.</p>
+
+<p><img src="/overthewire/vortex/images/level4_1.png" alt="image" /></p>
+
+<p>Here, we needed to manipulate the stack to find where our stored memory is. We used <code class="language-plaintext highlighter-rouge">$</code> inside format strings to navigate through the stack.</p>
+
+<p>I wrote a simple solution, as shown above, that writes each byte to the memory of the <code class="language-plaintext highlighter-rouge">exit_plt_address</code>.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">exit_plt_address</code> is <code class="language-plaintext highlighter-rouge">0x804c008</code>, and the next addresses are: <code class="language-plaintext highlighter-rouge">0x804c009</code>, <code class="language-plaintext highlighter-rouge">0x804c00a</code>, <code class="language-plaintext highlighter-rouge">0x804c00b</code>, which all contain characters, causing the print to stop when using Python.</p>
+
+<p><img src="/overthewire/vortex/images/level4_2.png" alt="image" /></p>
+
+<p>So, we needed to insert 3 bytes into the first address and 1 byte into the fourth address. This results in a long string being printed.</p>
+
+<p>I wrote this C code to run <code class="language-plaintext highlighter-rouge">/vortex/vortex4</code> with the payload (<code class="language-plaintext highlighter-rouge">level4.c</code>).</p>
+
+<p>The script is located here: <a href="/overthewire/vortex/scripts/level4/level4.py">level4.py</a>. You need to adjust the <code class="language-plaintext highlighter-rouge">address_of_exit</code> and <code class="language-plaintext highlighter-rouge">address_of_shellcode</code>, debug, and find them.</p>
+
+<p><img src="/overthewire/vortex/images/level4_4.png" alt="image" />
+<img src="/overthewire/vortex/images/level4_5.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">heo3EbnS9</code></em></strong></p>
+
+<p><strong>Note:</strong> I now noticed that the issue is with the script. You can use <a href="/overthewire/vortex/scripts/level4/level4_with_payload.c">level4_with_payload.c</a> and just provide the payload inside, the regular payload will work.</p>
+
+<p><img src="/overthewire/vortex/images/level4_3.png" alt="image" /></p>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

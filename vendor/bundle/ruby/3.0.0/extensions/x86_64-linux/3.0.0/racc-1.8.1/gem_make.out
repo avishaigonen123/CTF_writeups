@@ -1,0 +1,15 @@
+current directory: /mnt/c/Users/avish/git/CTF_writeups/vendor/bundle/ruby/3.0.0/gems/racc-1.8.1/ext/racc/cparse
+/usr/bin/ruby3.0 -I /usr/lib/ruby/vendor_ruby -r ./siteconf20250626-9315-62og9o.rb extconf.rb
+creating Makefile
+
+current directory: /mnt/c/Users/avish/git/CTF_writeups/vendor/bundle/ruby/3.0.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= clean
+
+current directory: /mnt/c/Users/avish/git/CTF_writeups/vendor/bundle/ruby/3.0.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\=
+compiling cparse.c
+linking shared-object racc/cparse.so
+
+current directory: /mnt/c/Users/avish/git/CTF_writeups/vendor/bundle/ruby/3.0.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= install
+/usr/bin/install -c -m 0755 cparse.so ./.gem.20250626-9315-do32ym/racc

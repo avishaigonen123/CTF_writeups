@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>🧰 Wi-Fi Hacking Cheat Sheet | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="🧰 Wi-Fi Hacking Cheat Sheet" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/stuff/cheat_sheet_WiFi_Hacking.html" />
+<meta property="og:url" content="http://localhost:4000/stuff/cheat_sheet_WiFi_Hacking.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="🧰 Wi-Fi Hacking Cheat Sheet" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"🧰 Wi-Fi Hacking Cheat Sheet","url":"http://localhost:4000/stuff/cheat_sheet_WiFi_Hacking.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="-wi-fi-hacking-cheat-sheet">🧰 Wi-Fi Hacking Cheat Sheet</h1>
+
+<p>This cheat sheet covers essential Wi-Fi penetration testing techniques, including reconnaissance, handshake capture, and password cracking using <code class="language-plaintext highlighter-rouge">aircrack-ng</code>, <code class="language-plaintext highlighter-rouge">hcxtools</code>, and <code class="language-plaintext highlighter-rouge">hashcat</code>.</p>
+
+<hr />
+
+<h2 id="-1-interface-setup">🔧 1. Interface Setup</h2>
+
+<h3 id="-stop-network-services">🛑 Stop Network Services</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl stop NetworkManager.service
+<span class="nb">sudo </span>systemctl stop wpa_supplicant.service
+</code></pre></div></div>
+
+<h3 id="️-start-network-services">▶️ Start Network Services</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start wpa_supplicant.service
+<span class="nb">sudo </span>systemctl start NetworkManager.service
+</code></pre></div></div>
+
+<h3 id="️-set-interface-to-monitor-mode">🛰️ Set Interface to Monitor Mode</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>ip <span class="nb">link set </span>wlan0 down
+<span class="nb">sudo </span>iw dev wlan0 <span class="nb">set type </span>monitor
+<span class="nb">sudo </span>ip <span class="nb">link set </span>wlan0 up
+</code></pre></div></div>
+<blockquote>
+  <p>💡 Replace <code class="language-plaintext highlighter-rouge">wlan0</code> with your actual network interface name (check with <code class="language-plaintext highlighter-rouge">ip a</code> or <code class="language-plaintext highlighter-rouge">iwconfig</code>).</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-2-reconnaissance">🔍 2. Reconnaissance</h2>
+
+<h3 id="-scan-all-networks">🌐 Scan All Networks</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>airodump-ng wlan0
+</code></pre></div></div>
+
+<h3 id="-target-specific-access-point">🎯 Target Specific Access Point</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>airodump-ng <span class="nt">--bssid</span> &lt;BSSID&gt; <span class="nt">-c</span> &lt;CHANNEL&gt; <span class="nt">-w</span> capture_file wlan0
+</code></pre></div></div>
+<blockquote>
+  <p>Replace <code class="language-plaintext highlighter-rouge">&lt;BSSID&gt;</code> with the AP’s MAC address, and <code class="language-plaintext highlighter-rouge">&lt;CHANNEL&gt;</code> with the channel number.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-3-capturing-handshakes">💥 3. Capturing Handshakes</h2>
+
+<h3 id="-deauthentication-attack-force-client-reconnect">❌ Deauthentication Attack (Force Client Reconnect)</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>aireplay-ng <span class="nt">--deauth</span> 10 <span class="nt">-a</span> &lt;BSSID&gt; wlan0 <span class="nt">-c</span> &lt;CLIENT&gt;
+</code></pre></div></div>
+
+<h3 id="-passive-capture-without-disconnecting-clients">👻 Passive Capture Without Disconnecting Clients</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>hcxdumptool <span class="nt">-i</span> wlan0 <span class="nt">-w</span> dumpfile.pcapng
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-4-converting-capture-files">🔄 4. Converting Capture Files</h2>
+
+<h3 id="-from-cap-to-22000">📦 From <code class="language-plaintext highlighter-rouge">.cap</code> to <code class="language-plaintext highlighter-rouge">.22000</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hcxpcapngtool <span class="nt">-o</span> wifi_hash.22000 <span class="nt">-E</span> essidlist.txt capture_file.cap
+</code></pre></div></div>
+
+<h3 id="-from-pcapng-to-22000">🧪 From <code class="language-plaintext highlighter-rouge">.pcapng</code> to <code class="language-plaintext highlighter-rouge">.22000</code></h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hcxpcapngtool <span class="nt">-o</span> hash.22000 <span class="nt">-E</span> essidlist.txt dumpfile.pcapng
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-5-cracking-passwords">🔓 5. Cracking Passwords</h2>
+
+<h3 id="-using-dictionary-attack">📚 Using Dictionary Attack</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hashcat <span class="nt">-m</span> 22000 <span class="nt">-a</span> 0 hash.22000 /path/to/wordlist.txt <span class="nt">--force</span> <span class="nt">--show</span>
+</code></pre></div></div>
+
+<h3 id="-using-brute-force-attack">🧮 Using Brute Force Attack</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hashcat <span class="nt">-m</span> 22000 <span class="nt">-a</span> 3 hash.22000 ?d?d?l?u<span class="sb">`</span><span class="o">!</span><span class="sb">`</span><span class="nv">$?</span>d?d?d <span class="nt">--force</span> <span class="nt">--show</span>
+</code></pre></div></div>
+<blockquote>
+  <p>🗂️ Replace <code class="language-plaintext highlighter-rouge">/path/to/wordlist.txt</code> with the actual path to your wordlist file.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-6-additional-attacks">🧠 6. Additional Attacks</h2>
+
+<h3 id="-pmkid-attack-wpa2wpa3">🧬 PMKID Attack (WPA2/WPA3)</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>hcxdumptool <span class="nt">-i</span> wlan0 <span class="nt">-o</span> pmkid.pcapng <span class="nt">--enable_status</span> 3
+<span class="nb">sudo </span>hcxpcapngtool <span class="nt">-o</span> pmkid_hash.22000 pmkid.pcapng
+hashcat <span class="nt">-m</span> 16800 pmkid_hash.22000 /path/to/wordlist.txt <span class="nt">--force</span> <span class="nt">--show</span>
+</code></pre></div></div>
+
+<h3 id="-evil-twin-attack-fake-access-point">👿 Evil Twin Attack (Fake Access Point)</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>airbase-ng <span class="nt">-e</span> <span class="s2">"FakeAP"</span> <span class="nt">-c</span> &lt;CHANNEL&gt; wlan0
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="-notes">📎 Notes</h2>
+
+<ul>
+  <li>Make sure your wireless adapter supports monitor mode and packet injection.</li>
+  <li>Consider using <code class="language-plaintext highlighter-rouge">airmon-ng check kill</code> before monitor mode if services interfere.</li>
+  <li>Always run these commands responsibly, legally, and with permission.</li>
+</ul>
+
+<hr />
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

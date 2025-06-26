@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>vortex level10 Solution | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="vortex level10 Solution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/overthewire/vortex/vortex10.html" />
+<meta property="og:url" content="http://localhost:4000/overthewire/vortex/vortex10.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="vortex level10 Solution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"vortex level10 Solution","url":"http://localhost:4000/overthewire/vortex/vortex10.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="vortex-level10-solution">vortex level10 Solution</h1>
+
+<p>in this level we need to exploit the fact the seed isn’t really randomized, and we can find it.</p>
+
+<p><del>
+the difficulty with this level is the way we solve it, when we need to be fast when input the seed back to /vortex/vortex10.</del></p>
+
+<p>this is the process:</p>
+
+<p>run vortex in the background <code class="language-plaintext highlighter-rouge">/vortex/vortex10 &amp;</code>, copy the 20 numbers and give it to level10 solution</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./code "[ 406d24bc, 611ce048, 730ce6d4, 6d26333f, 4c62274d, 6351d72e, 0f9cbb1f, 0beed3e0, 484b284e, 1afcb11c, 72b9599f, 4c65ffd3, 0051df7c, 492c9c2d, 0004bba9, 5855a95d, 2d85388d, 021bb254, 65d633cb, 559b6674,]"
+</code></pre></div></div>
+<p>then, we need to hope we get printable result, return our vortex10 to foreground using <code class="language-plaintext highlighter-rouge">fg</code> and give it our seed. If we’ll be lucky, we’ll manage to get our shell and might have enough time to read the password, before it disconnect. YAY :(</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/vortex/vortex10 &amp;
+./level10 ""
+fg
+
+# inside the shell
+cat /etc/vortex_pass/vortex11 
+</code></pre></div></div>
+<p>&lt;/del&gt;</p>
+
+<p><em>UPDATE:</em></p>
+
+<p>I created script in python that do the whole piping process.
+this will be our c code: <a href="/overthewire/vortex/scripts/level10/level10.c">level10.c</a> and this will be our script <a href="/overthewire/vortex/scripts/level10/pipe.py">pipe.py</a>.</p>
+
+<p>all you need to do is to execute the piping script :)</p>
+
+<p><img src="/overthewire/vortex/images/level10.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">srx196haC</code></em></strong></p>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>
