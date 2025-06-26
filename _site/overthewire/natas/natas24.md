@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas24
+---
+
 # Natas Level 24 Solution
 
 this is the url `http://natas24.natas.labs.overthewire.org/?passwd[]=%27%27`

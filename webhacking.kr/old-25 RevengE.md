@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-25 RevengE
+---
+
 # Webhacking old-25 RevengE Solution
 
 Here we face the problem that `flag` is inside `flag.txt`.

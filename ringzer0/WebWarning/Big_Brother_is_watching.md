@@ -1,3 +1,8 @@
+---
+layout: default
+title: Big_Brother_is_watching
+---
+
 # Big Brother is watching Solution
 
 It says that "Even Google cannot find this one", so i decided to go to robots.txt file.

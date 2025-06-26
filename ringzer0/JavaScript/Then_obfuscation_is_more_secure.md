@@ -1,3 +1,8 @@
+---
+layout: default
+title: Then_obfuscation_is_more_secure
+---
+
 # Then obfuscation is more secure Solution
 
 using online deobfuscation tools i got this code:

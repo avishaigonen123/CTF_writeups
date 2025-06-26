@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 ## Rails 7.1.5.1 (December 10, 2024) ##
 
 *   No changes.

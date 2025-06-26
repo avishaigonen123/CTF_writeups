@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # vortex Write-Ups
 
 This folder contains solutions for the [vortex](https://overthewire.org/wargames/vortex/) website. 

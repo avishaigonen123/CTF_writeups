@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # trythis0ne Write-Ups
 
 This folder contains solutions for the [trythis0ne](http://trythis0ne.com/) website. 

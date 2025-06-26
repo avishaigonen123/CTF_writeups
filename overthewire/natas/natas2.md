@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas2
+---
+
 # Natas Level 2 Solution
 
 in the source code there is a pixel.png, then by going to the folder u can find the directory "files".

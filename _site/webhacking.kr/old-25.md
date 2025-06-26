@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-25
+---
+
 # Webhacking old-25 Solution
 
 insert this payload:

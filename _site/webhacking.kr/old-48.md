@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-48
+---
+
 # Webhacking old-48 Solution
 
 in this challenge there is command injection. when we delete file, it runs this command: `rm -rf $filename`

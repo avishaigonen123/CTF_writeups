@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Faraday Net::HTTP adapter
 
 This gem is a [Faraday][faraday] adapter for the [Net::HTTP][net-http] library. Faraday is an HTTP client library that provides a common interface over many adapters. Every adapter is defined into it's own gem. This gem defines the adapter for `Net::HTTP` the HTTP library that's included into the standard library of Ruby.

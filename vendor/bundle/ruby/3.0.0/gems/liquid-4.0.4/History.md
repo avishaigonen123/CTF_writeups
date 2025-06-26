@@ -1,3 +1,8 @@
+---
+layout: default
+title: History
+---
+
 # Liquid Change Log
 
 ## 4.0.4 / (unreleased)

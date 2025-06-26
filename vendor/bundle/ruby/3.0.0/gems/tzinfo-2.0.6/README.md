@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # TZInfo - Ruby Time Zone Library
 
 [![RubyGems](https://img.shields.io/gem/v/tzinfo?logo=rubygems&label=Gem)](https://rubygems.org/gems/tzinfo) [![Tests](https://github.com/tzinfo/tzinfo/workflows/Tests/badge.svg?branch=master&event=push)](https://github.com/tzinfo/tzinfo/actions?query=workflow%3ATests+branch%3Amaster+event%3Apush)

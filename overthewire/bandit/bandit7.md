@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit7
+---
+
 # Bandit Level 7 Solution
 
 ```

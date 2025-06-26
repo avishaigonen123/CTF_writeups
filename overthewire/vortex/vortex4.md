@@ -1,3 +1,8 @@
+---
+layout: default
+title: vortex4
+---
+
 # vortex level4 Solution
 In this challenge, we had a format string attack.
 
@@ -15,13 +20,19 @@ So, we needed to insert 3 bytes into the first address and 1 byte into the fourt
 
 I wrote this C code to run `/vortex/vortex4` with the payload (`level4.c`).
 
-The script is located here: [level4.py](./scripts/level4/level4.py). You need to adjust the `address_of_exit` and `address_of_shellcode`, debug, and find them.
+```py
+% scripts/level4.py
+```
+. You need to adjust the `address_of_exit` and `address_of_shellcode`, debug, and find them.
 
 ![image](./images/level4_4.png)
 ![image](./images/level4_5.png)
 
 **Flag:** ***`heo3EbnS9`***
 
-**Note:** I now noticed that the issue is with the script. You can use [level4_with_payload.c](./scripts/level4/level4_with_payload.c) and just provide the payload inside, the regular payload will work.
+```c
+% scripts/level4_with_payload.c
+```
+ and just provide the payload inside, the regular payload will work.
 
 ![image](./images/level4_3.png)

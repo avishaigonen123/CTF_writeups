@@ -1,3 +1,8 @@
+---
+layout: default
+title: Jail3
+---
+
 # Jail2 Solution
 
 here, we redirect the output of `</home/level2/flag.txt` into $input, by running this command:

@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit20
+---
+
 # Bandit Level 20 Solution
 
 ```

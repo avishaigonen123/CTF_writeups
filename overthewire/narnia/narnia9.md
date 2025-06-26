@@ -1,3 +1,8 @@
+---
+layout: default
+title: narnia9
+---
+
 # narnia level9 Solution
 
 we can see it doesn't have ASLR and no stack protection.
@@ -14,7 +19,11 @@ we'll try to override the address of printf and put there our address of shellco
 ![alt text](./images/level9_2.png)
 as you can see, there is the buffer of bluh which is 20 bytes. then, the address of the buffer bok, then the of ebp, and then the ret-address.
 
-after finding the address of the env variable, in our case: `0xffffd511`, we need to insert it to the script that solves the challenge [level9.py](./scripts/level9.py)
+after finding the address of the env variable, in our case: `0xffffd511`, we need to insert it to the script that solves the challenge [level9.py]
+```python
+% scripts/level9.py
+```
+
 
 we need to play a bit with the script to find the right addres of bok, it might be a little different than the address in the debugger.
 

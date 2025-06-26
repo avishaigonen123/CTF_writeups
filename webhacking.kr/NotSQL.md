@@ -1,3 +1,8 @@
+---
+layout: default
+title: NotSQL
+---
+
 # Webhacking NotSQL Solution
 
 In this challenge we exploit vulnerabilities in `GraphQL`

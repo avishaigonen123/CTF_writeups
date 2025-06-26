@@ -1,3 +1,8 @@
+---
+layout: default
+title: installation
+---
+
 # Installing Jekyll SEO Tag
 
 1. Add the following to your site's `Gemfile`:

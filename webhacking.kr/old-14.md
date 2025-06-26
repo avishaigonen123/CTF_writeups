@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-14
+---
+
 # Webhacking old-14 Solution
 
 in the source code we can see this:

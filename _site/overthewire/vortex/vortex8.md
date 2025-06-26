@@ -1,3 +1,8 @@
+---
+layout: default
+title: vortex8
+---
+
 # vortex level8 Solution
 
 in this level we can use buffer overflow to inject our code
@@ -24,9 +29,15 @@ pop eax
 int 0x80  => exit()
 ```
 
-so, we only need to find `plt_printf_address` and `shellcode_address`, and put them in the code [shellcode.py](./scripts/level8/shellcode.py)
+```py
+% scripts/shellcode.py
+```
 
-after generating the shellcode, we need to modify the address of the shellcode and put it in the return address of the unsafe function, which will do using [level8.py](./scripts/level8/level8.py).
+
+```py
+% scripts/level8.py
+```
+.
 so, modify `shellcode_address`, and execute those lines:
 
 ![image](./images/level8_4.png).

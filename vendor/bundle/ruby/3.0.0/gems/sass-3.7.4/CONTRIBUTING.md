@@ -1,3 +1,8 @@
+---
+layout: default
+title: CONTRIBUTING
+---
+
 Contributions are welcomed. Please see the following site for guidelines:
 
 [https://sass-lang.com/community#Contribute](https://sass-lang.com/community#Contribute)

@@ -1,9 +1,18 @@
+---
+layout: default
+title: old-22
+---
+
 # Webhacking old-22 Solution
 
 Here this is sql injection, when we can extract the `MD5 hash` of the password.
 We know that when we assign a user, it appends `apple` as a salt to the end of the password and then MD5 hash it.
 
-source code: [old-22](./scripts/old-22.py)
+source code: [old-22]
+```python
+% scripts/old-22.py
+```
+
 
 Here you can see the script in action.
 ![Hash extract](./images/old-22.png)

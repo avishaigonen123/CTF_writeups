@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas6
+---
+
 # Natas Level 6 Solution
 
 here, you can see in the source code that it includes the file `includes/secret.inc`, so let's go there:

@@ -1,6 +1,14 @@
+---
+layout: default
+title: collision
+---
+
 # collision Solution
 
-in this challenge we need to give input that answer the criteria that is expected. we can use this script [collision.py](./scripts/collision/collision.py)
+```py
+% scripts/collision.py
+```
+
 
 ![image](./images/collision.png)
 

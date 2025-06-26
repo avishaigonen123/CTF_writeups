@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-59
+---
+
 # Webhacking old-59 Solution
 
 

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Random Login Form
+---
+
 # Random Login Form Solution
 
 here we need to connect as admin, so i created this user: ` admin`, and the password is `123`. 

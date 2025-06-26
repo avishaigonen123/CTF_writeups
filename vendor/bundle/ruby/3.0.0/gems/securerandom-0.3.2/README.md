@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Securerandom
 
 This library is an interface to secure random number generators which are

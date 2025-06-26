@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit15
+---
+
 # Bandit Level 15 Solution
 
 ```

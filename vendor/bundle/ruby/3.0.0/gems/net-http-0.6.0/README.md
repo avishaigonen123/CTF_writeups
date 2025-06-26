@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Net::HTTP
 
 Net::HTTP provides a rich library which can be used to build HTTP

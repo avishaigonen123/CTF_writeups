@@ -1,3 +1,8 @@
+---
+layout: default
+title: UPGRADE
+---
+
 # Upgrade guide
 
 ## 0.5

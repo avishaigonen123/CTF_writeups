@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 # Addressable 2.8.7 <a name="v2.8.7">
 - Allow `public_suffix` 6 ([#535])
 

@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-17
+---
+
 # Webhacking old-17 Solution
 
 calculate this val: 

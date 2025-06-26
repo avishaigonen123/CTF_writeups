@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit8
+---
+
 # Bandit Level 8 Solution
 
 ```

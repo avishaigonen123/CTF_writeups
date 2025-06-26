@@ -1,3 +1,8 @@
+---
+layout: default
+title: LICENSE
+---
+
 # The MIT License
 
 Copyright, 2009, by [Natalie Weizenbaum](https://github.com/nex3).  

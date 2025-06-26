@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit27
+---
+
 # Bandit Level 27 Solution
 
 after entering in last level, you need to change the shell.

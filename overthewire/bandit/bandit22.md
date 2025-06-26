@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit22
+---
+
 # Bandit Level 22 Solution
 
 ```

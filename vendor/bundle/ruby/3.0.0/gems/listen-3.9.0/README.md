@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Listen
 
 The `listen` gem listens to file modifications and notifies you about the changes.

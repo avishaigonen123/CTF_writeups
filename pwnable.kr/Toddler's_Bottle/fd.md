@@ -1,3 +1,8 @@
+---
+layout: default
+title: fd
+---
+
 # fd Solution
 
 in this challenge the file-descriptor will be our input minus 0x1234.

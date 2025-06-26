@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit30
+---
+
 # Bandit Level 29 Solution
 
 

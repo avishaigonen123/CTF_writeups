@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit9
+---
+
 # Bandit Level 9 Solution
 
 ```

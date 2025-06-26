@@ -1,3 +1,8 @@
+---
+layout: default
+title: g00gle1
+---
+
 # webhacking g00gle1 Solution
 
 here it was very simple... I just searched in the source code for "flag"

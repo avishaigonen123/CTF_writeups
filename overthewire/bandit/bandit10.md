@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit10
+---
+
 # Bandit Level 10 Solution
 
 ```

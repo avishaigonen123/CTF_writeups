@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # RingZer0 Write-Ups
 
 This folder contains solutions for the [RingZer0](https://ringzer0ctf.com) website. 

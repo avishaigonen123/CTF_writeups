@@ -1,3 +1,8 @@
+---
+layout: default
+title: vortex10
+---
+
 # vortex level10 Solution
 
 in this level we need to exploit the fact the seed isn't really randomized, and we can find it.
@@ -26,7 +31,13 @@ cat /etc/vortex_pass/vortex11
 *UPDATE:*
 
 I created script in python that do the whole piping process.
-this will be our c code: [level10.c](./scripts/level10/level10.c) and this will be our script [pipe.py](./scripts/level10/pipe.py).
+```c
+% scripts/level10.c
+```
+```py
+% scripts/pipe.py
+```
+.
 
 all you need to do is to execute the piping script :)
 

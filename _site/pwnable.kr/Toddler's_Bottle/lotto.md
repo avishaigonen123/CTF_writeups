@@ -1,8 +1,16 @@
+---
+layout: default
+title: lotto
+---
+
 # lotto Solution
 
 in this challenge the lotto process isn't so good, it uses double for-loop and this reduce our brute force to only 45 options.
 
-i used this script [lotto.py](./scripts/lotto/lotto.py)
+```py
+% scripts/lotto.py
+```
+
 
 ![image](./images/lotto.png)
 

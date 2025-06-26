@@ -1,3 +1,8 @@
+---
+layout: default
+title: CONTRIBUTING
+---
+
 Contribute to Listen
 ===================
 

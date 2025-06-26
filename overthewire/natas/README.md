@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Natas Write-Ups
 
 This folder contains solutions for the [Natas](http://overthewire.org/wargames/natas/) wargame from OverTheWire. Natas focuses on web security challenges, helping to develop skills in areas like HTML, JavaScript, PHP, and general web exploitation techniques.

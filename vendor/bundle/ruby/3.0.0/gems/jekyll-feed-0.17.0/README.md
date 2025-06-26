@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Jekyll Feed plugin
 
 A Jekyll plugin to generate an Atom (RSS-like) feed of your Jekyll posts

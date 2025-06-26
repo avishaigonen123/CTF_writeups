@@ -1,3 +1,8 @@
+---
+layout: default
+title: LICENSE
+---
+
 The MIT License
 
 Copyright 2008 -- 2023 by Mike Dalessio, Aaron Patterson, Yoko Harada, Akinori MUSHA, John Shahid, Karol Bucek, Sam Ruby, Craig Barnes, Stephen Checkoway, Lars Kanis, Sergio Arbeo, Timothy Elliott, Nobuyoshi Nakada, Charles Nutter, Patrick Mahoney.

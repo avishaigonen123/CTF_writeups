@@ -1,3 +1,8 @@
+---
+layout: default
+title: LICENSE
+---
+
 The MIT License (MIT)
 
 Copyright (c) 2016-2017 GitHub, Inc.

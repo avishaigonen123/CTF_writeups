@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 [![Build Status](https://github.com/alexdalitz/dnsruby/actions/workflows/ci.yml/badge.svg)]
 [![Coverage Status](https://img.shields.io/coveralls/alexdalitz/dnsruby.svg)](https://coveralls.io/r/alexdalitz/dnsruby?branch=master)
 

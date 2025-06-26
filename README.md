@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # CTF Write-Ups
 
 hello world!This repository contains concise solutions for various CTF challenges and wargames I've solved, organized by wargame and level.

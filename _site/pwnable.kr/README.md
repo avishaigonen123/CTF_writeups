@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # pwnable.kr Write-Ups
 
 This folder contains solutions for the [Pwnable.kr](https://pwnable.kr/) website. 

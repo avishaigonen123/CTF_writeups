@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Webrick
 
 WEBrick is an HTTP server toolkit that can be configured as an HTTPS server, a proxy server, and a virtual-host server.

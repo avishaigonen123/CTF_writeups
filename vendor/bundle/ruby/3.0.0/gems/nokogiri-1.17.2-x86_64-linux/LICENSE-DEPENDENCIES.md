@@ -1,3 +1,8 @@
+---
+layout: default
+title: LICENSE-DEPENDENCIES
+---
+
 # Vendored Dependency Licenses
 
 Nokogiri ships with some third party dependencies, which are listed here along with their licenses.

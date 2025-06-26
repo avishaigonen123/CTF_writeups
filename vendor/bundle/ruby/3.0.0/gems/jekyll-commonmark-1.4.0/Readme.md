@@ -1,3 +1,8 @@
+---
+layout: default
+title: Readme
+---
+
 # jekyll-commonmark
 
 *CommonMark Markdown converter for Jekyll*

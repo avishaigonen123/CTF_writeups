@@ -1,3 +1,8 @@
+---
+layout: default
+title: orange
+---
+
 # webhacking orange Solution
 
 It looks like SSRF, we can supply the `url` parameter.
@@ -43,7 +48,11 @@ All the parsing functions process the content without url-decoding it, but the `
 
 WOW! if we can insert `@`, so we can insert also our php code :)
 
-I wrote short script, you can use it: [orange.py](./scripts/orange.py)
+I wrote short script, you can use it: [orange.py]
+```python
+% scripts/orange.py
+```
+
 
 
 **Flag:** ***`FLAG{hardcore_from_7.1}`*** 

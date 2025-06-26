@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit5
+---
+
 # Bandit Level 5 Solution
 
 ```

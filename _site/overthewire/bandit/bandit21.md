@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit21
+---
+
 # Bandit Level 21 Solution
 
 ```

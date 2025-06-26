@@ -1,3 +1,8 @@
+---
+layout: default
+title: leviathan0
+---
+
 # leviathan level0 Solution
 
 first we check what we have in our folder. we can see the hidden folder `.backup`.

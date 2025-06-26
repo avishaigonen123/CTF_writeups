@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # krypton Write-Ups
 
 This folder contains solutions for the [krypton](https://overthewire.org/wargames/krypton/) website. 

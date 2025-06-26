@@ -1,3 +1,8 @@
+---
+layout: default
+title: narnia8
+---
+
 # narnia level8 Solution
 
 we can see it doesn't have ASLR but have stack protection.
@@ -11,7 +16,11 @@ they can be found here:
 
 
 
-the python script for creating the payload can is here: [level8.py](./scripts/level8.py)
+the python script for creating the payload can is here: [level8.py]
+```python
+% scripts/level8.py
+```
+
 
 
 ![alt text](./images/level8_3.png)

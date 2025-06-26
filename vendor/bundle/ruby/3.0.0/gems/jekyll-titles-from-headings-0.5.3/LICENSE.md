@@ -1,3 +1,8 @@
+---
+layout: default
+title: LICENSE
+---
+
 MIT License
 
 Copyright (c) 2016 Ben Balter

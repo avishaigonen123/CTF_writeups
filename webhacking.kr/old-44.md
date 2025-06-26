@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-44
+---
+
 # Webhacking old-44 Solution
 
 here, you need to insert this payload: `'ls;'`

@@ -1,3 +1,8 @@
+---
+layout: default
+title: usage
+---
+
 ## Usage
 
 The SEO tag will respect any of the following if included in your site's `_config.yml` (and simply not include them if

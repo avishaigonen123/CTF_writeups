@@ -1,3 +1,8 @@
+---
+layout: default
+title: Ohno
+---
+
 # trythis0ne Ohno Solution
 
 

@@ -1,3 +1,8 @@
+---
+layout: default
+title: narnia3
+---
+
 # narnia level3 Solution
 
 first we can see it doesn't have ASLR and run protection.

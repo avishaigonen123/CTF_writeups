@@ -1,3 +1,8 @@
+---
+layout: default
+title: CODE_OF_CONDUCT
+---
+
 Sass is more than a technology; Sass is driven by the community of individuals
 that power its development and use every day. As a community, we want to embrace
 the very differences that have made our collaboration so powerful, and work

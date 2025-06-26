@@ -1,8 +1,16 @@
+---
+layout: default
+title: Level2_Pwnage_Linux_Level_Up
+---
+
 # Level2 Pwnage Linux Level Up Solution
 
 here we need to give username: `nobody`, password: `Ksdkjkk32avsh`, and then in the command we can overflow the user and put there `root`.
 
-this is our short script: [level2.py](./scripts/level2/level2.py)
+```py
+% scripts/level2.py
+```
+
 
 the file I created is `my_script.sh`, it contains this:
 ```

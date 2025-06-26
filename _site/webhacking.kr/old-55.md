@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-55
+---
+
 # Webhacking old-55 Solution
 
 first, i entered the score 8200 using the command line:
@@ -11,7 +16,11 @@ i got this: `id : webhacking.chall55.p4ssw0rd_1123581321 //`
 means the column name is: `p4ssw0rd_1123581321`.
 
 now, we will run the script to find the flag:
-[old-55](./scripts/old-55.py)
+[old-55]
+```python
+% scripts/old-55.py
+```
+
 
 
 **Flag:** ***`FLAG{easy_peasy_lemon_squeezy!}`*** 

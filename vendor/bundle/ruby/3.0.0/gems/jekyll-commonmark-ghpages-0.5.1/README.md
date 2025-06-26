@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # jekyll-commonmark-ghpages
 
 *GitHub Flavored Markdown converter for Jekyll, based on [`jekyll-commonmark`](https://github.com/jekyll/jekyll-commonmark)*

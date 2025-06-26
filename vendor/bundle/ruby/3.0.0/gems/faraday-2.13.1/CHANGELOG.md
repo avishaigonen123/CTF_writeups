@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 # Faraday Changelog
 
 ## The changelog has moved!

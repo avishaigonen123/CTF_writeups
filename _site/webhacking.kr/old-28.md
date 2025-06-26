@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-28
+---
+
 # Webhacking old-28 Solution
 
 here we can see we can upload files, and when we try to go to `http://webhacking.kr:10002/upload/jTH2HlN7aYbv/flag.php`, we get empty page. That's because there is a php file there, and we can't read the code.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: bandit4
+---
+
 # Bandit Level 4 Solution
 
 ```

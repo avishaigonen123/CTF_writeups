@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # HTML::Pipeline [![Build Status](https://travis-ci.org/jch/html-pipeline.svg?branch=master)](https://travis-ci.org/jch/html-pipeline)
 
 HTML processing filters and utilities. This module includes a small

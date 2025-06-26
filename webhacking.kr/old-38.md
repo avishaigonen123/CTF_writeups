@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-38
+---
+
 # Webhacking old-17 Solution
 
 change the text box to textarea:

@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas21
+---
+
 # Natas Level 21 Solution
 
 i can give it in the HTTP post every pare of key,value i want.

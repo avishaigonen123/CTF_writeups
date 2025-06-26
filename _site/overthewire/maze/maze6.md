@@ -1,3 +1,8 @@
+---
+layout: default
+title: maze6
+---
+
 # maze level6 Solution
 
 i decompiled maze 6, here you can see the source code.
@@ -26,7 +31,11 @@ FILE_struct_address  = 0xffffd158
 plt_exit_address = 0x0804b208
 shellcode_address = 0xffffd204
 ```
-the code can be found here [level7.py](./scripts/level6/level6.py)
+the code can be found here [level7.py]
+```python
+% scripts/level6/level6.py
+```
+
 
 ![image](./images/level6_6.png)
 

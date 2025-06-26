@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 ## Unicode::DisplayWidth [![[version]](https://badge.fury.io/rb/unicode-display_width.svg)](https://badge.fury.io/rb/unicode-display_width) [<img src="https://travis-ci.org/janlelis/unicode-display_width.png" />](https://travis-ci.org/janlelis/unicode-display_width)
 
 Determines the monospace display width of a string in Ruby. Implementation based on [EastAsianWidth.txt](https://www.unicode.org/Public/UNIDATA/EastAsianWidth.txt) and other data, 100% in Ruby. Other than [wcwidth()](https://github.com/janlelis/wcswidth-ruby), which fulfills a similar purpose, it does not rely on the OS vendor to provide an up-to-date method for measuring string width.

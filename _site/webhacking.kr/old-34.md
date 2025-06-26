@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-34
+---
+
 # Webhacking old-34 Solution
 
 as we can see, there is some messy javascript code:
@@ -6,7 +11,11 @@ as we can see, there is some messy javascript code:
 
 let's try to beautifier it in https://beautifier.io/
 and analyze the code
-[old-34](./scripts/old-34.js)
+[old-34]
+```javascript
+% scripts/old-34.js
+```
+
 
 i saw this if statement:
 ```

@@ -1,3 +1,8 @@
+---
+layout: default
+title: manpage4
+---
+
 # manpage level4 Solution
 
 In this challenge we exploit the fact we can put input into `inp` on the stack, which is 2048, and then there will be content on `lastname`.
@@ -10,7 +15,10 @@ The diff between them is 1284, and then we need to find how many characters we n
 
 So, all left is to solve the game.
 
-Notice that the script [level4.py](./scripts/level4/level4.py) pipe all the data as it was a regular stdin, and when you want to make the attack, you only need to type ATTACK.
+```py
+% scripts/level4.py
+```
+ pipe all the data as it was a regular stdin, and when you want to make the attack, you only need to type ATTACK.
 
 I use random 4, and find that in room 10 the WUMPUS is found.
 

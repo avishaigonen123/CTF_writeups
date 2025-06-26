@@ -1,3 +1,8 @@
+---
+layout: default
+title: narnia7
+---
+
 # narnia level7 Solution
 
 we can see it doesn't have ASLR but have stack protection.
@@ -15,7 +20,11 @@ then, check the name of the loaded binaries, and finally search for symbols in o
 ![alt text](./images/level7_3.png)
 so, the (virtual)address of system on the RAM is `0xf7dcd430`, let's put it into the script, 
 
- [level7.py](./scripts/level7.py)
+ [level7.py]
+```python
+% scripts/level7.py
+```
+
 
 ![alt text](./images/level7_4.png)
 

@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Octokit
 
 Ruby toolkit for the GitHub API.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-18
+---
+
 # Webhacking old-18 Solution
 
 this challange is SQL injection.

@@ -1,3 +1,8 @@
+---
+layout: default
+title: RegexMaster
+---
+
 # Webhacking RegexMaster Solution
 
 In this challange we exploit regex injection.
@@ -11,7 +16,11 @@ For example: `?pattern=^(?=..A)((.*)*)*salt$` -> *Takes time* (3rd char is `A`)
 In our side, all we can see is that on the right char it got delayed:
 ![Burp image](./images/RegexMaster_burp.png)
 
-So, let's write our script: [regexMaster.py](./scripts/regexMaster.py)
+So, let's write our script: [regexMaster.py]
+```python
+% scripts/regexMaster.py
+```
+
 
 
 **Flag:** ***`FLAG{im_r/e/g/e/x_master//_//}`*** 

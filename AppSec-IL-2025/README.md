@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # AppSec-IL-2025 Write-Ups
 
 This folder contains solutions for the [AppSec-IL-2025](https://appsecil25.ctf.today/) website. 

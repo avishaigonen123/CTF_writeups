@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Mercenary
 
 Lightweight and flexible library for writing command-line apps in Ruby.

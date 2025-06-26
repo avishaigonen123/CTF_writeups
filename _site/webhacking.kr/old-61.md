@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-61
+---
+
 # Webhacking old-61 Solution
 
 this is the payload we will send:

@@ -1,6 +1,14 @@
+---
+layout: default
+title: level1
+---
+
 # Level1 Shellcoding Solution
 
-here, we exploit basic buffer overflow, this is the code we used: [level1.py](./scripts/level1/level1.py)
+```py
+% scripts/level1.py
+```
+
 
 ![image](./images/level1.png)
 

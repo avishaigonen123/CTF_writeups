@@ -1,3 +1,8 @@
+---
+layout: default
+title: old-43 RevengE
+---
+
 # Webhacking old-43 RevengE Solution
 
 Here we need to upload our `webshell`, however, it checks whether the uploaded file isn't some specific unallowed file-type, and also trying to resize the image.

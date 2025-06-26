@@ -1,3 +1,8 @@
+---
+layout: default
+title: CHANGELOG
+---
+
 # CHANGELOG
 
 ## 1.8.0

@@ -1,3 +1,8 @@
+---
+layout: default
+title: cheat_sheet_WiFi_Hacking
+---
+
 # 🧰 Wi-Fi Hacking Cheat Sheet
 
 This cheat sheet covers essential Wi-Fi penetration testing techniques, including reconnaissance, handshake capture, and password cracking using `aircrack-ng`, `hcxtools`, and `hashcat`.

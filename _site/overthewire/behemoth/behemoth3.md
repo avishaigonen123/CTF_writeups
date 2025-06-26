@@ -1,3 +1,8 @@
+---
+layout: default
+title: behemoth3
+---
+
 # behemoth level3 Solution
 
 In this challenge, we can see the code call this line in C: `system("touch $pid")`, so, we'll override the `touch` by manipulating the $PATH environment variable.

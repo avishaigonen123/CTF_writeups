@@ -1,3 +1,8 @@
+---
+layout: default
+title: natas9
+---
+
 # Natas Level 9 Solution
 
 in this challenge we use command injection, this is the vuln part: `passthru("grep -i $key dictionary.txt");`

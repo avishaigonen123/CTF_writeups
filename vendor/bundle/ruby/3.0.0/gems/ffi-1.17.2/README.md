@@ -1,3 +1,8 @@
+---
+layout: default
+title: README
+---
+
 # Ruby-FFI https://github.com/ffi/ffi/wiki
 
 ## Description
