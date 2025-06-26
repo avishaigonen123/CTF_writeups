@@ -5,30 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Webhacking old-34 Solution | Avishai’s CTF Writeups</title>
+<title>old-34 | Avishai’s CTF Writeups</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Webhacking old-34 Solution" />
+<meta property="og:title" content="old-34" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
-<link rel="canonical" href="http://localhost:4000/webhacking.kr/old-34.html" />
-<meta property="og:url" content="http://localhost:4000/webhacking.kr/old-34.html" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-34.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-34.html" />
 <meta property="og:site_name" content="Avishai’s CTF Writeups" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Webhacking old-34 Solution" />
+<meta property="twitter:title" content="old-34" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"Webhacking old-34 Solution","url":"http://localhost:4000/webhacking.kr/old-34.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-34","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-34.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=c7717680ee836fb275ca7ab0727bb88d0c432f55">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="/assets/js/respond.js"></script>
+    <script src="/CTF_writeups/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if lt IE 8]>
-    <link rel="stylesheet" href="/assets/css/ie.css">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
@@ -58,11 +58,13 @@
 
 <p>as we can see, there is some messy javascript code:</p>
 
-<p><img src="/webhacking.kr/images/old-34_1.png" alt="example" /></p>
+<p><img src="/CTF_writeups/webhacking.kr/images/old-34_1.png" alt="example" /></p>
 
 <p>let’s try to beautifier it in https://beautifier.io/
 and analyze the code
-<a href="/webhacking.kr/scripts/old-34.js">old-34</a></p>
+[old-34]</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="nx">scripts</span><span class="o">/</span><span class="nx">old</span><span class="o">-</span><span class="mi">34</span><span class="p">.</span><span class="nx">js</span>
+</code></pre></div></div>
 
 <p>i saw this if statement:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (location[b("0x19", "iUmC")][b("0x1a", "6]r1")](1) == b("0x1b", "RLUb"))
@@ -73,7 +75,7 @@ else
 
 <p>let’s try to see what does the alert prints <code class="language-plaintext highlighter-rouge">b("0x1e", "14cN")</code></p>
 
-<p><img src="/webhacking.kr/images/old-34_2.png" alt="example" /></p>
+<p><img src="/CTF_writeups/webhacking.kr/images/old-34_2.png" alt="example" /></p>
 
 <p>interesting… so, let’s try to run the code in the if statement <code class="language-plaintext highlighter-rouge">location[b("0x1c", "4c%d")] = b("0x1d", "llaF");</code></p>
 

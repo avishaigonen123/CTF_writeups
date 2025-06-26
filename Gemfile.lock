@@ -285,7 +285,6 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
-  jekyll-remote-theme
 
 BUNDLED WITH
    2.5.23

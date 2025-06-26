@@ -5,30 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>manpage level2 Solution | Avishai’s CTF Writeups</title>
+<title>manpage2 | Avishai’s CTF Writeups</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="manpage level2 Solution" />
+<meta property="og:title" content="manpage2" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
-<link rel="canonical" href="http://localhost:4000/overthewire/manpage/manpage2.html" />
-<meta property="og:url" content="http://localhost:4000/overthewire/manpage/manpage2.html" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/manpage/manpage2.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/manpage/manpage2.html" />
 <meta property="og:site_name" content="Avishai’s CTF Writeups" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="manpage level2 Solution" />
+<meta property="twitter:title" content="manpage2" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"manpage level2 Solution","url":"http://localhost:4000/overthewire/manpage/manpage2.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"manpage2","url":"http://localhost:4000/CTF_writeups/overthewire/manpage/manpage2.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=c7717680ee836fb275ca7ab0727bb88d0c432f55">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="/assets/js/respond.js"></script>
+    <script src="/CTF_writeups/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if lt IE 8]>
-    <link rel="stylesheet" href="/assets/css/ie.css">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
@@ -56,10 +56,13 @@
 
         <h1 id="manpage-level2-solution">manpage level2 Solution</h1>
 
-<p>in this level we can exploit the fact it leaves the file open, and also we can execute our code using the last line that reruns the file, with <code class="language-plaintext highlighter-rouge">excel</code>.
-this will be our solution <a href="/overthewire/manpage/scripts/level2/level2.c">level2.c</a>, while this is the file we’ll give as input <a href="/overthewire/manpage/scripts/level2/read_pass.c">read_pass.c</a></p>
+<p>in this level we can exploit the fact it leaves the file open, and also we can execute our code using the last line that reruns the file, with <code class="language-plaintext highlighter-rouge">excel</code>.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level2</span><span class="p">.</span><span class="n">c</span>
+</code></pre></div></div>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">scripts</span><span class="o">/</span><span class="n">read_pass</span><span class="p">.</span><span class="n">c</span>
+</code></pre></div></div>
 
-<p><img src="/overthewire/manpage/images/level2.png" alt="image" /></p>
+<p><img src="/CTF_writeups/overthewire/manpage/images/level2.png" alt="image" /></p>
 
 <p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">uAcGloJt0Q</code></em></strong></p>
 

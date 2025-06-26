@@ -5,30 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>uaf Solution | Avishai’s CTF Writeups</title>
+<title>uaf | Avishai’s CTF Writeups</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="uaf Solution" />
+<meta property="og:title" content="uaf" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
-<link rel="canonical" href="http://localhost:4000/pwnable.kr/Toddler's_Bottle/uaf.html" />
-<meta property="og:url" content="http://localhost:4000/pwnable.kr/Toddler's_Bottle/uaf.html" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/pwnable.kr/Toddler's_Bottle/uaf.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/pwnable.kr/Toddler's_Bottle/uaf.html" />
 <meta property="og:site_name" content="Avishai’s CTF Writeups" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="uaf Solution" />
+<meta property="twitter:title" content="uaf" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"uaf Solution","url":"http://localhost:4000/pwnable.kr/Toddler's_Bottle/uaf.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"uaf","url":"http://localhost:4000/CTF_writeups/pwnable.kr/Toddler's_Bottle/uaf.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=c7717680ee836fb275ca7ab0727bb88d0c432f55">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="/assets/js/respond.js"></script>
+    <script src="/CTF_writeups/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if lt IE 8]>
-    <link rel="stylesheet" href="/assets/css/ie.css">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
@@ -59,7 +59,8 @@
 <p>here we exploit the fact we delete Man and Woman, and manage to put our code inside the grave of Man and Woman.
 Then, when we’ll call it’s introduce function, it will execute shell.</p>
 
-<p>this is our script <a href="/pwnable.kr/Toddler's_Bottle/scripts/uaf/payload.py">payload.py</a></p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">scripts</span><span class="o">/</span><span class="n">payload</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div></div>
 
 <p>we will give as input this values:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3 (for free)
@@ -68,7 +69,7 @@ Then, when we’ll call it’s introduce function, it will execute shell.</p>
 1 (for calling "introduce")
 </code></pre></div></div>
 
-<p><img src="/pwnable.kr/Toddler's_Bottle/images/uaf.png" alt="image" /></p>
+<p><img src="/CTF_writeups/pwnable.kr/Toddler's_Bottle/images/uaf.png" alt="image" /></p>
 
 <p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">yay_f1ag_aft3r_pwning</code></em></strong></p>
 

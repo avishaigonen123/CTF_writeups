@@ -5,30 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>vortex level7 Solution | Avishai’s CTF Writeups</title>
+<title>vortex7 | Avishai’s CTF Writeups</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="vortex level7 Solution" />
+<meta property="og:title" content="vortex7" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
-<link rel="canonical" href="http://localhost:4000/overthewire/vortex/vortex7.html" />
-<meta property="og:url" content="http://localhost:4000/overthewire/vortex/vortex7.html" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/vortex/vortex7.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/vortex/vortex7.html" />
 <meta property="og:site_name" content="Avishai’s CTF Writeups" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="vortex level7 Solution" />
+<meta property="twitter:title" content="vortex7" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"vortex level7 Solution","url":"http://localhost:4000/overthewire/vortex/vortex7.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"vortex7","url":"http://localhost:4000/CTF_writeups/overthewire/vortex/vortex7.html"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=c7717680ee836fb275ca7ab0727bb88d0c432f55">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="/assets/js/respond.js"></script>
+    <script src="/CTF_writeups/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if lt IE 8]>
-    <link rel="stylesheet" href="/assets/css/ie.css">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
@@ -71,7 +71,7 @@
     <p>retrieve the CRC tables
   there are saved CRC tables which are stored in the memory, you need to achieve them and put them in the code.
   this is the command i used in radare2 <code class="language-plaintext highlighter-rouge">pxw 256*4 @obj.crc32_table</code>.
-<img src="/overthewire/vortex/images/level7_1.png" alt="image" /></p>
+<img src="/CTF_writeups/overthewire/vortex/images/level7_1.png" alt="image" /></p>
   </li>
 </ul>
 
@@ -81,16 +81,18 @@
 than, it will go 4 back and inside this memory, it’ll find the shellcode address.</li>
 </ul>
 
-<p><img src="/overthewire/vortex/images/level7_2.png" alt="image" /></p>
+<p><img src="/CTF_writeups/overthewire/vortex/images/level7_2.png" alt="image" /></p>
 
 <p>we’ll put in ecx the address forward, and then in ebx and ebp the shellcode address.
-<img src="/overthewire/vortex/images/level7_3.png" alt="image" /></p>
+<img src="/CTF_writeups/overthewire/vortex/images/level7_3.png" alt="image" /></p>
 
 <p>also, you need to find the shellcode address, i put the shellcode in the buffer after @ebp+0x4, just debug and you’ll find.</p>
 
-<p>so, this is the code <a href="/overthewire/vortex/scripts/level7/level7.py">level7.py</a>, all you need to change is <code class="language-plaintext highlighter-rouge">shellcode_address</code> and <code class="language-plaintext highlighter-rouge">ecx_address</code>.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level7</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div></div>
+<p>, all you need to change is <code class="language-plaintext highlighter-rouge">shellcode_address</code> and <code class="language-plaintext highlighter-rouge">ecx_address</code>.</p>
 
-<p><img src="/overthewire/vortex/images/level7_4.png" alt="image" /></p>
+<p><img src="/CTF_writeups/overthewire/vortex/images/level7_4.png" alt="image" /></p>
 
 <p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">niEUGtu7f</code></em></strong></p>
 
