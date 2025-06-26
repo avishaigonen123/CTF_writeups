@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>🛡️ WiFi Hacking Recon &amp; Targeting Summary (Without Evil Twin) | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="🛡️ WiFi Hacking Recon &amp; Targeting Summary (Without Evil Twin)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/stuff/another_file.html" />
+<meta property="og:url" content="http://localhost:4000/stuff/another_file.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="🛡️ WiFi Hacking Recon &amp; Targeting Summary (Without Evil Twin)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"🛡️ WiFi Hacking Recon &amp; Targeting Summary (Without Evil Twin)","url":"http://localhost:4000/stuff/another_file.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="️-wifi-hacking-recon--targeting-summary-without-evil-twin">🛡️ WiFi Hacking Recon &amp; Targeting Summary (Without Evil Twin)</h1>
+
+<h2 id="-1-discovering-devices-with-arp-scan">🔍 1. Discovering Devices with <code class="language-plaintext highlighter-rouge">arp-scan</code></h2>
+
+<p>We used <code class="language-plaintext highlighter-rouge">arp-scan</code> to discover devices on the local network. This tool sends ARP requests to the subnet and lists active devices with their IP and MAC addresses.</p>
+
+<h3 id="command">Command:</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>arp-scan <span class="nt">--interface</span><span class="o">=</span>eth0 <span class="nt">--localnet</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--interface=eth0</code>: Set the network interface (e.g., use <code class="language-plaintext highlighter-rouge">wlan0</code> for WiFi).</li>
+  <li><code class="language-plaintext highlighter-rouge">--localnet</code>: Automatically scans the subnet you’re on.</li>
+</ul>
+
+<blockquote>
+  <p>⚠️ If your interface has no IP address (e.g., <code class="language-plaintext highlighter-rouge">wlan0</code> in monitor mode), <code class="language-plaintext highlighter-rouge">arp-scan</code> might not work unless you specify the spoofed address using <code class="language-plaintext highlighter-rouge">--arpspa</code>.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="-2-scanning-a-target-device-with-nmap">📡 2. Scanning a Target Device with Nmap</h2>
+
+<p>Once we identify a target IP (from <code class="language-plaintext highlighter-rouge">arp-scan</code>, DHCP leases, or router interface), we use <code class="language-plaintext highlighter-rouge">nmap</code> to fingerprint the OS and check for open ports.</p>
+
+<h3 id="command-1">Command:</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmap <span class="nt">-O</span> &lt;target-ip&gt;
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-O</code>: Attempts to detect the operating system.</li>
+  <li>Requires root to send raw TCP packets.</li>
+  <li>Useful for determining if a device is a Windows machine, Linux, Android, etc.</li>
+</ul>
+
+<hr />
+
+<h2 id="-3-getting-mac-address-from-ip-and-vice-versa">🎯 3. Getting MAC Address from IP and Vice Versa</h2>
+
+<h3 id="a-from-your-own-pc">A. From Your Own PC:</h3>
+<p>Use the <code class="language-plaintext highlighter-rouge">arp</code> tool after pinging the device.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping &lt;target-ip&gt;
+arp <span class="nt">-a</span>
+</code></pre></div></div>
+
+<h3 id="b-from-within-scripts--tools">B. From Within Scripts / Tools:</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">arp-scan</code> returns both IPs and MACs.</li>
+  <li>Routers also often expose DHCP lease tables.</li>
+</ul>
+
+<hr />
+
+<h2 id="-4-observing-devices-with-airodump-ng">🔬 4. Observing Devices with <code class="language-plaintext highlighter-rouge">airodump-ng</code></h2>
+
+<p>To passively monitor WiFi traffic, we used:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>airodump-ng wlan0mon
+</code></pre></div></div>
+
+<p>Once BSSIDs and STATION MACs are visible, you can identify connected clients and signal strength (PWR).</p>
+
+<blockquote>
+  <p>If your phone doesn’t appear, ensure:</p>
+  <ul>
+    <li>It’s actively transmitting packets.</li>
+    <li>It’s not using WiFi isolation or client isolation features.</li>
+    <li>You’re monitoring the correct channel.</li>
+  </ul>
+</blockquote>
+
+<hr />
+
+<h2 id="-5-attempting-deauthentication-for-educational-use">🚫 5. Attempting Deauthentication (for Educational Use)</h2>
+
+<p>We attempted to deauthenticate a specific client from a known AP.</p>
+
+<h3 id="command-2">Command:</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>aireplay-ng <span class="nt">--deauth</span> 10 <span class="nt">-a</span> &lt;AP_MAC&gt; <span class="nt">-c</span> &lt;CLIENT_MAC&gt; wlan0mon
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">-a</code>: AP MAC address.</li>
+  <li><code class="language-plaintext highlighter-rouge">-c</code>: Client MAC address.</li>
+  <li><code class="language-plaintext highlighter-rouge">10</code>: Number of deauth packets to send.</li>
+</ul>
+
+<blockquote>
+  <p>✅ This worked when your phone was connected to a hotspot, but not reliably on some modern access points (due to protection mechanisms like 802.11w, deauth protection, etc.).</p>
+</blockquote>
+
+<hr />
+
+<h2 id="️-6-mac-address-tracking--identification-techniques">⚙️ 6. MAC Address Tracking &amp; Identification Techniques</h2>
+
+<p>When facing many clients on the same WiFi:</p>
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">airodump-ng</code> to see which STATIONs are talking most to the AP.</li>
+  <li>Look at:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">#Data</code> frames exchanged.</li>
+      <li>PWR to estimate distance.</li>
+      <li>Probes to guess device names/OS (e.g., Windows, iPhone).</li>
+    </ul>
+  </li>
+</ul>
+
+<p>You can then:</p>
+<ul>
+  <li>Track their IP via <code class="language-plaintext highlighter-rouge">arp-scan</code>.</li>
+  <li>OS fingerprint via <code class="language-plaintext highlighter-rouge">nmap</code>.</li>
+  <li>Optionally spoof or target only that MAC.</li>
+</ul>
+
+<hr />
+
+<h2 id="-summary-of-tools-used">✅ Summary of Tools Used</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>arp-scan</td>
+      <td>Discover IP/MAC on local network</td>
+    </tr>
+    <tr>
+      <td>airodump-ng</td>
+      <td>Sniff wireless traffic and client list</td>
+    </tr>
+    <tr>
+      <td>aireplay-ng</td>
+      <td>Send deauth frames to clients</td>
+    </tr>
+    <tr>
+      <td>nmap</td>
+      <td>Port and OS scanning</td>
+    </tr>
+    <tr>
+      <td>arp</td>
+      <td>View IP ↔ MAC mapping after ping</td>
+    </tr>
+    <tr>
+      <td>ettercap</td>
+      <td>(Planned) for MITM sniffing and spoofing</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<blockquote>
+  <p>⚠️ <strong>Legal Note:</strong> All actions discussed here should only be performed in lab environments or on networks you own/have permission to test. Unauthorized network interference is illegal.</p>
+</blockquote>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

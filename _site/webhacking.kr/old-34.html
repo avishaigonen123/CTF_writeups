@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Webhacking old-34 Solution | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Webhacking old-34 Solution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/webhacking.kr/old-34.html" />
+<meta property="og:url" content="http://localhost:4000/webhacking.kr/old-34.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Webhacking old-34 Solution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"Webhacking old-34 Solution","url":"http://localhost:4000/webhacking.kr/old-34.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="webhacking-old-34-solution">Webhacking old-34 Solution</h1>
+
+<p>as we can see, there is some messy javascript code:</p>
+
+<p><img src="/webhacking.kr/images/old-34_1.png" alt="example" /></p>
+
+<p>let’s try to beautifier it in https://beautifier.io/
+and analyze the code
+<a href="/webhacking.kr/scripts/old-34.js">old-34</a></p>
+
+<p>i saw this if statement:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if (location[b("0x19", "iUmC")][b("0x1a", "6]r1")](1) == b("0x1b", "RLUb"))
+    location[b("0x1c", "4c%d")] = b("0x1d", "llaF"); 
+else 
+    alert(b("0x1e", "14cN"));
+</code></pre></div></div>
+
+<p>let’s try to see what does the alert prints <code class="language-plaintext highlighter-rouge">b("0x1e", "14cN")</code></p>
+
+<p><img src="/webhacking.kr/images/old-34_2.png" alt="example" /></p>
+
+<p>interesting… so, let’s try to run the code in the if statement <code class="language-plaintext highlighter-rouge">location[b("0x1c", "4c%d")] = b("0x1d", "llaF");</code></p>
+
+<p>this takes us to this url: <code class="language-plaintext highlighter-rouge">https://webhacking.kr/challenge/js-7/?Passw0RRdd=1</code>
+and the is challenge over.</p>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

