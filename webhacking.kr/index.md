@@ -6,7 +6,7 @@ title: Webhacking.kr Writeups
       ← Back to webhacking.kr
 </a>
 
-### This folder contains solutions for the [Webhacking.kr](http://webhacking.kr/webhacking.kr/) wargame from webhacking.kr.
+### This folder contains solutions for the [Webhacking.kr](http://webhacking.kr/) wargame from webhacking.kr.
 
 <style>
   body {
@@ -131,9 +131,9 @@ title: Webhacking.kr Writeups
     <h00>Levels</h00>
     <ul>
       {% assign webhacking.kr_pages = site.pages
-        | where_exp: "p", "p.path contains 'webhacking.kr/webhacking.kr'"
-        | reject: "path", "webhacking.kr/webhacking.kr/index.md"
-        | reject: "path", "webhacking.kr/webhacking.kr/index.html"
+        | where_exp: "p", "p.path contains 'webhacking.kr/'"
+        | reject: "path", "webhacking.kr/index.md"
+        | reject: "path", "webhacking.kr/index.html"
       %}
       {% assign level_pages = webhacking.kr_pages | sort_natural: "path" %}
       {% for p in level_pages %}
