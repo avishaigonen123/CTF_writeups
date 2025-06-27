@@ -7,7 +7,7 @@ title: iron_golem
 
 the source code is here [iron_golem]
 ```python
-% scripts/iron_golem.py
+{% include_relative scripts/iron_golem.py %}
 ```
 
 

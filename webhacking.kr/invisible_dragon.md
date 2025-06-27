@@ -28,8 +28,8 @@ Where each time we find the character, and by this way leak the flag.
 
 ![FLAG image](./images/invisible_dragon.png)
 So, let's write our script: [invisible_dragon.py]
-```python
-% scripts/invisible_dragon.py
+```scripts/invisible_dragon.py
+{% include_relative scripts/invisible_dragon.py %}
 ```
 
 

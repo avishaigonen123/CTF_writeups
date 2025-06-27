@@ -6,8 +6,8 @@ title: old-41
 # Webhacking old-41 Solution
 
 first we will upload file with long filename, and see what happens: [old-41]
-```python
-% scripts/old-41.py
+```scripts/old-41.py
+{% include_relative scripts/old-41.py %}
 ```
 
 

@@ -13,7 +13,7 @@ in this case, i chose the put the memory of the `exit_plt`, and override it with
 
 
 ```py
-% scripts/passcode.py
+{% include_relative scripts/passcode/passcode.py %}
 ```
  you might need to adjust the addresses.
 

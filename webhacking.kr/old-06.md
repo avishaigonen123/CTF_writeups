@@ -7,7 +7,7 @@ title: old-06
 
 
 here is the source code: [old-06]
-```python
-% scripts/old-06.py
+```scripts/old-06.py
+{% include_relative scripts/old-06.py %}
 ```
 

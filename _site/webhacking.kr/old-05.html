@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>old-05 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="old-05" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-05.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-05.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="old-05" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-05","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-05.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-old-05-solution">webhacking old-05 Solution</h1>
+
+<p>as we can see, the login page redirects us to <code class="language-plaintext highlighter-rouge">./mem/login.php</code>. so, there might be also <code class="language-plaintext highlighter-rouge">./mem/join.php</code>. we will go there:</p>
+<pre><code class="language-https://webhacking.kr/challenge/web-05/mem/join.php```">
+in this page there is js obfuscated, let's use some online tool like https://beautifier.io/ and achieve more nice looking code. 
+here is the source code: [old-05]
+```scripts/old-05.js
+l = 'a';
+ll = 'b';
+lll = 'c';
+llll = 'd';
+lllll = 'e';
+llllll = 'f';
+lllllll = 'g';
+llllllll = 'h';
+lllllllll = 'i';
+llllllllll = 'j';
+lllllllllll = 'k';
+llllllllllll = 'l';
+lllllllllllll = 'm';
+llllllllllllll = 'n';
+lllllllllllllll = 'o';
+llllllllllllllll = 'p';
+lllllllllllllllll = 'q';
+llllllllllllllllll = 'r';
+lllllllllllllllllll = 's';
+llllllllllllllllllll = 't';
+lllllllllllllllllllll = 'u';
+llllllllllllllllllllll = 'v';
+lllllllllllllllllllllll = 'w';
+llllllllllllllllllllllll = 'x';
+lllllllllllllllllllllllll = 'y';
+llllllllllllllllllllllllll = 'z';
+I = '1';
+II = '2';
+III = '3';
+IIII = '4';
+IIIII = '5';
+IIIIII = '6';
+IIIIIII = '7';
+IIIIIIII = '8';
+IIIIIIIII = '9';
+IIIIIIIIII = '0';
+li = '.';
+ii = '&lt;';
+iii = '&gt;';
+lIllIllIllIllIllIllIllIllIllIl = lllllllllllllll + llllllllllll + llll + llllllllllllllllllllllllll + lllllllllllllll + lllllllllllll + ll + lllllllll + lllll;
+lIIIIIIIIIIIIIIIIIIl = llll + lllllllllllllll + lll + lllllllllllllllllllll + lllllllllllll + lllll + llllllllllllll + llllllllllllllllllll + li + lll + lllllllllllllll + lllllllllllllll + lllllllllll + lllllllll + lllll;
+if (eval(lIIIIIIIIIIIIIIIIIIl)
+    .indexOf(lIllIllIllIllIllIllIllIllIllIl) == -1) {
+    alert('bye');
+    throw "stop";
+}
+if (eval(llll + lllllllllllllll + lll + lllllllllllllllllllll + lllllllllllll + lllll + llllllllllllll + llllllllllllllllllll + li + 'U' + 'R' + 'L')
+    .indexOf(lllllllllllll + lllllllllllllll + llll + lllll + '=' + I) == -1) {
+    alert('access_denied');
+    throw "stop";
+} else {
+    document.write('&lt;font size=2 color=white&gt;Join&lt;/font&gt;&lt;p&gt;');
+    document.write('.&lt;p&gt;.&lt;p&gt;.&lt;p&gt;.&lt;p&gt;.&lt;p&gt;');
+    document.write('&lt;form method=post action=' + llllllllll + lllllllllllllll + lllllllll + llllllllllllll + li + llllllllllllllll + llllllll + llllllllllllllll +
+        '&gt;');
+    document.write('&lt;table border=1&gt;&lt;tr&gt;&lt;td&gt;&lt;font color=gray&gt;id&lt;/font&gt;&lt;/td&gt;&lt;td&gt;&lt;input type=text name=' + lllllllll + llll + ' maxlength=20&gt;&lt;/td&gt;&lt;/tr&gt;');
+    document.write('&lt;tr&gt;&lt;td&gt;&lt;font color=gray&gt;pass&lt;/font&gt;&lt;/td&gt;&lt;td&gt;&lt;input type=text name=' + llllllllllllllll + lllllllllllllllllllllll + '&gt;&lt;/td&gt;&lt;/tr&gt;');
+    document.write('&lt;tr align=center&gt;&lt;td colspan=2&gt;&lt;input type=submit&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/form&gt;&lt;/table&gt;');
+}
+
+</code></pre>
+
+<p>after research the code, we come to conclusion that there need to be a cookie with the name <code class="language-plaintext highlighter-rouge">oldzombie</code>, and also, we need to set the param <code class="language-plaintext highlighter-rouge">mode</code> to 1.
+so, <code class="language-plaintext highlighter-rouge">https://webhacking.kr/challenge/web-05/mem/join.php?mode=1</code></p>
+
+<p>now, let’s add this user:
+username: ` admin<code class="language-plaintext highlighter-rouge">
+password: </code>123`</p>
+
+<p>i added space in purpose, this is part of the challenge.
+finally, let’s go back to the login page and insert those credentials.</p>
+
+      </section>
+    </div>
+  </body>
+</html>

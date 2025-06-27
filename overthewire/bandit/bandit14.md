@@ -3,7 +3,7 @@ layout: default
 title: bandit14
 ---
 
-# Bandit Level 14 Solution
+
 
 ```
 ssh -i sshkey.private bandit14@localhost -p 2220

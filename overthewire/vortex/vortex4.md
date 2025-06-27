@@ -3,7 +3,7 @@ layout: default
 title: vortex4
 ---
 
-# vortex level4 Solution
+
 In this challenge, we had a format string attack.
 
 ![image](./images/level4_1.png)
@@ -21,7 +21,7 @@ So, we needed to insert 3 bytes into the first address and 1 byte into the fourt
 I wrote this C code to run `/vortex/vortex4` with the payload (`level4.c`).
 
 ```py
-% scripts/level4.py
+{% include_relative scripts/level4/level4.py %}
 ```
 . You need to adjust the `address_of_exit` and `address_of_shellcode`, debug, and find them.
 
@@ -31,7 +31,7 @@ I wrote this C code to run `/vortex/vortex4` with the payload (`level4.c`).
 **Flag:** ***`heo3EbnS9`***
 
 ```c
-% scripts/level4_with_payload.c
+{% include_relative scripts/level4/level4_with_payload.c %}
 ```
  and just provide the payload inside, the regular payload will work.
 

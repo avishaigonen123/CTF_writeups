@@ -3,7 +3,7 @@ layout: default
 title: bandit17
 ---
 
-# Bandit Level 17 Solution
+
 
 ```
 bandit16@bandit:~$ nmap localhost -p 31000-32000

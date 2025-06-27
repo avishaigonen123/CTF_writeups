@@ -3,12 +3,12 @@ layout: default
 title: maze1
 ---
 
-# maze level1 Solution
+
 
 in this challange, we need to create our own `libc.so.4` that will be used by the program.
 
 ```c
-% scripts/hook.c
+{% include_relative scripts/level1/hook.c %}
 ```
 , you need to adjust the addresses on the stack of the (maybe) local variables.
 

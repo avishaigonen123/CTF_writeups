@@ -2,7 +2,7 @@ title: Avishai's CTF Writeups
 description: "..."
 url: "https://avishaigonen123.github.io"
 baseurl: "/CTF_writeups"  
-remote_theme: pages-themes/midnight@v0.2.0
+remote_theme: pages-themes/hacker
 
 plugins:
   - jekyll-remote-theme

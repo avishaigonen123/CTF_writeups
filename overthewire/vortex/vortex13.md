@@ -3,7 +3,7 @@ layout: default
 title: vortex13
 ---
 
-# vortex level13 Solution
+
 
 stuck ! 
 

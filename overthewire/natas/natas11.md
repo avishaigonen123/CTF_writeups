@@ -3,7 +3,7 @@ layout: default
 title: natas11
 ---
 
-# Natas Level 11 Solution
+
 
 ```
 <?
@@ -37,7 +37,7 @@ function xor_encrypt($in) {
 
     // Iterate through each character
     for($i=0;$i<strlen($text);$i++) {
-    $outText .= $text[$i] ^ $key[$i % strlen($key)];
+    $outText .= $text[$i] ^ $key[$i % strlen($key)]; 
     }
 
     return $outText;

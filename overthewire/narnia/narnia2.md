@@ -3,7 +3,7 @@ layout: default
 title: narnia2
 ---
 
-# narnia level2 Solution
+
 
 we will use our shellcode [shellcode.py](./general/shellcode.py)
 

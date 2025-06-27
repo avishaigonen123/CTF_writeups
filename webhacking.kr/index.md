@@ -1,19 +1,46 @@
 ---
 layout: default
-title: Writeups
+title: Webhacking.Kr Writeups
 ---
 
-# 🧠 Writeups in `{{ page.path | split: "/" | slice: 0 }}`
+This folder contains solutions for the [Webhacking.Kr](http://overthewire.org/wargames/webhacking.kr/) wargame from OverTheWire.
 
-<div style="max-height: 500px; overflow-y: auto; padding: 1rem; border: 1px solid #ccc; border-radius: 10px;">
+<style>
+/* Styles same as your Behemoth example – omitted here for brevity */
+</style>
 
-<ul>
-{% assign current_dir = page.path | split: "/" | first %}
-{% for p in site.pages %}
-  {% if p.path contains current_dir and p.url != page.url and p.url contains ".html" %}
-    <li><a href="{{ p.url }}">{{ p.title | default: p.path }}</a></li>
-  {% endif %}
-{% endfor %}
-</ul>
+<div class="behemoth-container">
+
+  <!-- Sidebar -->
+  <div class="behemoth-sidebar">
+    <h00>Levels</h00>
+    <ul>
+      {% assign webhacking.kr_pages = site.pages 
+        | where_exp: "p", "p.path contains 'overthewire/webhacking.kr'" 
+        | reject: "path", "overthewire/webhacking.kr/index.md" 
+        | reject: "path", "overthewire/webhacking.kr/index.html" 
+      %}
+      {% assign level_pages = webhacking.kr_pages | sort_natural: "path" %}
+      {% for p in level_pages %}
+        {% assign name = p.path | split: '/' | last | split: '.' | first %}
+        {% if name != "index" %}
+          <li><a href="#{{ name }}">{{ name }}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Main content -->
+  <div class="behemoth-content">
+    {% for p in level_pages %}
+      {% assign name = p.path | split: '/' | last | split: '.' | first %}
+      {% if name != "index" %}
+        <h00 id="{{ name }}">{{ name }}</h00>
+        {{ p.content | markdownify }}
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      {% endif %}
+    {% endfor %}
+  </div>
 
 </div>

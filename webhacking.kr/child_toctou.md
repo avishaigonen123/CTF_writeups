@@ -11,7 +11,7 @@ i can use this: https://github.com/l4rzy/l4rzy.github.io/commit/0f9c7f5e53ac9693
 
 here is the source code: [child_toctou]
 ```python
-% scripts/child_toctou.py
+{% include_relative scripts/child_toctou.py %}
 ```
 
 

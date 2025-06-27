@@ -7,7 +7,7 @@ title: coin
 
 in this challenge we need to do binary search, multiple times, until we answer to all of the questions.
 ```py
-% scripts/coin.py
+{% include_relative scripts/coin/coin.py %}
 ```
  
 ![image](./images/coin.png)

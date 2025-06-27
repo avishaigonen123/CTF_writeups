@@ -3,7 +3,7 @@ layout: default
 title: bandit32
 ---
 
-# Bandit Level 32 Solution
+
 
 
 ```

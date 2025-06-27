@@ -3,10 +3,10 @@ layout: default
 title: vortex1
 ---
 
-# vortex level1 Solution
+
 
 ```py
-% scripts/level1.py
+{% include_relative scripts/level1/level1.py %}
 ```
 
 

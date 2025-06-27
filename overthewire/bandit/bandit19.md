@@ -3,7 +3,7 @@ layout: default
 title: bandit19
 ---
 
-# Bandit Level 19 Solution
+
 
 ```
 moshe@myPC:~$ ssh bandit18@bandit.labs.overthewire.org -p 2220 cat ./readme

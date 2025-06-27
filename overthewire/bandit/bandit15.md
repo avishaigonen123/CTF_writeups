@@ -3,7 +3,7 @@ layout: default
 title: bandit15
 ---
 
-# Bandit Level 15 Solution
+
 
 ```
 bandit14@bandit:~$ nc localhost 30000

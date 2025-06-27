@@ -7,7 +7,7 @@ title: golem
 
 the source code is here [golem]
 ```python
-% scripts/golem.py
+{% include_relative scripts/golem.py %}
 ```
 
 

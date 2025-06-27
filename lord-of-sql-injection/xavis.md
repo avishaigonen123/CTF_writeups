@@ -6,8 +6,8 @@ title: xavis
 # Lord of SQLInjection xavis Solution
 
 the source code is here [xavis]
-```python
-% scripts/xavis.py
+```scripts/xavis.py
+{% include_relative scripts/xavis.py %}
 ```
 
 

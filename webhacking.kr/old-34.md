@@ -12,8 +12,8 @@ as we can see, there is some messy javascript code:
 let's try to beautifier it in https://beautifier.io/
 and analyze the code
 [old-34]
-```javascript
-% scripts/old-34.js
+```scripts/old-34.js
+{% include_relative scripts/old-34.js %}
 ```
 
 

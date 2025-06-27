@@ -3,7 +3,7 @@ layout: default
 title: vortex12
 ---
 
-# vortex level12 Solution
+
 
 in this challenge we need to use ROP chain in order to exploit the buffer overflow. 
 we will find our gadgets in *libc.so.6*, and in *ld-linux.so.2*.

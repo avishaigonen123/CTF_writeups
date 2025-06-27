@@ -3,7 +3,7 @@ layout: default
 title: bandit29
 ---
 
-# Bandit Level 29 Solution
+
 
 
 ```

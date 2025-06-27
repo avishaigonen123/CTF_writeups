@@ -8,7 +8,7 @@ title: Level2_Pwnage_Linux_Level_Up
 here we need to give username: `nobody`, password: `Ksdkjkk32avsh`, and then in the command we can overflow the user and put there `root`.
 
 ```py
-% scripts/level2.py
+{% include_relative scripts/level2.py %}
 ```
 
 

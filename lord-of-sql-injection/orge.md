@@ -7,7 +7,7 @@ title: orge
 
 the source code is here [orge]
 ```python
-% scripts/orge.py
+{% include_relative scripts/orge.py %}
 ```
 
 

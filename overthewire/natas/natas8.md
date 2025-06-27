@@ -3,7 +3,7 @@ layout: default
 title: natas8
 ---
 
-# Natas Level 8 Solution
+
 
 in this challenge i check what the secret needs to be, by running the reverse procedure.
 

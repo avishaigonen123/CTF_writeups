@@ -3,7 +3,7 @@ layout: default
 title: bandit16
 ---
 
-# Bandit Level 16 Solution
+
 
 ```
 bandit15@bandit:~$ openssl s_client -port 30001 -quiet

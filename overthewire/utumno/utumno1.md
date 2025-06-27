@@ -3,16 +3,16 @@ layout: default
 title: utumno1
 ---
 
-# utumno level1 Solution
+
 
 here, we need to put our shellcode after "sh_". there is a small problem that we can't use "\\" in the shell code, because this char can't be in filname
 
 ```py
-% scripts/level1.py
+{% include_relative scripts/level1/level1.py %}
 ```
 
 ```sh
-% scripts/script.sh
+{% include_relative scripts/level1/script.sh %}
 ```
 
 

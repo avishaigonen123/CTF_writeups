@@ -3,7 +3,7 @@ layout: default
 title: narnia7
 ---
 
-# narnia level7 Solution
+
 
 we can see it doesn't have ASLR but have stack protection.
 ![alt text](./images/level7_1.png)
@@ -22,7 +22,7 @@ so, the (virtual)address of system on the RAM is `0xf7dcd430`, let's put it into
 
  [level7.py]
 ```python
-% scripts/level7.py
+{% include_relative scripts/level7.py %}
 ```
 
 

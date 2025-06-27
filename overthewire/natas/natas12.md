@@ -3,7 +3,7 @@ layout: default
 title: natas12
 ---
 
-# Natas Level 12 Solution
+
 
 here we inject webshell, by changing the EXT of the tmp file we upload, as you can see below
 

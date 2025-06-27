@@ -8,8 +8,8 @@ title: old-04
 in this challenge, we do dictionary attack, based on well known salt. we need to calculate as much hashes as possible.
 
 This is the source code: [old-04]
-```python
-% scripts/old-04.py
+```scripts/old-04.py
+{% include_relative scripts/old-04.py %}
 ```
 
 there is an example of how the dictionary should look like, i gave you only 1000 rows... you need to generate much more rows: [hash-dictionry-old-4]
