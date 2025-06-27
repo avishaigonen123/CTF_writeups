@@ -108,7 +108,7 @@ title: Drifter Writeups
       flex-direction: column;
     }
     .drifter-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }

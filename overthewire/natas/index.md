@@ -108,7 +108,7 @@ title: Natas Writeups
       flex-direction: column;
     }
     .natas-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }

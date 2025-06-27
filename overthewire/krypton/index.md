@@ -108,7 +108,7 @@ title: Krypton Writeups
       flex-direction: column;
     }
     .krypton-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }

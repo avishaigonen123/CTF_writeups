@@ -108,7 +108,7 @@ title: Narnia Writeups
       flex-direction: column;
     }
     .narnia-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }
