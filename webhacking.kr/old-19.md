@@ -3,7 +3,7 @@ layout: default
 title: old-19
 ---
 
-# Webhacking old-19 Solution
+
 
 in the cookie *user id* you need to insert the next value:
 ```

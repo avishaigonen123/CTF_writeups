@@ -3,7 +3,7 @@ layout: default
 title: RegexMaster
 ---
 
-# Webhacking RegexMaster Solution
+
 
 In this challange we exploit regex injection.
 

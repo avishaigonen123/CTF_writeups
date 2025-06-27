@@ -3,7 +3,7 @@ layout: default
 title: Jail2
 ---
 
-# Jail2 Solution
+
 
 here, we redirect the output of `</home/level2/flag.txt` into $input, by running this command:
 `$(</home/level2/flag.txt)`

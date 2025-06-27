@@ -3,7 +3,7 @@ layout: default
 title: BABY
 ---
 
-# webhacking BABY Solution
+
 
 Here we can inject tag, we can inject this:
 `<base href="ourDomain.com">`

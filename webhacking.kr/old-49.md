@@ -3,7 +3,7 @@ layout: default
 title: old-49
 ---
 
-# Webhacking old-49 Solution
+
 
 another sql injection.
 here we want to insert this: `1 or id = 'admin'`

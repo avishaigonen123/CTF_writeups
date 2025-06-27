@@ -3,7 +3,7 @@ layout: default
 title: old-51
 ---
 
-# Webhacking old-51 Solution
+
 
 you need to insert to id the value `admin`
 and to the password this value `129581926211651571912466741651878684928`

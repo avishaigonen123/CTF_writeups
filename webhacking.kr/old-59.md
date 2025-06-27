@@ -3,7 +3,7 @@ layout: default
 title: old-59
 ---
 
-# Webhacking old-59 Solution
+
 
 
 we create the next raw: ('nimda',1,'admin')

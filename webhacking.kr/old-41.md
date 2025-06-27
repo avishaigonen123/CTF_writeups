@@ -3,7 +3,7 @@ layout: default
 title: old-41
 ---
 
-# Webhacking old-41 Solution
+
 
 first we will upload file with long filename, and see what happens: [old-41]
 ```scripts/old-41.py

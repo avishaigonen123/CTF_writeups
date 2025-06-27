@@ -3,7 +3,7 @@ layout: default
 title: collision
 ---
 
-# collision Solution
+
 
 ```python
 {% include_relative scripts/collision/collision.py %}

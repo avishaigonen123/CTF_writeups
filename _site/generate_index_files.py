@@ -1,15 +1,17 @@
 import os
 from string import Template
 
+WARGAME_NAME = "trythis0ne"
+
 TEMPLATE = Template('''---
 layout: default
 title: ${title} Writeups
 ---
-<a href="/CTF_writeups/overthewire/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
-      ← Back to OverTheWire
-    </a>
-                    
-### This folder contains solutions for the [${title}](http://overthewire.org/wargames/${slug}/) wargame from OverTheWire.
+<a href="/CTF_writeups/${wargame_name}/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
+      ← Back to ${wargame_name}
+</a>
+
+### This folder contains solutions for the [${title}](http://${wargame_name}/${slug}/) wargame from ${wargame_name}.
 
 <style>
   body {
@@ -111,7 +113,7 @@ title: ${title} Writeups
       flex-direction: column;
     }
     .${slug}-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }
@@ -134,9 +136,9 @@ title: ${title} Writeups
     <h00>Levels</h00>
     <ul>
       {% assign ${slug}_pages = site.pages
-        | where_exp: "p", "p.path contains 'overthewire/${slug}'"
-        | reject: "path", "overthewire/${slug}/index.md"
-        | reject: "path", "overthewire/${slug}/index.html"
+        | where_exp: "p", "p.path contains '${wargame_name}/${slug}'"
+        | reject: "path", "${wargame_name}/${slug}/index.md"
+        | reject: "path", "${wargame_name}/${slug}/index.html"
       %}
       {% assign level_pages = ${slug}_pages | sort_natural: "path" %}
       {% for p in level_pages %}
@@ -165,17 +167,21 @@ title: ${title} Writeups
 ''')
 
 def generate_index_file(folder_path, slug):
+    content = TEMPLATE.substitute(
+        title=slug.capitalize(),
+        slug=slug,
+        wargame_name=WARGAME_NAME
+    )
     index_path = os.path.join(folder_path, "index.md")
-    content = TEMPLATE.substitute(title=slug.capitalize(), slug=slug)
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(content)
     print(f"✅ Generated: {index_path}")
 
 def should_generate_index(folder):
-    md_files = [f for f in os.listdir(folder) if f.endswith(".md")]
-    return len(md_files) > 1  # Now always overwrite
+    files = [f for f in os.listdir(folder) if f.endswith(".md") and f not in ("index.md", "index.html")]
+    return len(files) > 0
 
-def main(root="overthewire"):
+def main(root=WARGAME_NAME):
     print(f"🔍 Scanning '{root}' for folders with markdown files...")
     count = 0
     for subdir, dirs, files in os.walk(root):

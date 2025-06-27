@@ -3,7 +3,7 @@ layout: default
 title: old-42
 ---
 
-# Webhacking old-42 Solution
+
 
 i can see that there is base64 encoding here.
 

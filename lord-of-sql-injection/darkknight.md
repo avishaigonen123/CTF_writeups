@@ -3,7 +3,7 @@ layout: default
 title: darkknight
 ---
 
-# Lord of SQLInjection darkknight Solution
+
 
 the source code is here [darkknight]
 ```python

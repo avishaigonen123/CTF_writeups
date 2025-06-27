@@ -3,7 +3,7 @@ layout: default
 title: Most basic SQLi pattern
 ---
 
-# Most basic SQLi pattern Solution
+
 
 here we give username: `' or 1 -- ` and password `b`.
 

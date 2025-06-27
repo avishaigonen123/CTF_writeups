@@ -4,8 +4,15 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Manpage Writeups | Avishai’s CTF Writeups</title>
@@ -150,7 +157,7 @@
       flex-direction: column;
     }
     .manpage-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }
@@ -242,9 +249,6 @@
 </code></pre></div></div>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level1</span><span class="o">/</span><span class="n">payload</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
 </code></pre></div></div>
-<p>[level1.py]</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level1</span><span class="o">/</span><span class="n">payload</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
-</code></pre></div></div>
 
 <p>don’t forget to put the shellcode in an environment variable, and put the address of the shellcode in <code class="language-plaintext highlighter-rouge">shellcode_address</code>, in the payload.py file.</p>
 
@@ -261,18 +265,9 @@
         <h00 id="manpage2">manpage2</h00>
         <p>in this level we can exploit the fact it leaves the file open, and also we can execute our code using the last line that reruns the file, with <code class="language-plaintext highlighter-rouge">excel</code>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">shellcode</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level2</span><span class="o">/</span><span class="n">level2</span><span class="p">.</span><span class="n">c</span> <span class="o">%</span><span class="p">}</span>
 </code></pre></div></div>
-<!--
- ```c
-{% include_relative scripts/level2/level2.c %}
-```
-```c
-{% include_relative scripts/level2/read_pass.c %}
-```
- -->
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">shellcode</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level2</span><span class="o">/</span><span class="n">read_pass</span><span class="p">.</span><span class="n">c</span> <span class="o">%</span><span class="p">}</span>
 </code></pre></div></div>
 
 <p><img src="/CTF_writeups/overthewire/manpage/images/level2.png" alt="image" /></p>
@@ -286,9 +281,9 @@
       
       
         <h00 id="manpage3">manpage3</h00>
-        <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>% include_relative scripts/level3/level3.sh %<span class="o">}</span>
+        <p>Brute forcing</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>% include_relative scripts/level3/level3.sh %<span class="o">}</span>
 </code></pre></div></div>
-<p>for brute force.</p>
 
 <p>then, we’ll run it in the background and try giving empty string, by entering <em>ctrl-D</em>.</p>
 
@@ -345,8 +340,6 @@ The diff between them is 1284, and then we need to find how many characters we n
     </tr>
   </tbody>
 </table>
-
-<p><img src="./images/level5.png" alt="level5" /></p>
 
 <p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">sxmrfDKUtV</code></em></strong></p>
 

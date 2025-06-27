@@ -3,7 +3,7 @@ layout: default
 title: dark_eyes
 ---
 
-# Lord of SQLInjection dark_eyes Solution
+
 
 the source code is here [dark_eyes]
 ```python

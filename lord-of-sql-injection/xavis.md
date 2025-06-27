@@ -3,7 +3,7 @@ layout: default
 title: xavis
 ---
 
-# Lord of SQLInjection xavis Solution
+
 
 the source code is here [xavis]
 ```scripts/xavis.py

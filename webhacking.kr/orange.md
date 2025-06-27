@@ -3,7 +3,7 @@ layout: default
 title: orange
 ---
 
-# webhacking orange Solution
+
 
 It looks like SSRF, we can supply the `url` parameter.
 ```php

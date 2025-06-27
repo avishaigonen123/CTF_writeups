@@ -3,7 +3,7 @@ layout: default
 title: Lets_Drive
 ---
 
-# trythis0ne Let's_Drive Solution
+
 
 I downloaded the image and run `strings filename.bmp` in the command line.
 

@@ -3,7 +3,7 @@ layout: default
 title: old-07
 ---
 
-# webhacking old-07 Solution
+
 
 here there is another sql challenge:
 

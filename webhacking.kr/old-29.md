@@ -3,7 +3,7 @@ layout: default
 title: old-29
 ---
 
-# Webhacking old-29 Solution
+
 
 this is another sql injection challenge.
 I think the sql query is like that: `INSERT INTO table Values (filename)`, so, we need to see what are the next columns, there are 2 options:

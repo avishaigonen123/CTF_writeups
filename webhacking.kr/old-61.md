@@ -3,7 +3,7 @@ layout: default
 title: old-61
 ---
 
-# Webhacking old-61 Solution
+
 
 this is the payload we will send:
 `0x61646D696E%0bid#`

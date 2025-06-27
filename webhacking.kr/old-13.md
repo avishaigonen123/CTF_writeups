@@ -3,7 +3,7 @@ layout: default
 title: old-13
 ---
 
-# Webhacking old-13 Solution
+
 
 Another sql injection.
 Here i maid some fancy script, i should use it in the future.

@@ -3,7 +3,7 @@ layout: default
 title: g00gle2
 ---
 
-# webhacking g00gle2 Solution
+
 
 here we can see that in the beginning the flag was exist, and then, during the fetching of the data, it has been changed.
 

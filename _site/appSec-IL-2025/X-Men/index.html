@@ -4,13 +4,20 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>X Men Writeups | Avishai’s CTF Writeups</title>
+<title>X-men Writeups | Avishai’s CTF Writeups</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="X Men Writeups" />
+<meta property="og:title" content="X-men Writeups" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
@@ -19,9 +26,9 @@
 <meta property="og:site_name" content="Avishai’s CTF Writeups" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="X Men Writeups" />
+<meta property="twitter:title" content="X-men Writeups" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"X Men Writeups","url":"http://localhost:4000/CTF_writeups/appSec-IL-2025/X-Men/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"X-men Writeups","url":"http://localhost:4000/CTF_writeups/appSec-IL-2025/X-Men/"}</script>
 <!-- End Jekyll SEO tag -->
 
   </head>
@@ -44,26 +51,179 @@
 
     <div class="container">
       <section id="main_content">
-        <p>This folder contains solutions for the <a href="http://overthewire.org/wargames/X-Men/">X Men</a> wargame from OverTheWire.</p>
+        <p><a href="/CTF_writeups/appSec-IL-2025/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
+      ← Back to appSec-IL-2025
+</a></p>
+
+<h3 id="this-folder-contains-solutions-for-the-x-men-wargame-from-appsec-il-2025">This folder contains solutions for the <a href="http://appSec-IL-2025/X-Men/">X-men</a> wargame from appSec-IL-2025.</h3>
 
 <style>
-/* Styles same as your Behemoth example – omitted here for brevity */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eceff1;
+    color: #333;
+    margin: 0;
+  }
+  #main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto;
+  }
+  .X-Men-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+  .X-Men-sidebar {
+    min-width: 200px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #34495e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #ecf0f1;
+    margin-top: 1rem;
+  }
+  .X-Men-sidebar h00 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ecf0f1;
+    border-bottom: 2px solid #16a085;
+    padding-bottom: 0.5rem;
+  }
+  .X-Men-sidebar ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 1rem;
+    margin: 0;
+  }
+  .X-Men-sidebar li {
+    margin-bottom: 0.5rem;
+  }
+  .X-Men-sidebar a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ecf0f1;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .X-Men-sidebar a:hover {
+    background-color: #16a085;
+    color: #fff;
+  }
+  .X-Men-content {
+    flex: 1;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    font-size: 1rem;
+    color: #333;
+    margin-top: 1rem;
+  }
+  .X-Men-content h00 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color:rgb(143, 151, 159);
+    scroll-margin-top: 100px;
+  }
+  hr {
+    margin: 2.5rem 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+  .X-Men-sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .X-Men-sidebar::-webkit-scrollbar-thumb {
+    background-color: #16a085;
+    border-radius: 4px;
+  }
+  .X-Men-sidebar::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+  }
+  @media (max-width: 768px) {
+    .X-Men-container {
+      flex-direction: column;
+    }
+    .X-Men-sidebar {
+      max-height: none;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+  .level-banner {
+    background-color: #16a085;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2rem;
+    border-radius: 8px;
+  }
 </style>
 
-<div class="behemoth-container">
+<div class="X-Men-container">
 
   <!-- Sidebar -->
-  <div class="behemoth-sidebar">
+  <div class="X-Men-sidebar">
     <h00>Levels</h00>
     <ul>
       
       
       
+        
+        
+      
+        
+        
+          <li><a href="#X-Men">X-Men</a></li>
+        
+      
     </ul>
   </div>
 
   <!-- Main content -->
-  <div class="behemoth-content">
+  <div class="X-Men-content">
+    
+      
+      
+    
+      
+      
+        <h00 id="X-Men">X-Men</h00>
+        <h1 id="x-men">X-Men</h1>
+
+<ul>
+  <li>
+    <h2 id="category-web"><strong>Category:</strong> Web</h2>
+  </li>
+</ul>
+
+<p>The challenge is about XPath injection.</p>
+
+<p>I basically injected this payload <code class="language-plaintext highlighter-rouge">' or '1'='1</code>, and by this way so all the users.
+Very similar to SQLi</p>
+
+<p>Here you can see the final image using burp suite</p>
+
+<p><img src="/CTF_writeups/appSec-IL-2025/X-Men/Final.jpg" alt="final image" /></p>
+
+<p>The flag is <code class="language-plaintext highlighter-rouge">AppSec-IL{!XPaTh_Inj3ct10n@_ForC3}</code></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
     
   </div>
 

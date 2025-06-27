@@ -3,7 +3,7 @@ layout: default
 title: old-39
 ---
 
-# webhacking.kr old-39 Solution
+
 
 here we will insert payload that will drop the last duplicated '
 

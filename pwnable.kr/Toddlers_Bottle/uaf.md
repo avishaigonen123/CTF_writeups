@@ -3,7 +3,7 @@ layout: default
 title: uaf
 ---
 
-# uaf Solution
+
 
 here we exploit the fact we delete Man and Woman, and manage to put our code inside the grave of Man and Woman.
 Then, when we'll call it's introduce function, it will execute shell.

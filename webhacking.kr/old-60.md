@@ -3,7 +3,7 @@ layout: default
 title: old-60
 ---
 
-# Webhacking old-60 Solution
+
 
 this challenge is based on race condition, and also on the fact that you can talk on two different PHP sessions by changing your cookie.
 

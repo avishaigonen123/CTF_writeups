@@ -3,7 +3,7 @@ layout: default
 title: old-32
 ---
 
-# Webhacking old-32 Solution
+
 
 solution in [old-32]
 ```scripts/old-32.py

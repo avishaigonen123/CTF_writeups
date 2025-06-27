@@ -3,7 +3,7 @@ layout: default
 title: old-36
 ---
 
-# Webhacking old-36 Solution
+
 
 
 we will take the temp file: `.index.php.swp` by going to this file directly using the browser.

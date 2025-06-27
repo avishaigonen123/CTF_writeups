@@ -3,7 +3,7 @@ layout: default
 title: Ohno
 ---
 
-# trythis0ne Ohno Solution
+
 
 
 in this challenge you can run the function doit() that will rewrite the page, using decrypting some big array. 

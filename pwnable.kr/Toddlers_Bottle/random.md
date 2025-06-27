@@ -3,7 +3,7 @@ layout: default
 title: random
 ---
 
-# random Solution
+
 
 here is using rand(), without setting the seed using srand().
 so, it means it uses the default seed and this will always give the same sequence.

@@ -6,7 +6,7 @@ title: Toddlers_bottle Writeups
       ← Back to pwnable.kr
     </a>
                     
-### This folder contains solutions for the [Toddlers_bottle](http://pwnable.kr/Toddlers_Bottle/) wargame from Pwnable.kr.
+##s for the [Toddlers_bottle](http://pwnable.kr/Toddlers_Bottle/) wargame from Pwnable.kr.
 
 <style>
   body {

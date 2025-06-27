@@ -3,7 +3,7 @@ layout: default
 title: old-56
 ---
 
-# Webhacking old-56 Solution
+
 
 here what you need to do is brute force, solution in the source code
 [old-56]

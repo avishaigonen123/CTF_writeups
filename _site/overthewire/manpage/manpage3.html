@@ -4,8 +4,15 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>manpage3 | Avishai’s CTF Writeups</title>
@@ -44,14 +51,14 @@
 
     <div class="container">
       <section id="main_content">
-        <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+        <p>Brute forcing</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
 <span class="k">while</span> <span class="o">[</span> <span class="nb">true</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
  /manpage/manpage3-reset
 <span class="k">done</span><span class="p">;</span>
 
 </code></pre></div></div>
-<p>for brute force.</p>
 
 <p>then, we’ll run it in the background and try giving empty string, by entering <em>ctrl-D</em>.</p>
 

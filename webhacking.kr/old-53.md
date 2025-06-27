@@ -3,7 +3,7 @@ layout: default
 title: old-53
 ---
 
-# Webhacking old-53 Solution
+
 
 this is another sql injection problem.
 

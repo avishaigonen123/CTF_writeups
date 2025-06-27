@@ -3,7 +3,7 @@ layout: default
 title: Level2_Pwnage_Linux_Level_Up
 ---
 
-# Level2 Pwnage Linux Level Up Solution
+
 
 here we need to give username: `nobody`, password: `Ksdkjkk32avsh`, and then in the command we can overflow the user and put there `root`.
 

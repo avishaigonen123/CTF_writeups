@@ -3,7 +3,7 @@ layout: default
 title: old-34
 ---
 
-# Webhacking old-34 Solution
+
 
 as we can see, there is some messy javascript code:
 
