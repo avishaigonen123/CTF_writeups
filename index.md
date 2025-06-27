@@ -11,7 +11,7 @@ title: "CTF Writeups Home"
 
 ## 📁 Contents
 
-<div style="font-size: 1.4rem; line-height: 2;">
+<div style="font-size: 1.4rem; line-height: 2.5;">
   <ul style="list-style-type: none; padding: 0;">
     <li>🔓 <a href="./overthewire/">OverTheWire</a></li>
     <li>🕵️ <a href="./trythis0ne/">trythis0ne</a></li>
@@ -20,7 +20,6 @@ title: "CTF Writeups Home"
     <li>🧮 <a href="./lord-of-sql-injection/">Lord of SQL Injection</a></li>
     <li>🎯 <a href="./ringzer0">RingZer0</a></li>
     <li>🇮🇱 <a href="./appSec-IL-2025/">AppSec-IL-2025</a></li>
-    <li>📦 <a href="./stuff">Other Stuff</a></li>
   </ul>
 </div>
 
