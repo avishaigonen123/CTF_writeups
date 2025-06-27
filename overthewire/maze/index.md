@@ -20,13 +20,13 @@ title: Maze Writeups
     width: 100% !important;
     margin: 0 auto;
   }
-  .maze-container {
+  .behemoth-container {
     display: flex;
     gap: 1.5rem;
     margin-top: 2rem;
     padding: 1rem;
   }
-  .maze-sidebar {
+  .behemoth-sidebar {
     min-width: 200px;
     max-height: 90vh;
     overflow-y: auto;
@@ -39,7 +39,7 @@ title: Maze Writeups
     color: #ecf0f1;
     margin-top: 1rem;
   }
-  .maze-sidebar h00 {
+  .behemoth-sidebar h00 {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
@@ -47,16 +47,16 @@ title: Maze Writeups
     border-bottom: 2px solid #16a085;
     padding-bottom: 0.5rem;
   }
-  .maze-sidebar ul {
+  .behemoth-sidebar ul {
     list-style: none;
     padding-left: 0;
     font-size: 1rem;
     margin: 0;
   }
-  .maze-sidebar li {
+  .behemoth-sidebar li {
     margin-bottom: 0.5rem;
   }
-  .maze-sidebar a {
+  .behemoth-sidebar a {
     display: block;
     padding: 6px 12px;
     border-radius: 6px;
@@ -64,11 +64,11 @@ title: Maze Writeups
     color: #ecf0f1;
     transition: background 0.3s ease, color 0.3s ease;
   }
-  .maze-sidebar a:hover {
+  .behemoth-sidebar a:hover {
     background-color: #16a085;
     color: #fff;
   }
-  .maze-content {
+  .behemoth-content {
     flex: 1;
     max-height: 90vh;
     overflow-y: auto;
@@ -81,7 +81,7 @@ title: Maze Writeups
     color: #333;
     margin-top: 1rem;
   }
-  .maze-content h00 {
+  .behemoth-content h00 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-top: 2rem;
@@ -93,21 +93,21 @@ title: Maze Writeups
     border: none;
     border-top: 1px solid #ddd;
   }
-  .maze-sidebar::-webkit-scrollbar {
+  .behemoth-sidebar::-webkit-scrollbar {
     width: 8px;
   }
-  .maze-sidebar::-webkit-scrollbar-thumb {
+  .behemoth-sidebar::-webkit-scrollbar-thumb {
     background-color: #16a085;
     border-radius: 4px;
   }
-  .maze-sidebar::-webkit-scrollbar-track {
+  .behemoth-sidebar::-webkit-scrollbar-track {
     background-color: #ecf0f1;
   }
   @media (max-width: 768px) {
-    .maze-container {
+    .behemoth-container {
       flex-direction: column;
     }
-    .maze-sidebar {
+    .behemoth-sidebar {
       max-height: auto;
       width: 100%;
       margin-bottom: 2rem;
@@ -124,18 +124,18 @@ title: Maze Writeups
   }
 </style>
 
-<div class="maze-container">
+<div class="behemoth-container">
 
   <!-- Sidebar -->
-  <div class="maze-sidebar">
+  <div class="behemoth-sidebar">
     <h00>Levels</h00>
     <ul>
-      {% assign maze_pages = site.pages
+      {% assign behemoth_pages = site.pages
         | where_exp: "p", "p.path contains 'overthewire/maze'"
         | reject: "path", "overthewire/maze/index.md"
         | reject: "path", "overthewire/maze/index.html"
       %}
-      {% assign level_pages = maze_pages | sort_natural: "path" %}
+      {% assign level_pages = behemoth_pages | sort_natural: "path" %}
       {% for p in level_pages %}
         {% assign name = p.path | split: '/' | last | split: '.' | first %}
         {% if name != "index" %}
@@ -146,7 +146,7 @@ title: Maze Writeups
   </div>
 
   <!-- Main content -->
-  <div class="maze-content">
+  <div class="behemoth-content">
     {% for p in level_pages %}
       {% assign name = p.path | split: '/' | last | split: '.' | first %}
       {% if name != "index" %}
