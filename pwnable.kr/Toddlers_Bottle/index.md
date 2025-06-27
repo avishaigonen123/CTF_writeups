@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Toddler's_bottle Writeups
+title: Toddlers_bottle Writeups
 ---
 <a href="/CTF_writeups/pwnable.kr/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
       ← Back to pwnable.kr
     </a>
                     
-### This folder contains solutions for the [Toddler's_bottle](http://pwnable.kr/Toddler's_Bottle/) wargame from Pwnable.kr.
+### This folder contains solutions for the [Toddlers_bottle](http://pwnable.kr/Toddlers_Bottle/) wargame from Pwnable.kr.
 
 <style>
   body {
@@ -20,13 +20,13 @@ title: Toddler's_bottle Writeups
     width: 100% !important;
     margin: 0 auto;
   }
-  .Toddler's_Bottle-container {
+  .Toddlers_Bottle-container {
     display: flex;
     gap: 1.5rem;
     margin-top: 2rem;
     padding: 1rem;
   }
-  .Toddler's_Bottle-sidebar {
+  .Toddlers_Bottle-sidebar {
     min-width: 200px;
     max-height: 90vh;
     overflow-y: auto;
@@ -39,7 +39,7 @@ title: Toddler's_bottle Writeups
     color: #ecf0f1;
     margin-top: 1rem;
   }
-  .Toddler's_Bottle-sidebar h00 {
+  .Toddlers_Bottle-sidebar h00 {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
@@ -47,16 +47,16 @@ title: Toddler's_bottle Writeups
     border-bottom: 2px solid #16a085;
     padding-bottom: 0.5rem;
   }
-  .Toddler's_Bottle-sidebar ul {
+  .Toddlers_Bottle-sidebar ul {
     list-style: none;
     padding-left: 0;
     font-size: 1rem;
     margin: 0;
   }
-  .Toddler's_Bottle-sidebar li {
+  .Toddlers_Bottle-sidebar li {
     margin-bottom: 0.5rem;
   }
-  .Toddler's_Bottle-sidebar a {
+  .Toddlers_Bottle-sidebar a {
     display: block;
     padding: 6px 12px;
     border-radius: 6px;
@@ -64,11 +64,11 @@ title: Toddler's_bottle Writeups
     color: #ecf0f1;
     transition: background 0.3s ease, color 0.3s ease;
   }
-  .Toddler's_Bottle-sidebar a:hover {
+  .Toddlers_Bottle-sidebar a:hover {
     background-color: #16a085;
     color: #fff;
   }
-  .Toddler's_Bottle-content {
+  .Toddlers_Bottle-content {
     flex: 1;
     max-height: 90vh;
     overflow-y: auto;
@@ -81,7 +81,7 @@ title: Toddler's_bottle Writeups
     color: #333;
     margin-top: 1rem;
   }
-  .Toddler's_Bottle-content h00 {
+  .Toddlers_Bottle-content h00 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-top: 2rem;
@@ -93,21 +93,21 @@ title: Toddler's_bottle Writeups
     border: none;
     border-top: 1px solid #ddd;
   }
-  .Toddler's_Bottle-sidebar::-webkit-scrollbar {
+  .Toddlers_Bottle-sidebar::-webkit-scrollbar {
     width: 8px;
   }
-  .Toddler's_Bottle-sidebar::-webkit-scrollbar-thumb {
+  .Toddlers_Bottle-sidebar::-webkit-scrollbar-thumb {
     background-color: #16a085;
     border-radius: 4px;
   }
-  .Toddler's_Bottle-sidebar::-webkit-scrollbar-track {
+  .Toddlers_Bottle-sidebar::-webkit-scrollbar-track {
     background-color: #ecf0f1;
   }
   @media (max-width: 768px) {
-    .Toddler's_Bottle-container {
+    .Toddlers_Bottle-container {
       flex-direction: column;
     }
-    .Toddler's_Bottle-sidebar {
+    .Toddlers_Bottle-sidebar {
       max-height: none;
       width: 100%;
       margin-bottom: 2rem;
@@ -124,18 +124,18 @@ title: Toddler's_bottle Writeups
   }
 </style>
 
-<div class="Toddler's_Bottle-container">
+<div class="Toddlers_Bottle-container">
 
   <!-- Sidebar -->
-  <div class="Toddler's_Bottle-sidebar">
+  <div class="Toddlers_Bottle-sidebar">
     <h00>Levels</h00>
     <ul>
-      {% assign Toddler's_Bottle_pages = site.pages
-        | where_exp: "p", "p.path contains 'pwnable.kr/Toddler's_Bottle'"
-        | reject: "path", "pwnable.kr/Toddler's_Bottle/index.md"
-        | reject: "path", "pwnable.kr/Toddler's_Bottle/index.html"
+      {% assign Toddlers_Bottle_pages = site.pages
+        | where_exp: "p", "p.path contains 'pwnable.kr/Toddlers_Bottle'"
+        | reject: "path", "pwnable.kr/Toddlers_Bottle/index.md"
+        | reject: "path", "pwnable.kr/Toddlers_Bottle/index.html"
       %}
-      {% assign level_pages = Toddler's_Bottle_pages | sort_natural: "path" %}
+      {% assign level_pages = Toddlers_Bottle_pages | sort_natural: "path" %}
       {% for p in level_pages %}
         {% assign name = p.path | split: '/' | last | split: '.' | first %}
         {% if name != "index" %}
@@ -146,7 +146,7 @@ title: Toddler's_bottle Writeups
   </div>
 
   <!-- Main content -->
-  <div class="Toddler's_Bottle-content">
+  <div class="Toddlers_Bottle-content">
     {% for p in level_pages %}
       {% assign name = p.path | split: '/' | last | split: '.' | first %}
       {% if name != "index" %}
