@@ -12,7 +12,9 @@ in this level we can exploit the fact it leaves the file open, and also we can e
 ```c
 {% include_relative scripts/level2/read_pass.c %}
 ```
-
+```py
+{% include_relative general/shellcode.py %}
+```
 
 ![image](./images/level2.png)
 
