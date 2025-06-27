@@ -51,9 +51,7 @@
 
     <div class="container">
       <section id="main_content">
-        <h1 id="webhacking-old-28-solution">Webhacking old-28 Solution</h1>
-
-<p>here we can see we can upload files, and when we try to go to <code class="language-plaintext highlighter-rouge">http://webhacking.kr:10002/upload/jTH2HlN7aYbv/flag.php</code>, we get empty page. That’s because there is a php file there, and we can’t read the code.</p>
+        <p>here we can see we can upload files, and when we try to go to <code class="language-plaintext highlighter-rouge">http://webhacking.kr:10002/upload/jTH2HlN7aYbv/flag.php</code>, we get empty page. That’s because there is a php file there, and we can’t read the code.</p>
 
 <p>After i tried to access file who isn’t exist, i’ve got an error message that indicate we’re using an apache server. Thus, we might control the <code class="language-plaintext highlighter-rouge">.htaccess</code> file by uploading our file, and writing into it: <code class="language-plaintext highlighter-rouge">php_flag engine off</code>.</p>
 

@@ -51,9 +51,7 @@
 
     <div class="container">
       <section id="main_content">
-        <h1 id="webhacking-orange-solution">webhacking orange Solution</h1>
-
-<p>It looks like SSRF, we can supply the <code class="language-plaintext highlighter-rouge">url</code> parameter.</p>
+        <p>It looks like SSRF, we can supply the <code class="language-plaintext highlighter-rouge">url</code> parameter.</p>
 <div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$url</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'url'</span><span class="p">]</span><span class="mf">.</span><span class="s2">".txt"</span><span class="p">;</span>
     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">filter_var</span><span class="p">(</span><span class="nv">$url</span><span class="p">,</span> <span class="no">FILTER_VALIDATE_URL</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s2">"invalid url"</span><span class="p">);</span>
     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">preg_match</span><span class="p">(</span><span class="s2">"/http:\/\/webhacking.kr:10009\//"</span><span class="p">,</span><span class="nv">$url</span><span class="p">))</span> <span class="k">exit</span><span class="p">(</span><span class="s2">"invalid server"</span><span class="p">);</span>
