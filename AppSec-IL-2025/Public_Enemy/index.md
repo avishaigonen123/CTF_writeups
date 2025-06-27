@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Big in japan Writeups
+title: Public_Enemy Writeups
 ---
 <a href="/CTF_writeups/appSec-IL-2025/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
       ← Back to appSec-IL-2025
 </a>
 
-### This folder contains solutions for the [Big in japan](http://appSec-IL-2025/Big In Japan/) wargame from appSec-IL-2025.
+### This folder contains solutions for the [Public_Enemy](http://appSec-IL-2025/Public_Enemy/) wargame from appSec-IL-2025.
 
 <style>
   body {
@@ -20,13 +20,13 @@ title: Big in japan Writeups
     width: 100% !important;
     margin: 0 auto;
   }
-  .Big In Japan-container {
+  .Public_Enemy-container {
     display: flex;
     gap: 1.5rem;
     margin-top: 2rem;
     padding: 1rem;
   }
-  .Big In Japan-sidebar {
+  .Public_Enemy-sidebar {
     min-width: 200px;
     max-height: 90vh;
     overflow-y: auto;
@@ -39,7 +39,7 @@ title: Big in japan Writeups
     color: #ecf0f1;
     margin-top: 1rem;
   }
-  .Big In Japan-sidebar h00 {
+  .Public_Enemy-sidebar h00 {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
@@ -47,16 +47,16 @@ title: Big in japan Writeups
     border-bottom: 2px solid #16a085;
     padding-bottom: 0.5rem;
   }
-  .Big In Japan-sidebar ul {
+  .Public_Enemy-sidebar ul {
     list-style: none;
     padding-left: 0;
     font-size: 1rem;
     margin: 0;
   }
-  .Big In Japan-sidebar li {
+  .Public_Enemy-sidebar li {
     margin-bottom: 0.5rem;
   }
-  .Big In Japan-sidebar a {
+  .Public_Enemy-sidebar a {
     display: block;
     padding: 6px 12px;
     border-radius: 6px;
@@ -64,11 +64,11 @@ title: Big in japan Writeups
     color: #ecf0f1;
     transition: background 0.3s ease, color 0.3s ease;
   }
-  .Big In Japan-sidebar a:hover {
+  .Public_Enemy-sidebar a:hover {
     background-color: #16a085;
     color: #fff;
   }
-  .Big In Japan-content {
+  .Public_Enemy-content {
     flex: 1;
     max-height: 90vh;
     overflow-y: auto;
@@ -81,7 +81,7 @@ title: Big in japan Writeups
     color: #333;
     margin-top: 1rem;
   }
-  .Big In Japan-content h00 {
+  .Public_Enemy-content h00 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-top: 2rem;
@@ -93,21 +93,21 @@ title: Big in japan Writeups
     border: none;
     border-top: 1px solid #ddd;
   }
-  .Big In Japan-sidebar::-webkit-scrollbar {
+  .Public_Enemy-sidebar::-webkit-scrollbar {
     width: 8px;
   }
-  .Big In Japan-sidebar::-webkit-scrollbar-thumb {
+  .Public_Enemy-sidebar::-webkit-scrollbar-thumb {
     background-color: #16a085;
     border-radius: 4px;
   }
-  .Big In Japan-sidebar::-webkit-scrollbar-track {
+  .Public_Enemy-sidebar::-webkit-scrollbar-track {
     background-color: #ecf0f1;
   }
   @media (max-width: 768px) {
-    .Big In Japan-container {
+    .Public_Enemy-container {
       flex-direction: column;
     }
-    .Big In Japan-sidebar {
+    .Public_Enemy-sidebar {
       max-height: none;
       width: 100%;
       margin-bottom: 2rem;
@@ -124,18 +124,18 @@ title: Big in japan Writeups
   }
 </style>
 
-<div class="Big In Japan-container">
+<div class="Public_Enemy-container">
 
   <!-- Sidebar -->
-  <div class="Big In Japan-sidebar">
+  <div class="Public_Enemy-sidebar">
     <h00>Levels</h00>
     <ul>
-      {% assign Big In Japan_pages = site.pages
-        | where_exp: "p", "p.path contains 'appSec-IL-2025/Big In Japan'"
-        | reject: "path", "appSec-IL-2025/Big In Japan/index.md"
-        | reject: "path", "appSec-IL-2025/Big In Japan/index.html"
+      {% assign Public_Enemy_pages = site.pages
+        | where_exp: "p", "p.path contains 'appSec-IL-2025/Public_Enemy'"
+        | reject: "path", "appSec-IL-2025/Public_Enemy/index.md"
+        | reject: "path", "appSec-IL-2025/Public_Enemy/index.html"
       %}
-      {% assign level_pages = Big In Japan_pages | sort_natural: "path" %}
+      {% assign level_pages = Public_Enemy_pages | sort_natural: "path" %}
       {% for p in level_pages %}
         {% assign name = p.path | split: '/' | last | split: '.' | first %}
         {% if name != "index" %}
@@ -146,7 +146,7 @@ title: Big in japan Writeups
   </div>
 
   <!-- Main content -->
-  <div class="Big In Japan-content">
+  <div class="Public_Enemy-content">
     {% for p in level_pages %}
       {% assign name = p.path | split: '/' | last | split: '.' | first %}
       {% if name != "index" %}
