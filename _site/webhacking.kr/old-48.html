@@ -51,9 +51,7 @@
 
     <div class="container">
       <section id="main_content">
-        <h1 id="webhacking-old-48-solution">Webhacking old-48 Solution</h1>
-
-<p>in this challenge there is command injection. when we delete file, it runs this command: <code class="language-plaintext highlighter-rouge">rm -rf $filename</code></p>
+        <p>in this challenge there is command injection. when we delete file, it runs this command: <code class="language-plaintext highlighter-rouge">rm -rf $filename</code></p>
 
 <p>so, we need to upload file with this name for example: <code class="language-plaintext highlighter-rouge">file;ls</code>. Then, when we delete the file, it’ll show us the flag.</p>
 

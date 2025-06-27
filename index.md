@@ -3,27 +3,44 @@ layout: default
 title: "CTF Writeups Home"
 ---
 
-# Welcome to My CTF Writeups
+# 🛡️ Welcome to My CTF Writeups
 
-This repository contains concise solutions for various CTF challenges and wargames I've solved, organized by wargame and level.
+> A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
-## Contents
-- [OverTheWire](./overthewire/)
-- [trythis0ne](./trythis0ne/)
-- [Webhacking.kr](./webhacking.kr/)
-- [Pwnable.kr](./pwnable.kr/)
-- [Lord of sql injection](./lord-of-sql-injection/)
-- [RingZer0](./ringzer0)
-- [AppSec-IL-2025](./AppSec-IL-2025/)
-- Other wargames as they come...
+---
 
-- [Other stuff](./stuff)
+## 📁 Contents
 
-## Wargame Guide
-Each wargame folder contains:
-- **Level Write-Ups**: Short solutions with step-by-step instructions and flags.
-- **Scripts/Code**: Any required code or scripts are included in the same directory as the write-up.
+Explore writeups by platform:
 
-## Notes
-- Write-ups are kept concise, focusing on key steps and solutions.
-- This repository will be updated as I complete new challenges.
+- 🔓 [OverTheWire](./overthewire/)
+- 🕵️ [trythis0ne](./trythis0ne/)
+- 🌐 [Webhacking.kr](./webhacking.kr/)
+- 🧨 [Pwnable.kr](./pwnable.kr/)
+- 🧮 [Lord of SQL Injection](./lord-of-sql-injection/)
+- 🎯 [RingZer0](./ringzer0)
+- 🇮🇱 [AppSec-IL-2025](./appSec-IL-2025/)
+- 📦 [Other Stuff](./stuff)
+
+---
+
+## 🧭 Wargame Guide
+
+Each folder includes:
+- ✍️ **Level Writeups**: Short, step-by-step walkthroughs with clear flags.
+- 💻 **Scripts/Code**: Relevant exploit or helper code placed alongside the writeups.
+
+---
+
+## 📝 Notes
+
+- Writeups are **concise**, focusing only on the **essential steps** to solve each challenge.
+- This project is constantly growing — **new challenges will be added regularly**.
+- All content is meant for **educational purposes**.
+
+---
+
+## 🙌 Happy Hacking!
+
+Feel free to [connect with me](https://github.com/avishaigonen123) or contribute.  
+Learn, explore, and enjoy the world of CTFs 🧠💥
