@@ -3,6 +3,6 @@ layout: default
 title: trying2
 ---
 
-{% highlight python %}
+```python
 {% include_relative general/shellcode.py %}
-{% endhighlight %}
+```
