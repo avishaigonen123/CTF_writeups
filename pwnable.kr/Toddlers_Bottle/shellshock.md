@@ -3,7 +3,7 @@ layout: default
 title: shellshock
 ---
 
-# shellshock Solution
+
 
 in this level we exploit the bug of shellshock, which runs unintentionally code that is found after func declaration inside env variables.
 

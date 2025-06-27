@@ -4,8 +4,15 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Sqlinjection Writeups | Avishai’s CTF Writeups</title>
@@ -44,26 +51,241 @@
 
     <div class="container">
       <section id="main_content">
-        <p>This folder contains solutions for the <a href="http://overthewire.org/wargames/SQLInjection/">Sqlinjection</a> wargame from OverTheWire.</p>
+        <p><a href="/CTF_writeups/ringzer0/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
+      ← Back to ringzer0
+</a></p>
+
+<h3 id="this-folder-contains-solutions-for-the-sqlinjection-wargame-from-ringzer0">This folder contains solutions for the <a href="http://ringzer0/SQLInjection/">Sqlinjection</a> wargame from Ringzer0.</h3>
 
 <style>
-/* Styles same as your Behemoth example – omitted here for brevity */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eceff1;
+    color: #333;
+    margin: 0;
+  }
+  #main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto;
+  }
+  .SQLInjection-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+  .SQLInjection-sidebar {
+    min-width: 200px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #34495e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #ecf0f1;
+    margin-top: 1rem;
+  }
+  .SQLInjection-sidebar h00 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ecf0f1;
+    border-bottom: 2px solid #16a085;
+    padding-bottom: 0.5rem;
+  }
+  .SQLInjection-sidebar ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 1rem;
+    margin: 0;
+  }
+  .SQLInjection-sidebar li {
+    margin-bottom: 0.5rem;
+  }
+  .SQLInjection-sidebar a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ecf0f1;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .SQLInjection-sidebar a:hover {
+    background-color: #16a085;
+    color: #fff;
+  }
+  .SQLInjection-content {
+    flex: 1;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    font-size: 1rem;
+    color: #333;
+    margin-top: 1rem;
+  }
+  .SQLInjection-content h00 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color:rgb(143, 151, 159);
+    scroll-margin-top: 100px;
+  }
+  hr {
+    margin: 2.5rem 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+  .SQLInjection-sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .SQLInjection-sidebar::-webkit-scrollbar-thumb {
+    background-color: #16a085;
+    border-radius: 4px;
+  }
+  .SQLInjection-sidebar::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+  }
+  @media (max-width: 768px) {
+    .SQLInjection-container {
+      flex-direction: column;
+    }
+    .SQLInjection-sidebar {
+      max-height: none;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+  .level-banner {
+    background-color: #16a085;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2rem;
+    border-radius: 8px;
+  }
 </style>
 
-<div class="behemoth-container">
+<div class="SQLInjection-container">
 
   <!-- Sidebar -->
-  <div class="behemoth-sidebar">
+  <div class="SQLInjection-sidebar">
     <h00>Levels</h00>
     <ul>
       
       
       
+        
+        
+          <li><a href="#ACL rulezzz the world">ACL rulezzz the world</a></li>
+        
+      
+        
+        
+      
+        
+        
+          <li><a href="#Login portal 1">Login portal 1</a></li>
+        
+      
+        
+        
+          <li><a href="#Most basic SQLi pattern">Most basic SQLi pattern</a></li>
+        
+      
+        
+        
+          <li><a href="#Po po po po postgresql">Po po po po postgresql</a></li>
+        
+      
+        
+        
+          <li><a href="#Random Login Form">Random Login Form</a></li>
+        
+      
     </ul>
   </div>
 
   <!-- Main content -->
-  <div class="behemoth-content">
+  <div class="SQLInjection-content">
+    
+      
+      
+        <h00 id="ACL rulezzz the world">ACL rulezzz the world</h00>
+        <p>here, i saw it send on post method our user.
+so, i send using burp-suite this user: <code class="language-plaintext highlighter-rouge">' or 1 -- </code>
+<img src="./images/ACL%20rulezzz%20the%20world.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG-sdfoip340e89rfuj34woit</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+    
+      
+      
+        <h00 id="Login portal 1">Login portal 1</h00>
+        <p>here we can’t send <code class="language-plaintext highlighter-rouge">;, --, #</code> and every other comment character. so, let’s send this as username: <code class="language-plaintext highlighter-rouge">' or 1 or '</code> and password anything else, for example, <code class="language-plaintext highlighter-rouge">a</code></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG-4f885o1dal0q1huj6eaxuatcvn</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="Most basic SQLi pattern">Most basic SQLi pattern</h00>
+        <p>here we give username: <code class="language-plaintext highlighter-rouge">' or 1 -- </code> and password <code class="language-plaintext highlighter-rouge">b</code>.</p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG-238974289383274893</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="Po po po po postgresql">Po po po po postgresql</h00>
+        <p>This is the query:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SELECT * FROM users WHERE (username = ('$username') AND ...
+</code></pre></div></div>
+
+<p>so, let’s give this input: <code class="language-plaintext highlighter-rouge">')) or 1 -- </code></p>
+
+<p>however, i get this error, because this is PostgresSQL
+<img src="./images/Po%20po%20po%20po%20postgresql.png" alt="image" /></p>
+
+<p>so, let’s give it true value instead of 1:
+<code class="language-plaintext highlighter-rouge">')) or TRUE -- </code></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG-mdeq68jNN88xLB1o2m8V33Ld</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="Random Login Form">Random Login Form</h00>
+        <p>here we need to connect as admin, so i created this user: ` admin<code class="language-plaintext highlighter-rouge">, and the password is </code>123`. 
+Then, when i login with this username, he recognize me as the admin, because it strips the spaces.</p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG-0Kg64o8M9gPQfH45583Mc0jc3u</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
     
   </div>
 

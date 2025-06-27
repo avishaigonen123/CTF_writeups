@@ -3,7 +3,7 @@ layout: default
 title: flag
 ---
 
-# flag Solution
+
 
 first i used strings on the file, and found it compressed with UPX32.
 then, i decompressed it using upx, `upx -d flag`.

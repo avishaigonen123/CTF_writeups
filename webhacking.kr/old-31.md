@@ -3,7 +3,7 @@ layout: default
 title: old-31
 ---
 
-# Webhacking old-31 Solution
+
 
 in this challenge we will open port for the public internet using ngrok.
 `ngrok tcp 1337`

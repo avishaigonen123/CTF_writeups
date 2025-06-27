@@ -3,7 +3,7 @@ layout: default
 title: lotto
 ---
 
-# lotto Solution
+
 
 in this challenge the lotto process isn't so good, it uses double for-loop and this reduce our brute force to only 45 options.
 

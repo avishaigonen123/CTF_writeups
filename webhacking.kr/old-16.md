@@ -3,7 +3,7 @@ layout: default
 title: old-16
 ---
 
-# webhacking.kr old-16 Solution
+
 
 i can see in the source code this interesting code:
 ![alt text](./images/old-16.png)

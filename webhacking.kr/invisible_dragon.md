@@ -3,7 +3,7 @@ layout: default
 title: invisible_dragon
 ---
 
-# Webhacking Invisible Dragon Solution
+
 
 Here we can bypass this:
 ```php

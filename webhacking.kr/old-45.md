@@ -3,7 +3,7 @@ layout: default
 title: old-45
 ---
 
-# Webhacking old-45 Solution
+
 
 another sql injection.
 here we use insert %bb and then, after the addslashes put `\` before the `'`, it'll take the %bb + `\` and encode in `euc-kr` format.

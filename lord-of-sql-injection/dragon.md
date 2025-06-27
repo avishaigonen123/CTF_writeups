@@ -3,7 +3,7 @@ layout: default
 title: dragon
 ---
 
-# Lord of SQLInjection dragon Solution
+
 
 The payload will be 
 ```

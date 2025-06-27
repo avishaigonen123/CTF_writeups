@@ -4,8 +4,15 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Maze Writeups | Avishai’s CTF Writeups</title>
@@ -62,13 +69,13 @@
     width: 100% !important;
     margin: 0 auto;
   }
-  .behemoth-container {
+  .maze-container {
     display: flex;
     gap: 1.5rem;
     margin-top: 2rem;
     padding: 1rem;
   }
-  .behemoth-sidebar {
+  .maze-sidebar {
     min-width: 200px;
     max-height: 90vh;
     overflow-y: auto;
@@ -81,7 +88,7 @@
     color: #ecf0f1;
     margin-top: 1rem;
   }
-  .behemoth-sidebar h00 {
+  .maze-sidebar h00 {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
@@ -89,16 +96,16 @@
     border-bottom: 2px solid #16a085;
     padding-bottom: 0.5rem;
   }
-  .behemoth-sidebar ul {
+  .maze-sidebar ul {
     list-style: none;
     padding-left: 0;
     font-size: 1rem;
     margin: 0;
   }
-  .behemoth-sidebar li {
+  .maze-sidebar li {
     margin-bottom: 0.5rem;
   }
-  .behemoth-sidebar a {
+  .maze-sidebar a {
     display: block;
     padding: 6px 12px;
     border-radius: 6px;
@@ -106,11 +113,11 @@
     color: #ecf0f1;
     transition: background 0.3s ease, color 0.3s ease;
   }
-  .behemoth-sidebar a:hover {
+  .maze-sidebar a:hover {
     background-color: #16a085;
     color: #fff;
   }
-  .behemoth-content {
+  .maze-content {
     flex: 1;
     max-height: 90vh;
     overflow-y: auto;
@@ -123,7 +130,7 @@
     color: #333;
     margin-top: 1rem;
   }
-  .behemoth-content h00 {
+  .maze-content h00 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-top: 2rem;
@@ -135,22 +142,22 @@
     border: none;
     border-top: 1px solid #ddd;
   }
-  .behemoth-sidebar::-webkit-scrollbar {
+  .maze-sidebar::-webkit-scrollbar {
     width: 8px;
   }
-  .behemoth-sidebar::-webkit-scrollbar-thumb {
+  .maze-sidebar::-webkit-scrollbar-thumb {
     background-color: #16a085;
     border-radius: 4px;
   }
-  .behemoth-sidebar::-webkit-scrollbar-track {
+  .maze-sidebar::-webkit-scrollbar-track {
     background-color: #ecf0f1;
   }
   @media (max-width: 768px) {
-    .behemoth-container {
+    .maze-container {
       flex-direction: column;
     }
-    .behemoth-sidebar {
-      max-height: auto;
+    .maze-sidebar {
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }
@@ -166,10 +173,10 @@
   }
 </style>
 
-<div class="behemoth-container">
+<div class="maze-container">
 
   <!-- Sidebar -->
-  <div class="behemoth-sidebar">
+  <div class="maze-sidebar">
     <h00>Levels</h00>
     <ul>
       
@@ -227,7 +234,7 @@
   </div>
 
   <!-- Main content -->
-  <div class="behemoth-content">
+  <div class="maze-content">
     
       
       

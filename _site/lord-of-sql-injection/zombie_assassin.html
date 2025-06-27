@@ -4,8 +4,15 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>zombie_assassin | Avishai’s CTF Writeups</title>
@@ -44,9 +51,7 @@
 
     <div class="container">
       <section id="main_content">
-        <h1 id="lord-of-sqlinjection-zombie_assassin-solution">Lord of SQLInjection zombie_assassin Solution</h1>
-
-<p>The payload will be for id: <code class="language-plaintext highlighter-rouge">%00</code>
+        <p>The payload will be for id: <code class="language-plaintext highlighter-rouge">%00</code>
 for pw: <code class="language-plaintext highlighter-rouge">%0b--1||</code> 
 and the whole query will look like this: <code class="language-plaintext highlighter-rouge">id=%00&amp;pw=%0b--1||</code></p>
 

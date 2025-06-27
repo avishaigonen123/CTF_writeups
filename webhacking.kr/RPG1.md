@@ -3,7 +3,7 @@ layout: default
 title: RPG1
 ---
 
-# Webhacking RPG1 Solution
+
 
 in this challenge i read the code and searched for a function that check the passage, for crossing the river.
 

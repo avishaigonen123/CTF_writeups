@@ -3,7 +3,7 @@ layout: default
 title: OSLogin
 ---
 
-# trythis0ne OSLogin Solution
+
 
 in this level i need in the HTTP post request to send also admin=1, so, let's use wget in wsl
 

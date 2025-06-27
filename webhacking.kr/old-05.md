@@ -3,7 +3,7 @@ layout: default
 title: old-05
 ---
 
-# webhacking old-05 Solution
+
 
 as we can see, the login page redirects us to `./mem/login.php`. so, there might be also `./mem/join.php`. we will go there:
 ```https://webhacking.kr/challenge/web-05/mem/join.php``` 

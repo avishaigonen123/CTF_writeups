@@ -3,7 +3,7 @@ layout: default
 title: iron_golem
 ---
 
-# Lord of SQLInjection iron_golem Solution
+
 
 the source code is here [iron_golem]
 ```python

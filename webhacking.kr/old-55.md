@@ -3,7 +3,7 @@ layout: default
 title: old-55
 ---
 
-# Webhacking old-55 Solution
+
 
 first, i entered the score 8200 using the command line:
 

@@ -3,7 +3,7 @@ layout: default
 title: assassin
 ---
 
-# Lord of SQLInjection assassin Solution
+
 
 the source code is here [assassin]
 ```python

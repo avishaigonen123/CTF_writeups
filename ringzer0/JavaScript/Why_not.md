@@ -3,7 +3,7 @@ layout: default
 title: Why_not
 ---
 
-# Why not Solution
+
 
 I wrote this code that do the reverse operation
 ```

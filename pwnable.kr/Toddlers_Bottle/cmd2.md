@@ -3,7 +3,7 @@ layout: default
 title: cmd2
 ---
 
-# cmd2 Solution
+
 
 this is more complicated level.
 here we use this input: 

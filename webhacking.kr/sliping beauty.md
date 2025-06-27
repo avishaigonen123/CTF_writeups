@@ -3,7 +3,7 @@ layout: default
 title: sliping beauty
 ---
 
-# Webhacking sliping beauty Solution
+
 
 In this challange we exploit the zip slip, here you can read about it: [Zip Slip](https://security.snyk.io/research/zip-slip-vulnerability).
 

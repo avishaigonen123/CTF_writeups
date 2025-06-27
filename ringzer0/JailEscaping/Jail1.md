@@ -3,7 +3,7 @@ layout: default
 title: Jail1
 ---
 
-# Jail1 Solution
+
 
 i opened bash, and then echoed the password to stderr, using `>&2`.
 ```

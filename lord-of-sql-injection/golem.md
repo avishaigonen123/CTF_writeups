@@ -3,7 +3,7 @@ layout: default
 title: golem
 ---
 
-# Lord of SQLInjection golem Solution
+
 
 the source code is here [golem]
 ```python

@@ -3,7 +3,7 @@ layout: default
 title: old-02
 ---
 
-# webhacking old-02 Solution
+
 
 here we use blind sqli based on time variant.
 

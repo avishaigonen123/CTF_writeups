@@ -3,7 +3,7 @@ layout: default
 title: coin
 ---
 
-# coin Solution
+
 
 in this challenge we need to do binary search, multiple times, until we answer to all of the questions.
 ```python

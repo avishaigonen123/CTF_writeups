@@ -3,7 +3,7 @@ layout: default
 title: MEMO Service
 ---
 
-# Webhacking MEMO Service Solution
+
 
 That was tough :|
 

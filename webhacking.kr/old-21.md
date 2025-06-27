@@ -3,7 +3,7 @@ layout: default
 title: old-21
 ---
 
-# Webhacking old-21 Solution
+
 
 in this challenge there is basic sql injection, and finding the password using brute force.
 

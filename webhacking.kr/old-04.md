@@ -3,7 +3,7 @@ layout: default
 title: old-04
 ---
 
-# webhacking old-04 Solution
+
 
 in this challenge, we do dictionary attack, based on well known salt. we need to calculate as much hashes as possible.
 

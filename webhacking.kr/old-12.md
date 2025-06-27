@@ -3,7 +3,7 @@ layout: default
 title: old-12
 ---
 
-# Webhacking old-12 Solution
+
 
 first we can see that the js is encoded with aaencode.
 let's decode it using websites like https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html.

@@ -3,7 +3,7 @@ layout: default
 title: blukat
 ---
 
-# blukat Solution
+
 
 i saw that it doesn't check whether it can open the file. When it fails, it submit this string to password: `cat: password: Permission denied` (with \n)
 Let's try give this as password.

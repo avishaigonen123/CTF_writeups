@@ -3,7 +3,7 @@ layout: default
 title: bugbear
 ---
 
-# Lord of SQLInjection bugbear Solution
+
 
 the source code is here [bugbear]
 ```python

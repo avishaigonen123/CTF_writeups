@@ -3,7 +3,7 @@ layout: default
 title: WhatDoYouMean
 ---
 
-# trythis0ne WhatDoYouMean Solution
+
 
 in this level i simply changed my referrer header.
 ```

@@ -3,7 +3,7 @@ layout: default
 title: passcode
 ---
 
-# passcode Solution
+
 
 in this level we exploit the fact we can fill the stack with our data, then we can change the address of `passcode1`.
 so, we choose what will be the memory in this place, and also what will be the content.

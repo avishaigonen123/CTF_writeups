@@ -3,7 +3,7 @@ layout: default
 title: old-26
 ---
 
-# Webhacking old-26 Solution
+
 
 i can see that this take the 'id' and decode it, so let's insert encoded 'admin'
 

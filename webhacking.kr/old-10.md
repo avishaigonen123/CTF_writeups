@@ -3,7 +3,7 @@ layout: default
 title: old-10
 ---
 
-# webhacking old-10 Solution
+
 
 
 ![alt text](./images/old-10.png)

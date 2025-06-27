@@ -3,7 +3,7 @@ layout: default
 title: brain_fuck
 ---
 
-# brain_fuck Solution
+
 
 in this challenge we give payload that override the plt table in 3 different places, in memset -> gets
 in fgets -> system

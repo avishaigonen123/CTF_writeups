@@ -6,7 +6,7 @@ title: Rookiss Writeups
       ← Back to pwnable.kr
     </a>
                     
-### This folder contains solutions for the [Rookiss](http://pwnable.kr/Rookiss/) wargame from Pwnable.kr.
+##s for the [Rookiss](http://pwnable.kr/Rookiss/) wargame from Pwnable.kr.
 
 <style>
   body {

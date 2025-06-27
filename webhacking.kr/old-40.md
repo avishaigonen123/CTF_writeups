@@ -3,7 +3,7 @@ layout: default
 title: old-40
 ---
 
-# webhacking.kr old-40 Solution
+
 
 another sql injection
 

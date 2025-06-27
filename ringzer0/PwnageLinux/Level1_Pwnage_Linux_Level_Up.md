@@ -3,7 +3,7 @@ layout: default
 title: Level1_Pwnage_Linux_Level_Up
 ---
 
-# Level1 Pwnage Linux Level Up Solution
+
 
 ```python
 {% include_relative scripts/level1.py %}
