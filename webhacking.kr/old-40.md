@@ -8,7 +8,7 @@ title: old-40
 another sql injection
 
 this is the code: [old-40]
-```scripts/old-40.py
+```py
 {% include_relative scripts/old-40.py %}
 ```
 

@@ -6,7 +6,7 @@ title: old-24
 
 
 solution in [old-24]
-```scripts/old-24.py
+```py
 {% include_relative scripts/old-24.py %}
 ```
 

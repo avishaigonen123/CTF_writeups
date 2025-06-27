@@ -9,12 +9,12 @@ this challenge is based on race condition, and also on the fact that you can tal
 
 this are the two source codes:
 [old-60_1]
-```scripts/old-60_1.py
+```py
 {% include_relative scripts/old-60_1.py %}
 ```
 
 [old-60_2]
-```scripts/old-60_2.py
+```py
 {% include_relative scripts/old-60_2.py %}
 ```
 

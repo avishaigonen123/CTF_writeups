@@ -6,7 +6,7 @@ title: old-41
 
 
 first we will upload file with long filename, and see what happens: [old-41]
-```scripts/old-41.py
+```py
 {% include_relative scripts/old-41.py %}
 ```
 

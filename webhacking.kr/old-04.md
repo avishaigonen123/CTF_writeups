@@ -8,7 +8,7 @@ title: old-04
 in this challenge, we do dictionary attack, based on well known salt. we need to calculate as much hashes as possible.
 
 This is the source code: [old-04]
-```scripts/old-04.py
+```py
 {% include_relative scripts/old-04.py %}
 ```
 

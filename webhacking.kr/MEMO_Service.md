@@ -24,7 +24,7 @@ base64 encode:
 #### Building the cookie
 
 You can use this script [cookie_build.py]
-```scripts/MEMO_Service_cookie_build.py
+```py
 {% include_relative scripts/MEMO_Service_cookie_build.py %}
 ```
 , for building your cookie, Change the `URL`, for your own webhook.

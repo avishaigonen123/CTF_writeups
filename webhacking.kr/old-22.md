@@ -9,7 +9,7 @@ Here this is sql injection, when we can extract the `MD5 hash` of the password.
 We know that when we assign a user, it appends `apple` as a salt to the end of the password and then MD5 hash it.
 
 source code: [old-22]
-```scripts/old-22.py
+```py
 {% include_relative scripts/old-22.py %}
 ```
 

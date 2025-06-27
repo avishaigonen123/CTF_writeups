@@ -17,7 +17,7 @@ means the column name is: `p4ssw0rd_1123581321`.
 
 now, we will run the script to find the flag:
 [old-55]
-```scripts/old-55.py
+```py
 {% include_relative scripts/old-55.py %}
 ```
 

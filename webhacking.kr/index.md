@@ -20,13 +20,13 @@ title: Webhacking.kr Writeups
     width: 100% !important;
     margin: 0 auto;
   }
-  .webhacking.kr-container {
+  .webhacking-container {
     display: flex;
     gap: 1.5rem;
     margin-top: 2rem;
     padding: 1rem;
   }
-  .webhacking.kr-sidebar {
+  .webhacking-sidebar {
     min-width: 200px;
     max-height: 90vh;
     overflow-y: auto;
@@ -39,7 +39,7 @@ title: Webhacking.kr Writeups
     color: #ecf0f1;
     margin-top: 1rem;
   }
-  .webhacking.kr-sidebar h00 {
+  .webhacking-sidebar h00 {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
@@ -47,16 +47,16 @@ title: Webhacking.kr Writeups
     border-bottom: 2px solid #16a085;
     padding-bottom: 0.5rem;
   }
-  .webhacking.kr-sidebar ul {
+  .webhacking-sidebar ul {
     list-style: none;
     padding-left: 0;
     font-size: 1rem;
     margin: 0;
   }
-  .webhacking.kr-sidebar li {
+  .webhacking-sidebar li {
     margin-bottom: 0.5rem;
   }
-  .webhacking.kr-sidebar a {
+  .webhacking-sidebar a {
     display: block;
     padding: 6px 12px;
     border-radius: 6px;
@@ -64,11 +64,11 @@ title: Webhacking.kr Writeups
     color: #ecf0f1;
     transition: background 0.3s ease, color 0.3s ease;
   }
-  .webhacking.kr-sidebar a:hover {
+  .webhacking-sidebar a:hover {
     background-color: #16a085;
     color: #fff;
   }
-  .webhacking.kr-content {
+  .webhacking-content {
     flex: 1;
     max-height: 90vh;
     overflow-y: auto;
@@ -81,7 +81,7 @@ title: Webhacking.kr Writeups
     color: #333;
     margin-top: 1rem;
   }
-  .webhacking.kr-content h00 {
+  .webhacking-content h00 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-top: 2rem;
@@ -93,21 +93,21 @@ title: Webhacking.kr Writeups
     border: none;
     border-top: 1px solid #ddd;
   }
-  .webhacking.kr-sidebar::-webkit-scrollbar {
+  .webhacking-sidebar::-webkit-scrollbar {
     width: 8px;
   }
-  .webhacking.kr-sidebar::-webkit-scrollbar-thumb {
+  .webhacking-sidebar::-webkit-scrollbar-thumb {
     background-color: #16a085;
     border-radius: 4px;
   }
-  .webhacking.kr-sidebar::-webkit-scrollbar-track {
+  .webhacking-sidebar::-webkit-scrollbar-track {
     background-color: #ecf0f1;
   }
   @media (max-width: 768px) {
-    .webhacking.kr-container {
+    .webhacking-container {
       flex-direction: column;
     }
-    .webhacking.kr-sidebar {
+    .webhacking-sidebar {
       max-height: none;
       width: 100%;
       margin-bottom: 2rem;
@@ -124,18 +124,18 @@ title: Webhacking.kr Writeups
   }
 </style>
 
-<div class="webhacking.kr-container">
+<div class="webhacking-container">
 
   <!-- Sidebar -->
-  <div class="webhacking.kr-sidebar">
+  <div class="webhacking-sidebar">
     <h00>Levels</h00>
     <ul>
-      {% assign webhacking.kr_pages = site.pages
+      {% assign webhacking_pages = site.pages
         | where_exp: "p", "p.path contains 'webhacking.kr'"
         | reject: "path", "webhacking.kr/index.md"
         | reject: "path", "webhacking.kr/index.html"
       %}
-      {% assign level_pages = webhacking.kr_pages | sort_natural: "path" %}
+      {% assign level_pages = webhacking_pages | sort_natural: "path" %}
       {% for p in level_pages %}
         {% assign name = p.path | split: '/' | last | split: '.' | first %}
         {% if name != "index" %}
@@ -146,7 +146,7 @@ title: Webhacking.kr Writeups
   </div>
 
   <!-- Main content -->
-  <div class="webhacking.kr-content">
+  <div class="webhacking-content">
     {% for p in level_pages %}
       {% assign name = p.path | split: '/' | last | split: '.' | first %}
       {% if name != "index" %}

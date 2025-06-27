@@ -3,11 +3,8 @@ layout: default
 title: old-06
 ---
 
-
-
-
 here is the source code: [old-06]
-```scripts/old-06.py
+```py
 {% include_relative scripts/old-06.py %}
 ```
 

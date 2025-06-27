@@ -49,7 +49,7 @@ All the parsing functions process the content without url-decoding it, but the `
 WOW! if we can insert `@`, so we can insert also our php code :)
 
 I wrote short script, you can use it: [orange.py]
-```scripts/orange.py
+```py
 {% include_relative scripts/orange.py %}
 ```
 
