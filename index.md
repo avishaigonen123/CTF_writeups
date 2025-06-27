@@ -11,7 +11,7 @@ title: "CTF Writeups Home"
 
 ## 📁 Contents
 
-Explore writeups by platform:
+<div style="font-size: 1.5rem; line-height: 3;">
 
 - 🔓 [OverTheWire](./overthewire/)
 - 🕵️ [trythis0ne](./trythis0ne/)
@@ -22,7 +22,8 @@ Explore writeups by platform:
 - 🇮🇱 [AppSec-IL-2025](./appSec-IL-2025/)
 - 📦 [Other Stuff](./stuff)
 
----
+</div>
+
 
 ## 🧭 Wargame Guide
 
