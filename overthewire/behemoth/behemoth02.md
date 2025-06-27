@@ -27,7 +27,7 @@ notice to compile it with the `-m32` flag, for example: `gcc -m32 get_address.c 
 
 after finding the address of the env variable, in our case: `0xffffd511`, we need to insert it to the script that solves the challenge.
 
-```py
+```python
 {% include_relative scripts/level2.py %}
 ```
 

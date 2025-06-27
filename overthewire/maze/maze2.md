@@ -7,7 +7,7 @@ title: maze2
 
 in this challange, we inject short code that pushes the shellcode address, and then executes the shellcode.
 
-```py
+```python
 {% include_relative scripts/level2/level2.py %}
 ```
 

@@ -5,11 +5,11 @@ title: manpage0
 
 
 
-```py
+```python
 {% include_relative scripts/level0/shellcode.py %}
 ```
 
-```py
+```python
 {% include_relative scripts/level0/level0.py %}
 ```
 

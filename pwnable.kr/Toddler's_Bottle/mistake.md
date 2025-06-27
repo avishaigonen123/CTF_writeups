@@ -7,7 +7,7 @@ title: mistake
 
 in this challenge the error lies in the fact it reads the password from stdin, because the compare happens before the assignment when it opens the password file for reading.
 
-```py
+```python
 {% include_relative scripts/mistake/mistake.py %}
 ```
 

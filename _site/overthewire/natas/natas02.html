@@ -4,24 +4,24 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=cbdd8a6193c6d93e3fe2b2349fcd6a262aeb14c8">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>vortex2 | Avishai’s CTF Writeups</title>
+<title>natas2 | Avishai’s CTF Writeups</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="vortex2" />
+<meta property="og:title" content="natas2" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="…" />
 <meta property="og:description" content="…" />
-<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/vortex/vortex2.html" />
-<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/vortex/vortex2.html" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/natas/natas02.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/natas/natas02.html" />
 <meta property="og:site_name" content="Avishai’s CTF Writeups" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="vortex2" />
+<meta property="twitter:title" content="natas2" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"vortex2","url":"http://localhost:4000/CTF_writeups/overthewire/vortex/vortex2.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"natas2","url":"http://localhost:4000/CTF_writeups/overthewire/natas/natas02.html"}</script>
 <!-- End Jekyll SEO tag -->
 
   </head>
@@ -44,16 +44,10 @@
 
     <div class="container">
       <section id="main_content">
-        <p>in this level, we exploit the tar archive by archiving <code class="language-plaintext highlighter-rouge">vortex3</code> password file, and when extracting, we can read it.</p>
+        <p>in the source code there is a pixel.png, then by going to the folder u can find the directory “files”.
+then, go to http://natas2.natas.labs.overthewire.org/files/users.txt</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /etc/vortex_pass/
-/vortex/vortex2 vortex3
-tar xvf /tmp/ownership.$\$.tar
-</code></pre></div></div>
-
-<p><img src="/CTF_writeups/overthewire/vortex/images/level2.png" alt="image" /></p>
-
-<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">YAVzRBMI4</code></em></strong></p>
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">3gqisGdR0pjm6tpkDKdIWO2hSvchLeYH</code></em></strong></p>
 
       </section>
     </div>

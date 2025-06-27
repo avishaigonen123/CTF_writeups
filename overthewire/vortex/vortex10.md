@@ -34,7 +34,7 @@ I created script in python that do the whole piping process.
 ```c
 {% include_relative scripts/level10/level10.c %}
 ```
-```py
+```python
 {% include_relative scripts/level10/pipe.py %}
 ```
 .

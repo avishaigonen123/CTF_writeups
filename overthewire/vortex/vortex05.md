@@ -7,7 +7,7 @@ title: vortex5
 
 in this challenge we run brute force on md5, which approved to be vulnerable to collision attack.
 
-```py
+```python
 {% include_relative scripts/level5/level5.py %}
 ```
 , which will do the brute force for us.

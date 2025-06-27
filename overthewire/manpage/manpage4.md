@@ -15,7 +15,7 @@ The diff between them is 1284, and then we need to find how many characters we n
 
 So, all left is to solve the game.
 
-```py
+```python
 {% include_relative scripts/level4/level4.py %}
 ```
  pipe all the data as it was a regular stdin, and when you want to make the attack, you only need to type ATTACK.

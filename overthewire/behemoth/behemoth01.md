@@ -4,7 +4,7 @@ title: behemoth1
 ---
 
 the code can be found here 
-```py
+```python
 {% include_relative scripts/level1.py %}
 ```
 

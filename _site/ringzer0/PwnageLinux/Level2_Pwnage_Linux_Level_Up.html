@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=cbdd8a6193c6d93e3fe2b2349fcd6a262aeb14c8">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -48,7 +48,7 @@
 
 <p>here we need to give username: <code class="language-plaintext highlighter-rouge">nobody</code>, password: <code class="language-plaintext highlighter-rouge">Ksdkjkk32avsh</code>, and then in the command we can overflow the user and put there <code class="language-plaintext highlighter-rouge">root</code>.</p>
 
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">command</span> <span class="o">=</span> <span class="sa">b</span><span class="s">'/tmp/my_script.sh'</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">command</span> <span class="o">=</span> <span class="sa">b</span><span class="s">'/tmp/my_script.sh'</span>
 
 <span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s">'nobody</span><span class="se">\n</span><span class="s">'</span>
 <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'Ksdkjkk32avsh</span><span class="se">\n</span><span class="s">'</span>

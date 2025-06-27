@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=cbdd8a6193c6d93e3fe2b2349fcd6a262aeb14c8">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -46,7 +46,7 @@
       <section id="main_content">
         <p>I’ve found that on the heap there is an address that it + 0x40 will be the address of <code class="language-plaintext highlighter-rouge">s</code>, so, we need to put there our exit plt and override it using shellcode address.</p>
 
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
 </span><span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 

@@ -29,12 +29,12 @@ pop eax
 int 0x80  => exit()
 ```
 
-```py
+```python
 {% include_relative scripts/level8/shellcode.py %}
 ```
 
 
-```py
+```python
 {% include_relative scripts/level8/level8.py %}
 ```
 .

@@ -7,7 +7,7 @@ title: Level3_Pwnage_Linux_Level_Up
 
 
 It doesn't put NULL after the strncat, so, we can manipulate it to make buffer overflow and then override the ret-address.
-```py
+```python
 {% include_relative scripts/level3.py %}
 ```
 

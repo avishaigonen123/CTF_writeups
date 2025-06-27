@@ -8,7 +8,7 @@ title: uaf
 here we exploit the fact we delete Man and Woman, and manage to put our code inside the grave of Man and Woman.
 Then, when we'll call it's introduce function, it will execute shell.
 
-```py
+```python
 {% include_relative scripts/uaf/payload.py %}
 ```
 
