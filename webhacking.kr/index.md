@@ -131,7 +131,7 @@ title: Webhacking.kr Writeups
     <h00>Levels</h00>
     <ul>
       {% assign webhacking.kr_pages = site.pages
-        | where_exp: "p", "p.path contains 'webhacking.kr/'"
+        | where_exp: "p", "p.path contains 'webhacking.kr'"
         | reject: "path", "webhacking.kr/index.md"
         | reject: "path", "webhacking.kr/index.html"
       %}
