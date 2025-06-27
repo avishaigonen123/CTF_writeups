@@ -108,7 +108,7 @@ title: Manpage Writeups
       flex-direction: column;
     }
     .manpage-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }
@@ -130,7 +130,12 @@ title: Manpage Writeups
   <div class="manpage-sidebar">
     <h00>Levels</h00>
     <ul>
-      {% assign level_pages = site.pages | where: "dir", "/CTF_writeups/overthewire/manpage/" | sort_natural: "path" %}
+      {% assign manpage_pages = site.pages
+        | where_exp: "p", "p.path contains 'overthewire/manpage'"
+        | reject: "path", "overthewire/manpage/index.md"
+        | reject: "path", "overthewire/manpage/index.html"
+      %}
+      {% assign level_pages = manpage_pages | sort_natural: "path" %}
       {% for p in level_pages %}
         {% assign name = p.path | split: '/' | last | split: '.' | first %}
         {% if name != "index" %}

@@ -108,7 +108,7 @@ title: Vortex Writeups
       flex-direction: column;
     }
     .vortex-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }

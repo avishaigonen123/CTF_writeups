@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Trying Writeups
+title: Tryinggg Writeups
 ---
 <a href="/CTF_writeups/overthewire/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
       ← Back to OverTheWire
     </a>
                     
-### This folder contains solutions for the [Trying](http://overthewire.org/wargames/trying/) wargame from OverTheWire.
+### This folder contains solutions for the [Tryinggg](http://overthewire.org/wargames/tryinggg/) wargame from OverTheWire.
 
 <style>
   body {
@@ -20,13 +20,13 @@ title: Trying Writeups
     width: 100% !important;
     margin: 0 auto;
   }
-  .trying-container {
+  .tryinggg-container {
     display: flex;
     gap: 1.5rem;
     margin-top: 2rem;
     padding: 1rem;
   }
-  .trying-sidebar {
+  .tryinggg-sidebar {
     min-width: 200px;
     max-height: 90vh;
     overflow-y: auto;
@@ -39,7 +39,7 @@ title: Trying Writeups
     color: #ecf0f1;
     margin-top: 1rem;
   }
-  .trying-sidebar h00 {
+  .tryinggg-sidebar h00 {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
@@ -47,16 +47,16 @@ title: Trying Writeups
     border-bottom: 2px solid #16a085;
     padding-bottom: 0.5rem;
   }
-  .trying-sidebar ul {
+  .tryinggg-sidebar ul {
     list-style: none;
     padding-left: 0;
     font-size: 1rem;
     margin: 0;
   }
-  .trying-sidebar li {
+  .tryinggg-sidebar li {
     margin-bottom: 0.5rem;
   }
-  .trying-sidebar a {
+  .tryinggg-sidebar a {
     display: block;
     padding: 6px 12px;
     border-radius: 6px;
@@ -64,11 +64,11 @@ title: Trying Writeups
     color: #ecf0f1;
     transition: background 0.3s ease, color 0.3s ease;
   }
-  .trying-sidebar a:hover {
+  .tryinggg-sidebar a:hover {
     background-color: #16a085;
     color: #fff;
   }
-  .trying-content {
+  .tryinggg-content {
     flex: 1;
     max-height: 90vh;
     overflow-y: auto;
@@ -81,7 +81,7 @@ title: Trying Writeups
     color: #333;
     margin-top: 1rem;
   }
-  .trying-content h00 {
+  .tryinggg-content h00 {
     font-size: 1.4rem;
     font-weight: 600;
     margin-top: 2rem;
@@ -93,22 +93,22 @@ title: Trying Writeups
     border: none;
     border-top: 1px solid #ddd;
   }
-  .trying-sidebar::-webkit-scrollbar {
+  .tryinggg-sidebar::-webkit-scrollbar {
     width: 8px;
   }
-  .trying-sidebar::-webkit-scrollbar-thumb {
+  .tryinggg-sidebar::-webkit-scrollbar-thumb {
     background-color: #16a085;
     border-radius: 4px;
   }
-  .trying-sidebar::-webkit-scrollbar-track {
+  .tryinggg-sidebar::-webkit-scrollbar-track {
     background-color: #ecf0f1;
   }
   @media (max-width: 768px) {
-    .trying-container {
+    .tryinggg-container {
       flex-direction: column;
     }
-    .trying-sidebar {
-      max-height: auto;
+    .tryinggg-sidebar {
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }
@@ -124,13 +124,18 @@ title: Trying Writeups
   }
 </style>
 
-<div class="trying-container">
+<div class="tryinggg-container">
 
   <!-- Sidebar -->
-  <div class="trying-sidebar">
+  <div class="tryinggg-sidebar">
     <h00>Levels</h00>
     <ul>
-      {% assign level_pages = site.pages | where: "dir", "/CTF_writeups/overthewire/trying/" | sort_natural: "path" %}
+      {% assign tryinggg_pages = site.pages
+        | where_exp: "p", "p.path contains 'overthewire/tryinggg'"
+        | reject: "path", "overthewire/tryinggg/index.md"
+        | reject: "path", "overthewire/tryinggg/index.html"
+      %}
+      {% assign level_pages = tryinggg_pages | sort_natural: "path" %}
       {% for p in level_pages %}
         {% assign name = p.path | split: '/' | last | split: '.' | first %}
         {% if name != "index" %}
@@ -141,7 +146,7 @@ title: Trying Writeups
   </div>
 
   <!-- Main content -->
-  <div class="trying-content">
+  <div class="tryinggg-content">
     {% for p in level_pages %}
       {% assign name = p.path | split: '/' | last | split: '.' | first %}
       {% if name != "index" %}

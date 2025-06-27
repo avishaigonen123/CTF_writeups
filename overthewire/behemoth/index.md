@@ -108,7 +108,7 @@ title: Behemoth Writeups
       flex-direction: column;
     }
     .behemoth-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }

@@ -108,7 +108,7 @@ title: Utumno Writeups
       flex-direction: column;
     }
     .utumno-sidebar {
-      max-height: auto;
+      max-height: none;
       width: 100%;
       margin-bottom: 2rem;
     }
