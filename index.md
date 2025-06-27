@@ -11,18 +11,19 @@ title: "CTF Writeups Home"
 
 ## 📁 Contents
 
-<div style="font-size: 1.5rem; line-height: 3;">
-
-- 🔓 [OverTheWire](./overthewire/)
-- 🕵️ [trythis0ne](./trythis0ne/)
-- 🌐 [Webhacking.kr](./webhacking.kr/)
-- 🧨 [Pwnable.kr](./pwnable.kr/)
-- 🧮 [Lord of SQL Injection](./lord-of-sql-injection/)
-- 🎯 [RingZer0](./ringzer0)
-- 🇮🇱 [AppSec-IL-2025](./appSec-IL-2025/)
-- 📦 [Other Stuff](./stuff)
-
+<div style="font-size: 1.4rem; line-height: 2;">
+  <ul style="list-style-type: none; padding: 0;">
+    <li>🔓 <a href="./overthewire/">OverTheWire</a></li>
+    <li>🕵️ <a href="./trythis0ne/">trythis0ne</a></li>
+    <li>🌐 <a href="./webhacking.kr/">Webhacking.kr</a></li>
+    <li>🧨 <a href="./pwnable.kr/">Pwnable.kr</a></li>
+    <li>🧮 <a href="./lord-of-sql-injection/">Lord of SQL Injection</a></li>
+    <li>🎯 <a href="./ringzer0">RingZer0</a></li>
+    <li>🇮🇱 <a href="./appSec-IL-2025/">AppSec-IL-2025</a></li>
+    <li>📦 <a href="./stuff">Other Stuff</a></li>
+  </ul>
 </div>
+
 
 
 ## 🧭 Wargame Guide
