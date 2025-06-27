@@ -12,7 +12,7 @@ in this case, i chose the put the memory of the `exit_plt`, and override it with
 ![image](./images/passcode_1.png)
 
 
-```py
+```python
 {% include_relative scripts/passcode/passcode.py %}
 ```
  you might need to adjust the addresses.

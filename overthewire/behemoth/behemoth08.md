@@ -15,7 +15,7 @@ if we'll look closely, we can see that it checks only the 512 first characters, 
 now all left is to find the address of the buffer, play with the debugger to find it. notice it changes based on the length of the input you give it.
 
 here can be found our injection: 
-```py
+```python
 {% include_relative scripts/level8.py %}
 ```
 

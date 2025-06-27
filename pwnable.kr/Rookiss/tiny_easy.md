@@ -7,7 +7,7 @@ title: tiny_easy
 
 in this challenge, we spam the stack with our shellcode, and hope that in arg1 we'll put address that'll fall exactly on NOP bytes, and by this way execute our shellcode.
 
-```py
+```python
 {% include_relative scripts/tiny_easy/tiny_easy.py %}
 ```
 

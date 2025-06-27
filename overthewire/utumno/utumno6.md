@@ -15,7 +15,7 @@ the idea behind the attack is to override where the return address is found, and
 we can see that the address of the `auStack_34` is located in [ebp-0x34], so if we'll set `arg1 = -1`, we can override the address. than, we need to find where on the stack the return address is found, take this memory location, and this will be the new address of our `auStack_34`
 ![image](./images/level6_3.png)
 
-```py
+```python
 {% include_relative scripts/level6/level6.py %}
 ```
 .

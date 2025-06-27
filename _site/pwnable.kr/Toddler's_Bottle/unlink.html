@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=cbdd8a6193c6d93e3fe2b2349fcd6a262aeb14c8">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -50,7 +50,7 @@
 
 <p>we inject in the stack, where ecx will get the address from. then, we make sure that we put the shell function address in [ecx-4].</p>
 
-<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">struct</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">struct</span>
 <span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="k">def</span> <span class="nf">p32</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>

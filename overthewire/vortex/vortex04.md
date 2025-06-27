@@ -20,7 +20,7 @@ So, we needed to insert 3 bytes into the first address and 1 byte into the fourt
 
 I wrote this C code to run `/vortex/vortex4` with the payload (`level4.c`).
 
-```py
+```python
 {% include_relative scripts/level4/level4.py %}
 ```
 . You need to adjust the `address_of_exit` and `address_of_shellcode`, debug, and find them.

@@ -5,7 +5,7 @@ title: vortex1
 
 
 
-```py
+```python
 {% include_relative scripts/level1/level1.py %}
 ```
 

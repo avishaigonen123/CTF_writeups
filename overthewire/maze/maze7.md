@@ -17,7 +17,7 @@ i marked important values: arg1, arg2, arg3, arg4, fd. (in this order), so we ca
 
  
 now, all left is to create your shellcode in environment variable and put the address in the code, in `shellcode_address`.
-```py
+```python
 {% include_relative scripts/level7/level7.py %}
 ```
 

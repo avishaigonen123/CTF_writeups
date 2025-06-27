@@ -12,6 +12,10 @@ here is almost as before, but we defuse the SIGTERM by setting our signal handle
 ```python
 {% include_relative scripts/level1/payload.py %}
 ```
+[level1.py]
+```python
+{% include_relative scripts/level1/payload.py %}
+```
 
 don't forget to put the shellcode in an environment variable, and put the address of the shellcode in `shellcode_address`, in the payload.py file.
 

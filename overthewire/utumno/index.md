@@ -2,23 +2,138 @@
 layout: default
 title: Utumno Writeups
 ---
-
-This folder contains solutions for the [Utumno](http://overthewire.org/wargames/utumno/) wargame from OverTheWire.
+<a href="/CTF_writeups/overthewire/" style="display:inline-block; margin-bottom: 1rem; text-decoration: none; color: #16a085; font-weight: bold;">
+      ← Back to OverTheWire
+    </a>
+                    
+### This folder contains solutions for the [Utumno](http://overthewire.org/wargames/utumno/) wargame from OverTheWire.
 
 <style>
-/* Styles same as your Behemoth example – omitted here for brevity */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eceff1;
+    color: #333;
+    margin: 0;
+  }
+  #main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto;
+  }
+  .utumno-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+  .utumno-sidebar {
+    min-width: 200px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #34495e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #ecf0f1;
+    margin-top: 1rem;
+  }
+  .utumno-sidebar h00 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ecf0f1;
+    border-bottom: 2px solid #16a085;
+    padding-bottom: 0.5rem;
+  }
+  .utumno-sidebar ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 1rem;
+    margin: 0;
+  }
+  .utumno-sidebar li {
+    margin-bottom: 0.5rem;
+  }
+  .utumno-sidebar a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ecf0f1;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .utumno-sidebar a:hover {
+    background-color: #16a085;
+    color: #fff;
+  }
+  .utumno-content {
+    flex: 1;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    font-size: 1rem;
+    color: #333;
+    margin-top: 1rem;
+  }
+  .utumno-content h00 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color:rgb(143, 151, 159);
+    scroll-margin-top: 100px;
+  }
+  hr {
+    margin: 2.5rem 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+  .utumno-sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .utumno-sidebar::-webkit-scrollbar-thumb {
+    background-color: #16a085;
+    border-radius: 4px;
+  }
+  .utumno-sidebar::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+  }
+  @media (max-width: 768px) {
+    .utumno-container {
+      flex-direction: column;
+    }
+    .utumno-sidebar {
+      max-height: auto;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+  .level-banner {
+    background-color: #16a085;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2rem;
+    border-radius: 8px;
+  }
 </style>
 
-<div class="behemoth-container">
+<div class="utumno-container">
 
   <!-- Sidebar -->
-  <div class="behemoth-sidebar">
+  <div class="utumno-sidebar">
     <h00>Levels</h00>
     <ul>
-      {% assign utumno_pages = site.pages 
-        | where_exp: "p", "p.path contains 'overthewire/utumno'" 
-        | reject: "path", "overthewire/utumno/index.md" 
-        | reject: "path", "overthewire/utumno/index.html" 
+      {% assign utumno_pages = site.pages
+        | where_exp: "p", "p.path contains 'overthewire/utumno'"
+        | reject: "path", "overthewire/utumno/index.md"
+        | reject: "path", "overthewire/utumno/index.html"
       %}
       {% assign level_pages = utumno_pages | sort_natural: "path" %}
       {% for p in level_pages %}
@@ -31,7 +146,7 @@ This folder contains solutions for the [Utumno](http://overthewire.org/wargames/
   </div>
 
   <!-- Main content -->
-  <div class="behemoth-content">
+  <div class="utumno-content">
     {% for p in level_pages %}
       {% assign name = p.path | split: '/' | last | split: '.' | first %}
       {% if name != "index" %}

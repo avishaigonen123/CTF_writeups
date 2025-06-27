@@ -32,7 +32,7 @@ we'll put in ecx the address forward, and then in ebx and ebp the shellcode addr
 
 also, you need to find the shellcode address, i put the shellcode in the buffer after @ebp+0x4, just debug and you'll find.
 
-```py
+```python
 {% include_relative scripts/level7/level7.py %}
 ```
 , all you need to change is `shellcode_address` and `ecx_address`.

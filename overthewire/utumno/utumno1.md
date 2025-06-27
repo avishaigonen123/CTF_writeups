@@ -7,7 +7,7 @@ title: utumno1
 
 here, we need to put our shellcode after "sh_". there is a small problem that we can't use "\\" in the shell code, because this char can't be in filname
 
-```py
+```python
 {% include_relative scripts/level1/level1.py %}
 ```
 

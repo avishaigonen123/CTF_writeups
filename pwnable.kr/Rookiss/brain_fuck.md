@@ -11,7 +11,7 @@ and in putchar -> main.
 
 then, we send "/bin/sh" that will pushed into the stack in the second run if main, in gets, and when "fgets" will be called, system("/bin/sh") will get executed. 
 
-```py
+```python
 {% include_relative scripts/brain_fuck/brain_fuck.py %}
 ```
 
