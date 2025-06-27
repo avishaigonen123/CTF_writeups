@@ -10,7 +10,7 @@ as we can see, the login page redirects us to `./mem/login.php`. so, there might
 
 in this page there is js obfuscated, let's use some online tool like https://beautifier.io/ and achieve more nice looking code. 
 here is the source code: [old-05]
-```scripts/old-05.js
+```js
 {% include_relative scripts/old-05.js %}
 ```
 

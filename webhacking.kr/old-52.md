@@ -6,7 +6,7 @@ title: old-52
 
 
 in this challenge there is both server vulnerabilities and sql injection. the source code can be found here: [old-52]
-```scripts/old-52.py
+```py
 {% include_relative scripts/old-52.py %}
 ```
 

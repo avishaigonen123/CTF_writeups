@@ -8,7 +8,7 @@ title: old-21
 in this challenge there is basic sql injection, and finding the password using brute force.
 
 source code: [old-21]
-```scripts/old-21.py
+```py
 {% include_relative scripts/old-21.py %}
 ```
 

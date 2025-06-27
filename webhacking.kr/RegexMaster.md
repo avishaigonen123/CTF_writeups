@@ -17,7 +17,7 @@ In our side, all we can see is that on the right char it got delayed:
 ![Burp image](./images/RegexMaster_burp.png)
 
 So, let's write our script: [regexMaster.py]
-```scripts/regexMaster.py
+```py
 {% include_relative scripts/regexMaster.py %}
 ```
 
