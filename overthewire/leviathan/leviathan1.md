@@ -3,7 +3,7 @@ layout: default
 title: leviathan1
 ---
 
-# leviathan level1 Solution
+
 
 using radare2 we can see the password is `sexsecretgodlove`
 ![alt text](./images/level1_1.png)

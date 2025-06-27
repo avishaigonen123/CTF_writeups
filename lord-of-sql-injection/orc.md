@@ -7,7 +7,7 @@ title: orc
 
 the source code is here [orc]
 ```python
-% scripts/orc.py
+{% include_relative scripts/orc.py %}
 ```
 
 

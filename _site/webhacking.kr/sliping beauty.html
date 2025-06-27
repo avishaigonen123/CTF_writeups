@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>sliping beauty | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="sliping beauty" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/sliping%20beauty.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/sliping%20beauty.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="sliping beauty" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"sliping beauty","url":"http://localhost:4000/CTF_writeups/webhacking.kr/sliping%20beauty.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-sliping-beauty-solution">Webhacking sliping beauty Solution</h1>
+
+<p>In this challange we exploit the zip slip, here you can read about it: <a href="https://security.snyk.io/research/zip-slip-vulnerability">Zip Slip</a>.</p>
+
+<p>We override the session file with admin privilege, and then we can see the flag, as wrote in the source code</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>agonen@PC4:~<span class="nv">$ </span>php <span class="nt">-a</span>
+Interactive shell
+
+php <span class="o">&gt;</span> session_start<span class="o">()</span><span class="p">;</span>
+php <span class="o">&gt;</span> <span class="nb">echo </span>session_id<span class="o">()</span><span class="p">;</span>
+0tf30efgp62k6u1jm9lbmeckg7
+php <span class="o">&gt;</span> <span class="nv">$_SESSION</span><span class="o">[</span><span class="s1">'uid'</span><span class="o">]</span> <span class="o">=</span> <span class="s1">'admin'</span><span class="p">;</span>
+php <span class="o">&gt;</span> <span class="nb">echo </span>session_encode<span class="o">()</span><span class="p">;</span>
+uid|s:5:<span class="s2">"admin"</span><span class="p">;</span>
+php <span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>Now, all left is to create our payload:
+<code class="language-plaintext highlighter-rouge">python3 sliping_beauty.py</code>, and then upload it to the server.</p>
+
+<p>Lastly, let’s change our session ID to the session id we achieve, for example:
+<code class="language-plaintext highlighter-rouge">0tf30efgp62k6u1jm9lbmeckg791194204</code> (include the random chars).</p>
+
+<p><img src="./images/sliping%20beauty.png" alt="FLAG" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG{my_zip_is_sliping_beauty}</code></em></strong></p>
+
+
+      </section>
+    </div>
+  </body>
+</html>

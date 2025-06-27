@@ -3,7 +3,7 @@ layout: default
 title: vortex7
 ---
 
-# vortex level7 Solution
+
 
 in this level we need to exploit buffer overflow. also, the CRC32 of the buffer needs to be `0xe1ca95ee`
 
@@ -33,7 +33,7 @@ we'll put in ecx the address forward, and then in ebx and ebp the shellcode addr
 also, you need to find the shellcode address, i put the shellcode in the buffer after @ebp+0x4, just debug and you'll find.
 
 ```py
-% scripts/level7.py
+{% include_relative scripts/level7/level7.py %}
 ```
 , all you need to change is `shellcode_address` and `ecx_address`.
 

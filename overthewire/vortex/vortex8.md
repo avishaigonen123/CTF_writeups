@@ -3,7 +3,7 @@ layout: default
 title: vortex8
 ---
 
-# vortex level8 Solution
+
 
 in this level we can use buffer overflow to inject our code
 ![image](./images/level8_1.png).
@@ -30,12 +30,12 @@ int 0x80  => exit()
 ```
 
 ```py
-% scripts/shellcode.py
+{% include_relative scripts/level8/shellcode.py %}
 ```
 
 
 ```py
-% scripts/level8.py
+{% include_relative scripts/level8/level8.py %}
 ```
 .
 so, modify `shellcode_address`, and execute those lines:

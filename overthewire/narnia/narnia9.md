@@ -3,7 +3,7 @@ layout: default
 title: narnia9
 ---
 
-# narnia level9 Solution
+
 
 we can see it doesn't have ASLR and no stack protection.
 ![alt text](./images/level9_1.png)
@@ -21,7 +21,7 @@ as you can see, there is the buffer of bluh which is 20 bytes. then, the address
 
 after finding the address of the env variable, in our case: `0xffffd511`, we need to insert it to the script that solves the challenge [level9.py]
 ```python
-% scripts/level9.py
+{% include_relative scripts/level9.py %}
 ```
 
 

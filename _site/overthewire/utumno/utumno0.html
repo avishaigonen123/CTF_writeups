@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>utumno0 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="utumno0" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/utumno/utumno0.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/utumno/utumno0.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="utumno0" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"utumno0","url":"http://localhost:4000/CTF_writeups/overthewire/utumno/utumno0.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>when i run the file, it says to read it, however i don’t have read permissions. so, i decided to try hooking the file, using hooking the put function.</p>
+
+<p>After i saw the hooking works, i read the stack using <code class="language-plaintext highlighter-rouge">printf("%p %p %p %p %p %p %p %p\n")</code>, and then i saw addresses that starts with <code class="language-plaintext highlighter-rouge">0x804</code>, maybe indicates on local variables on the stack, that might contain the password.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// Hooked puts function</span>
+<span class="kt">int</span> <span class="nf">puts</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span> <span class="p">{</span><span class="n">z</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%p %p %p %p %p %p %p %p %p %p %p</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mh">0x804907d</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mh">0x804917d</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mh">0x804a01d</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mh">0x804a008</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p>, you need to adjust the addresses on the stack of the (maybe) local variables.</p>
+
+<p>the commands for compiling and linking the so file, here.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc -m32 -shared -fPIC -o hook.so hook.c -ldl
+LD_PRELOAD=./hook.so /utumno/utumno0
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/utumno/images/level0.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">ytvWa6DzmL</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

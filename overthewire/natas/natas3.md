@@ -3,7 +3,7 @@ layout: default
 title: natas3
 ---
 
-# Natas Level 3 Solution
+
 
 go to robots.txt
 http://natas3.natas.labs.overthewire.org/robots.txt

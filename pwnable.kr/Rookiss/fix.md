@@ -12,7 +12,7 @@ if we want to stack to work in *0x62696e2f* we need to enable it, by executing t
 then, we need to push to byte 15 the value 92, which is 0x5c, which is `pop esp`.
 
 ```py
-% scripts/fix.py
+{% include_relative scripts/fix/fix.py %}
 ```
 
 

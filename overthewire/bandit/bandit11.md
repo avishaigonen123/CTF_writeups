@@ -3,7 +3,7 @@ layout: default
 title: bandit11
 ---
 
-# Bandit Level 11 Solution
+
 
 ```
 bandit10@bandit:~$ base64 -d data.txt

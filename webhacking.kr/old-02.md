@@ -10,8 +10,8 @@ here we use blind sqli based on time variant.
 In the comment there is a time that getting changed based on the cookie, and we can see the time changed.
 
 here is the source code: [old-02]
-```python
-% scripts/old-02.py
+```py
+{% include_relative scripts/old-02.py %}
 ```
 
 

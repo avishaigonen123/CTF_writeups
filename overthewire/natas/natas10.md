@@ -3,7 +3,7 @@ layout: default
 title: natas10
 ---
 
-# Natas Level 10 Solution
+
 
 in this challenge we use command injection, this is the vuln part: `passthru("grep -i $key dictionary.txt");`
 

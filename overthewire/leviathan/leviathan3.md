@@ -3,7 +3,7 @@ layout: default
 title: leviathan3
 ---
 
-# leviathan level3 Solution
+
 
 using ltrace we can find the password.
 

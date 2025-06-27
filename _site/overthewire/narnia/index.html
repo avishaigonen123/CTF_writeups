@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Narnia Writeups | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Narnia Writeups" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/narnia/" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/narnia/" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Narnia Writeups" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"Narnia Writeups","url":"http://localhost:4000/CTF_writeups/overthewire/narnia/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>This folder contains solutions for the <a href="http://overthewire.org/wargames/narnia/">Narnia</a> wargame from OverTheWire.</p>
+
+<style>
+/* Styles same as your Behemoth example – omitted here for brevity */
+</style>
+
+<div class="behemoth-container">
+
+  <!-- Sidebar -->
+  <div class="behemoth-sidebar">
+    <h00>Levels</h00>
+    <ul>
+      
+      
+      
+        
+        
+      
+        
+        
+          <li><a href="#narnia1">narnia1</a></li>
+        
+      
+        
+        
+          <li><a href="#narnia2">narnia2</a></li>
+        
+      
+        
+        
+          <li><a href="#narnia3">narnia3</a></li>
+        
+      
+        
+        
+          <li><a href="#narnia4">narnia4</a></li>
+        
+      
+        
+        
+          <li><a href="#narnia5">narnia5</a></li>
+        
+      
+        
+        
+          <li><a href="#narnia6">narnia6</a></li>
+        
+      
+        
+        
+          <li><a href="#narnia7">narnia7</a></li>
+        
+      
+        
+        
+          <li><a href="#narnia8">narnia8</a></li>
+        
+      
+        
+        
+          <li><a href="#narnia9">narnia9</a></li>
+        
+      
+    </ul>
+  </div>
+
+  <!-- Main content -->
+  <div class="behemoth-content">
+    
+      
+      
+    
+      
+      
+        <h00 id="narnia1">narnia1</h00>
+        <p>very simple, insert 0xdeadbeaf after 20 bytes [level1.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level1</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/narnia/images/level1.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">WDcYUTG5ul</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="narnia2">narnia2</h00>
+        <p>we will use our shellcode <a href="/CTF_writeups/overthewire/narnia/general/shellcode.py">shellcode.py</a></p>
+
+<p><img src="/CTF_writeups/overthewire/narnia/images/level2.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">5agRAXeBdG</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="narnia3">narnia3</h00>
+        <p>first we can see it doesn’t have ASLR and run protection.
+<img src="/CTF_writeups/overthewire/narnia/images/level3_1.png" alt="alt text" /></p>
+
+<p>we will use our shellcode <a href="/CTF_writeups/overthewire/narnia/general/shellcode.py">shellcode.py</a> and store it in environment variable, then we will find the address of the environment variable using <a href="/CTF_writeups/overthewire/narnia/general/get_address.c">get_address.c</a></p>
+
+<p>using the script we saw we override the return address after 132, so let’s insert the address of our environment variable.</p>
+
+<p><img src="/CTF_writeups/overthewire/narnia/images/level3_2.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">2xszzNl6uG</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="narnia4">narnia4</h00>
+        <p>we will override the output file, this is the line we’ll run
+<code class="language-plaintext highlighter-rouge">python3 -c "print('/tmp/1/'+'a'*(32-len('/tmp/1/')) + 'output_file')"</code>
+notice my dir is <code class="language-plaintext highlighter-rouge">/tmp/1</code>.
+then, we will run link the file that it outputs to the password file: <code class="language-plaintext highlighter-rouge">ln -sf /etc/narnia_pass/narnia4 /tmp/1/aaaaaaaaaaaaaaaaaaaaaaaaaoutput_file</code></p>
+
+<p>then, we will create the output file: <code class="language-plaintext highlighter-rouge">touch output_file</code>
+and we need only to execute the binary: <code class="language-plaintext highlighter-rouge">/narnia/narnia3 /tmp/1/aaaaaaaaaaaaaaaaaaaaaaaaaoutput_file</code></p>
+
+<p>in one picture:
+<img src="/CTF_writeups/overthewire/narnia/images/level4.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">iqNWNk173q</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="narnia5">narnia5</h00>
+        <p>we can see it doesn’t have ASLR and stack protection.
+<img src="/CTF_writeups/overthewire/narnia/images/level5_1.png" alt="alt text" /></p>
+
+<p>we’ve found using the begin of the script here [level5.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level5</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+<p>that after 264 bytes we reach the ret-address.</p>
+
+<p>now all left is to find the address of the buffer, play with the debugger to find it. notice it changes based on the length of the input you give it.</p>
+
+<p>here can be found our injection: [level5.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level5</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/narnia/images/level5_2.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">Ni3xHPEuuw</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="narnia6">narnia6</h00>
+        <p>here we use basic format string attack, only change the address of the stack.
+here can be found our code: [level6.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level6</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/narnia/images/level6.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">BNSjoSDeGL</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="narnia7">narnia7</h00>
+        <p>we can see it doesn’t have ASLR but have stack protection.
+<img src="/CTF_writeups/overthewire/narnia/images/level7_1.png" alt="alt text" /></p>
+
+<p>in this level, we will call the system func with the command:<code class="language-plaintext highlighter-rouge">/bin/sh</code>, then it will execute this: <code class="language-plaintext highlighter-rouge">system("/bin/sh")</code></p>
+
+<p>first we need to find the address of system function, it being included during runtime via the <code class="language-plaintext highlighter-rouge">libc.so.6</code>. the range of the addresses there is at <code class="language-plaintext highlighter-rouge">0xf7......</code>, and that’s what we need.</p>
+
+<p>i use radare2, first i analyze it, start running it, and let it run until main. it is important to let it run, because otherwise it won’t load our desired shared library.
+<code class="language-plaintext highlighter-rouge">aaa; ood; dcu main</code></p>
+
+<p>then, check the name of the loaded binaries, and finally search for symbols in our load library, and greping for system.
+<img src="/CTF_writeups/overthewire/narnia/images/level7_2.png" alt="alt text" />
+<img src="/CTF_writeups/overthewire/narnia/images/level7_3.png" alt="alt text" />
+so, the (virtual)address of system on the RAM is <code class="language-plaintext highlighter-rouge">0xf7dcd430</code>, let’s put it into the script,</p>
+
+<p>[level7.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level7</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="./images/level7_4.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">54RtepCEU0</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="narnia8">narnia8</h00>
+        <p>we can see it doesn’t have ASLR but have stack protection.
+<img src="/CTF_writeups/overthewire/narnia/images/level8_1.png" alt="alt text" /></p>
+
+<p>the address we want to insert is the address of the hacked function: <code class="language-plaintext highlighter-rouge">0x804930f</code>
+the address we will override is the address of the ptr: <code class="language-plaintext highlighter-rouge">0xffffd218</code>
+they can be found here: 
+<img src="/CTF_writeups/overthewire/narnia/images/level8_2.png" alt="alt text" /></p>
+
+<p>the python script for creating the payload can is here: [level8.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level8</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/narnia/images/level8_3.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">i1SQ81fkb8</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="narnia9">narnia9</h00>
+        <p>we can see it doesn’t have ASLR and no stack protection.
+<img src="/CTF_writeups/overthewire/narnia/images/level9_1.png" alt="alt text" /></p>
+
+<p>we will generate shellcode using the <a href="/CTF_writeups/overthewire/narnia/general/shellcode.py">shellcode.py</a> script</p>
+
+<p>now we will load the shellcode into env variable:
+<code class="language-plaintext highlighter-rouge">export SHELLCODE=$(python3 shellcode.py)</code>
+we need to find the address of the env variable, using the <a href="/CTF_writeups/overthewire/narnia/general/get_address.c">get_address.c</a>. notice to compile it with the <code class="language-plaintext highlighter-rouge">-m32</code> flag, for example: <code class="language-plaintext highlighter-rouge">gcc -m32 get_address.c -o get_address</code></p>
+
+<p>we’ll try to override the address of printf and put there our address of shellcode.
+<img src="/CTF_writeups/overthewire/narnia/images/level9_2.png" alt="alt text" />
+as you can see, there is the buffer of bluh which is 20 bytes. then, the address of the buffer bok, then the of ebp, and then the ret-address.</p>
+
+<p>after finding the address of the env variable, in our case: <code class="language-plaintext highlighter-rouge">0xffffd511</code>, we need to insert it to the script that solves the challenge [level9.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">include_relative</span> <span class="n">scripts</span><span class="o">/</span><span class="n">level9</span><span class="p">.</span><span class="n">py</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>we need to play a bit with the script to find the right addres of bok, it might be a little different than the address in the debugger.</p>
+
+<p><img src="/CTF_writeups/overthewire/narnia/images/level9_3.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">1FFD4HnU4K</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+  </div>
+
+</div>
+
+      </section>
+    </div>
+  </body>
+</html>

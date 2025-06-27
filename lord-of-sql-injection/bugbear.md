@@ -7,7 +7,7 @@ title: bugbear
 
 the source code is here [bugbear]
 ```python
-% scripts/bugbear.py
+{% include_relative scripts/bugbear.py %}
 ```
 
 

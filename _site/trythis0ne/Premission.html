@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Premission | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Premission" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/trythis0ne/Premission.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/trythis0ne/Premission.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Premission" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"Premission","url":"http://localhost:4000/CTF_writeups/trythis0ne/Premission.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="trythis0ne-premission-solution">trythis0ne Premission Solution</h1>
+
+<p>this is the message we get:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Gsv kzhhdliw gszg blf mvvw rh gsv mznv gszg
+yvolmth gl gsv nzm gszg hzbh gsv mvcg hvmgvmxv:
+
+"Givzg blfi kzhhdliw orpv blfi gllgsyifhs.
+Wlm'g ovg zmbylwb vohv fhv rg, zmw tvg z mvd
+lmv vevib hrc nlmgsh."
+</code></pre></div></div>
+
+<p>so, i use this website to decrypt this substitution encrypted cipher. https://planetcalc.com/8047/</p>
+
+<p>then, we got this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>THE WASSFORD THAT YOU NEED IS THE NAME THAT
+BELONGS TO THE MAN THAT SAYS THE NEXT SENTENCE:
+
+"TREAT YOUR WASSFORD LIKE YOUR TOOTHBRUSH.
+DON'T LET ANYBODY ELSE USE IT, AND GET A NEF
+ONE EVERY SIX MONTHS."
+</code></pre></div></div>
+
+<p>which tells us that the password is the name of someone…
+<strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">Clifford Stoll</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

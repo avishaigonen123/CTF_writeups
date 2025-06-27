@@ -3,7 +3,7 @@ layout: default
 title: leviathan0
 ---
 
-# leviathan level0 Solution
+
 
 first we check what we have in our folder. we can see the hidden folder `.backup`.
 in the hidden folder we can find html file, let's open it

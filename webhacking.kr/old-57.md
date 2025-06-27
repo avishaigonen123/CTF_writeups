@@ -7,8 +7,8 @@ title: old-57
 
 another sql injection, same as usual.
 [old-57]
-```python
-% scripts/old-57.py
+```scripts/old-57.py
+{% include_relative scripts/old-57.py %}
 ```
 
 

@@ -3,7 +3,7 @@ layout: default
 title: narnia4
 ---
 
-# narnia level4 Solution
+
 
 we will override the output file, this is the line we'll run
 `python3 -c "print('/tmp/1/'+'a'*(32-len('/tmp/1/')) + 'output_file')"`

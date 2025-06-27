@@ -7,7 +7,7 @@ title: dark_eyes
 
 the source code is here [dark_eyes]
 ```python
-% scripts/dark_eyes.py
+{% include_relative scripts/dark_eyes.py %}
 ```
 
 

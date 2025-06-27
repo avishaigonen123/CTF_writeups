@@ -3,7 +3,7 @@ layout: default
 title: vortex9
 ---
 
-# vortex level9 Solution
+
 
 in this level we can't find any exec file which named "vortex9".
 so, i decided to search for a files with the name "vortex9"

@@ -3,7 +3,7 @@ layout: default
 title: natas13
 ---
 
-# Natas Level 13 Solution
+
 
 here we inject webshell, but here we add the header of jpeg file in the begin of the content, because the php code use the func `exif_imagetype`
 

@@ -3,7 +3,7 @@ layout: default
 title: maze8
 ---
 
-# maze level8 Solution
+
 
 in this stage we need to open a socket on port 1337, and send data. then, we exploit format string attack, in `snprintf`
 
@@ -13,7 +13,7 @@ and then
 `/maze/maze8`
 the code can be found here [level8.py]
 ```python
-% scripts/level8.py
+{% include_relative scripts/level8/level8.py %}
 ```
 
 

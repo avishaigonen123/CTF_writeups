@@ -3,7 +3,7 @@ layout: default
 title: bandit10
 ---
 
-# Bandit Level 10 Solution
+
 
 ```
 bandit9@bandit:~$ strings data.txt | grep ===*

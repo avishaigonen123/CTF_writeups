@@ -3,7 +3,7 @@ layout: default
 title: bandit26
 ---
 
-# Bandit Level 26 Solution
+
 
 ```
 bandit25@bandit:~$ ssh -i bandit26.sshkey "bandit26@localhost" -p 2220

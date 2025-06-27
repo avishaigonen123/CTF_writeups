@@ -3,13 +3,13 @@ layout: default
 title: maze4
 ---
 
-# maze level4 Solution
+
 
 in this challenge we override one address, and put there value that will fit our needs.
 also, we need to give short script in bash that will open shell, i do it using the following commands:
 
 ```c
-% scripts/code.c
+{% include_relative scripts/level4/code.c %}
 ```
 , we will use this file as shebang. 
 

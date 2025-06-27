@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>vortex5 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="vortex5" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/vortex/vortex5.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/vortex/vortex5.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="vortex5" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"vortex5","url":"http://localhost:4000/CTF_writeups/overthewire/vortex/vortex5.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>in this challenge we run brute force on md5, which approved to be vulnerable to collision attack.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">md5</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="n">desired_hash</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x15\x5f\xb9\x5d\x04\x28\x7b\x75\x7c\x99\x6d\x77\xb5\xea\x51\xf7</span><span class="s">"</span>
+
+<span class="c1"># Check if a given password matches the desired hash
+</span><span class="k">def</span> <span class="nf">checkguess</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+    <span class="n">guess_hash</span> <span class="o">=</span> <span class="n">md5</span><span class="p">(</span><span class="n">password</span><span class="p">.</span><span class="n">encode</span><span class="p">()).</span><span class="n">digest</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">guess_hash</span> <span class="o">==</span> <span class="n">desired_hash</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Brute-forcing started..."</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">guess</span> <span class="ow">in</span> <span class="n">itertools</span><span class="p">.</span><span class="n">product</span><span class="p">(</span><span class="s">'r'</span> <span class="o">+</span> <span class="n">string</span><span class="p">.</span><span class="n">ascii_letters</span><span class="o">+</span><span class="n">string</span><span class="p">.</span><span class="n">digits</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">checkguess</span><span class="p">(</span><span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">guess</span><span class="p">)):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Password is: {0}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">guess</span><span class="p">)))</span>
+        <span class="k">break</span>
+    <span class="k">if</span> <span class="n">cnt</span> <span class="o">%</span> <span class="mi">10000000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Checked {0} passwords, guess is {1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">guess</span><span class="p">)))</span>
+
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Brute-forcing ended..."</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Time taken: {0:.2f} seconds"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+
+</code></pre></div></div>
+<p>, which will do the brute force for us.</p>
+
+<p>example output:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Brute-forcing started...
+Password is: rlTf6
+Brute-forcing ended...
+Time taken: 4.70 seconds
+</code></pre></div></div>
+<p>so, the password is: <code class="language-plaintext highlighter-rouge">rlTf6</code></p>
+
+<p><img src="/CTF_writeups/overthewire/vortex/images/level5.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">heo3EbnS9</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

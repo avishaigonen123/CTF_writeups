@@ -3,7 +3,7 @@ layout: default
 title: bandit12
 ---
 
-# Bandit Level 12 Solution
+
 
 ```
 bandit11@bandit:~$ cat data.txt | tr a-zA-Z n-za-mN-ZA-M

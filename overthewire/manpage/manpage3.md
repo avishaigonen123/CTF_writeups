@@ -3,10 +3,10 @@ layout: default
 title: manpage3
 ---
 
-# manpage level3 Solution
+
 
 ```sh
-% scripts/level3.sh
+{% include_relative scripts/level3/level3.sh %}
 ```
  for brute force.
 

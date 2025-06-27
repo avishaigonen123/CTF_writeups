@@ -3,7 +3,7 @@ layout: default
 title: bandit13
 ---
 
-# Bandit Level 13 Solution
+
 
 ```
 bandit12@bandit:~$ cd $(mktemp -d)

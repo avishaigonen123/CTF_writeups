@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>old-04 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="old-04" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-04.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-04.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="old-04" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-04","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-04.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-old-04-solution">webhacking old-04 Solution</h1>
+
+<p>in this challenge, we do dictionary attack, based on well known salt. we need to calculate as much hashes as possible.</p>
+
+<p>This is the source code: [old-04]</p>
+<pre><code class="language-scripts/old-04.py">import hashlib
+from concurrent.futures import ProcessPoolExecutor, as_completed
+import time
+
+def generate_hash(start, end):
+    """Generate hashed values for a given range with 500 SHA-1 iterations per value."""
+    result = []
+    for i in range(start, end):
+        data = f"{i}salt_for_you"
+        hashed_data = data
+        for _ in range(500):
+            hashed_data = hashlib.sha1(hashed_data.encode()).hexdigest()
+        result.append(f"{data}: {hashed_data}\n")
+    return result
+
+def process_and_write(filename, ranges, batch_size=100000):
+    """Processes hash ranges in parallel and writes results to file in batches."""
+    with ProcessPoolExecutor() as executor:
+        futures = {executor.submit(generate_hash, start, end): (start, end) for start, end in ranges}
+        completed_batches = 0
+        start_time = time.time()
+
+        with open(filename, 'w') as file:
+            for future in as_completed(futures):
+                batch = future.result()
+                file.writelines(batch)
+                completed_batches += 1
+
+                # Progress and timing updates
+                elapsed_time = time.time() - start_time
+                estimated_total_time = (elapsed_time / completed_batches) * len(ranges)
+                remaining_time = estimated_total_time - elapsed_time
+                print(f"Completed batch {completed_batches}/{len(ranges)}. "
+                      f"Estimated time left: {remaining_time / 60:.2f} minutes.")
+
+    print("All data written to file.")
+
+if __name__ == "__main__":
+    # Configuration
+    start_range = 10000000
+    end_range = 99999999
+    batch_size = 100000
+
+    # Creating ranges to distribute across processes
+    ranges = [(i, min(i + batch_size, end_range)) for i in range(start_range, end_range, batch_size)]
+    print(f"Total batches to process: {len(ranges)}")
+
+    # Process and write to file
+    output_file = "optimized_hash_dictionary.txt"
+    process_and_write(output_file, ranges)
+
+    total_time = time.time() - time.time()
+    print(f"All batches completed in {total_time / 60:.2f} minutes.")
+
+</code></pre>
+
+<p>there is an example of how the dictionary should look like, i gave you only 1000 rows… you need to generate much more rows: [hash-dictionry-old-4]</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% scripts/hash-dictionry-old-4.txt
+</code></pre></div></div>
+
+<p>then, you will refresh the page until there is some hash you can find in the dictionary.
+note: as much time you let the script run, more rows you will craft. I believe 30 minutes should be enough.</p>
+
+<p><img src="/CTF_writeups/webhacking.kr/images/old-04.png" alt="alt text" /></p>
+
+<p>:)</p>
+
+      </section>
+    </div>
+  </body>
+</html>

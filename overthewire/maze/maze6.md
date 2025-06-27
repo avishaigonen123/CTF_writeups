@@ -3,7 +3,7 @@ layout: default
 title: maze6
 ---
 
-# maze level6 Solution
+
 
 i decompiled maze 6, here you can see the source code.
 
@@ -33,7 +33,7 @@ shellcode_address = 0xffffd204
 ```
 the code can be found here [level7.py]
 ```python
-% scripts/level6/level6.py
+{% include_relative scripts/level6/level6.py %}
 ```
 
 

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>coin | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="coin" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/pwnable.kr/Toddler's_Bottle/coin.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/pwnable.kr/Toddler's_Bottle/coin.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="coin" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"coin","url":"http://localhost:4000/CTF_writeups/pwnable.kr/Toddler's_Bottle/coin.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="coin-solution">coin Solution</h1>
+
+<p>in this challenge we need to do binary search, multiple times, until we answer to all of the questions.</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="n">payload</span><span class="o">=</span>  <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="n">right</span><span class="p">)))</span> <span class="o">+</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span>
+    <span class="n">p</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">recv</span><span class="p">().</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s">"Correct"</span> <span class="ow">in</span> <span class="n">answer</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"coin is {}</span><span class="se">\n</span><span class="s">"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="n">answer_int</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+    <span class="c1"># if answer_int==9:
+</span>    <span class="c1">#     # p.send(payload)
+</span>    <span class="k">return</span> <span class="n">answer_int</span><span class="o">/</span><span class="mi">10</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="p">)</span>    
+
+<span class="c1"># Connection details
+# host = 'pwnable.kr'
+</span><span class="n">host</span> <span class="o">=</span> <span class="s">'localhost'</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">9007</span>
+
+<span class="c1"># context.log_level = 'debug'
+</span>
+<span class="c1"># Establish a remote connection
+</span><span class="n">p</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+
+<span class="c1"># p.recvuntil('- Ready? starting in 3 sec... -')
+# p.recv() # get all begin data
+</span>
+<span class="c1"># line = p.recv() # N=734 C=10
+</span>
+<span class="c1"># # Regular expression to extract N and C values
+# match = re.search(r'N=(\d+)\s+C=(\d+)', line.decode())
+</span>
+<span class="c1"># if not match:
+#     print("Could not extract N and C values from the received data.")
+#     exit(1)
+</span>
+<span class="c1"># N = int(match.group(1))  # Extract the first group (N)
+# C = int(match.group(2))  # Extract the second group (C)
+# # print(f"N={N}, C={C}")
+# print("N={0}, C={1}".format(N,C))
+</span>
+<span class="c1"># low = 0
+# big = N
+# binary search algorithm
+</span>
+<span class="n">p</span><span class="p">.</span><span class="n">recv</span><span class="p">()</span> <span class="c1"># get all begin data
+# p.recv()
+</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">recv</span><span class="p">()</span> <span class="c1"># N=734 C=10
+</span>    
+    <span class="k">if</span> <span class="s">"flag"</span> <span class="ow">in</span> <span class="n">line</span><span class="p">.</span><span class="n">decode</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="n">decode</span><span class="p">())</span>
+        <span class="k">break</span>
+
+    <span class="c1"># Regular expression to extract N and C values
+</span>    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s">'N=(\d+)\s+C=(\d+)'</span><span class="p">,</span> <span class="n">line</span><span class="p">.</span><span class="n">decode</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"Could not extract N and C values from the received data."</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># Extract the first group (N)
+</span>    <span class="n">C</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="p">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># Extract the second group (C)
+</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"N={0}, C={1}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">C</span><span class="p">))</span>
+    <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Initialize the search bounds
+</span>    
+    <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">:</span>
+        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># Find the midpoint
+</span>        <span class="n">res</span> <span class="o">=</span> <span class="n">check</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">mid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">==-</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># Found first coin
+</span>            <span class="k">break</span> 
+        <span class="k">elif</span> <span class="n">res</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span> <span class="c1"># Target in in left half
+</span>            <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># Target in right half
+</span>            <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span>
+
+
+
+<span class="n">p</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+<span class="c1"># p.sendline('15')
+# p.recv()
+# p.sendline('92')
+</span>
+<span class="c1">#  p.log("send values")
+</span>
+
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/pwnable.kr/Toddler's_Bottle/images/coin.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">b1NaRy_S34rch1nG_1s_3asy_p3asy</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

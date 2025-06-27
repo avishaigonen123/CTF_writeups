@@ -3,7 +3,7 @@ layout: default
 title: natas0
 ---
 
-# Natas Level 0 Solution
+
 
 f12, the password is in the source code
 

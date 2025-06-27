@@ -6,7 +6,7 @@ title: collision
 # collision Solution
 
 ```py
-% scripts/collision.py
+{% include_relative scripts/collision/collision.py %}
 ```
 
 

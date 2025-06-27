@@ -6,8 +6,8 @@ title: old-52
 # Webhacking old-52 Solution
 
 in this challenge there is both server vulnerabilities and sql injection. the source code can be found here: [old-52]
-```python
-% scripts/old-52.py
+```scripts/old-52.py
+{% include_relative scripts/old-52.py %}
 ```
 
 

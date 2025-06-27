@@ -9,7 +9,7 @@ here we exploit the fact we delete Man and Woman, and manage to put our code ins
 Then, when we'll call it's introduce function, it will execute shell.
 
 ```py
-% scripts/payload.py
+{% include_relative scripts/uaf/payload.py %}
 ```
 
 

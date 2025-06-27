@@ -3,7 +3,7 @@ layout: default
 title: vortex2
 ---
 
-# vortex level2 Solution
+
 
 in this level, we exploit the tar archive by archiving `vortex3` password file, and when extracting, we can read it.
 

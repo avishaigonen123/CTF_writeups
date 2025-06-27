@@ -3,19 +3,19 @@ layout: default
 title: maze0
 ---
 
-# maze level0 Solution
+
 
 in this level we exploit race condition.
 first it checks access to a file, and then change to higher privileges and print the content of the file. 
 so, we will link it to maze0 privilege, and before it opens the file for reading, we'll change to maze1 privilege.
 
 ```sh
-% scripts/link_script.sh
+{% include_relative scripts/level0/link_script.sh %}
 ```
 
 
 ```sh
-% scripts/run_script.sh
+{% include_relative scripts/level0/run_script.sh %}
 ```
 
 

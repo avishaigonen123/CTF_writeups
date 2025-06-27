@@ -3,7 +3,7 @@ layout: default
 title: bandit25
 ---
 
-# Bandit Level 25 Solution
+
 
 ```
 bandit24@bandit:/tmp/tmp.qmmouBVoUs$ cat > script.sh

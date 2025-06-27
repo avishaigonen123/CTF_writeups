@@ -7,8 +7,8 @@ title: WithStyle
 
 in this challenge, i saw the js in the frontend and run it from the console in order to find the user and the pass.
 you can find the code here: [WithStyle.js]
-```javascript
-% scripts/WithStyle.js
+```scripts/WithStyle.js
+{% include_relative scripts/WithStyle.js %}
 ```
  
 

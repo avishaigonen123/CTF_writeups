@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Leviathan Writeups | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Leviathan Writeups" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/overthewire/leviathan/" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/overthewire/leviathan/" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Leviathan Writeups" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"Leviathan Writeups","url":"http://localhost:4000/CTF_writeups/overthewire/leviathan/"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>This folder contains solutions for the <a href="http://overthewire.org/wargames/leviathan/">Leviathan</a> wargame from OverTheWire.</p>
+
+<style>
+/* Styles same as your Behemoth example – omitted here for brevity */
+</style>
+
+<div class="behemoth-container">
+
+  <!-- Sidebar -->
+  <div class="behemoth-sidebar">
+    <h00>Levels</h00>
+    <ul>
+      
+      
+      
+        
+        
+      
+        
+        
+          <li><a href="#leviathan0">leviathan0</a></li>
+        
+      
+        
+        
+          <li><a href="#leviathan1">leviathan1</a></li>
+        
+      
+        
+        
+          <li><a href="#leviathan2">leviathan2</a></li>
+        
+      
+        
+        
+          <li><a href="#leviathan3">leviathan3</a></li>
+        
+      
+        
+        
+          <li><a href="#leviathan4">leviathan4</a></li>
+        
+      
+        
+        
+          <li><a href="#leviathan5">leviathan5</a></li>
+        
+      
+        
+        
+          <li><a href="#leviathan6">leviathan6</a></li>
+        
+      
+    </ul>
+  </div>
+
+  <!-- Main content -->
+  <div class="behemoth-content">
+    
+      
+      
+    
+      
+      
+        <h00 id="leviathan0">leviathan0</h00>
+        <p>first we check what we have in our folder. we can see the hidden folder <code class="language-plaintext highlighter-rouge">.backup</code>.
+in the hidden folder we can find html file, let’s open it
+<img src="/CTF_writeups/overthewire/leviathan/images/level0.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">3QJ3TgzHDq</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="leviathan1">leviathan1</h00>
+        <p>using radare2 we can see the password is <code class="language-plaintext highlighter-rouge">sexsecretgodlove</code>
+<img src="/CTF_writeups/overthewire/leviathan/images/level1_1.png" alt="alt text" /></p>
+
+<p><img src="/CTF_writeups/overthewire/leviathan/images/level1_2.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">NsN1HwFoyN</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="leviathan2">leviathan2</h00>
+        <p>we will create link file for the password file in the name “link”
+<code class="language-plaintext highlighter-rouge">ln -sf /etc/leviathan_pass/leviathan3 link</code>.
+then, we will create file which named “link bla”.
+<code class="language-plaintext highlighter-rouge">touch "link bla"</code>
+and then, we’ll execute the printfile with our file:
+<code class="language-plaintext highlighter-rouge">~/printfile "link bla"</code>.
+also, we need to change the permission of our directory, that the user leviathan3 will be able to access files.
+<code class="language-plaintext highlighter-rouge">chmod +x .</code></p>
+
+<p>the exploit based on the fact that the access function returns 0 for the file “link bla”, because it’s fine.</p>
+
+<p>however, it than execute <code class="language-plaintext highlighter-rouge">/bin/cat link file</code>, which divided to 2 different commands.</p>
+
+<p><img src="/CTF_writeups/overthewire/leviathan/images/level2.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">f0n8h2iWLP</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="leviathan3">leviathan3</h00>
+        <p>using ltrace we can find the password.</p>
+
+<p><img src="/CTF_writeups/overthewire/leviathan/images/level3_1.png" alt="alt text" />
+so, the password is <code class="language-plaintext highlighter-rouge">snlprintf\n</code></p>
+
+<p><img src="/CTF_writeups/overthewire/leviathan/images/level3_2.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">WG1egElCvO</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="leviathan4">leviathan4</h00>
+        <p>here we can find the hidden directory which called “.trash”.
+in this directory, we can run the “bin” file and use ltrace to see what it does
+<img src="/CTF_writeups/overthewire/leviathan/images/level4_1.png" alt="alt text" />
+so, it prints the password in binary,</p>
+
+<p>using online tools we can find the password
+<img src="/CTF_writeups/overthewire/leviathan/images/level4_2.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">0dyxT7F4QD</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="leviathan5">leviathan5</h00>
+        <p>it prints the content of /tmp/file.log
+so, i linked it to the password file: 
+<code class="language-plaintext highlighter-rouge">ln -sf /etc/leviathan_pass/leviathan6 /tmp/file.log</code></p>
+
+<p><img src="/CTF_writeups/overthewire/leviathan/images/level5.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">szo7HDB88w</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+      
+      
+        <h00 id="leviathan6">leviathan6</h00>
+        <p>here we need to brute force the code, which is only 4 digits. i wrote short script in bash</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>% include_relative scripts/level6.sh %<span class="o">}</span>
+</code></pre></div></div>
+
+<p><img src="/CTF_writeups/overthewire/leviathan/images/level6.png" alt="alt text" /></p>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">qEs5Io5yM8</code></em></strong></p>
+
+        <div class="level-banner">Next Level Writeup</div>
+        <hr />
+      
+    
+  </div>
+
+</div>
+
+      </section>
+    </div>
+  </body>
+</html>

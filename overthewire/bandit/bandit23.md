@@ -3,7 +3,7 @@ layout: default
 title: bandit23
 ---
 
-# Bandit Level 23 Solution
+
 
 ```
 bandit22@bandit:~$ cat /usr/bin/cronjob_bandit23.sh

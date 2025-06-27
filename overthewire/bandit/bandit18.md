@@ -3,7 +3,7 @@ layout: default
 title: bandit18
 ---
 
-# Bandit Level 18 Solution
+
 
 ```
 bandit17@bandit:~$ diff passwords.new passwords.old

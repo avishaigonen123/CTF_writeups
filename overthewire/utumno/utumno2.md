@@ -3,7 +3,7 @@ layout: default
 title: utumno2
 ---
 
-# utumno level2 Solution
+
 
 first we can see there is no protection, and also ASLR disabled.
 ![image](./images/level2_1.png)
@@ -18,7 +18,7 @@ we need to find the address of the shellcode, try debugging and find it. for exa
 (here i debug and put breakpoint on where the main of /utumno/utumno2 is find, it won't change because ASLR is turned off)
 
 ```c
-% scripts/level2.c
+{% include_relative scripts/level2/level2.c %}
 ```
 , only change the address_of_shellcode variable and this should work. 
 

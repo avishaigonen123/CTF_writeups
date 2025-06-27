@@ -7,7 +7,7 @@ title: assassin
 
 the source code is here [assassin]
 ```python
-% scripts/assassin.py
+{% include_relative scripts/assassin.py %}
 ```
 
 

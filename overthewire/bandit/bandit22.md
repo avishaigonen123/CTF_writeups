@@ -3,7 +3,7 @@ layout: default
 title: bandit22
 ---
 
-# Bandit Level 22 Solution
+
 
 ```
 bandit21@bandit:~$ cat /etc/cron.d/cronjob_bandit22

@@ -3,7 +3,7 @@ layout: default
 title: maze5
 ---
 
-# maze level5 Solution
+
 
 simple reverse engineering can show us that for the username: `username`, the password should be `<>A7?B7:`
 ![image](./images/level5_1.png)
