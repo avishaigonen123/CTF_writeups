@@ -6,7 +6,7 @@ title: Lord-of-sql-injection Writeups
       ← Back to lord-of-sql-injection
 </a>
 
-### This folder contains solutions for the [Lord-of-sql-injection](http://lord-of-sql-injection/lord-of-sql-injection/) wargame from lord-of-sql-injection.
+### This folder contains solutions for the [Lord-of-sql-injection](http://los.rubiya.kr/) wargame from lord-of-sql-injection.
 
 <style>
   body {
@@ -131,9 +131,9 @@ title: Lord-of-sql-injection Writeups
     <h00>Levels</h00>
     <ul>
       {% assign lord-of-sql-injection_pages = site.pages
-        | where_exp: "p", "p.path contains 'lord-of-sql-injection/lord-of-sql-injection'"
-        | reject: "path", "lord-of-sql-injection/lord-of-sql-injection/index.md"
-        | reject: "path", "lord-of-sql-injection/lord-of-sql-injection/index.html"
+        | where_exp: "p", "p.path contains 'lord-of-sql-injection/'"
+        | reject: "path", "lord-of-sql-injection/index.md"
+        | reject: "path", "lord-of-sql-injection/index.html"
       %}
       {% assign level_pages = lord-of-sql-injection_pages | sort_natural: "path" %}
       {% for p in level_pages %}

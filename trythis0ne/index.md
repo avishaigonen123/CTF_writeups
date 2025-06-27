@@ -6,7 +6,7 @@ title: Trythis0ne Writeups
       ← Back to trythis0ne
 </a>
 
-### This folder contains solutions for the [Trythis0ne](http://trythis0ne/trythis0ne/) wargame from trythis0ne.
+### This folder contains solutions for the [Trythis0ne](http://trythis0ne.com/) wargame from trythis0ne.
 
 <style>
   body {
@@ -131,9 +131,9 @@ title: Trythis0ne Writeups
     <h00>Levels</h00>
     <ul>
       {% assign trythis0ne_pages = site.pages
-        | where_exp: "p", "p.path contains 'trythis0ne/trythis0ne'"
-        | reject: "path", "trythis0ne/trythis0ne/index.md"
-        | reject: "path", "trythis0ne/trythis0ne/index.html"
+        | where_exp: "p", "p.path contains 'trythis0ne'"
+        | reject: "path", "trythis0ne/index.md"
+        | reject: "path", "trythis0ne/index.html"
       %}
       {% assign level_pages = trythis0ne_pages | sort_natural: "path" %}
       {% for p in level_pages %}
