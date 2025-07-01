@@ -16,6 +16,7 @@ title: "CTF Writeups Home"
     <li>🔓 <a href="./overthewire/">OverTheWire</a></li>
     <li>🕵️ <a href="./trythis0ne/">trythis0ne</a></li>
     <li>🌐 <a href="./webhacking.kr/">Webhacking.kr</a></li>
+    <li>🕸️ <a href="./websec.fr/">Websec.fr</a></li>
     <li>🧨 <a href="./pwnable.kr/">Pwnable.kr</a></li>
     <li>🧮 <a href="./lord-of-sql-injection/">Lord of SQL Injection</a></li>
     <li>🎯 <a href="./ringzer0">RingZer0</a></li>
