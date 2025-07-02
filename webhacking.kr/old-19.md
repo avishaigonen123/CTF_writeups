@@ -14,20 +14,3 @@ you can find the code that generate this here: [old-19]
 ```py
 {% include_relative scripts/old-19.py %}
 ```
-
-Trying including with different names:
-```py
-{% include_relative scripts/old-20.py %}
-```
-```py
-{% include_relative scripts/ouroboros.py %}
-```
-
-And with the regex?
-So, let's write our script: [regexMaster.py]
-```py
-{% include_relative scripts/regexMaster.py %}
-```
-
-
-Changed... maybe now?
