@@ -23,4 +23,11 @@ Trying including with different names:
 {% include_relative scripts/ouroboros.py %}
 ```
 
+And with the regex?
+So, let's write our script: [regexMaster.py]
+```py
+{% include_relative scripts/regexMaster.py %}
+```
+
+
 Changed... maybe now?
