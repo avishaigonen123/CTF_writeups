@@ -1,4 +1,4 @@
-GIF <?php 
+GIF89a <?php 
 $dir = getcwd();  // Current working directory
 
 $files = scandir($dir);  // Get all files in the current directory

@@ -7,7 +7,7 @@ Another `RCE` using webshell we uploading. This time, we pass this check:
 ```php
 if (exif_imagetype($_FILES['fileToUpload']['tmp_name']) === IMAGETYPE_GIF) 
 ```
-By just providing the magic `IMAGETYPE_GIF` which is `GIF`. 
+By just providing the magic `IMAGETYPE_GIF` which is `GIF89a`. 
 
 Our webshell will show us the files in the folders, and then we'll read the flag.
 
