@@ -14,4 +14,3 @@ you can find the code that generate this here: [old-19]
 ```py
 {% include_relative scripts/old-19.py %}
 ```
-
