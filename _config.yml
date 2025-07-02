@@ -19,4 +19,5 @@ include:
   - lord-of-sql-injection
   - trythis0ne
   - appSec-IL-2025
+  - websec.fr
   # - assets  # if you use an assets folder for CSS, JS, etc.
