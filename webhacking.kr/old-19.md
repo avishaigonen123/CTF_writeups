@@ -11,6 +11,6 @@ MGNjMTc1YjljMGYxYjZhODMxYzM5OWUyNjk3NzI2NjE4Mjc3ZTA5MTBkNzUwMTk1YjQ0ODc5NzYxNmUw
 ```
 
 you can find the code that generate this here: [old-19]
-```py
+{% highlight python %}
 {% include_relative scripts/old-19.py %}
-```
+{% endhighlight %}
