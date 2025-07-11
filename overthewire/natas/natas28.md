@@ -1,12 +1,13 @@
 ---
 layout: default
-title: natas27
+title: natas28
 ---
 
-Need to write, it used to work for me but i don't manage to make it now...
-you can have a look on this script.
+This is the source code.
+
+It about `SQLi` and exploit of `AES-ECB` mode.
 ```python
-{% include_relative scripts/level27.py %}
+{% include_relative scripts/level28.py %}
 ```
 
 ```
