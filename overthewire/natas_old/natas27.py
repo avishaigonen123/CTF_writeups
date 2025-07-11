@@ -25,7 +25,7 @@ print(bla)
 data['username'] = bla
 response = requests.post(URL,data=data, headers=headers)
 print(response.text)
-data['username'] = bla
+data['username'] = 'natas28'
 response = requests.post(URL,data=data, headers=headers)
 print(response.text)
     # if "Here" in response.te
