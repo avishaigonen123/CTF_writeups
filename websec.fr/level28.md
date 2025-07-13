@@ -3,7 +3,7 @@ layout: default
 title: level28
 ---
 
-Here we need to upload our webshell and then read the Flag. We've got only one second before the file get deleted, is basically `RCE` combined will `TocToe`.
+Here we need to upload our webshell and then read the Flag. We've got only one second before the file get deleted, this is `RCE` combined will `TocToe`.
 This will be our payload
 ```php
 <?php
