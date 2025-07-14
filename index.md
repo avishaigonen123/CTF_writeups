@@ -12,7 +12,7 @@ title: "CTF Writeups Home"
 ## 📁 Contents
 
 <div style="font-size: 1.4rem; line-height: 2.5;">
-  <ul style="list-style-type: none; padding: 0;">
+  <ul style="list-style-type: none; padding: 0.5;">
     <li>🔓 <a href="./overthewire/">OverTheWire</a></li>
     <li>🕵️ <a href="./trythis0ne/">trythis0ne</a></li>
     <li>🌐 <a href="./webhacking.kr/">Webhacking.kr</a></li>

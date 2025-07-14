@@ -51,7 +51,7 @@ Welcome to the **Webhacking.kr** wargame writeups! Click a level below to view t
 
 <div class="level-grid">
   {% assign webhacking_pages = site.pages
-    | where_exp: "p", "p.path contains 'webhacking.lr'"
+    | where_exp: "p", "p.path contains 'webhacking.kr'"
     | reject: "path", "webhacking.kr/index.md"
     | reject: "path", "webhacking.kr/index.html"
   %}
