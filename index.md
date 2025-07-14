@@ -35,7 +35,7 @@ title: "CTF Writeups Home"
       🎯 <a href="./ringzer0" style="text-decoration: none; color: #16a085;">RingZer0</a>
     </li>
     <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🇮🇱 <a href="./appSec-IL-2025/" style="text-decoration: none; color: #16a085;">AppSec-IL-2025</a>
+      🇮🇱 <a href="./AppSec-IL-2025/" style="text-decoration: none; color: #16a085;">AppSec-IL-2025</a>
     </li>
   </ul>
 </div>
