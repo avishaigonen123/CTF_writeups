@@ -34,6 +34,10 @@
 <script>
   // Go one folder up from current URL
   const parts = window.location.pathname.split('/').filter(Boolean);
+  if (parts.length === 0) { // If at root, go to home
+    document.getElementById('back-link').href = '/';
+    return;
+  }
   parts.pop(); // remove current page or last folder
   const parent = '/' + parts.join('/') + '/';
   document.getElementById('back-link').href = parent;

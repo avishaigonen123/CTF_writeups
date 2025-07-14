@@ -11,20 +11,36 @@ title: "CTF Writeups Home"
 
 ## 📁 Contents
 
-<div style="font-size: 1.4rem; line-height: 2.5;">
-  <ul style="list-style-type: none; padding: 0.5;">
-    <li>🔓 <a href="./overthewire/">OverTheWire</a></li>
-    <li>🕵️ <a href="./trythis0ne/">trythis0ne</a></li>
-    <li>🌐 <a href="./webhacking.kr/">Webhacking.kr</a></li>
-    <li>🕸️ <a href="./websec.fr/">Websec.fr</a></li>
-    <li>🧨 <a href="./pwnable.kr/">Pwnable.kr</a></li>
-    <li>🧮 <a href="./lord-of-sql-injection/">Lord of SQL Injection</a></li>
-    <li>🎯 <a href="./ringzer0">RingZer0</a></li>
-    <li>🇮🇱 <a href="./appSec-IL-2025/">AppSec-IL-2025</a></li>
+<div style="font-size: 1.4rem; line-height: 2.5; padding: 10px;">
+  <ul style="list-style-type: none; padding: 0;">
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
+      🔓 <a href="./overthewire/" style="text-decoration: none; color: #16a085;">OverTheWire</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
+      🕵️ <a href="./trythis0ne/" style="text-decoration: none; color: #16a085;">trythis0ne</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
+      🌐 <a href="./webhacking.kr/" style="text-decoration: none; color: #16a085;">Webhacking.kr</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
+      🕸️ <a href="./websec.fr/" style="text-decoration: none; color: #16a085;">Websec.fr</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
+      🧨 <a href="./pwnable.kr/" style="text-decoration: none; color: #16a085;">Pwnable.kr</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
+      🧮 <a href="./lord-of-sql-injection/" style="text-decoration: none; color: #16a085;">Lord of SQL Injection</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
+      🎯 <a href="./ringzer0" style="text-decoration: none; color: #16a085;">RingZer0</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
+      🇮🇱 <a href="./appSec-IL-2025/" style="text-decoration: none; color: #16a085;">AppSec-IL-2025</a>
+    </li>
   </ul>
 </div>
 
-
+---
 
 ## 🧭 Wargame Guide
 
