@@ -34,11 +34,13 @@
 <script>
   // Go one folder up from current URL
   const parts = window.location.pathname.split('/').filter(Boolean);
-  if (parts.length === 0) { // If at root, go to home
-    document.getElementById('back-link').href = '/';
-    return;
-  }
-  parts.pop(); // remove current page or last folder
-  const parent = '/' + parts.join('/') + '/';
+  
+  // Remove the last part (current page or last folder)
+  parts.pop(); 
+  
+  // If we're already at the root level, make sure the parent is '/'
+  const parent = parts.length > 0 ? '/' + parts.join('/') + '/' : '/';
+  
+  // Update the back-link href attribute
   document.getElementById('back-link').href = parent;
 </script>
