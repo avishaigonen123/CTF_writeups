@@ -1,7 +1,24 @@
-
 <link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
 
 <!-- remove the cache headers -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+
+<!-- Auto "Back" link -->
+<style>
+  .back-link {
+    display: block;
+    margin: 20px 0;
+    text-decoration: none;
+    font-weight: bold;
+    color: #16a085;
+  }
+</style>
+
+{% assign path_parts = page.url | split: '/' %}
+{% assign parent_path = '' %}
+{% for part in path_parts offset:1 limit: path_parts.size - 2 %}
+  {% assign parent_path = parent_path | append: '/' | append: part %}
+{% endfor %}
+<a class="back-link" href="{{ parent_path }}/">← Back</a>
