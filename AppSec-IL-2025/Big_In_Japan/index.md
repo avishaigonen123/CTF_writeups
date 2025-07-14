@@ -51,15 +51,15 @@ Welcome to the **Big_In_Japan** wargame writeups! Click a level below to view th
 
 <div class="level-grid">
   {% assign BigInJapan_pages = site.pages
-    | where_exp: "p", "p.path contains 'appSec-IL-2025/Big_In_Japan'"
-    | reject: "path", "appSec-IL-2025/Big_In_Japan/index.md"
-    | reject: "path", "appSec-IL-2025/Big_In_Japan/index.html"
+    | where_exp: "p", "p.path contains 'AppSec-IL-2025/Big_In_Japan'"
+    | reject: "path", "AppSec-IL-2025/Big_In_Japan/index.md"
+    | reject: "path", "AppSec-IL-2025/Big_In_Japan/index.html"
   %}
   {% assign sorted_levels = BigInJapan_pages | sort_natural: "path" %}
   {% for page in sorted_levels %}
     {% assign name = page.path | split: '/' | last | split: '.' | first %}
     {% if name != "index" %}
-    <a class="level-card" href="{{ site.baseurl }}/appSec-IL-2025/Big_In_Japan/{{ name }}.html">
+    <a class="level-card" href="{{ site.baseurl }}/AppSec-IL-2025/Big_In_Japan/{{ name }}.html">
       <span class="level-icon">🧩</span>
       <h3>{{ name }}</h3>
       <p>Solution for {{ name }}</p>
