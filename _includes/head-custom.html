@@ -21,6 +21,9 @@
 </style>
 
 {% assign url_parts = page.url | split: '/' %}
-{% assign parent_parts = url_parts | slice: 0, url_parts.size - 1 %}
-{% assign parent_path = parent_parts | join: '/' %}
-<a class="back-link" href="{{ parent_path }}/">← Back</a>
+{% assign depth = url_parts.size | minus: 2 %}
+{% assign up_path = "" %}
+{% for i in (1..depth) %}
+  {% assign up_path = up_path | append: "../" %}
+{% endfor %}
+<a class="back-link" href="{{ up_path }}">← Back</a>
