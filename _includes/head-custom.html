@@ -8,17 +8,24 @@
 <!-- Auto "Back" link -->
 <style>
   .back-link {
-    display: block;
-    margin: 20px 0;
+    display: inline-block;
+    margin: 30px 0 20px 30px;
     text-decoration: none;
     font-weight: bold;
+    font-size: 1.5em;
     color: #16a085;
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .back-link:hover {
+    background-color: #e0e0e0;
   }
 </style>
 
-{% assign path_parts = page.url | split: '/' %}
-{% assign parent_path = '' %}
-{% for part in path_parts offset:1 limit: path_parts.size - 2 %}
-  {% assign parent_path = parent_path | append: '/' | append: part %}
-{% endfor %}
+{% assign url_parts = page.url | split: '/' %}
+{% assign url_parts = url_parts | slice: 0, url_parts.size - 2 %}
+{% assign parent_path = url_parts | join: '/' %}
 <a class="back-link" href="{{ parent_path }}/">← Back</a>
