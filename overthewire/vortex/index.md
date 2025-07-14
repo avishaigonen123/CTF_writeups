@@ -62,10 +62,13 @@ Welcome to the **Vortex** wargame writeups! Click a level below to view the deta
   {% assign sorted_levels = vortex_pages | sort_natural: "path" %}
   {% for page in sorted_levels %}
     {% assign name = page.path | split: '/' | last | split: '.' | first %}
-    <a class="level-card" href="{{ site.baseurl }}/CTF_writeups/overthewire/vortex/{{ name }}.html">
+    {% if name != "index" %}
+    <a class="level-card" href="{{ site.baseurl }}/overthewire/vortex/{{ name }}.html">
       <span class="level-icon">🧩</span>
       <h3>{{ name }}</h3>
       <p>Solution for {{ name }}</p>
     </a>
+    {% endif %}
   {% endfor %}
 </div>
+<ul>
