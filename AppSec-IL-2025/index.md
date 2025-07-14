@@ -45,11 +45,11 @@ Welcome to the AppSec-IL-2025 Wargames writeups hub. Choose a wargame below to v
 <div class="wargame-container">
   {% assign seen = "" | split: "" %}
   {% for folder in site.pages %}
-    {% if folder.path contains 'appSec-IL-2025/' and folder.path != 'appSec-IL-2025/index.md' %}
+    {% if folder.path contains 'AppSec-IL-2025/' and folder.path != 'AppSec-IL-2025/index.md' %}
       {% assign path_parts = folder.path | split: '/' %}
       {% assign folder_name = path_parts[1] %}
       {% unless seen contains folder_name %}
-        {% capture folder_path %}appSec-IL-2025/{{ folder_name }}{% endcapture %}
+        {% capture folder_path %}AppSec-IL-2025/{{ folder_name }}{% endcapture %}
         <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
           <h2>{{ folder_name | capitalize }}</h2>
           <p>Writeups for {{ folder_name | capitalize }} wargame</p>
