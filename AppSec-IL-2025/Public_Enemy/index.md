@@ -51,15 +51,15 @@ Welcome to the **Public_Enemy** wargame writeups! Click a level below to view th
 
 <div class="level-grid">
   {% assign PublicEnemyn_pages = site.pages
-    | where_exp: "p", "p.path contains 'appSec-IL-2025/Public_Enemy'"
-    | reject: "path", "appSec-IL-2025/Public_Enemy/index.md"
-    | reject: "path", "appSec-IL-2025/Public_Enemy/index.html"
+    | where_exp: "p", "p.path contains 'AppSec-IL-2025/Public_Enemy'"
+    | reject: "path", "AppSec-IL-2025/Public_Enemy/index.md"
+    | reject: "path", "AppSec-IL-2025/Public_Enemy/index.html"
   %}
   {% assign sorted_levels = PublicEnemyn_pages | sort_natural: "path" %}
   {% for page in sorted_levels %}
     {% assign name = page.path | split: '/' | last | split: '.' | first %}
     {% if name != "index" %}
-    <a class="level-card" href="{{ site.baseurl }}/appSec-IL-2025/Public_Enemy/{{ name }}.html">
+    <a class="level-card" href="{{ site.baseurl }}/AppSec-IL-2025/Public_Enemy/{{ name }}.html">
       <span class="level-icon">🧩</span>
       <h3>{{ name }}</h3>
       <p>Solution for {{ name }}</p>
