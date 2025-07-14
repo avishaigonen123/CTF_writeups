@@ -3,10 +3,6 @@ layout: default
 title: Vortex Writeups
 ---
 
-<a href="/CTF_writeups/overthewire/" style="display:inline-block; margin-bottom: 1.5rem; text-decoration: none; color: #16a085; font-weight: bold;">
-  ← Back to OverTheWire
-</a>
-
 Welcome to the **Vortex** wargame writeups! Click a level below to view the detailed solution.
 
 <style>
