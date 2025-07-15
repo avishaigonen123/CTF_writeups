@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Lord-of-sql-Injection Writeups
+title: Lord-of-sql-injection Writeups
 ---
 
-Welcome to the **Lord-of-sql-Injection** wargame writeups! Click a level below to view the detailed solution.
+Welcome to the **Lord-of-sql-injection** wargame writeups! Click a level below to view the detailed solution.
 
 <style>
   .level-grid {
@@ -50,16 +50,16 @@ Welcome to the **Lord-of-sql-Injection** wargame writeups! Click a level below t
 </style>
 
 <div class="level-grid">
-  {% assign lord-of-sql-Injection_pages = site.pages
-    | where_exp: "p", "p.path contains 'lord-of-sql-Injection'"
-    | reject: "path", "lord-of-sql-Injection/index.md"
-    | reject: "path", "lord-of-sql-Injection/index.html"
+  {% assign lord-of-sql-injection_pages = site.pages
+    | where_exp: "p", "p.path contains 'lord-of-sql-injection'"
+    | reject: "path", "lord-of-sql-injection/index.md"
+    | reject: "path", "lord-of-sql-injection/index.html"
   %}
-  {% assign sorted_levels = lord-of-sql-Injection_pages | sort_natural: "path" %}
+  {% assign sorted_levels = lord-of-sql-injection_pages | sort_natural: "path" %}
   {% for page in sorted_levels %}
     {% assign name = page.path | split: '/' | last | split: '.' | first %}
     {% if name != "index" %}
-    <a class="level-card" href="{{ site.baseurl }}/lord-of-sql-Injection/{{ name }}.html">
+    <a class="level-card" href="{{ site.baseurl }}/lord-of-sql-injection/{{ name }}.html">
       <span class="level-icon">🧩</span>
       <h3>{{ name }}</h3>
       <p>Solution for {{ name }}</p>
