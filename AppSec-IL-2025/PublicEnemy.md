@@ -13,7 +13,7 @@ title: PublicEnemy
 
 ## Description
 
-![problem description](./Challenge-info.gif)
+![problem description](./Public_Enemy/Challenge-info.gif)
 
 The challenge lets users log in and uses JWT to maintain session cookies. It's vulnerable to an algorithm confusion attack mixed with prototype pollution.
 
@@ -22,7 +22,7 @@ The challenge lets users log in and uses JWT to maintain session cookies. It's v
 ## Solution
 
 First, we log in as guest with `guest` as username and password. This is the JWT token we got: 
-![jwt token](./JWT-token.png)
+![jwt token](./Public_Enemy/JWT-token.png)
 
 As we can see, it holds our username and also the `isAdmin` field. From the source code, in the file `index.js`, we need to somehow be the admin in order to view the `FLAG`.
 ```js
@@ -108,7 +108,7 @@ So, we can use this flaw to inject our own header.alg, by supplying this as the 
 ## Flaw 3
 
 All we need for our algorithm confusion attack is to obtain the `public key`. We use the tool [JWT-Key-Recovery](https://github.com/FlorianPicca/JWT-Key-Recovery) from GitHub, and extract the `public key` by supplying 2 JWT tokens.
- ![Extract public key](./Extract-public-key.png)
+ ![Extract public key](./Public_Enemy/Extract-public-key.png)
 
  ---
 
@@ -116,7 +116,7 @@ All we need for our algorithm confusion attack is to obtain the `public key`. We
 
 We need to change the header and the payload. In the header, we use *Flaw 1* and *Flaw 2* in order to use `HS256`, which is a symmetric algorithm, and in the payload we set the `isAdmin` flag to true. 
 
-![Final attack](./Final-attack.png)
+![Final attack](./Public_Enemy/Final-attack.png)
 
 All that's left is to sign this token with the `public key` we obtained in *Flaw 3*. Notice it might be frustrating—the format of the key, new lines might jump. 
 I changed the source code of the `recover.py` and printed the `PEM key` already base64 encoded.
@@ -127,6 +127,6 @@ I changed the source code of the `recover.py` and printed the `PEM key` already 
 > ```
 > (Make sure to adjust the command and file names as needed for your key type.)
 
-![FLAG-picture](./Final-image.png)
+![FLAG-picture](./Public_Enemy/Final-image.png)
 
 The flag is `AppSec-IL{i_am_confusion}`
