@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://avishaigonen123.github.io/CTF_writeups/sitemap.xml
