@@ -6,6 +6,7 @@ remote_theme: pages-themes/hacker
 
 plugins:
   - jekyll-remote-theme
+  - jekyll-sitemap
 
 # 🧠 ADD THIS SECTION 👇
 include:
