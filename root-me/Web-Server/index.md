@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Big_In_Japan Writeups
+title: Web-Server Writeups
 ---
 
-Welcome to the **Big_In_Japan** wargame writeups! Click a level below to view the detailed solution.
+Welcome to the **Web-Server** wargame writeups! Click a level below to view the detailed solution.
 
 <style>
   .level-grid {
@@ -50,16 +50,16 @@ Welcome to the **Big_In_Japan** wargame writeups! Click a level below to view th
 </style>
 
 <div class="level-grid">
-  {% assign BigInJapan_pages = site.pages
-    | where_exp: "p", "p.path contains 'AppSec-IL-2025/Big_In_Japan'"
-    | reject: "path", "AppSec-IL-2025/Big_In_Japan/index.md"
-    | reject: "path", "AppSec-IL-2025/Big_In_Japan/index.html"
+  {% assign Web-Server_pages = site.pages
+    | where_exp: "p", "p.path contains 'root-me/Web-Server'"
+    | reject: "path", "root-me/Web-Server/index.md"
+    | reject: "path", "root-me/Web-Server/index.html"
   %}
-  {% assign sorted_levels = BigInJapan_pages | sort_natural: "path" %}
+  {% assign sorted_levels = Web-Server_pages | sort_natural: "path" %}
   {% for page in sorted_levels %}
     {% assign name = page.path | split: '/' | last | split: '.' | first %}
     {% if name != "index" %}
-    <a class="level-card" href="{{ site.baseurl }}/AppSec-IL-2025/Big_In_Japan/{{ name }}.html">
+    <a class="level-card" href="{{ site.baseurl }}/root-me/Web-Server/{{ name }}.html">
       <span class="level-icon">🧩</span>
       <h3>{{ name }}</h3>
       <p>Solution for {{ name }}</p>
