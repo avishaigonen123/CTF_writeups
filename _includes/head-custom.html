@@ -59,7 +59,17 @@
   SimpleJekyllSearch({
     searchInput: document.getElementById('search-input'),
     resultsContainer: document.getElementById('results-container'),
-    json: '{{ site.baseurl }}/search.json'
+    json: '{{ site.baseurl }}/search.json',
+    searchResultTemplate: '<li><a href="{url}" style="color:#0f0;">{title}</a></li>',
+    fuzzy: false,
+    templateMiddleware: function (prop, value, template) {
+      return value;
+    },
+    filter: function (post, searchQuery) {
+      const terms = searchQuery.toLowerCase().trim().split(/\s+/);
+      const haystack = `${post.title} ${post.content}`.toLowerCase();
+      return terms.every(term => haystack.includes(term));
+    }
   });
 
   // Clear results when input is empty
@@ -75,7 +85,7 @@
 
 <style>
   #search-container {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 20px auto 0;
     padding: 0 15px;
   }
@@ -83,7 +93,7 @@
   #search-input {
     width: 100%;
     padding: 8px 12px;
-    font-size: 1em;
+    font-size: 1.5em;
     border: 1px solid #00ff00;
     border-radius: 4px;
     background-color: #111;
