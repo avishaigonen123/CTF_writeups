@@ -44,3 +44,63 @@
   // Update the back-link href attribute
   document.getElementById('back-link').href = parent;
 </script>
+
+<!-- 🔍 Global Search Bar -->
+<div id="search-container">
+  <input type="text" id="search-input" placeholder="Search writeups...">
+  <ul id="results-container"></ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script>
+
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '{{ site.baseurl }}/search.json'
+  });
+
+  // Clear results when input is empty
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('results-container');
+
+  input.addEventListener('input', () => {
+    if (!input.value.trim()) {
+      results.innerHTML = '';
+    }
+  });
+</script>
+
+<style>
+  #search-container {
+    width: 100%;
+    padding: 20px 16.9%;
+    background: #000;
+  }
+
+  #search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    border: 2px solid #00ff00;
+    border-radius: 5px;
+    background-color: #111;
+    color: #0f0;
+  }
+
+  #results-container {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+    color: #0f0;
+  }
+
+  #results-container li {
+    background: #111;
+    border: 1px solid #0f0;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+  }
+</style>
+
