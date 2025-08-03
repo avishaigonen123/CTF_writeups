@@ -21,8 +21,10 @@ uid|s:5:"admin";
 php >
 ```
 
-Now, all left is to create our payload:
-`python3 sliping_beauty.py`, and then upload it to the server.
+Now, all left is to create our payload, using this code, and then upload it to the server:
+```py
+{% include_relative scripts/sliping_beauty.py %}
+```
 
 Lastly, let's change our session ID to the session id we achieve, for example:
 `0tf30efgp62k6u1jm9lbmeckg791194204` (include the random chars).
