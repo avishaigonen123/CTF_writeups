@@ -11,7 +11,7 @@ Then, I saw this article [hacking the debugging pin of flask](https://b33pl0g1c.
 
 This script should regenerate the PIN, however, we need to supply input that we need to achieve somehow.
 ```py
-{% include_relative scripts/Flask-Development-server_pin_cracker %}
+{% include_relative scripts/Flask-Development-server_pin_cracker.py %}
 ```
 
 Then, I saw this `LFI` here: `http://challenge01.root-me.org:59085/services?search=/etc/passwd`
