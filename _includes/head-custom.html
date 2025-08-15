@@ -1,5 +1,66 @@
 <head>
   {% include head-meta.html %}
-  {% include back-link.html %}
-  {% include search-bar.html %}
+  <!-- {% include back-link.html %} -->
+  <!-- {% include search-bar.html %} -->
 </head>
+
+<!-- 🔍 Global Search Bar -->
+<div id="search-container">
+  <input type="text" id="search-input" placeholder="Search  CTF Writeups..." aria-label="Search CTF Writeups..." />
+  <ul id="results-container"></ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script>
+
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '{{ site.baseurl }}/search.json',
+    searchResultTemplate: '<li><a href="{url}" style="color:#0f0;">{title}</a></li>',
+    fuzzy: false,
+    templateMiddleware: function (prop, value, template) {
+      return value;
+    },
+    filter: function (post, searchQuery) {
+      const terms = searchQuery.toLowerCase().trim().split(/\s+/);
+      const haystack = `${post.title} ${post.content}`.toLowerCase();
+      return terms.every(term => haystack.includes(term));
+    }
+  });
+
+  // Clear results when input is empty
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('results-container');
+
+  input.addEventListener('input', () => {
+    if (!input.value.trim()) {
+      results.innerHTML = '';
+    }
+  });
+</script>
+
+
+<link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
+
+
+
+<div class="back-container">
+  <a id="back-link" class="back-link" href="#">← Back</a>
+</div>
+
+<script>
+  // Go one folder up from current URL
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  
+  // Remove the last part (current page or last folder)
+  parts.pop(); 
+  
+  // If we're already at the root level, make sure the parent is '/'
+  const parent = parts.length > 0 ? '/' + parts.join('/') + '/' : '/';
+  
+  // Update the back-link href attribute
+  document.getElementById('back-link').href = parent;
+</script>
+
+<link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
