@@ -16,7 +16,6 @@ if (searchInput && resultsContainer) {
       resultsContainer.appendChild(li);
     });
 
-    // create "Show More" button if needed
     if (allResults.length > count) {
       if (!showMoreBtn) {
         showMoreBtn = document.createElement('button');
@@ -42,8 +41,8 @@ if (searchInput && resultsContainer) {
     searchInput: searchInput,
     resultsContainer: resultsContainer,
     json: 'assets/json/search.json',
-    searchResultTemplate: '',
     fuzzy: false,
+    searchResultTemplate: '<li><a href="{url}" style="color:#0f0;">{title}</a></li>',
     templateMiddleware: (prop, value) => value,
     filter: (post, query) => {
       const terms = query.toLowerCase().trim().split(/\s+/);
