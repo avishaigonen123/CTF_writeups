@@ -11,10 +11,10 @@
 }
 
 /* Make iframe take most of the viewport height */
-.iframe-container iframe,
-.iframe-container img {
+/* Iframe container */
+.iframe-container iframe {
   width: 95%;
-  height: 90vh; /* 90% of viewport height */
+  height: 90vh; /* iframe fills most of the viewport */
   border: 3px solid #3b82f6;
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
@@ -22,6 +22,17 @@
   margin: 0 auto 40px;
 }
 
+/* Image inside the container */
+.iframe-container img {
+  width: 95%;       /* full width like iframe */
+  height: auto;     /* keep original aspect ratio */
+  max-height: 90vh; /* prevent it from being too tall */
+  border: 3px solid #3b82f6;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  display: block;
+  margin: 0 auto 40px;
+}
 
   /* CTF Rank Cards */
   .ctf-ranks {

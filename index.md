@@ -121,7 +121,7 @@ Learn, explore, and enjoy the world of CTFs 🧠💥
 
   <div class="iframe-wrapper">
     <div class="iframe-title">Root-Me</div>
-    <img src="assets/screenshots/rootme.png" alt="Root-Me Scoreboard">
+    <img src="assets/screenshots/root-me.png" alt="Root-Me Scoreboard">
     <!-- <iframe src="https://www.root-me.org/elicopter770?lang=en#fd3288f941c568ba4d7b3d56ed57d3db" title="Root-Me Profile"></iframe> -->
   </div>
 
