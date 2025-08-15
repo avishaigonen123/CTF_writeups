@@ -1,13 +1,13 @@
 ---
-layout: null
+layout: none
 ---
 [
-{% for page in site.pages %}
-  {% if page.title %}
+  {% assign pages = site.pages | where_exp: "p", "p.title" %}
+  {% for post in pages %}
     {
-      "title": "{{ page.title | escape }}",
-      "url": "{{ page.url | relative_url }}"
+      "title": "{{ post.title | escape }}",
+      "url": "{{ post.url | relative_url }}",
+      "content": {{ post.content | strip_html | strip_newlines | jsonify }}
     }{% unless forloop.last %},{% endunless %}
-  {% endif %}
-{% endfor %}
+  {% endfor %}
 ]
