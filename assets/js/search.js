@@ -25,9 +25,13 @@ showMoreBtn.addEventListener('click', () => {
   renderResults(allResults);
 });
 
-// Initialize search WITHOUT giving resultsContainer
+// Dummy container for SJS to satisfy requirement
+const dummyContainer = document.createElement('div');
+
+// Initialize search
 SimpleJekyllSearch({
   searchInput: searchInput,
+  resultsContainer: dummyContainer, // required, but we won't use it
   json: 'assets/json/search.json',
   fuzzy: false,
   templateMiddleware: (prop, value) => value,
