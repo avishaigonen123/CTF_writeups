@@ -5,16 +5,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const countEl = counter.querySelector(".count");
     const progressEl = counter.querySelector(".progress");
 
-    // Get the count from the data-count attribute (set by Jekyll in HTML)
     const target = parseInt(counter.getAttribute("data-count")) || 0;
     let current = 0;
-    const duration = 1500; 
-    const frameRate = 60;
-    const totalFrames = Math.round((duration / 1000) * frameRate);
-    let frame = 0;
 
     const radius = progressEl.r.baseVal.value;
     const circumference = 2 * Math.PI * radius;
+
+    progressEl.style.strokeDasharray = circumference;
+    progressEl.style.strokeDashoffset = circumference;
+
+    const duration = 1500;
+    const frameRate = 60;
+    const totalFrames = Math.round((duration / 1000) * frameRate);
+    let frame = 0;
 
     const animate = () => {
       frame++;
