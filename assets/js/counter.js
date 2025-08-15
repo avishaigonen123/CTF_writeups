@@ -22,9 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const animate = () => {
       frame++;
       const progress = frame / totalFrames;
-
-      // springy easing
-      const eased = easeOutElastic(progress);
+      const eased = easeOutCubic(progress);
 
       current = Math.round(target * eased);
       countEl.textContent = current;
@@ -42,14 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     requestAnimationFrame(animate);
 
-    // springy easing function
-    function easeOutElastic(t) {
-      const c4 = (2 * Math.PI) / 3;
-      return t === 0
-        ? 0
-        : t === 1
-        ? 1
-        : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c4) + 1;
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
     }
   });
 });
