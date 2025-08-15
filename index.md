@@ -13,7 +13,7 @@ title: "CTF Writeups Home"
 {% assign filtered_pages = "" %}
 {% for p in md_pages %}
   {% assign first_part = p.path | split: '/' | first %}
-  {% unless p.path endswith "index.md" %}
+  {% unless p.path | slice: -8 == "index.md" %}
     {% if wargames contains first_part %}
       {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
     {% endif %}
@@ -23,15 +23,23 @@ title: "CTF Writeups Home"
 
 
 <div class="circle-counter" data-count="{{ filtered_pages | size }}">
-  <svg>
+   <svg>
     <defs>
-      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#3b82f6"/>
-        <stop offset="100%" stop-color="#06b6d4"/>
+        <stop offset="50%" stop-color="#06b6d4"/>
+        <stop offset="100%" stop-color="#8b5cf6"/>
       </linearGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="4" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
     </defs>
-    <circle class="bg" cx="75" cy="75" r="70"></circle>
-    <circle class="progress" cx="75" cy="75" r="70"></circle>
+    <circle class="bg" cx="100" cy="100" r="90"></circle>
+    <circle class="progress" cx="100" cy="100" r="90"></circle>
   </svg>
   <div class="text-wrapper">
     <div class="count">0</div>

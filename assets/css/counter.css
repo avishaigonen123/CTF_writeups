@@ -1,33 +1,33 @@
 .circle-counter {
   position: relative;
-  width: 150px;
-  height: 150px;
-  margin: 40px auto;
+  width: 220px;
+  height: 220px;
+  margin: 50px auto;
 }
 
 .circle-counter svg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 150px;
-  height: 150px;
+  width: 220px;
+  height: 220px;
   transform: rotate(-90deg);
 }
 
 .circle-counter .bg {
   fill: none;
   stroke: #e0e0e0;
-  stroke-width: 12;
+  stroke-width: 15;
 }
 
 .circle-counter .progress {
   fill: none;
   stroke: url(#gradient);
-  stroke-width: 12;
+  stroke-width: 15;
   stroke-linecap: round;
-  stroke-dasharray: 439.82;
-  stroke-dashoffset: 439.82;
-  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
+  stroke-dasharray: 565.48; /* 2 * PI * 90 */
+  stroke-dashoffset: 565.48;
+  filter: url(#glow);
   transition: stroke-dashoffset 0.3s linear;
 }
 
@@ -40,17 +40,17 @@
 }
 
 .circle-counter .count {
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
+  text-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
 }
 
 .circle-counter .label {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #3b82f6;
-  font-weight: 500;
-  text-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+  font-weight: 600;
+  text-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
 }
