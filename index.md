@@ -11,7 +11,7 @@ title: "CTF Writeups Home"
 <p>
   Writeups count: 
 {% assign md_pages = site.pages 
-  | where_exp: "p", "p.path contains '.md' and p.path != 'index.md'" 
+  | where_exp: "p", "p.path contains '.md'" 
   %}
 <span id="counter" data-count="{{ md_pages }}">0</span>
 
