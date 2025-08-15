@@ -7,9 +7,10 @@ title: "CTF Writeups Home"
 
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
+{% assign categories = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" | split: "," %}
 {% assign md_pages = site.pages
   | where_exp: "p", "p.path contains '.md'"
-  | where_exp: "p", "p.path contains 'AppSec-IL-2025' or p.path contains 'overthewire' or p.path contains 'ringzer0' or p.path contains 'root-me' or p.path contains 'trythis0ne' or p.path contains 'pwnable.kr' or p.path contains 'websec.fr' or p.path contains 'webhacking.kr' or p.path contains 'lord-of-sql-injection'"
+  | where_exp: "p", "categories contains p.path | split: '/' | first"
   | reject: "path", "index.html"
 %}
 
