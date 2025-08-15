@@ -10,11 +10,7 @@ title: "CTF Writeups Home"
 
 {% assign categories_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" %}
 {% assign categories = categories_string | split: "," %}
-{% assign md_pages = site.pages
-  | where_exp: "p", "p.path contains '.md'"
-  | where_exp: "p", "categories contains p.path | split: '/' | first"
-  | reject: "path", "index.md"
-%}
+{% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" | where_exp: "p", "categories contains p.path | split: '/' | first" | reject: "path", "index.md" %}
 
 <div class="circle-counter" data-count="{{ md_pages | size }}">
   <svg>
@@ -23,7 +19,7 @@ title: "CTF Writeups Home"
   </svg>
   <div class="text-wrapper">
     <div class="count">0</div>
-    <div class="label">Writeups coun</div>
+    <div class="label">Writeups so far :D</div>
   </div>
 </div>
 
