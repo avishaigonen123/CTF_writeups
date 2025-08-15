@@ -13,7 +13,7 @@ title: "CTF Writeups Home"
 {% assign md_pages = site.pages 
   | where_exp: "p", "p.path contains '.md'" 
   %}
-<span id="counter" data-count="{{ md_pages }}">0</span>
+<span id="counter" data-count="{{ md_pages | size }}">0</span>
 
 
 
