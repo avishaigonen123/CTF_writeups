@@ -12,11 +12,7 @@ title: "CTF Writeups Home"
 {% assign wargames = wargames_string | split: "," %}
 
 
-{% assign md_pages = site.pages 
-  | where_exp: "p", "p.path contains '.md'" 
-  | where_exp: "p", "wargames contains p.path | split: '/' | first"
-  | reject: "path", "index.md"
-  %}
+{% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" | where_exp: "p", "wargames contains p.path | split: '/' | first" | reject: "path", "index.md" %}
 <div class="circle-counter" data-count="{{ md_pages | size }}">
   <svg>
     <circle class="bg" cx="75" cy="75" r="70"></circle>
