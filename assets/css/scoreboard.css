@@ -1,17 +1,19 @@
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #0f172a;
-    color: #e0e0e0;
-    margin: 0;
-    padding: 20px;
-  }
-
-  h1 {
+  h2 {
     text-align: center;
     color: #3b82f6;
     text-shadow: 0 0 10px #3b82f6;
   }
 
+    /* Make iframe take most of the viewport height */
+    .iframe-container iframe {
+        width: 95%;             /* almost full width */
+        height: 90vh;           /* 90% of the viewport height */
+        border: 3px solid #3b82f6;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        display: block;
+        margin: 0 auto 40px;    /* center it and add spacing below */
+    }
 
 
   /* CTF Rank Cards */

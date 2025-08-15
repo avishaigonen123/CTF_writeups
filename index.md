@@ -101,43 +101,35 @@ Feel free to [connect with me](https://github.com/avishaigonen123) or contribute
 Learn, explore, and enjoy the world of CTFs 🧠💥
 
 
-<!-- Scoreboard iframe -->
-<div class="scoreboard-wrapper">
-  <iframe src="https://your-ctf-platform.com/scoreboard" title="CTF Scoreboard"></iframe>
-</div>
 
 <link rel="stylesheet" href="{{ '/assets/css/scoreboard.css' | relative_url }}">
 <script src="{{ '/assets/js/scoreboard.js' | relative_url }}"></script>
 
 
 
-<body>
-
-<h1>EliCopter770 CTF Dashboard</h1>
-
 <!-- CTF Ranks -->
+<h1>Score boards</h1>
+
 <div class="iframe-container">
   <div>
-    <div class="profile-label">Root-Me</div>
-    <iframe src="https://www.root-me.org/elicopter770?lang=en#fd3288f941c568ba4d7b3d56ed57d3db" title="Root-Me Profile"></iframe>
+    <h2>Root-Me</h2>
+    <iframe src="https://www.root-me.org/elicopter770?lang=fd3288f941c568ba4d7b3d56ed57d3db" title="Root-Me Profile"></iframe>
   </div>
 
   <div>
-    <div class="profile-label">WebHacking.kr</div>
+    <h2>WebHacking.kr</h2>
     <iframe src="https://webhacking.kr/rank.php?page=2" title="WebHacking.kr Profile"></iframe>
   </div>
 
   <div>
-    <div class="profile-label">WebSec.fr</div>
+    <h2>WebSec.fr</h2>
     <iframe src="https://websec.fr/scoreboard/5" title="WebSec.fr Profile"></iframe>
   </div>
 
   <div>
-    <div class="profile-label">WeChall</div>
+    <h2>WeChall</h2>
     <iframe src="https://www.wechall.net/profile/EliCopter" title="WeChall Profile"></iframe>
   </div>
 </div>
 
 
-
-</body>
