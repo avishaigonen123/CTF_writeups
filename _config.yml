@@ -7,7 +7,6 @@ remote_theme: pages-themes/hacker
 plugins:
   - jekyll-remote-theme
   - jekyll-sitemap
-  - jekyll-search
 
 # 🧠 ADD THIS SECTION 👇
 include:

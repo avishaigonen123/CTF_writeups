@@ -1,0 +1,45 @@
+.circle-counter {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.circle-counter svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.circle-counter circle {
+  fill: none;
+  stroke-width: 10;
+}
+
+.circle-counter circle.bg {
+  stroke: #eee;
+}
+
+.circle-counter circle.progress {
+  stroke: #2ecc71;
+  stroke-dasharray: 283; /* 2πr */
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 0.3s linear;
+}
+
+.circle-counter .count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.circle-counter .label {
+  position: absolute;
+  width: 100%;
+  bottom: -25px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
