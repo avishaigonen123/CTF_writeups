@@ -8,12 +8,14 @@ title: "CTF Writeups Home"
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
 
+{% assign all_md_pages = site.pages | where_exp: "p", "p.path contains '.md' and p.path != 'index.md'" %}
+{% assign md_posts = site.posts | where_exp: "p", "p.path contains '.md'" %}
+{% assign total_md = all_md_pages | concat: md_posts %}
+
 <p>
-  Writeups count: 
-{% assign md_pages = site.pages 
-  | where_exp: "p", "p.path contains '.md'" 
-  %}
-<span id="counter" data-count="{{ md_pages | size }}">0</span>
+  Writeups count: <span id="counter" data-count="{{ total_md | size }}">0</span>
+</p>
+
 
 
 
