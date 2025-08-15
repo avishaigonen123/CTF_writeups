@@ -1,40 +1,30 @@
 .circle-counter {
   position: relative;
-  width: 180px;
-  height: 180px;
-  margin: 50px auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  cursor: default;
-  transition: transform 0.3s;
-}
-
-.circle-counter:hover {
-  transform: scale(1.1);
+  width: 150px;
+  height: 150px;
+  margin: 40px auto;
 }
 
 .circle-counter svg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   transform: rotate(-90deg);
 }
 
-.circle-counter circle {
-  fill: none;
-  stroke-width: 15;
-  stroke-linecap: round;
-}
-
 .circle-counter .bg {
-  stroke: #222;
+  fill: none;
+  stroke: #e0e0e0;
+  stroke-width: 12;
 }
 
 .circle-counter .progress {
-  stroke-dasharray: 440;
-  stroke-dashoffset: 440;
-  filter: drop-shadow(0 0 8px #00bfff) drop-shadow(0 0 8px #ff00ff);
+  fill: none;
+  stroke: #3b82f6; /* subtle blue gradient can be applied via stroke */
+  stroke-width: 12;
+  stroke-linecap: round;
   transition: stroke-dashoffset 0.3s;
 }
 
@@ -44,18 +34,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  user-select: none;
 }
 
 .circle-counter .count {
-  font-size: 2.8rem;
-  font-weight: 800;
-  color: #00bfff;
-  text-shadow: 0 0 8px #00bfff, 0 0 12px #ff00ff;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937; /* dark gray, clean */
 }
 
 .circle-counter .label {
-  font-size: 1.1rem;
-  color: #aaa;
-  margin-top: 5px;
+  font-size: 1rem;
+  color: #6b7280; /* lighter gray */
+  margin-top: 4px;
+  display: block;
 }
