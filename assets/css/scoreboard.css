@@ -1,0 +1,81 @@
+body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .circle-counter {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 40px auto;
+    }
+
+    .circle-counter svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 200px;
+      transform: rotate(-90deg);
+    }
+
+    .circle-counter .bg {
+      fill: none;
+      stroke: #1e293b;
+      stroke-width: 15;
+    }
+
+    .circle-counter .progress {
+      fill: none;
+      stroke: url(#gradient);
+      stroke-width: 15;
+      stroke-linecap: round;
+      stroke-dasharray: 439.82; /* will be overwritten in JS */
+      stroke-dashoffset: 439.82;
+      transition: stroke-dashoffset 1s ease;
+      filter: drop-shadow(0 0 10px #3b82f6);
+    }
+
+    .circle-counter .text-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .circle-counter .count {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #3b82f6, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+    }
+
+    .circle-counter .label {
+      font-size: 1.2rem;
+      color: #3b82f6;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+    }
+
+    .scoreboard-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      margin-top: 50px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    .scoreboard-wrapper iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+    }

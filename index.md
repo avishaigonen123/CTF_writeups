@@ -23,7 +23,7 @@ title: "CTF Writeups Home"
 
 
 <div class="circle-counter" data-count="{{ filtered_pages | size }}">
-  <svg>
+   <svg>
     <defs>
       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="0%" stop-color="#3b82f6"/>
@@ -35,7 +35,7 @@ title: "CTF Writeups Home"
   </svg>
   <div class="text-wrapper">
     <div class="count">0</div>
-    <div class="label">Writeups</div>
+    <div class="label">Writeups so far :D</div>
   </div>
 </div>
 
