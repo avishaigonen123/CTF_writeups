@@ -1,53 +1,54 @@
+// Simple Jekyll Search
 const searchInput = document.getElementById('search-input');
 const resultsContainer = document.getElementById('results-container');
-const showMoreBtn = document.getElementById('show-more-btn');
 
-let allResults = [];
-let displayedCount = 10;
+if (searchInput && resultsContainer) {
+  let allResults = [];
+  let displayedCount = 10;
 
-// Fetch the JSON once
-fetch('{{ "/assets/json/search.json" | relative_url }}')
-  .then(response => response.json())
-  .then(data => {
-    allResults = data;
-  })
-  .catch(err => console.error('Error loading search.json:', err));
+  function renderResults(count) {
+    resultsContainer.innerHTML = '';
+    const toDisplay = allResults.slice(0, count);
+    toDisplay.forEach(post => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${post.url}">${post.title}</a>`;
+      resultsContainer.appendChild(li);
+    });
 
-// Render results up to displayedCount
-function renderResults(results) {
-  resultsContainer.innerHTML = '';
+    if (allResults.length > count) {
+      const moreBtn = document.createElement('button');
+      moreBtn.textContent = 'Search More';
+      moreBtn.addEventListener('click', () => {
+        displayedCount += 10;
+        renderResults(displayedCount);
+      });
+      resultsContainer.appendChild(moreBtn);
+    }
+  }
 
-  const slice = results.slice(0, displayedCount);
-  slice.forEach(post => {
-    const li = document.createElement('li');
-    li.innerHTML = `<a href="${post.url}" style="color:#0f0;">${post.title}</a>`;
-    resultsContainer.appendChild(li);
+  SimpleJekyllSearch({
+    searchInput: searchInput,
+    resultsContainer: resultsContainer,
+    json: '{{ site.baseurl }}/search.json',
+    searchResultTemplate: '',
+    fuzzy: false,
+    templateMiddleware: (prop, value) => value,
+    filter: (post, query) => {
+      const terms = query.toLowerCase().trim().split(/\s+/);
+      const haystack = `${post.title} ${post.content}`.toLowerCase();
+      return terms.every(term => haystack.includes(term));
+    },
+    searchCallback: (results) => {
+      allResults = results;
+      displayedCount = 10;
+      renderResults(displayedCount);
+    }
   });
 
-  showMoreBtn.style.display = results.length > displayedCount ? 'block' : 'none';
-}
-
-// Filter results based on search query
-function filterResults(query) {
-  if (!query.trim()) return [];
-  const terms = query.toLowerCase().trim().split(/\s+/);
-
-  return allResults.filter(post => {
-    const haystack = `${post.title} ${post.content}`.toLowerCase();
-    return terms.every(term => haystack.includes(term));
+  searchInput.addEventListener('input', () => {
+    if (!searchInput.value.trim()) {
+      resultsContainer.innerHTML = '';
+      allResults = [];
+    }
   });
 }
-
-// Show more button click
-showMoreBtn.addEventListener('click', () => {
-  displayedCount += 10;
-  const filtered = filterResults(searchInput.value);
-  renderResults(filtered);
-});
-
-// Input event
-searchInput.addEventListener('input', () => {
-  displayedCount = 10;
-  const filtered = filterResults(searchInput.value);
-  renderResults(filtered);
-});
