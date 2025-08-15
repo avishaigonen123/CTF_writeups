@@ -9,12 +9,13 @@ title: "CTF Writeups Home"
 
 <div class="circle-counter" data-count="123">
   <svg>
-    <circle class="bg" cx="50" cy="50" r="45"></circle>
-    <circle class="progress" cx="50" cy="50" r="45"></circle>
+    <circle class="bg" cx="60" cy="60" r="54"></circle>
+    <circle class="progress" cx="60" cy="60" r="54"></circle>
   </svg>
   <div class="count">0</div>
-  <div class="label">Writeups count:</div>
+  <div class="label">Writeups count</div>
 </div>
+
 
 <link rel="stylesheet" href="{{ '/assets/css/counter.css' | relative_url }}">
 <script src="{{ '/assets/js/counter.js' | relative_url }}"></script>

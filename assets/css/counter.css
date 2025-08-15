@@ -1,7 +1,7 @@
 .circle-counter {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
 }
 
 .circle-counter svg {
@@ -12,7 +12,8 @@
 
 .circle-counter circle {
   fill: none;
-  stroke-width: 10;
+  stroke-width: 12;
+  stroke-linecap: round;
 }
 
 .circle-counter circle.bg {
@@ -21,8 +22,8 @@
 
 .circle-counter circle.progress {
   stroke: #2ecc71;
-  stroke-dasharray: 283; /* 2πr */
-  stroke-dashoffset: 283;
+  stroke-dasharray: 339.292; /* 2πr = 2*3.1416*54 */
+  stroke-dashoffset: 339.292;
   transition: stroke-dashoffset 0.3s linear;
 }
 
@@ -31,8 +32,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
+  color: #555;
 }
 
 .circle-counter .label {
@@ -40,6 +42,6 @@
   width: 100%;
   bottom: -25px;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #555;
 }

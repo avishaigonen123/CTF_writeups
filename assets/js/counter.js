@@ -1,37 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const counter = document.getElementById("counter");
-  if (!counter) return;
+  const counters = document.querySelectorAll(".circle-counter");
 
-  const target = parseInt(counter.getAttribute("data-count"), 10);
-  let current = 0;
-  const duration = 2000; // animation duration in ms
-  const frameRate = 60; // FPS
-  const totalFrames = Math.round((duration / 1000) * frameRate);
-  let frame = 0;
+  counters.forEach(counter => {
+    const countEl = counter.querySelector(".count");
+    const progressEl = counter.querySelector(".progress");
+    const target = parseInt(counter.getAttribute("data-count"), 10);
 
-  const animate = () => {
-    frame++;
-    const progress = frame / totalFrames;
-    const eased = easeOutCubic(progress);
-    current = Math.round(target * eased);
+    let current = 0;
+    const duration = 2000;
+    const frameRate = 60;
+    const totalFrames = Math.round((duration / 1000) * frameRate);
+    let frame = 0;
 
-    counter.textContent = current;
+    const radius = progressEl.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
 
-    // smooth green fade from gray → green
-    counter.style.color = `rgb(${50 - eased * 50}, ${180 + eased * 75}, ${50 - eased * 50})`;
+    const animate = () => {
+      frame++;
+      const progress = frame / totalFrames;
+      const eased = easeOutCubic(progress);
 
-    if (frame < totalFrames) {
-      requestAnimationFrame(animate);
-    } else {
-      counter.textContent = target;
-      counter.style.color = "#2ecc71"; // final green
+      current = Math.round(target * eased);
+      countEl.textContent = current;
+
+      // update circle stroke
+      const offset = circumference * (1 - eased);
+      progressEl.style.strokeDashoffset = offset;
+
+      if (frame < totalFrames) {
+        requestAnimationFrame(animate);
+      } else {
+        countEl.textContent = target;
+        progressEl.style.strokeDashoffset = 0;
+      }
+    };
+
+    requestAnimationFrame(animate);
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
     }
-  };
-
-  requestAnimationFrame(animate);
-
-  // easing function for smoother animation
-  function easeOutCubic(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
+  });
 });
