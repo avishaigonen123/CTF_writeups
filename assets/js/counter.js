@@ -13,11 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const radius = parseFloat(progressEl.getAttribute("r")) || 90;
     const circumference = 2 * Math.PI * radius;
 
-    // Apply correct dasharray and offset
+    // Set correct dasharray and initial offset
     progressEl.style.strokeDasharray = circumference;
     progressEl.style.strokeDashoffset = circumference;
 
-    const duration = 1500; // animation duration in ms
+    const duration = 1500; // in ms
     const startTime = performance.now();
 
     const animate = (time) => {
@@ -25,11 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const progress = Math.min(elapsed / duration, 1);
       const eased = easeOutCubic(progress);
 
-      current = Math.round(target * eased);
+      current = Math.floor(target * eased);
       countEl.textContent = current;
 
-      const offset = circumference * (1 - eased);
-      progressEl.style.strokeDashoffset = offset;
+      progressEl.style.strokeDashoffset = circumference * (1 - eased);
 
       if (progress < 1) {
         requestAnimationFrame(animate);

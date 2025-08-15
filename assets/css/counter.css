@@ -22,15 +22,16 @@
   }
 
   .circle-counter .progress {
-    fill: none;
-    stroke: url(#gradient);
-    stroke-width: 16;
-    stroke-linecap: round;
-    stroke-dasharray: 439.82;
-    stroke-dashoffset: 439.82;
-    transition: stroke-dashoffset 1s ease;
-    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8));
-  }
+  fill: none;
+  stroke: url(#gradient);
+  stroke-width: 16;
+  stroke-linecap: round;
+  stroke-dasharray: 565.49; /* matches 2 * PI * 90 */
+  stroke-dashoffset: 565.49;
+  /* remove transition */
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8));
+}
+
 
   .circle-counter .text-wrapper {
     position: absolute;
