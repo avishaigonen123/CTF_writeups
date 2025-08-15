@@ -9,7 +9,7 @@ title: "CTF Writeups Home"
 
 {% assign categories_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" %}
 {% assign categories = categories_string | split: "," %}
-{% assign md_pages = site.pages
+{% assign md_pages = site.static_files
   | where_exp: "p", "p.path contains '.md'"
   | where_exp: "p", "categories contains p.path | split: '/' | first"
   | reject: "path", "index.html"
