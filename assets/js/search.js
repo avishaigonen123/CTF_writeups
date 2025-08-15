@@ -6,7 +6,7 @@ const showMoreBtn = document.getElementById('show-more-btn');
 SimpleJekyllSearch({
   searchInput: document.getElementById('search-input'),
   resultsContainer: resultsContainer,
-  json: 'assets/json/search.json',
+  json: '{{ site.baseurl }}/assets/json/search.json',
   searchResultTemplate: '<li><a href="{url}" style="color:#0f0;">{title}</a></li>',
   fuzzy: false,
   templateMiddleware: function (prop, value, template) {
