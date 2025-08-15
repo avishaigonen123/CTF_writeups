@@ -22,6 +22,5 @@ include:
   - appSec-IL-2025
   - websec.fr
   - root-me
-  - search.json
 
-  # - assets  # if you use an assets folder for CSS, JS, etc.
+  - assets  # if you use an assets folder for CSS, JS, etc.
