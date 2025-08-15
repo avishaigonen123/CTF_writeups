@@ -7,13 +7,8 @@ title: "CTF Writeups Home"
 
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
-<div class="circle-counter" data-count="{{ site.pages | where_exp:'p','p["path"] contains ".md" and p["path"] != "index.md"' | size }}">
-  <svg>
-    <circle class="bg" cx="60" cy="60" r="54"></circle>
-    <circle class="progress" cx="60" cy="60" r="54"></circle>
-  </svg>
-  <div class="count">0</div>
-  <div class="label">Writeups count</div>
+<div id="writeup-counter" style="font-size: 2rem; font-weight: bold; color: #16a085; text-align:center; margin: 20px 0;">
+  Solved CTFs: <span id="counter" data-count="{{ site.pages | where_exp:'p','p.path contains '.md' and p.path != 'index.md' ' | size }}">0</span>
 </div>
 
 
