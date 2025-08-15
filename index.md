@@ -7,13 +7,35 @@ title: "CTF Writeups Home"
 
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
+<!-- Counter div -->
 <div id="writeup-counter" style="font-size: 2rem; font-weight: bold; color: #16a085; text-align:center; margin: 20px 0;">
   Solved CTFs: <span id="counter" data-count="{{ site.pages | where_exp:'p','p.path contains '.md' and p.path != 'index.md' ' | size }}">0</span>
 </div>
 
+<!-- JS for animation -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const counter = document.getElementById('counter');
+    const target = +counter.getAttribute('data-count');
+    let count = 0;
+    const speed = 100; // smaller = faster
 
-<link rel="stylesheet" href="{{ '/assets/css/counter.css' | relative_url }}">
-<script src="{{ '/assets/js/counter.js' | relative_url }}"></script>
+    const updateCount = () => {
+      const increment = Math.ceil(target / speed);
+      if (count < target) {
+        count += increment;
+        if(count > target) count = target;
+        counter.innerText = count;
+        requestAnimationFrame(updateCount);
+      }
+    };
+
+    updateCount();
+  });
+</script>
+
+<!-- <link rel="stylesheet" href="{{ '/assets/css/counter.css' | relative_url }}">
+<script src="{{ '/assets/js/counter.js' | relative_url }}"></script> -->
 
 
 ---
