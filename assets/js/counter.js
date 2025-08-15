@@ -5,10 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const countEl = counter.querySelector(".count");
     const progressEl = counter.querySelector(".progress");
 
+    if (!countEl || !progressEl) return; // Safety check
+
     const target = parseInt(counter.getAttribute("data-count")) || 0;
     let current = 0;
 
-    const radius = progressEl.r.baseVal.value;
+    const radius = progressEl.r.baseVal.value || 50; // default 50
     const circumference = 2 * Math.PI * radius;
 
     progressEl.style.strokeDasharray = circumference;

@@ -13,11 +13,12 @@ title: "CTF Writeups Home"
 {% assign filtered_pages = "" %}
 {% for p in md_pages %}
   {% assign first_part = p.path | split: '/' | first %}
-  {% if wargames contains first_part and p.path != "index.md" %}
+  {% assign file_name = p.path | split: '/' | last %}
+  {% if wargames contains first_part and file_name != "index.md" %}
     {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
   {% endif %}
 {% endfor %}
-{% assign filtered_pages = filtered_pages | split: "," %}
+{% assign filtered_pages = filtered_pages | split: "," | reject: "" %}
 
 
 <div class="circle-counter" data-count="{{ filtered_pages | size }}">
@@ -118,20 +119,17 @@ Learn, explore, and enjoy the world of CTFs 🧠💥
     <iframe src="https://webhacking.kr/rank.php?page=2" title="WebHacking.kr Profile"></iframe>
   </div>
 
-  <!-- Screenshots as cards -->
-  <div class="ctf-ranks">
-    <div class="ctf-card">
-      <div class="iframe-title">Root-Me</div>
-        <img src="assets/screenshots/root-me.png" alt="Root-Me Scoreboard">
-        <!-- <iframe src="https://www.root-me.org/elicopter770?lang=en#fd3288f941c568ba4d7b3d56ed57d3db" title="Root-Me Profile"></iframe> -->
-    </div>  
+  <div class="iframe-wrapper">
+    <div class="iframe-title">Root-Me</div>
+    <img src="assets/screenshots/rootme.png" alt="Root-Me Scoreboard">
+    <!-- <iframe src="https://www.root-me.org/elicopter770?lang=en#fd3288f941c568ba4d7b3d56ed57d3db" title="Root-Me Profile"></iframe> -->
+  </div>
 
-    <div class="ctf-card">
-       <div class="iframe-title">WebSec.fr</div>
-         <img src="assets/screenshots/websec-fr.png" alt="WebSec.fr Scoreboard">
-        <!-- <iframe src="https://websec.fr/scoreboard/5" title="WebSec.fr Profile"></iframe> -->
-      </div>
-   </div>
+  <div class="iframe-wrapper">
+     <div class="iframe-title">WebSec.fr</div>
+     <img src="assets/screenshots/websec-fr.png" alt="WebSec.fr Scoreboard">
+    <!-- <iframe src="https://websec.fr/scoreboard/5" title="WebSec.fr Profile"></iframe> -->
+  </div>
 </div>
 
 

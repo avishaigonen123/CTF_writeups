@@ -62,9 +62,4 @@
     text-decoration: underline;
   }
 
-  .ctf-card img {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-  margin-top: 10px;
-}
+  
