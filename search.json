@@ -1,0 +1,14 @@
+---
+layout: null
+permalink: /search.json
+---
+[
+{% for page in site.pages %}
+  {% if page.title %}
+    {
+      "title": "{{ page.title | escape }}",
+      "url": "{{ page.url | relative_url }}"
+    }{% unless forloop.last %},{% endunless %}
+  {% endif %}
+{% endfor %}
+]

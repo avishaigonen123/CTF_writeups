@@ -4,32 +4,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const target = parseInt(counter.getAttribute("data-count"), 10);
   let current = 0;
-  const duration = 2000; // total animation time in ms
-  const frameRate = 60; // frames per second
+  const duration = 2000; // animation duration in ms
+  const frameRate = 60; // FPS
   const totalFrames = Math.round((duration / 1000) * frameRate);
   let frame = 0;
 
   const animate = () => {
     frame++;
     const progress = frame / totalFrames;
-    const eased = easeOutQuad(progress); // easing function
+    const eased = easeOutCubic(progress);
     current = Math.round(target * eased);
 
-    // color from red → green as it counts up
-    counter.style.color = `rgb(${255 - eased * 255}, ${eased * 255}, 0)`;
     counter.textContent = current;
+
+    // smooth green fade from gray → green
+    counter.style.color = `rgb(${50 - eased * 50}, ${180 + eased * 75}, ${50 - eased * 50})`;
 
     if (frame < totalFrames) {
       requestAnimationFrame(animate);
     } else {
-      counter.textContent = target; // ensure it ends exactly on target
-      counter.style.color = "#0f0"; // final color green
+      counter.textContent = target;
+      counter.style.color = "#2ecc71"; // final green
     }
   };
 
   requestAnimationFrame(animate);
 
-  function easeOutQuad(t) {
-    return t * (2 - t);
+  // easing function for smoother animation
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
   }
 });
