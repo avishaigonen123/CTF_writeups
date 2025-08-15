@@ -1,8 +1,51 @@
-<head>
-  <!-- {% include head-meta.html %} -->
-  <!-- {% include back-link.html %} -->
-  <!-- {% include search-bar.html %} -->
-</head>
+<link rel="shortcut icon" type="image/x-icon" href="/CTF_writeups/favicon.ico">
+
+<!-- remove the cache headers -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!-- Simple "Back" link -->
+<style>
+  .back-link {
+    text-decoration: none;
+    color: #007acc;
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  .back-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 16.90%; 
+    margin: 30px 0;
+  }
+</style>
+
+<div class="back-container">
+  <a id="back-link" class="back-link" href="#">← Back</a>
+</div>
+
+<script>
+  // Go one folder up from current URL
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  
+  // Remove the last part (current page or last folder)
+  parts.pop(); 
+  
+  // If we're already at the root level, make sure the parent is '/'
+  const parent = parts.length > 0 ? '/' + parts.join('/') + '/' : '/';
+  
+  // Update the back-link href attribute
+  document.getElementById('back-link').href = parent;
+</script>
+
+<!-- Search functionality -->
 
 <!-- 🔍 Global Search Bar -->
 <div id="search-container">
@@ -40,27 +83,35 @@
   });
 </script>
 
+<style>
+  #search-container {
+    max-width: 1000px;
+    margin: 20px auto 0;
+    padding: 0 15px;
+  }
 
-<link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
+  #search-input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 1.5em;
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    background-color: #111;
+    color: #0f0;
+  }
 
+  #results-container {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+    color: #0f0;
+  }
 
-
-<div class="back-container">
-  <a id="back-link" class="back-link" href="#">← Back</a>
-</div>
-
-<script>
-  // Go one folder up from current URL
-  const parts = window.location.pathname.split('/').filter(Boolean);
-  
-  // Remove the last part (current page or last folder)
-  parts.pop(); 
-  
-  // If we're already at the root level, make sure the parent is '/'
-  const parent = parts.length > 0 ? '/' + parts.join('/') + '/' : '/';
-  
-  // Update the back-link href attribute
-  document.getElementById('back-link').href = parent;
-</script>
-
-<link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+  #results-container li {
+    background: #111;
+    border: 1px solid #0f0;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 4px;
+  }
+</style>
