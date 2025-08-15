@@ -56,31 +56,63 @@
 <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script>
 
 <script>
-  SimpleJekyllSearch({
-    searchInput: document.getElementById('search-input'),
-    resultsContainer: document.getElementById('results-container'),
-    json: '{{ site.baseurl }}/search.json',
-    searchResultTemplate: '<li><a href="{url}" style="color:#0f0;">{title}</a></li>',
-    fuzzy: false,
-    templateMiddleware: function (prop, value, template) {
-      return value;
-    },
-    filter: function (post, searchQuery) {
-      const terms = searchQuery.toLowerCase().trim().split(/\s+/);
-      const haystack = `${post.title} ${post.content}`.toLowerCase();
-      return terms.every(term => haystack.includes(term));
-    }
+const searchInput = document.getElementById('search-input');
+const resultsContainer = document.getElementById('results-container');
+
+let allResults = []; // Store all results
+let displayedCount = 10; // Initial number of results to show
+let searchQuery = '';
+
+function renderResults(count) {
+  resultsContainer.innerHTML = '';
+  const toDisplay = allResults.slice(0, count);
+  toDisplay.forEach(post => {
+    const li = document.createElement('li');
+    li.innerHTML = `<a href="${post.url}" style="color:#0f0;">${post.title}</a>`;
+    resultsContainer.appendChild(li);
   });
 
-  // Clear results when input is empty
-  const input = document.getElementById('search-input');
-  const results = document.getElementById('results-container');
+  // Show "Search More" button if there are more results
+  if (allResults.length > count) {
+    let moreBtn = document.createElement('button');
+    moreBtn.textContent = 'Search More';
+    moreBtn.style = 'margin-top:10px; padding:6px 12px; font-size:1em; background:#0f0; color:#000; border:none; border-radius:4px; cursor:pointer;';
+    moreBtn.addEventListener('click', () => {
+      displayedCount += 10; // Show 10 more results each click
+      renderResults(displayedCount);
+    });
+    resultsContainer.appendChild(moreBtn);
+  }
+}
 
-  input.addEventListener('input', () => {
-    if (!input.value.trim()) {
-      results.innerHTML = '';
-    }
-  });
+// Initialize SimpleJekyllSearch
+SimpleJekyllSearch({
+  searchInput: searchInput,
+  resultsContainer: resultsContainer,
+  json: '{{ site.baseurl }}/search.json',
+  searchResultTemplate: '', // We'll render manually
+  fuzzy: false,
+  templateMiddleware: (prop, value, template) => value,
+  filter: function (post, query) {
+    const terms = query.toLowerCase().trim().split(/\s+/);
+    const haystack = `${post.title} ${post.content}`.toLowerCase();
+    return terms.every(term => haystack.includes(term));
+  },
+  searchCallback: function(results) {
+    searchQuery = searchInput.value.trim();
+    allResults = results;
+    displayedCount = 10; // Reset count on new search
+    renderResults(displayedCount);
+  }
+});
+
+// Clear results when input is empty
+searchInput.addEventListener('input', () => {
+  if (!searchInput.value.trim()) {
+    resultsContainer.innerHTML = '';
+    allResults = [];
+  }
+});
 </script>
 
 <style>
