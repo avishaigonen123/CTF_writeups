@@ -3,20 +3,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const countEl = counter.querySelector(".count");
   const progressEl = counter.querySelector(".progress");
   const total = parseInt(counter.dataset.count, 10);
-  
-  let current = 0;
+
   const circumference = 2 * Math.PI * 70;
   progressEl.style.strokeDasharray = circumference;
 
-  const animate = () => {
-    if (current <= total) {
-      countEl.textContent = current;
-      const offset = circumference - (current / total) * circumference;
-      progressEl.style.strokeDashoffset = offset;
-      current++;
+  let start = null;
+  const duration = 1500; // animation length in ms
+
+  function animate(timestamp) {
+    if (!start) start = timestamp;
+    const elapsed = timestamp - start;
+
+    const progress = Math.min(elapsed / duration, 1); // clamp to [0,1]
+
+    // Number update
+    countEl.textContent = Math.floor(progress * total);
+
+    // Circle update
+    const offset = circumference - progress * circumference;
+    progressEl.style.strokeDashoffset = offset;
+
+    if (progress < 1) {
       requestAnimationFrame(animate);
+    } else {
+      countEl.textContent = total; // ensure final value
     }
-  };
-  
-  animate();
+  }
+
+  requestAnimationFrame(animate);
 });
