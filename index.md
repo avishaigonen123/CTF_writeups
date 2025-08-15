@@ -8,20 +8,12 @@ title: "CTF Writeups Home"
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
 
-{% assign allowed_folders = "overthewire ringzer0 root-me trythis0ne pwnable.kr websec.fr webhacking.kr lord-of-sql-injection" | split: " " %}
-{% assign md_pages = site.pages | where_exp: "p", "p.path endswith '.md' and p.path contains 'index.md' == false" %}
-{% assign filtered_pages = "" | split: "" %}
-
-{% for page in md_pages %}
-  {% for folder in allowed_folders %}
-    {% if page.path contains folder %}
-      {% assign filtered_pages = filtered_pages | push: page %}
-      {% break %}
-    {% endif %}
-  {% endfor %}
-{% endfor %}
-
-<div class="circle-counter" data-count="{{ filtered_pages | size }}">
+{% assign md_pages = site.pages 
+  | where_exp: "p", "p.path contains '.md'" 
+  | reject: "path", "index.html"
+  %}
+  
+<div class="circle-counter" data-count="{{ md_pages | size }}">
   <svg>
     <circle class="bg" cx="75" cy="75" r="70"></circle>
     <circle class="progress" cx="75" cy="75" r="70"></circle>
@@ -31,6 +23,7 @@ title: "CTF Writeups Home"
     <div class="label">Writeups count</div>
   </div>
 </div>
+
 <link rel="stylesheet" href="{{ '/assets/css/counter.css' | relative_url }}">
 <script src="{{ '/assets/js/counter.js' | relative_url }}"></script>
 
