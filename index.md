@@ -14,7 +14,7 @@ title: "CTF Writeups Home"
 {% assign filtered_pages = "" %}
 {% for p in md_pages %}
   {% assign first_part = p.path | split: '/' | first %}
-  {% if wargames contains first_part and p.path != "index.md" %}
+  {% if wargames contains first_part and p.path != "*index.md" %}
     {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
   {% endif %}
 {% endfor %}
