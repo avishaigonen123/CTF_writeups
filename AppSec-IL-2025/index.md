@@ -5,7 +5,6 @@ title: AppSec-IL-2025 Writeups
 
 Welcome to the **AppSec-IL-2025** wargame writeups! Click a level below to view the detailed solution.
 
-{% raw %}
 <style>
   .level-grid {
     display: grid;
@@ -13,6 +12,7 @@ Welcome to the **AppSec-IL-2025** wargame writeups! Click a level below to view 
     gap: 1.5rem;
     margin-top: 2rem;
   }
+
   .level-card {
     background-color: #34495e;
     color: #ecf0f1;
@@ -24,27 +24,31 @@ Welcome to the **AppSec-IL-2025** wargame writeups! Click a level below to view 
     transition: transform 0.2s ease, background 0.2s ease;
     position: relative;
   }
+
   .level-card:hover {
     transform: translateY(-5px);
     background-color: #16a085;
     color: #fff;
   }
+
   .level-card h3 {
     margin: 0;
     font-size: 1.3rem;
   }
+
   .level-card p {
     margin-top: 0.5rem;
     font-size: 0.95rem;
     color: #bdc3c7;
   }
+
   .level-icon {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     display: block;
   }
 </style>
-{% endraw %}
+
 <div class="level-grid">
   {% assign AppSec-IL-2025_pages = site.pages
     | where_exp: "p", "p.path contains 'AppSec-IL-2025'"
