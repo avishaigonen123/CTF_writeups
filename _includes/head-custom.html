@@ -5,45 +5,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 
-<!-- Simple "Back" link -->
-<style>
-  .back-link {
-    text-decoration: none;
-    color: #007acc;
-    font-size: 1.4em;
-    font-weight: bold;
-  }
 
-  .back-link:hover {
-    text-decoration: underline;
-  }
 
-  .back-container {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 16.90%; 
-    margin: 30px 0;
-  }
-</style>
-
-<div class="back-container">
-  <a id="back-link" class="back-link" href="#">← Back</a>
-</div>
-
-<script>
-  // Go one folder up from current URL
-  const parts = window.location.pathname.split('/').filter(Boolean);
-  
-  // Remove the last part (current page or last folder)
-  parts.pop(); 
-  
-  // If we're already at the root level, make sure the parent is '/'
-  const parent = parts.length > 0 ? '/' + parts.join('/') + '/' : '/';
-  
-  // Update the back-link href attribute
-  document.getElementById('back-link').href = parent;
-</script>
 
 <!-- Search functionality -->
 
