@@ -9,18 +9,10 @@ title: "CTF Writeups Home"
 
 {% assign md_pages = site.pages
   | where_exp: "p", "p.path contains '.md'"
-  | where_exp: "p", 
-      "p.path contains 'AppSec-IL-2025' 
-       or p.path contains 'overthewire' 
-       or p.path contains 'ringzer0' 
-       or p.path contains 'root-me' 
-       or p.path contains 'trythis0ne' 
-       or p.path contains 'pwnable.kr' 
-       or p.path contains 'websec.fr' 
-       or p.path contains 'webhacking.kr'
-       or p.path contains 'lord-of-sql-injection'"
+  | where_exp: "p", "p.path contains 'AppSec-IL-2025' or p.path contains 'overthewire' or p.path contains 'ringzer0' or p.path contains 'root-me' or p.path contains 'trythis0ne' or p.path contains 'pwnable.kr' or p.path contains 'websec.fr' or p.path contains 'webhacking.kr' or p.path contains 'lord-of-sql-injection'"
   | reject: "path", "index.html"
 %}
+
   
 <div class="circle-counter" data-count="{{ md_pages | size }}">
   <svg>
