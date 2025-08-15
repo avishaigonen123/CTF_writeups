@@ -25,10 +25,10 @@
   stroke: url(#gradient);
   stroke-width: 12;
   stroke-linecap: round;
-  stroke-dasharray: 439.82; /* 2 * π * 70 */
+  stroke-dasharray: 439.82; /* circumference */
   stroke-dashoffset: 439.82;
   transition: stroke-dashoffset 1s ease;
-  filter: drop-shadow(0 0 5px #3b82f6);
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
 }
 
 .circle-counter .text-wrapper {
@@ -42,20 +42,15 @@
 .circle-counter .count {
   font-size: 2rem;
   font-weight: 700;
-  color: #ffffff;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
 }
 
 .circle-counter .label {
   font-size: 1rem;
-  color: #ffffffaa; /* semi-transparent white */
-  margin-top: 4px;
-  display: block;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
-
-/* Optional: add a keyframe animation for the number counting */
-@keyframes countUp {
-  from { content: "0"; }
-  to { content: attr(data-count); }
+  color: #3b82f6;
+  font-weight: 500;
+  text-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
 }

@@ -1,47 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const counters = document.querySelectorAll(".circle-counter");
+  const counter = document.querySelector(".circle-counter");
+  const countEl = counter.querySelector(".count");
+  const progressEl = counter.querySelector(".progress");
+  const total = parseInt(counter.dataset.count, 10);
+  
+  let current = 0;
+  const circumference = 2 * Math.PI * 70;
+  progressEl.style.strokeDasharray = circumference;
 
-  counters.forEach(counter => {
-    const countEl = counter.querySelector(".count");
-    const progressEl = counter.querySelector(".progress");
-
-    const target = parseInt(counter.getAttribute("data-count")) || 0;
-    let current = 0;
-
-    const radius = progressEl.r.baseVal.value;
-    const circumference = 2 * Math.PI * radius;
-
-    progressEl.style.strokeDasharray = circumference;
-    progressEl.style.strokeDashoffset = circumference;
-
-    const duration = 1500;
-    const frameRate = 60;
-    const totalFrames = Math.round((duration / 1000) * frameRate);
-    let frame = 0;
-
-    const animate = () => {
-      frame++;
-      const progress = frame / totalFrames;
-      const eased = easeOutCubic(progress);
-
-      current = Math.round(target * eased);
+  const animate = () => {
+    if (current <= total) {
       countEl.textContent = current;
-
-      const offset = circumference * (1 - eased);
+      const offset = circumference - (current / total) * circumference;
       progressEl.style.strokeDashoffset = offset;
-
-      if (frame < totalFrames) {
-        requestAnimationFrame(animate);
-      } else {
-        countEl.textContent = target;
-        progressEl.style.strokeDashoffset = 0;
-      }
-    };
-
-    requestAnimationFrame(animate);
-
-    function easeOutCubic(t) {
-      return 1 - Math.pow(1 - t, 3);
+      current++;
+      requestAnimationFrame(animate);
     }
-  });
+  };
+  
+  animate();
 });

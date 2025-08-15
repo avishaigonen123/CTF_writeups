@@ -17,6 +17,12 @@ title: "CTF Writeups Home"
   <svg>
     <circle class="bg" cx="75" cy="75" r="70"></circle>
     <circle class="progress" cx="75" cy="75" r="70"></circle>
+    <defs>
+  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#3b82f6"/>
+    <stop offset="100%" stop-color="#06b6d4"/>
+  </linearGradient>
+</defs>
   </svg>
   <div class="text-wrapper">
     <div class="count">0</div>
