@@ -10,11 +10,25 @@ title: "CTF Writeups Home"
 
 {% assign wargames_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" %}
 {% assign wargames = wargames_string | split: "," %}
+{% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" %}
+{% assign filtered_pages = "" %}
+{% for p in md_pages %}
+  {% assign first_part = p.path | split: '/' | first %}
+  {% if wargames contains first_part and p.path != "index.md" %}
+    {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
+  {% endif %}
+{% endfor %}
+{% assign filtered_pages = filtered_pages | split: "," %}
 
 
-{% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" | where_exp: "p", "wargames contains p.path | split: '/' | first" | reject: "path", "index.md" %}
-<div class="circle-counter" data-count="{{ md_pages | size }}">
+<div class="circle-counter" data-count="{{ filtered_pages | size }}">
   <svg>
+    <defs>
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#3b82f6"/>
+        <stop offset="100%" stop-color="#06b6d4"/>
+      </linearGradient>
+    </defs>
     <circle class="bg" cx="75" cy="75" r="70"></circle>
     <circle class="progress" cx="75" cy="75" r="70"></circle>
   </svg>

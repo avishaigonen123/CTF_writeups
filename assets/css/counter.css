@@ -25,10 +25,10 @@
   stroke: url(#gradient);
   stroke-width: 12;
   stroke-linecap: round;
-  stroke-dasharray: 439.82; /* circumference */
+  stroke-dasharray: 439.82;
   stroke-dashoffset: 439.82;
-  transition: stroke-dashoffset 1s ease;
   filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
+  transition: stroke-dashoffset 0.3s linear;
 }
 
 .circle-counter .text-wrapper {
