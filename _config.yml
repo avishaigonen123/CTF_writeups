@@ -23,4 +23,4 @@ include:
   - websec.fr
   - root-me
 
-  - assets  # if you use an assets folder for CSS, JS, etc.
+  - assets/  # if you use an assets folder for CSS, JS, etc.
