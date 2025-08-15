@@ -1,17 +1,35 @@
 .circle-counter {
   position: relative;
-  width: 150px;
-  height: 150px;
-  margin: 40px auto;
+  width: 180px;
+  height: 180px;
+  margin: 50px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .circle-counter svg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   transform: rotate(-90deg);
+}
+
+.circle-counter circle {
+  fill: none;
+  stroke-width: 15;
+  stroke-linecap: round;
+}
+
+.circle-counter .bg {
+  stroke: #eee;
+}
+
+.circle-counter .progress {
+  stroke: #00bfff; /* nice blue */
+  stroke-dasharray: 440; /* 2*π*radius (≈2*3.14*70) */
+  stroke-dashoffset: 440;
+  transition: stroke-dashoffset 0.3s;
 }
 
 .circle-counter .text-wrapper {
@@ -20,18 +38,16 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 1;
 }
 
 .circle-counter .count {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #00bfff;
 }
 
 .circle-counter .label {
-  font-size: 1rem;
-  color: #aaa;
-  margin-top: 10px; /* label now below the number */
-  display: block;
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 5px;
 }

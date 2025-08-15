@@ -15,11 +15,13 @@ title: "CTF Writeups Home"
   
 <div class="circle-counter" data-count="{{ md_pages | size }}">
   <svg>
-    <circle class="bg" cx="50" cy="50" r="45"></circle>
-    <circle class="progress" cx="50" cy="50" r="45"></circle>
+    <circle class="bg" cx="75" cy="75" r="70"></circle>
+    <circle class="progress" cx="75" cy="75" r="70"></circle>
   </svg>
-  <div class="count">0</div>
-  <div class="label">Writeups count:</div>
+  <div class="text-wrapper">
+    <div class="count">0</div>
+    <div class="label">Writeups count</div>
+  </div>
 </div>
 
 <link rel="stylesheet" href="{{ '/assets/css/counter.css' | relative_url }}">
