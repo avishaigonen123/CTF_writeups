@@ -14,6 +14,7 @@ title: "CTF Writeups Home"
 
 {% assign md_pages = site.pages 
   | where_exp: "p", "p.path contains '.md'" 
+  | where_exp: "p", "wargames contains p.path | split: '/' | first"
   | reject: "path", "index.md"
   %}
 <div class="circle-counter" data-count="{{ md_pages | size }}">
