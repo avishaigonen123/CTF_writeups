@@ -15,8 +15,14 @@ title: "CTF Writeups Home"
   
 <div class="circle-counter" data-count="{{ md_pages | size }}">
   <svg>
+    <defs>
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#00bfff"/>
+        <stop offset="100%" stop-color="#ff00ff"/>
+      </linearGradient>
+    </defs>
     <circle class="bg" cx="75" cy="75" r="70"></circle>
-    <circle class="progress" cx="75" cy="75" r="70"></circle>
+    <circle class="progress" cx="75" cy="75" r="70" stroke="url(#gradient)"></circle>
   </svg>
   <div class="text-wrapper">
     <div class="count">0</div>
