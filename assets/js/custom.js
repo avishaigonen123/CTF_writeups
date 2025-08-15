@@ -7,4 +7,5 @@
   const parent = parts.length > 0 ? '/' + parts.join('/') + '/' : '/';
   
   // Update the back-link href attribute
+  console.log(document.getElementById('back-link'))
   document.getElementById('back-link').href = parent;

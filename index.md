@@ -9,7 +9,8 @@ title: "CTF Writeups Home"
 
 
 <p>
-  Writeups count: <span id="counter" data-count="{{ site.pages | size }}">0</span>
+  Writeups count: <span id="counter" data-count="{{ site.pages | where_exp:'p','p.path contains \".md\" and p.path != \"index.md\"' | size }}">0</span>
+
 </p>
 <script src="/assets/js/counter.js"></script>
 
