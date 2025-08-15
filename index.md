@@ -21,19 +21,19 @@ title: "CTF Writeups Home"
 
 
 <div class="circle-counter" data-count="{{ filtered_pages | size }}">
-   <svg>
+    <svg>
     <defs>
       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="0%" stop-color="#3b82f6"/>
         <stop offset="100%" stop-color="#06b6d4"/>
       </linearGradient>
     </defs>
-    <circle class="bg" cx="75" cy="75" r="70"></circle>
-    <circle class="progress" cx="75" cy="75" r="70"></circle>
+    <circle class="bg" cx="100" cy="100" r="90"></circle>
+    <circle class="progress" cx="100" cy="100" r="90"></circle>
   </svg>
   <div class="text-wrapper">
     <div class="count">0</div>
-    <div class="label">Writeups</div>
+    <div class="label">Writeups so far</div>
   </div>
 </div>
 
@@ -111,225 +111,33 @@ Learn, explore, and enjoy the world of CTFs 🧠💥
 
 
 
-
-
-
-<title>EliCopter770 CTF Dashboard</title>
-<style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #0f172a;
-    color: #e0e0e0;
-    margin: 0;
-    padding: 20px;
-  }
-
-  h1 {
-    text-align: center;
-    color: #3b82f6;
-    text-shadow: 0 0 10px #3b82f6;
-  }
-
-  /* Circle Counter */
-  .circle-counter {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    margin: 40px auto;
-  }
-
-  .circle-counter svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 200px;
-    height: 200px;
-    transform: rotate(-90deg);
-  }
-
-  .circle-counter .bg {
-    fill: none;
-    stroke: #334155;
-    stroke-width: 16;
-  }
-
-  .circle-counter .progress {
-    fill: none;
-    stroke: url(#gradient);
-    stroke-width: 16;
-    stroke-linecap: round;
-    stroke-dasharray: 439.82;
-    stroke-dashoffset: 439.82;
-    transition: stroke-dashoffset 1s ease;
-    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8));
-  }
-
-  .circle-counter .text-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-
-  .circle-counter .count {
-    font-size: 2.5rem;
-    font-weight: 700;
-    background: linear-gradient(90deg, #3b82f6, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.6);
-  }
-
-  .circle-counter .label {
-    font-size: 1.2rem;
-    color: #3b82f6;
-    font-weight: 500;
-    text-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
-  }
-
-  /* CTF Rank Cards */
-  .ctf-ranks {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 40px;
-  }
-
-  .ctf-card {
-    background: #1e293b;
-    border: 2px solid #3b82f6;
-    border-radius: 16px;
-    padding: 20px;
-    width: 280px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-  }
-
-  .ctf-card h2 {
-    margin: 0 0 10px;
-    color: #06b6d4;
-  }
-
-  .ctf-card p {
-    margin: 5px 0;
-    font-size: 1.1rem;
-  }
-
-  .ctf-card a {
-    color: #3b82f6;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .ctf-card a:hover {
-    text-decoration: underline;
-  }
-
-</style>
-</head>
 <body>
 
 <h1>EliCopter770 CTF Dashboard</h1>
 
-<!-- Circle Counter -->
-<div class="circle-counter" data-count="380">
-  <svg>
-    <defs>
-      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#3b82f6"/>
-        <stop offset="100%" stop-color="#06b6d4"/>
-      </linearGradient>
-    </defs>
-    <circle class="bg" cx="100" cy="100" r="90"></circle>
-    <circle class="progress" cx="100" cy="100" r="90"></circle>
-  </svg>
-  <div class="text-wrapper">
-    <div class="count">0</div>
-    <div class="label">Writeups so far</div>
-  </div>
-</div>
-
 <!-- CTF Ranks -->
-<div class="ctf-ranks">
-  <div class="ctf-card">
-    <h2>Root-Me</h2>
-    <p>Username: <strong>EliCopter770</strong></p>
-    <p>Rank: <strong>#123</strong></p>
-    <p><a href="https://www.root-me.org/elicopter770?lang=en#fd3288f941c568ba4d7b3d56ed57d3db" target="_blank">View Profile</a></p>
+<div class="iframe-container">
+  <div>
+    <div class="profile-label">Root-Me</div>
+    <iframe src="https://www.root-me.org/elicopter770?lang=en#fd3288f941c568ba4d7b3d56ed57d3db" title="Root-Me Profile"></iframe>
   </div>
 
-  <div class="ctf-card">
-    <h2>WebHacking.kr</h2>
-    <p>Username: <strong>EliCopter770</strong></p>
-    <p>Rank: <strong>#45</strong></p>
-    <p><a href="https://webhacking.kr/rank.php?page=2" target="_blank">View Profile</a></p>
+  <div>
+    <div class="profile-label">WebHacking.kr</div>
+    <iframe src="https://webhacking.kr/rank.php?page=2" title="WebHacking.kr Profile"></iframe>
   </div>
 
-  <div class="ctf-card">
-    <h2>WebSec.fr</h2>
-    <p>Username: <strong>EliCopter770</strong></p>
-    <p>Rank: <strong>#67</strong></p>
-    <p><a href="https://websec.fr/scoreboard/5" target="_blank">View Profile</a></p>
+  <div>
+    <div class="profile-label">WebSec.fr</div>
+    <iframe src="https://websec.fr/scoreboard/5" title="WebSec.fr Profile"></iframe>
   </div>
 
-  <div class="ctf-card">
-    <h2>WeChall</h2>
-    <p>Username: <strong>EliCopter770</strong></p>
-    <p>Rank: <strong>#89</strong></p>
-    <p><a href="https://www.wechall.net/profile/EliCopter" target="_blank">View Profile</a></p>
+  <div>
+    <div class="profile-label">WeChall</div>
+    <iframe src="https://www.wechall.net/profile/EliCopter" title="WeChall Profile"></iframe>
   </div>
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const counters = document.querySelectorAll(".circle-counter");
 
-  counters.forEach(counter => {
-    const countEl = counter.querySelector(".count");
-    const progressEl = counter.querySelector(".progress");
-
-    const target = parseInt(counter.getAttribute("data-count")) || 0;
-    let current = 0;
-
-    const radius = progressEl.r.baseVal.value;
-    const circumference = 2 * Math.PI * radius;
-
-    progressEl.style.strokeDasharray = circumference;
-    progressEl.style.strokeDashoffset = circumference;
-
-    const duration = 1500;
-    const frameRate = 60;
-    const totalFrames = Math.round((duration / 1000) * frameRate);
-    let frame = 0;
-
-    const animate = () => {
-      frame++;
-      const progress = frame / totalFrames;
-      const eased = easeOutCubic(progress);
-
-      current = Math.round(target * eased);
-      countEl.textContent = current;
-
-      const offset = circumference * (1 - eased);
-      progressEl.style.strokeDashoffset = offset;
-
-      if (frame < totalFrames) {
-        requestAnimationFrame(animate);
-      } else {
-        countEl.textContent = target;
-        progressEl.style.strokeDashoffset = 0;
-      }
-    };
-
-    requestAnimationFrame(animate);
-
-    function easeOutCubic(t) {
-      return 1 - Math.pow(1 - t, 3);
-    }
-  });
-});
-</script>
 
 </body>
