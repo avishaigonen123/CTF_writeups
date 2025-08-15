@@ -28,3 +28,22 @@
     margin: 6px 0;
     border-radius: 4px;
   }
+
+
+  #show-more-btn {
+  display: block;
+  margin: 10px auto;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: 1px solid #0f0;
+  background: #111;
+  color: #0f0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+#show-more-btn:hover {
+  background: #0f0;
+  color: #111;
+}
