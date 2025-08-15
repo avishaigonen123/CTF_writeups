@@ -25,13 +25,11 @@ showMoreBtn.addEventListener('click', () => {
   renderResults(allResults);
 });
 
-// Initialize search
+// Initialize search WITHOUT giving resultsContainer
 SimpleJekyllSearch({
   searchInput: searchInput,
-  resultsContainer: resultsContainer,
   json: 'assets/json/search.json',
   fuzzy: false,
-  searchResultTemplate: '<li><a href="{url}" style="color:#0f0;">{title}</a></li>',
   templateMiddleware: (prop, value) => value,
   filter: (post, query) => {
     const terms = query.toLowerCase().trim().split(/\s+/);
