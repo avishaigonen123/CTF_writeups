@@ -5,11 +5,19 @@ const showMoreBtn = document.getElementById('show-more-btn');
 let allResults = [];
 let displayedCount = 10;
 
-// Render only the first `displayedCount` results
+// Fetch the JSON once
+fetch('{{ "/assets/json/search.json" | relative_url }}')
+  .then(response => response.json())
+  .then(data => {
+    allResults = data;
+  })
+  .catch(err => console.error('Error loading search.json:', err));
+
+// Render results up to displayedCount
 function renderResults(results) {
   resultsContainer.innerHTML = '';
-  const slice = results.slice(0, displayedCount);
 
+  const slice = results.slice(0, displayedCount);
   slice.forEach(post => {
     const li = document.createElement('li');
     li.innerHTML = `<a href="${post.url}" style="color:#0f0;">${post.title}</a>`;
@@ -19,40 +27,27 @@ function renderResults(results) {
   showMoreBtn.style.display = results.length > displayedCount ? 'block' : 'none';
 }
 
-// Show more button
-showMoreBtn.addEventListener('click', () => {
-  displayedCount += 10;
-  renderResults(allResults);
-});
+// Filter results based on search query
+function filterResults(query) {
+  if (!query.trim()) return [];
+  const terms = query.toLowerCase().trim().split(/\s+/);
 
-// Dummy container for SJS to satisfy requirement
-const dummyContainer = document.createElement('div');
-
-// Initialize search
-SimpleJekyllSearch({
-  searchInput: searchInput,
-  resultsContainer: dummyContainer, // required, but we won't use it
-  json: 'assets/json/search.json',
-  fuzzy: false,
-  templateMiddleware: (prop, value) => value,
-  filter: (post, query) => {
-    const terms = query.toLowerCase().trim().split(/\s+/);
+  return allResults.filter(post => {
     const haystack = `${post.title} ${post.content}`.toLowerCase();
     return terms.every(term => haystack.includes(term));
-  },
-  searchCallback: (results) => {
-    allResults = results;
-    displayedCount = 10;
-    renderResults(allResults);
-  }
+  });
+}
+
+// Show more button click
+showMoreBtn.addEventListener('click', () => {
+  displayedCount += 10;
+  const filtered = filterResults(searchInput.value);
+  renderResults(filtered);
 });
 
-// Clear results when input is empty
+// Input event
 searchInput.addEventListener('input', () => {
-  if (!searchInput.value.trim()) {
-    resultsContainer.innerHTML = '';
-    allResults = [];
-    displayedCount = 10;
-    showMoreBtn.style.display = 'none';
-  }
+  displayedCount = 10;
+  const filtered = filterResults(searchInput.value);
+  renderResults(filtered);
 });
