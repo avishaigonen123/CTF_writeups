@@ -5,9 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const countEl = counter.querySelector(".count");
     const progressEl = counter.querySelector(".progress");
 
-    // Dynamically fetch the real count here (replace with actual backend fetch)
+    // Get the count from the data-count attribute (set by Jekyll in HTML)
     const target = parseInt(counter.getAttribute("data-count")) || 0;
-
     let current = 0;
     const duration = 1500; 
     const frameRate = 60;
