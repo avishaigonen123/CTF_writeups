@@ -8,10 +8,14 @@ title: "CTF Writeups Home"
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
 
-{% assign categories_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" %}
-{% assign categories = categories_string | split: "," %}
-{% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" | where_exp: "p", "categories contains p.path | split: '/' | first" | reject: "path", "index.md" %}
+{% assign wargames_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" %}
+{% assign wargames = wargames_string | split: "," %}
 
+
+{% assign md_pages = site.pages 
+  | where_exp: "p", "p.path contains '.md'" 
+  | reject: "path", "index.html"
+  %}
 <div class="circle-counter" data-count="{{ md_pages | size }}">
   <svg>
     <circle class="bg" cx="75" cy="75" r="70"></circle>
