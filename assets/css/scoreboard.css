@@ -1,19 +1,26 @@
-  h3 {
-    text-align: center;
-    color: #3b82f6;
-    text-shadow: 0 0 10px #3b82f6;
-  }
 
-    /* Make iframe take most of the viewport height */
-    .iframe-container iframe {
-        width: 95%;             /* almost full width */
-        height: 90vh;           /* 90% of the viewport height */
-        border: 3px solid #3b82f6;
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
-        display: block;
-        margin: 0 auto 40px;    /* center it and add spacing below */
-    }
+
+/* Custom "h2"-like style for iframe titles */
+.iframe-title {
+  text-align: center;
+  color: #3b82f6;
+  text-shadow: 0 0 10px #3b82f6;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Make iframe take most of the viewport height */
+.iframe-container iframe,
+.iframe-container img {
+  width: 95%;
+  height: 90vh; /* 90% of viewport height */
+  border: 3px solid #3b82f6;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  display: block;
+  margin: 0 auto 40px;
+}
 
 
   /* CTF Rank Cards */
@@ -35,7 +42,7 @@
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
 
-  .ctf-card h3 {
+  .ctf-card h2 {
     margin: 0 0 10px;
     color: #06b6d4;
   }
