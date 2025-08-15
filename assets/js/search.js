@@ -1,7 +1,7 @@
 SimpleJekyllSearch({
     searchInput: document.getElementById('search-input'),
     resultsContainer: document.getElementById('results-container'),
-    json: '{{ site.baseurl }}/search.json',
+    json: '{{ site.baseurl }}/assets/json/search.json',
     searchResultTemplate: '<li><a href="{url}" style="color:#0f0;">{title}</a></li>',
     fuzzy: false,
     templateMiddleware: function (prop, value, template) {
