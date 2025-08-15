@@ -7,7 +7,6 @@ title: "CTF Writeups Home"
 
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
-<script src="/assets/js/counter.js"></script>
 <p>
   Writeups count: <span id="counter" data-count="{{ site.pages | size }}">0</span>
 </p>
