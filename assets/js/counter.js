@@ -4,10 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   counters.forEach(counter => {
     const countEl = counter.querySelector(".count");
     const progressEl = counter.querySelector(".progress");
-    const target = parseInt(counter.getAttribute("data-count"), 10);
+
+    // Dynamically fetch the real count here (replace with actual backend fetch)
+    const target = parseInt(counter.getAttribute("data-count")) || 0;
 
     let current = 0;
-    const duration = 2000;
+    const duration = 1500; 
     const frameRate = 60;
     const totalFrames = Math.round((duration / 1000) * frameRate);
     let frame = 0;
@@ -23,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
       current = Math.round(target * eased);
       countEl.textContent = current;
 
-      // update circle stroke
       const offset = circumference * (1 - eased);
       progressEl.style.strokeDashoffset = offset;
 

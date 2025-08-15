@@ -2,6 +2,7 @@
   position: relative;
   width: 130px;
   height: 130px;
+  margin: 20px 0;
 }
 
 .circle-counter svg {
@@ -17,12 +18,12 @@
 }
 
 .circle-counter circle.bg {
-  stroke: #eee;
+  stroke: #2e2e2e; /* dark background for contrast */
 }
 
 .circle-counter circle.progress {
-  stroke: #2ecc71;
-  stroke-dasharray: 339.292; /* 2πr = 2*3.1416*54 */
+  stroke: #4ade80; /* green */
+  stroke-dasharray: 339.292;
   stroke-dashoffset: 339.292;
   transition: stroke-dashoffset 0.3s linear;
 }
@@ -32,9 +33,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #555;
+  color: #f0f0f0;
 }
 
 .circle-counter .label {
@@ -43,5 +44,6 @@
   bottom: -25px;
   text-align: center;
   font-size: 1rem;
-  color: #555;
+  color: #aaa;
+  font-weight: 500;
 }
