@@ -103,7 +103,6 @@ Learn, explore, and enjoy the world of CTFs 🧠💥
 
 
 <link rel="stylesheet" href="{{ '/assets/css/scoreboard.css' | relative_url }}">
-<script src="{{ '/assets/js/scoreboard.js' | relative_url }}"></script>
 
 
 
@@ -112,24 +111,27 @@ Learn, explore, and enjoy the world of CTFs 🧠💥
 
 <div class="iframe-container">
   <div>
-    <h2>Root-Me</h2>
-    <iframe src="https://www.root-me.org/elicopter770?lang=fd3288f941c568ba4d7b3d56ed57d3db" title="Root-Me Profile"></iframe>
+    <h3>WeChall</h3>
+    <iframe src="https://www.wechall.net/profile/EliCopter" title="WeChall Profile"></iframe>
   </div>
 
   <div>
-    <h2>WebHacking.kr</h2>
+    <h3>WebHacking.kr</h3>
     <iframe src="https://webhacking.kr/rank.php?page=2" title="WebHacking.kr Profile"></iframe>
   </div>
 
   <div>
-    <h2>WebSec.fr</h2>
-    <iframe src="https://websec.fr/scoreboard/5" title="WebSec.fr Profile"></iframe>
+    <h3>Root-Me</h3>
+     <img src="assets/screenshots/root-me.png" alt="Root-Me Scoreboard">
+    <!-- <iframe src="https://www.root-me.org/elicopter770?lang=fd3288f941c568ba4d7b3d56ed57d3db" title="Root-Me Profile"></iframe> -->
   </div>
 
   <div>
-    <h2>WeChall</h2>
-    <iframe src="https://www.wechall.net/profile/EliCopter" title="WeChall Profile"></iframe>
+    <h3>WebSec.fr</h3>
+     <img src="assets/screenshots/websec-fr.png" alt="WebSec.fr Scoreboard">
+    <!-- <iframe src="https://websec.fr/scoreboard/5" title="WebSec.fr Profile"></iframe> -->
   </div>
+
 </div>
 
 
