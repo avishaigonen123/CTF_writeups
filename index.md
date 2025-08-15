@@ -20,7 +20,7 @@ title: "CTF Writeups Home"
   </svg>
   <div class="text-wrapper">
     <div class="count">0</div>
-    <div class="label">Writeups coun</div>
+    <div class="label">Writeups count</div>
   </div>
 </div>
 
