@@ -7,18 +7,19 @@ title: "CTF Writeups Home"
 
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
-
 {% assign wargames_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" %}
 {% assign wargames = wargames_string | split: "," %}
 {% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" %}
 {% assign filtered_pages = "" %}
 {% for p in md_pages %}
   {% assign first_part = p.path | split: '/' | first %}
-  {% if wargames contains first_part and p.path != "*index.md" %}
-    {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
-  {% endif %}
+  {% unless p.path endswith "index.md" %}
+    {% if wargames contains first_part %}
+      {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
+    {% endif %}
+  {% endunless %}
 {% endfor %}
-{% assign filtered_pages = filtered_pages | split: "," %}
+{% assign filtered_pages = filtered_pages | split: "," | reject: "" %}
 
 
 <div class="circle-counter" data-count="{{ filtered_pages | size }}">
