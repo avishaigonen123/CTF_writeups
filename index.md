@@ -8,18 +8,19 @@ title: "CTF Writeups Home"
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
 
-<p>
-  Writeups count: 
 {% assign md_pages = site.pages 
   | where_exp: "p", "p.path contains '.md'" 
   | reject: "path", "index.html"
   %}
-<span id="counter" data-count="{{ md_pages | size }}">0</span>
-
-
-
-</p>
-<script src="/assets/js/counter.js"></script>
+  
+<div class="circle-counter" data-count="{{ md_pages | size }}">
+  <svg>
+    <circle class="bg" cx="50" cy="50" r="45"></circle>
+    <circle class="progress" cx="50" cy="50" r="45"></circle>
+  </svg>
+  <div class="count">0</div>
+  <div class="label">Writeups count:</div>
+</div>
 
 <link rel="stylesheet" href="{{ '/assets/css/counter.css' | relative_url }}">
 <script src="{{ '/assets/js/counter.js' | relative_url }}"></script>
