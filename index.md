@@ -134,4 +134,4 @@ Learn, explore, and enjoy the world of CTFs 🧠💥
 
 
 
-<!-- changed to see if num of CTF's changing -->
+<!-- change to see if num of CTF's changing -->
