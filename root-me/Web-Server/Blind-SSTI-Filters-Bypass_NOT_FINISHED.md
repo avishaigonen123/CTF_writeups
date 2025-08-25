@@ -28,7 +28,7 @@ Best regards,
 However, there is this `sanitize` function:
 ```py
 def sanitize(value):
-    blacklist = ['{{','}}','{%','%}','import','eval','builtins','class','[',']']
+    blacklist = ['{{','}}','{ %','% }','import','eval','builtins','class','[',']']
     for word in blacklist:
         if word in value:
             value = value.replace(word,'')
