@@ -28,7 +28,7 @@ Best regards,
 However, there is this `sanitize` function:
 ```py
 def sanitize(value):
-    blacklist = ['{{','}}','{%','%}','import','eval','builtins','class','[',']']
+    blacklist = ['{{','}}','{ %','% }','import','eval','builtins','class','[',']']
     for word in blacklist:
         if word in value:
             value = value.replace(word,'')
@@ -49,7 +49,7 @@ if len(request.form["bday"]) > 10:
     return render_template("index.html", error="Field 'bday' is too long.")
 ```
 
-The main problem here is that we can't send `{{` or `}}`, and same for `{%` and `%}`.
+The main problem here is that we can't send `{{` or `}}`, and same for `{ %` and `% }`.
 In such case, there is no way to get `SSTI`. 
 
 Is it?
