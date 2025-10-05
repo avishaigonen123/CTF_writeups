@@ -85,7 +85,7 @@ title: "CTF Writeups Home"
       <a href="./AppSec-IL-2025/" style="text-decoration: none; color: #16a085;"> AppSec-IL-2025</a>
     </li>
     <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
-    <img src="./assets/hackthebox.png" alt="icon" width="25" height="25" style="display:block;">
+    <img src="./assets/hackthebox.svg" alt="icon" width="25" height="25" style="display:block;">
      <a href="./hackthebox/" style="text-decoration: none; color: #16a085; font-weight:500;">HackTheBox</a>
   </li>
 
