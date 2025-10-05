@@ -44,7 +44,7 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
 </style>
 
 
-{<div class="wargame-container">
+<div class="wargame-container">
   {% assign seen = "" | split: "" %}
   {% for folder in site.pages %}
     {% if folder.path contains 'hackthebox/' and folder.path != 'hackthebox/index.md' %}
