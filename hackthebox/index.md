@@ -33,7 +33,7 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
 
   .wargame-card img {
     width: 100%;
-    height: 180px;  /* Fixed height */
+    height: 400px;  /* Fixed height */
     object-fit: cover;  /* Ensures the image covers the area without distortion */
     border-radius: 8px 8px 0 0;
     display: block;
