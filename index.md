@@ -75,6 +75,11 @@ title: "CTF Writeups Home"
     <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
       🇮🇱 <a href="./AppSec-IL-2025/" style="text-decoration: none; color: #16a085;">AppSec-IL-2025</a>
     </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/htb_ic2.svg" alt="HTB icon" width="23" height="23" style="display:block;">
+    <a href="./hackthebox/" style="text-decoration: none; color: #16a085; font-weight:500;">HackTheBox</a>
+  </li>
+
   </ul>
 </div>
 
