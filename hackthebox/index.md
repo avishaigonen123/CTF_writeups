@@ -44,43 +44,45 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
 </style>
 
 
-{% assign seen = "" | split: "" %}
-{% for folder in site.pages %}
-  {% if folder.path contains 'hackthebox/' and folder.path != 'hackthebox/index.md' %}
-    {% assign path_parts = folder.path | split: '/' %}
-    {% assign folder_name = path_parts[1] %}
-    {% unless seen contains folder_name %}
-      
-      {% capture folder_path %}hackthebox/{{ folder_name }}{% endcapture %}
-      
-      {% comment %}
-        Check if the image exists in the folder
-      {% endcomment %}
-      {% assign img_rel_path = 'hackthebox/' | append: folder_name | append: '/wargame.png' %}
-      {% assign has_image = false %}
-      
-      {% for f in site.static_files %}
-        {% if f.path == img_rel_path %}
-          {% assign has_image = true %}
-          {% break %}
-        {% endif %}
-      {% endfor %}
-
-      <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
+{<div class="wargame-container">
+  {% assign seen = "" | split: "" %}
+  {% for folder in site.pages %}
+    {% if folder.path contains 'hackthebox/' and folder.path != 'hackthebox/index.md' %}
+      {% assign path_parts = folder.path | split: '/' %}
+      {% assign folder_name = path_parts[1] %}
+      {% unless seen contains folder_name %}
         
-        {% if has_image %}
-          <img src="{{ site.baseurl }}/{{ img_rel_path }}" alt="{{ folder_name | capitalize }} wargame image"
-               style="width:100%; height:160px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
-        {% else %}
-          <img src="{{ site.baseurl }}/assets/hackthebox.png" alt="default image"
-               style="width:100%; height:160px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
-        {% endif %}
+        {% capture folder_path %}hackthebox/{{ folder_name }}{% endcapture %}
         
-        <h2>{{ folder_name | capitalize }}</h2>
-        <p>Writeups for {{ folder_name | capitalize }} wargame</p>
-      </a>
+        {% comment %}
+          Check if wargame.png exists for the current folder
+        {% endcomment %}
+        {% assign img_rel_path = 'hackthebox/' | append: folder_name | append: '/wargame.png' %}
+        {% assign has_image = false %}
+        
+        {% for f in site.static_files %}
+          {% if f.path == img_rel_path %}
+            {% assign has_image = true %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
 
-      {% assign seen = seen | push: folder_name %}
-    {% endunless %}
-  {% endif %}
-{% endfor %}
+        <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
+          
+          {% if has_image %}
+            <img src="{{ site.baseurl }}/{{ img_rel_path }}" alt="{{ folder_name | capitalize }} wargame image"
+                 style="width:100%; height:160px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
+          {% else %}
+            <img src="{{ site.baseurl }}/assets/hackthebox.png" alt="default image"
+                 style="width:100%; height:160px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
+          {% endif %}
+          
+          <h2>{{ folder_name | capitalize }}</h2>
+          <p>Writeups for {{ folder_name | capitalize }} wargame</p>
+        </a>
+
+        {% assign seen = seen | push: folder_name %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+</div>
