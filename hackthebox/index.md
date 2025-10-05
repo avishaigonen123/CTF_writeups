@@ -44,7 +44,6 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
 </style>
 
 
-
 {% assign seen = "" | split: "" %}
 {% for folder in site.pages %}
   {% if folder.path contains 'hackthebox/' and folder.path != 'hackthebox/index.md' %}
@@ -52,13 +51,20 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
     {% assign folder_name = path_parts[1] %}
     {% unless seen contains folder_name %}
       {% capture folder_path %}hackthebox/{{ folder_name }}{% endcapture %}
-      {% comment %}
-        Build the static file path as it appears in site.static_files: "/hackthebox/<name>/wargame.png"
-      {% endcomment %}
       {% assign img_rel_path = '/' | append: folder_path | append: '/wargame.png' %}
 
+      {% comment %}
+        Debugging paths to check for proper matching
+      {% endcomment %}
+      <p>Image path to check: {{ img_rel_path }}</p>
+      
       {% assign has_image = false %}
       {% for f in site.static_files %}
+        {% comment %}
+          Debugging to see what static files Jekyll is handling
+        {% endcomment %}
+        <p>Static file path: {{ f.path }}</p>
+        
         {% if f.path == img_rel_path %}
           {% assign has_image = true %}
           {% break %}
@@ -70,7 +76,6 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
           <img src="{{ site.baseurl }}{{ img_rel_path }}" alt="{{ folder_name | capitalize }} wargame image"
                style="width:100%; height:160px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
         {% else %}
-          <!-- Optional: show placeholder markup or nothing -->
           <img src="{{ site.baseurl }}/assets/htb_ic2.svg" alt="placeholder"
                style="width:100%; height:160px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
         {% endif %}

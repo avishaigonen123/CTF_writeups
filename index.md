@@ -48,36 +48,45 @@ title: "CTF Writeups Home"
 
 <div style="font-size: 1.4rem; line-height: 2.5; padding: 10px;">
   <ul style="list-style-type: none; padding: 0;">
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🔓 <a href="./overthewire/" style="text-decoration: none; color: #16a085;">OverTheWire</a>
-    </li>
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🏴‍☠️ <a href="./root-me/" style="text-decoration: none; color: #16a085;">Root-me</a>
-    </li>
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🕵️ <a href="./trythis0ne/" style="text-decoration: none; color: #16a085;">trythis0ne</a>
-    </li>
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🌐 <a href="./webhacking.kr/" style="text-decoration: none; color: #16a085;">Webhacking.kr</a>
-    </li>
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🕸️ <a href="./websec.fr/" style="text-decoration: none; color: #16a085;">Websec.fr</a>
-    </li>
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🧨 <a href="./pwnable.kr/" style="text-decoration: none; color: #16a085;">Pwnable.kr</a>
-    </li>
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🧮 <a href="./lord-of-sql-injection/" style="text-decoration: none; color: #16a085;">Lord of SQL Injection</a>
-    </li>
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🎯 <a href="./ringzer0" style="text-decoration: none; color: #16a085;">RingZer0</a>
-    </li>
-    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s;">
-      🇮🇱 <a href="./AppSec-IL-2025/" style="text-decoration: none; color: #16a085;">AppSec-IL-2025</a>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/overthewire.jpeg" alt="icon" width="23" height="23" style="display:block;">
+      <a href="./overthewire/" style="text-decoration: none; color: #16a085;">OverTheWire</a>
     </li>
     <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
-    <img src="./assets/htb_ic2.svg" alt="HTB icon" width="23" height="23" style="display:block;">
-    <a href="./hackthebox/" style="text-decoration: none; color: #16a085; font-weight:500;">HackTheBox</a>
+    <img src="./assets/rootme.png" alt="icon" width="23" height="23" style="display:block;">
+      <a href="./root-me/" style="text-decoration: none; color: #16a085;">Root-me</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/trythis0ne.png" alt="icon" width="23" height="23" style="display:block;">
+      <a href="./trythis0ne/" style="text-decoration: none; color: #16a085;">trythis0ne</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/webhacking.ico" alt="icon" width="23" height="23" style="display:block;">
+      <a href="./webhacking.kr/" style="text-decoration: none; color: #16a085;">Webhacking.kr</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/websec.png" alt="icon" width="23" height="23" style="display:block;">
+      <a href="./websec.fr/" style="text-decoration: none; color: #16a085;">Websec.fr</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/pwnable.ico" alt="icon" width="23" height="23" style="display:block;">
+      <a href="./pwnable.kr/" style="text-decoration: none; color: #16a085;">Pwnable.kr</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/los.png" alt="icon" width="23" height="23" style="display:block;">
+      <a href="./lord-of-sql-injection/" style="text-decoration: none; color: #16a085;">Lord of SQL Injection</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/ringzer0.png" alt="icon" width="23" height="23" style="display:block;">
+       <a href="./ringzer0" style="text-decoration: none; color: #16a085;">RingZer0</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/appsecil2025.ico" alt="icon" width="23" height="23" style="display:block;">
+      <a href="./AppSec-IL-2025/" style="text-decoration: none; color: #16a085;">AppSec-IL-2025</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/hackthebox.png" alt="icon" width="23" height="23" style="display:block;">
+     <a href="./hackthebox/" style="text-decoration: none; color: #16a085; font-weight:500;">HackTheBox</a>
   </li>
 
   </ul>
