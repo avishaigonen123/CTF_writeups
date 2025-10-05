@@ -50,21 +50,16 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
     {% assign path_parts = folder.path | split: '/' %}
     {% assign folder_name = path_parts[1] %}
     {% unless seen contains folder_name %}
-      {% capture folder_path %}hackthebox/{{ folder_name }}{% endcapture %}
-      {% assign img_rel_path = '/' | append: folder_path | append: '/wargame.png' %}
-
-      {% comment %}
-        Debugging paths to check for proper matching
-      {% endcomment %}
-      <p>Image path to check: {{ img_rel_path }}</p>
       
+      {% capture folder_path %}hackthebox/{{ folder_name }}{% endcapture %}
+      
+      {% comment %}
+        Check if the image exists in the folder
+      {% endcomment %}
+      {% assign img_rel_path = 'hackthebox/' | append: folder_name | append: '/wargame.png' %}
       {% assign has_image = false %}
+      
       {% for f in site.static_files %}
-        {% comment %}
-          Debugging to see what static files Jekyll is handling
-        {% endcomment %}
-        <p>Static file path: {{ f.path }}</p>
-        
         {% if f.path == img_rel_path %}
           {% assign has_image = true %}
           {% break %}
@@ -72,13 +67,15 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
       {% endfor %}
 
       <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
+        
         {% if has_image %}
-          <img src="{{ site.baseurl }}{{ img_rel_path }}" alt="{{ folder_name | capitalize }} wargame image"
+          <img src="{{ site.baseurl }}/{{ img_rel_path }}" alt="{{ folder_name | capitalize }} wargame image"
                style="width:100%; height:160px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
         {% else %}
-          <img src="{{ site.baseurl }}/assets/htb_ic2.svg" alt="placeholder"
+          <img src="{{ site.baseurl }}/assets/hackthebox.png" alt="default image"
                style="width:100%; height:160px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
         {% endif %}
+        
         <h2>{{ folder_name | capitalize }}</h2>
         <p>Writeups for {{ folder_name | capitalize }} wargame</p>
       </a>
