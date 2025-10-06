@@ -20,6 +20,14 @@ PORT      STATE    SERVICE VERSION
 |_http-title: Login
 ```
 
+Okay, when i try to give some dummy creds, nothing happens. Let's try to do `SQL Injection` here.
 
+we'll give something like: `2' or '1'='1'#` as a username, and `password` as password.
 
-**Flag:*****`b40abdfe23665f766f9c61ecba8a4c19`***
+![login](image-1.png)
+
+And we get the flag!
+
+![flag](image-2.png)
+
+**Flag:*****`e3d0796d002a446c0e622226f42e9672`***

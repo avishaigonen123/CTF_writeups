@@ -80,10 +80,10 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
           
           {% if has_image %}
             <img src="{{ site.baseurl }}/{{ folder_path }}/wargame.png" alt="{{ folder_name | capitalize }} wargame image"
-                 style="width:100%; height:180px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
+                 style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
           {% else %}
             <img src="{{ site.baseurl }}/assets/hackthebox.svg" alt="default image"
-                 style="width:100%; height:180px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
+                 style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
           {% endif %}
           
           <h2>{{ folder_name | capitalize }}</h2>
