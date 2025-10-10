@@ -91,7 +91,7 @@ Let's upload our `webshell`, that will execute `reverse shell`, and then we'll c
 We uses pentest monkey reverse shell, from here https://github.com/pentestmonkey/php-reverse-shell/blob/master/php-reverse-shell.php.
 
 ```php
-{% include_relative scripts/php-reverse-shell.php %}
+{% include_relative php-reverse-shell.php %}
 ```
 
 We need to change the `ip` and the `port`, based on our ip and the port we uses to listen using the command `nc -nvlp 770`
