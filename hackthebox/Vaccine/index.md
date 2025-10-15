@@ -148,7 +148,7 @@ alright, the password for the user `postgres` is `P@s5w0rd!`, we can use it to c
 ssh postgres@$target
 ```
 
-### Escalate privilage
+### Escalate privilege
 
 After connecting via `ssh`, we start looking for PE. First, we'll check for commands we can run as an root, using:
 ```
