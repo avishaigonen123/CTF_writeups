@@ -107,12 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`${baseUrl}/search.json`)
         .then(res => res.json())
         .then(posts => {
-            fuse = new Fuse(posts, {
+           fuse = new Fuse(posts, {
                 includeMatches: true,
                 shouldSort: true,
-                threshold: 0.6, // a bit looser for better matching
-                distance: 2000,
-                minMatchCharLength: 2,
+                threshold: 0.45,              // balanced fuzzy
+                distance: 1000,               // works well for longer writeups
+                minMatchCharLength: 3,        // ignores short noise
                 keys: [
                     { name: 'title', weight: 0.6 },
                     { name: 'content', weight: 0.4 }
