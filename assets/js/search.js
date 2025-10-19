@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 🕵️ Perform search
+    // 🕵️ Perform search with exact matches first
     function doSearch(query) {
         displayedCount = 0;
         resultsContainer.innerHTML = '';
@@ -95,8 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const results = fuse.search(query); // no limit now
-        allResults = results;
+        const lowerQuery = query.toLowerCase();
+
+        // 1️⃣ Exact matches first
+        const exactMatches = fuse._docs
+            .filter(post =>
+                post.title.toLowerCase().includes(lowerQuery) ||
+                post.content.toLowerCase().includes(lowerQuery)
+            )
+            .map(post => ({ item: post }));
+
+        // 2️⃣ Fuzzy matches
+        const fuzzyResults = fuse.search(query)
+            .filter(result =>
+                !exactMatches.some(exact => exact.item === result.item)
+            );
+
+        allResults = [...exactMatches, ...fuzzyResults];
         renderResults();
     }
 
@@ -107,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`${baseUrl}/search.json`)
         .then(res => res.json())
         .then(posts => {
-           fuse = new Fuse(posts, {
+            fuse = new Fuse(posts, {
                 includeMatches: true,
                 shouldSort: true,
                 threshold: 0.45,              // balanced fuzzy
