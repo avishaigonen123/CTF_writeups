@@ -110,7 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
             fuse = new Fuse(posts, {
                 includeMatches: true,
                 shouldSort: true,
-                threshold: 0.5, // a bit looser for better matching
+                threshold: 0.6, // a bit looser for better matching
+                distance: 2000,
+                minMatchCharLength: 2,
                 keys: [
                     { name: 'title', weight: 0.6 },
                     { name: 'content', weight: 0.4 }
