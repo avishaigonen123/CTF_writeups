@@ -5,14 +5,15 @@
   <!-- {% include search-bar.html %} -->
 </head>
 
+<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+<script src="{{ '/assets/js/search.js' | relative_url }}"></script>
+
 <!-- 🔍 Global Search Bar -->
 <div id="search-container">
   <input type="text" id="search-input" placeholder="Search  CTF Writeups..." aria-label="Search CTF Writeups..." />
   <ul id="results-container"></ul>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
-<script src="{{ '/assets/js/search.js' | relative_url }}"></script>
 
 
 <style>
