@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput.disabled = true;
 
-    fetch('{{ site.baseurl }}/search.json')
+    fetch('/CTF_writeups/search.json')
         .then(res => res.json())
         .then(posts => {
             fuse = new Fuse(posts, {
