@@ -1,5 +1,5 @@
 // =========================
-// Enhanced Search with Fuse.js (Fixed)
+// 🚀 Advanced Search with Fuse.js
 // =========================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,12 +11,33 @@ document.addEventListener('DOMContentLoaded', () => {
     let displayedCount = 0;
     const batchSize = 10;
 
+    // 🔸 Better snippet generation
+    function getSnippet(post, query) {
+        const content = post.content;
+        const lowerContent = content.toLowerCase();
+        const lowerQuery = query.toLowerCase();
+        const matchIndex = lowerContent.indexOf(lowerQuery);
+
+        if (matchIndex === -1) {
+            return content.slice(0, 150) + (content.length > 150 ? '...' : '');
+        }
+
+        const start = Math.max(0, matchIndex - 40);
+        const end = Math.min(content.length, matchIndex + 110);
+        let snippet = content.slice(start, end);
+        if (start > 0) snippet = '...' + snippet;
+        if (end < content.length) snippet += '...';
+        return snippet;
+    }
+
+    // ✨ Highlight matched text
     function highlightMatch(text, query) {
         if (!query) return text;
         const regex = new RegExp(`(${query})`, 'gi');
         return text.replace(regex, '<mark>$1</mark>');
     }
 
+    // 📜 Render results with pagination
     function renderResults(start = 0, count = batchSize) {
         const fragment = document.createDocumentFragment();
         const slice = allResults.slice(start, start + count);
@@ -25,20 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const post = result.item;
             const li = document.createElement('li');
 
-            let snippet = post.content.slice(0, 150) + '...';
-            const match = result.matches?.find(m => m.key === 'content');
-            if (match && match.indices.length > 0) {
-                const idx = match.indices[0][0];
-                const startIdx = Math.max(0, idx - 30);
-                snippet = post.content.slice(startIdx, idx + 120) + '...';
-            }
+            let snippet = getSnippet(post, searchInput.value);
+            snippet = highlightMatch(snippet, searchInput.value);
 
             li.innerHTML = `
                 <a href="${post.url}" style="color:#0f0; font-weight:600;">
                     ${highlightMatch(post.title, searchInput.value)}
                 </a>
                 <div style="font-size:0.9em; color:#aaa; margin-top:4px;">
-                    ${highlightMatch(snippet, searchInput.value)}
+                    ${snippet}
                 </div>
             `;
             fragment.appendChild(li);
@@ -62,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 🕵️ Perform search
     function doSearch(query) {
         displayedCount = 0;
         resultsContainer.innerHTML = '';
@@ -78,33 +95,37 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const results = fuse.search(query, { limit: 50 });
+        const results = fuse.search(query); // no limit now
         allResults = results;
         renderResults();
     }
 
+    // 🌍 Load search index (absolute path)
+    const baseUrl = window.location.origin + '/CTF_writeups';
     searchInput.disabled = true;
 
-    fetch('/CTF_writeups/search.json')
+    fetch(`${baseUrl}/search.json`)
         .then(res => res.json())
         .then(posts => {
             fuse = new Fuse(posts, {
                 includeMatches: true,
                 shouldSort: true,
-                threshold: 0.4,
+                threshold: 0.5, // a bit looser for better matching
                 keys: [
-                    { name: 'title', weight: 0.7 },
-                    { name: 'content', weight: 0.3 }
+                    { name: 'title', weight: 0.6 },
+                    { name: 'content', weight: 0.4 }
                 ]
             });
             searchInput.disabled = false;
-        });
+        })
+        .catch(err => console.error('Error loading search.json', err));
 
-
+    // ⌨️ Live search as user types
     searchInput.addEventListener('input', () => {
         doSearch(searchInput.value);
     });
 
+    // ⌨️ "/" focuses the search bar
     document.addEventListener('keydown', (e) => {
         if (e.key === '/' && document.activeElement !== searchInput) {
             e.preventDefault();
