@@ -4,47 +4,14 @@
   {% include head-meta.html %}
 </head>
 
-<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
-<script src="{{ '/assets/js/search.js' | relative_url }}"></script>
 
-<!-- 🔍 Global Search Bar -->
+<!-- Global Search Bar -->
 <div id="search-container">
-  <input type="text" id="search-input" placeholder="Search  CTF Writeups..." aria-label="Search CTF Writeups..." />
+  <input type="text" id="search-input" placeholder="Search CTF Writeups..." aria-label="Search CTF Writeups..." />
   <ul id="results-container"></ul>
 </div>
 
-
-
-<style>
-  #search-container {
-    max-width: 1000px;
-    margin: 20px auto 0;
-    padding: 0 15px;
-  }
-
-  #search-input {
-    width: 100%;
-    padding: 8px 12px;
-    font-size: 1.5em;
-    border: 1px solid #00ff00;
-    border-radius: 4px;
-    background-color: #111;
-    color: #0f0;
-  }
-
-  #results-container {
-    margin-top: 10px;
-    list-style: none;
-    padding: 0;
-    color: #0f0;
-  }
-
-  #results-container li {
-    background: #111;
-    border: 1px solid #0f0;
-    padding: 10px;
-    margin: 6px 0;
-    border-radius: 4px;
-  }
-</style>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+<script src="{{ '/assets/js/search.js' | relative_url }}"></script>
+<link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
 
