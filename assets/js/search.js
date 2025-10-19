@@ -73,10 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if (!fuse) {
+            console.warn('Search index not ready yet');
+            return;
+        }
+
         const results = fuse.search(query, { limit: 50 });
         allResults = results;
         renderResults();
     }
+
+    searchInput.disabled = true;
 
     fetch('{{ site.baseurl }}/search.json')
         .then(res => res.json())
@@ -90,7 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     { name: 'content', weight: 0.3 }
                 ]
             });
+            searchInput.disabled = false;
         });
+
 
     searchInput.addEventListener('input', () => {
         doSearch(searchInput.value);
