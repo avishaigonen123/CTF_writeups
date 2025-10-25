@@ -4,8 +4,6 @@ url: "https://avishaigonen123.github.io"
 baseurl: "/CTF_writeups"  
 remote_theme: pages-themes/hacker
 markdown: kramdown
-kramdown:
-  input: Kramdown
 
   
 plugins:
