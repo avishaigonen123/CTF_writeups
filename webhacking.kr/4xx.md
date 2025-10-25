@@ -1,6 +1,8 @@
 ---
 layout: default
 title: 4xx
+category: "Web Exploitation"
+tags: [exploit, vulnerability]
 ---
 
 Here we need to send requests that gives us different http codes, each code will give us a key. We need to achieve 9 KEYS at all, and then we can achieve the flag.
