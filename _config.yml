@@ -3,6 +3,7 @@ description: "Yalla Balagan! A collection of my CTF writeups and solutions."
 url: "https://avishaigonen123.github.io"
 baseurl: "/CTF_writeups"  
 remote_theme: pages-themes/hacker
+markdown: kramdown
 
 plugins:
   - jekyll-remote-theme
