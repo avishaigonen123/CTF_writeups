@@ -11,29 +11,43 @@ document.addEventListener('DOMContentLoaded', () => {
     let displayedCount = 0;
     const batchSize = 10;
 
-    // 🔸 Better snippet generation
+    // 🔸 Better snippet generation (with multiple matches and context)
     function getSnippet(post, query) {
         const content = post.content;
         const lowerContent = content.toLowerCase();
         const lowerQuery = query.toLowerCase();
-        const matchIndex = lowerContent.indexOf(lowerQuery);
+        const queryWords = lowerQuery.split(/\s+/);
 
-        if (matchIndex === -1) {
+        // Collect all the matching positions
+        let matches = [];
+        queryWords.forEach(word => {
+            let index = -1;
+            while ((index = lowerContent.indexOf(word, index + 1)) !== -1) {
+                matches.push(index);
+            }
+        });
+
+        if (matches.length === 0) {
             return content.slice(0, 150) + (content.length > 150 ? '...' : '');
         }
 
+        // Create a snippet around the first match (with some context)
+        const matchIndex = matches[0];
         const start = Math.max(0, matchIndex - 40);
         const end = Math.min(content.length, matchIndex + 110);
         let snippet = content.slice(start, end);
+
         if (start > 0) snippet = '...' + snippet;
         if (end < content.length) snippet += '...';
         return snippet;
     }
 
-    // ✨ Highlight matched text
+    // ✨ Highlight matched text (all occurrences)
     function highlightMatch(text, query) {
         if (!query) return text;
-        const regex = new RegExp(`(${query})`, 'gi');
+
+        const words = query.toLowerCase().split(/\s+/);
+        const regex = new RegExp(`(${words.join('|')})`, 'gi'); // Matches any of the words
         return text.replace(regex, '<mark>$1</mark>');
     }
 
@@ -47,11 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
 
             let snippet = getSnippet(post, searchInput.value);
-            snippet = highlightMatch(snippet, searchInput.value);
+            snippet = highlightMatch(snippet, searchInput.value); // Apply highlighting to snippet
 
             li.innerHTML = `
                 <a href="${post.url}" style="color:#0f0; font-weight:600;">
-                    ${highlightMatch(post.title, searchInput.value)}
+                    ${highlightMatch(post.title, searchInput.value)}  <!-- Apply highlighting to title -->
                 </a>
                 <div style="font-size:0.9em; color:#aaa; margin-top:4px;">
                     ${snippet}
@@ -124,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         allResults = [...bothWordsMatches, ...exactMatches, ...fuzzyResults];
         renderResults();
     }
-
 
     // 🌍 Load search index (absolute path)
     const baseUrl = window.location.origin + '/CTF_writeups';
