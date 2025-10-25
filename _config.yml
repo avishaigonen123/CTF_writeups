@@ -4,7 +4,9 @@ url: "https://avishaigonen123.github.io"
 baseurl: "/CTF_writeups"  
 remote_theme: pages-themes/hacker
 markdown: kramdown
-
+kramdown:
+  input: GFM  # GitHub Flavored Markdown (supports fenced code blocks)
+  
 plugins:
   - jekyll-remote-theme
   - jekyll-sitemap
