@@ -6,7 +6,6 @@ remote_theme: pages-themes/hacker
 markdown: kramdown
 kramdown:
   input: Kramdown
-  syntax_highlighter: coderay
 
   
 plugins:
