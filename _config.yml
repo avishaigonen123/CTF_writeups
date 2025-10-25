@@ -8,6 +8,17 @@ markdown: kramdown
 plugins:
   - jekyll-remote-theme
   - jekyll-sitemap
+  - jekyll-copy-button
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-twitter-cards
+  - jekyll-tags
+  - jekyll-social-share-buttons
+  - jekyll-redirect-from
+
+paginate: 10
+paginate_path: "/page:num/"
 
 # 🧠 ADD THIS SECTION 👇
 include:
