@@ -37,7 +37,7 @@ Later, i understood this is python framework behind the scenes, more specific `D
 
 So, i kept looking for vulnerabilities, until i noticed `SSTI` vulnerability.
 
-First I set my name to `{{7*7}}`
+First I set my name to {% raw %}{{7*7}}{% endraw %} 
 
 ![edit profile first](image-1.png)
 
@@ -57,7 +57,7 @@ I tried `ih0vr{{364|add:733}}d121r`, and got back `ih0vr1097d121r`, which is poi
 The problem with that is that `DTL`, or `Django Template Langauge` is very strict, so i can't execute commands at all, or even include variables that are globals.
 The only thing i can do is to include variables that are in context, which means the Template Engine uses on run.
 
-First, i tried the `users` variable, because it probably exists, something that holds all the users on the page, to print their attributes and use their image. I sent this payload: `{{ users }}`:
+First, i tried the `users` variable, because it probably exists, something that holds all the users on the page, to print their attributes and use their image. I sent this payload: {% raw %}{{ users }}{% endraw %}:
 
 I got back this response:
 
@@ -68,7 +68,7 @@ Which after html decoding gave me:
 <QuerySet [<SocialUser: hexhunter>, <SocialUser: rootbreaker>, <SocialUser: netninja>, <SocialUser: shadowmancer>, <SocialUser: stealth_hawk>, <SocialUser: virus_viper>, <SocialUser: brute_force>, <SocialUser: {{ users.values }}>, <SocialUser: {{ users }}>]>
 ```
 
-Okay, let's get the values, using `{{ users.values }}`:
+Okay, let's get the values, using {% raw %}{{ users.values }}{% endraw %}:
 
 I got this long response:
 
