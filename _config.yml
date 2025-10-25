@@ -2,10 +2,12 @@ title: Avishai's CTF Writeups
 description: "Yalla Balagan! A collection of my CTF writeups and solutions."
 url: "https://avishaigonen123.github.io"
 baseurl: "/CTF_writeups"  
-remote_theme: cotes2020/jekyll-theme-chirpy
+remote_theme: pages-themes/hacker
 markdown: kramdown
 kramdown:
-  input: GFM  # GitHub Flavored Markdown (supports fenced code blocks)
+  input: Kramdown
+  syntax_highlighter: coderay
+
   
 plugins:
   - jekyll-remote-theme
