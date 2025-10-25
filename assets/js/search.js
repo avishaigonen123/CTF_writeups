@@ -96,24 +96,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const lowerQuery = query.toLowerCase();
+        const queryWords = lowerQuery.split(/\s+/);  // Split query into individual words
 
-        // 1️⃣ Exact matches first
-        const exactMatches = fuse._docs
-            .filter(post =>
-                post.title.toLowerCase().includes(lowerQuery) ||
-                post.content.toLowerCase().includes(lowerQuery)
-            )
-            .map(post => ({ item: post }));
+        // 1️⃣ Exact matches first: Find posts that contain **all** the words (in any order)
+        const bothWordsMatches = fuse._docs.filter(post => {
+            const postTitle = post.title.toLowerCase();
+            const postContent = post.content.toLowerCase();
 
-        // 2️⃣ Fuzzy matches
-        const fuzzyResults = fuse.search(query)
-            .filter(result =>
-                !exactMatches.some(exact => exact.item === result.item)
+            // Check if post contains **every** word
+            return queryWords.every(word =>
+                postTitle.includes(word) || postContent.includes(word)
             );
+        }).map(post => ({ item: post }));
 
-        allResults = [...exactMatches, ...fuzzyResults];
+        // 2️⃣ Exact matches for individual words (for cases where not all words are found)
+        const exactMatches = fuse._docs.filter(post => 
+            post.title.toLowerCase().includes(lowerQuery) ||
+            post.content.toLowerCase().includes(lowerQuery)
+        ).map(post => ({ item: post }));
+
+        // 3️⃣ Fuzzy matches (to catch words that are close but not exact)
+        const fuzzyResults = fuse.search(query).filter(result => 
+            !exactMatches.some(exact => exact.item === result.item)
+        );
+
+        // Combine results: prioritize both-words matches, then exact, then fuzzy
+        allResults = [...bothWordsMatches, ...exactMatches, ...fuzzyResults];
         renderResults();
     }
+
 
     // 🌍 Load search index (absolute path)
     const baseUrl = window.location.origin + '/CTF_writeups';
