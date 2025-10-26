@@ -253,3 +253,10 @@ img {
   background-color: #0d1117;
   border-radius: 6px;
 }
+
+/* Opt-out for specific images */
+img.no-style {
+  all: unset;
+  display: inline-block; /* reset basic behavior */
+  max-width: none;
+}
