@@ -253,34 +253,3 @@ img {
   background-color: #0d1117;
   border-radius: 6px;
 }
-
-/* Center iframe grid */
-.iframe-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.25rem;
-  max-width: 1100px;
-  margin: 1.5rem auto;
-  padding: 0 0.5rem;
-  box-sizing: border-box;
-}
-
-.iframe-wrapper {
-  flex: 1 1 300px;
-  max-width: 420px;
-}
-
-.iframe-wrapper iframe {
-  width: 100%;
-  min-height: 220px;
-  border: 0;
-  background: #111;
-  border-radius: 6px;
-}
-
-/* Circle counter center */
-.circle-counter {
-  margin: 2rem auto !important;
-  display: block !important;
-}

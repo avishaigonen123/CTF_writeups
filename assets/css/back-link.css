@@ -1,7 +1,7 @@
   .back-link {
     text-decoration: none;
-    color: #007acc;
-    font-size: 2em;
+    color: #00cc33;
+    font-size: 1.5em;
     font-weight: bold;
   }
 
@@ -12,6 +12,7 @@
   .back-container {
     width: 100%;
     display: flex;
+    margin-left: 5%;
     justify-content: flex-start;
     margin: 30  px 0;
   }
