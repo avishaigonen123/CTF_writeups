@@ -5,7 +5,7 @@
 
 /* General styles */
 html {
-  max-width: 880px;
+  max-width: 1400px;
   margin: 25px auto 125px auto; /* top 25px, bottom 125px, center horizontally */
   padding: 45px;
   border: 1px solid #444;
