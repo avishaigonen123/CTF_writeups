@@ -1,84 +1,129 @@
-  /* Enhance code block appearance */
+/* General Code Block Styling */
 pre code {
-  background-color: #2e2e2e;
-  color: #f8f8f2;
-  padding: 15px;
-  border-radius: 5px;
-  white-space: pre-wrap;
+  background-color: #282a36;  /* Slightly darker background for better contrast */
+  color: #f8f8f2;  /* Lighter text for readability */
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;  /* Prevent horizontal overflow */
+  font-size: 1em;  /* Set the font size to a consistent value */
+  font-family: 'Fira Code', monospace;  /* More readable font for code */
+  white-space: pre-wrap; /* Allow wrapping of long lines */
   word-wrap: break-word;
+  line-height: 1.6;
 }
+
+/* Inline code styling */
 code {
   background-color: #f5f5f5;
+  color: #333;
   padding: 2px 4px;
   border-radius: 3px;
   font-family: 'Courier New', Courier, monospace;
 }
-/* Style for inline code */
+
+/* Style for inline code (with class) */
 code.inline-code {
   background-color: #e0e0e0;
   padding: 2px 4px;
   border-radius: 3px;
   font-family: 'Courier New', Courier, monospace;
+  color: #333;
 }
-/* Style for blockquotes */
+
+/* Blockquote Styles */
 blockquote {
-  border-left: 4px solid #007acc;
+  border-left: 4px solid #007acc;  /* Blue accent for blockquotes */
   background-color: #f9f9f9;
   padding: 10px 20px;
   margin: 20px 0;
   font-style: italic;
+  font-size: 1.1em;
+  line-height: 1.5;
 }
+
 blockquote p {
   margin: 0;
 }
-/* Style for links */
+
+/* Link Styling */
 a {
-  color: #007acc;
+  color: #007acc;  /* Blue links */
   text-decoration: none;
+  transition: color 0.3s ease;
 }
+
 a:hover {
+  color: #ff8c00;  /* Orange on hover */
   text-decoration: underline;
 }
-/* Style for headings */
+
+/* Heading Styles */
 h1, h2, h3, h4, h5, h6 {
   color: #333333;
   margin-top: 20px;
   margin-bottom: 10px;
+  font-weight: 600;  /* Make headings stand out more */
 }
-/* Style for lists */
+
+/* List Styles */
 ul, ol {
   margin: 20px 0;
   padding-left: 40px;
 }
+
 li {
   margin-bottom: 10px;
+  line-height: 1.6;
 }
-/* Style for images */
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-/* Style for tables */
+
+/* Table Styling */
 table {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
+  font-size: 0.95em;
 }
+
 th, td {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
+
 th {
   background-color: #f2f2f2;
+  font-weight: bold;
 }
+
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-/* Responsive design */
+
+/* Image Styling */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .back-container {
     padding-left: 10%;
+  }
+
+  /* Stack the navbar links */
+  nav ul {
+    display: block;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  /* Make code block font a bit smaller on mobile */
+  pre code {
+    font-size: 0.9em;
   }
 }
