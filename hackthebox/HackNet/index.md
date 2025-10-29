@@ -3,6 +3,10 @@ layout: default
 title: HackNet
 ---
 
+## TL;DR
+
+We exploit `SSRF` on this `Django` platform to get `IDOR` and leak all users hases, then we crack `mikey`'s hash and login using ssh as `mikey`. 
+
 ### Recon
 
 we start with `nmap`, using this command:
@@ -41,12 +45,12 @@ First I set my name to {% raw %}{{7*7}}{% endraw %}
 
 ![edit profile first](image-1.png)
 
-Then, i want to http://hacknet.htb/explore, and put like to the first user i saw, in this case "glitch".
+Then, i want to `http://hacknet.htb/explore`, and put like to the first user i saw, in this case "glitch".
 After putting like, i clicked the "likes" to see who put likes over this post, and saw that something went wrong.
 
 ![something went wrong](image-2.png)
 
-I tried different payloads from https://swisskyrepo.github.io/PayloadsAllTheThings/Server%20Side%20Template%20Injection/Python, to detect exactly what is the framework behind the scenes.
+I tried different payloads from [https://swisskyrepo.github.io/PayloadsAllTheThings/Server%20Side%20Template%20Injection/Python](https://swisskyrepo.github.io/PayloadsAllTheThings/Server%20Side%20Template%20Injection/Python), to detect exactly what is the framework behind the scenes.
 
 ![payload all the things](image-3.png)
 
@@ -64,11 +68,11 @@ I got back this response:
 ![response](image-5.png)
 
 Which after html decoding gave me:
-```py
+```bash
 <QuerySet [<SocialUser: hexhunter>, <SocialUser: rootbreaker>, <SocialUser: netninja>, <SocialUser: shadowmancer>, <SocialUser: stealth_hawk>, <SocialUser: virus_viper>, <SocialUser: brute_force>, <SocialUser: {{ users.values }}>, <SocialUser: {{ users }}>]>
 ```
 
-Okay, let's get the values, using {% raw %}{{ users.values }}{% endraw %}:
+Okay, let's get the values, using {{ users.values }}:
 
 I got this long response:
 

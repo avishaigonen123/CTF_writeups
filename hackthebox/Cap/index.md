@@ -110,7 +110,7 @@ Vulnerable to CVE-2021-3560
 Potentially Vulnerable to CVE-2022-2588
 ```
 
-I googled for exploit, and find this github repo https://github.com/kimusan/pkwner.
+I googled for exploit, and find this github repo [https://github.com/kimusan/pkwner](https://github.com/kimusan/pkwner).
 
 Then, I simply downloaded and set up the http server on my local machine:
 ```bash

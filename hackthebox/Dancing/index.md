@@ -3,6 +3,12 @@ layout: default
 title: Dancing
 ---
 
+## TL;DR
+
+We can login anonymously to the `WorkShares` share on the SMB server, and then get the flag.
+
+### Recon
+
 We start with the `nmap`
 ```bash
 nmap -sVC -T4 $target
@@ -27,6 +33,7 @@ Notice there is also an `http` server on port `5985`, I tried to `curl` to see i
 
 ![curl 404](image-1.png)
 
+### Connecting anonymously to SMB and access WorkShares
 
 When trying to connect with `smbclient`, with wrong creds, it still let us see all the shared folders, using the `-L` flag.
 

@@ -38,7 +38,7 @@ Let's add `artificial.htb` to our `/etc/hosts`, this line:
 ### Get shell
 
 As we can see, we can upload models and then execute them on our dashboard.
-I googled for this, and found this https://github.com/Splinter0/tensorflow-rce, we can achieve `RCE` using creation of malicious `.h5` model files.
+I googled for this, and found this [https://github.com/Splinter0/tensorflow-rce](https://github.com/Splinter0/tensorflow-rce), we can achieve `RCE` using creation of malicious `.h5` model files.
 
 So, first let's download `DockerFile` and `requirements.txt` from the webserver.
 
@@ -165,7 +165,7 @@ Now, we use `cut` to get only hashes:
 ```bash
 cut -d '|' -f4 users.txt > hashes.txt
 ```
-Let's crack the passwords using https://crackstation.net/
+Let's crack the passwords using [https://crackstation.net/](https://crackstation.net/)
 
 ![crack the passwords](image-5.png)
 
