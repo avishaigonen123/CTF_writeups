@@ -3,10 +3,14 @@ layout: default
 title: Outbound
 ---
 
+## TL;DR
+
+We get `RCE` using known exploit on `Roundcube Webmail`. Then we move to `tyler`, and find inside `config.inc.php` the credentials for local `mysql` server. we decrypt the password of `john` we can find in the server, and then escalate to root using known exploit on `/usr/bin/below`.
+
 ### Intro
 
 we're given this info:
-```
+```bash
 As is common in real life pentests, you will start the Outbound box with credentials for the following account tyler / LhKL1o9Nm3X2
 ```
 So, the we got the credentials: `tyler / LhKL1o9Nm3X2`
@@ -37,6 +41,8 @@ we need to add `mail.outbound.htb` to our `/etc/hosts`, and probably also `outbo
 10.10.11.77     mail.outbound.htb
 ```
 
+### Login with given credentials to login portal
+
 I tried to connect with the credentials we got via `ssh` to the user `tyler`, but didn't managed to, probably the credentials are for the login portal at `mail.outbound.htb`.
 
 ![failed connect to ssh](image-1.png)
@@ -51,7 +57,7 @@ After clicking the question mark button, we can view the service and version, wh
 
 ![version detection](image-3.png)
 
-we google to check if there are some well known vulnerabilities, and immediately find this https://www.exploit-db.com/exploits/52324
+we google to check if there are some well known vulnerabilities, and immediately find this [https://www.exploit-db.com/exploits/52324](https://www.exploit-db.com/exploits/52324)
 there is authenticated `RCE`, and also module for that in `metasploit`, let's use it.
 
 ![exploit-db](image-4.png)
@@ -345,7 +351,7 @@ We can notice the username `jacob` and the encrypted password `L7Rv00A8TuwJAr67k
 
 
 Now, we can detect the username and the encrypted password, let's try to decrypt the string `L7Rv00A8TuwJAr67kITxxcSgnIk25Am/` using the key `rcmail-!24ByteDESkey*Str`, and the cipher method `DES-EDE3-CBC`.
-We can use this website: https://keydecryptor.com/decryption-tools/roundcube
+We can use this website: [https://keydecryptor.com/decryption-tools/roundcube](https://keydecryptor.com/decryption-tools/roundcube)
 
 ![decrypt](image-10.png)
 
@@ -470,7 +476,7 @@ User jacob may run the following commands on outbound:
 
 we can see the file `/usr/bin/below` can be executed as `root` user with the `sudo` command, with no password required. 
 
-when we google, for possible privilege esaclation, we can find this repo, https://github.com/00xCanelo/CVE-2025-27591
+when we google, for possible privilege escalation, we can find this repo, [https://github.com/00xCanelo/CVE-2025-27591](https://github.com/00xCanelo/CVE-2025-27591)
 
 i just downloaded the exploit, and executed the `exploit.sh`.
 

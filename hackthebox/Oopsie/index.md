@@ -3,6 +3,9 @@ layout: default
 title: Oopsie
 ---
 
+## TL;DR
+
+We exploit `IDOR` and achieve admin password, then we upload webshell to the server as admin. we find `robert`'s password inside `db.php` and then escalate to root using vulnerability in `/usr/bin/bugtracker`.
 
 ### Recon
 
@@ -14,7 +17,7 @@ nmap -p- -sVC --min-rate=10000 $target
 
 As you can see, there are two ports, port `22` for *ssh* and port `80` for http server, in this case *apache* server.
 
-```
+```bash
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
 | ssh-hostkey: 
@@ -26,6 +29,8 @@ PORT   STATE SERVICE VERSION
 |_http-server-header: Apache/2.4.29 (Ubuntu)
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
+
+### Using gobuster to find hidden endpoints
 
 First we start with `gobuster`, to check for common files and folders, using this command:
 ```bash
@@ -53,7 +58,7 @@ When going to uploads, we can see we need to be admin. we can easily change the 
 ### Upload webshell as an admin
 
 Okay, we want to upload webshell, we can find the file in `/usr/share/webshells/php/php-reverse-shell.php`, which is reverse shell that created by monkey pentesting.
-We just need to change the `port` and the `ip`, here is the full webshell
+We just need to change the `port` and the `ip`, here is the full webshell:
 ```php
 {% include_relative php-reverse-shell.php %}
 ```
@@ -115,7 +120,7 @@ Let's grab the user flag from `user.txt`, using this command:
 cat /home/robert/user.txt
 ```
 and we get this:
-```
+```bash
 f2c74ee8db7983851ab2a96a44eb7981
 ```
 

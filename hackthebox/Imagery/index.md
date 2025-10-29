@@ -5,7 +5,7 @@ title: Imagery
 
 ## TL;DR
 
-We use blind XSS Injection to steal admin session cookie, and then exploiting LFI to achieve source code. From there we crack the password of `testuser`, and find `RCE` in `api_edit`, which let us gain a shell on `web` user.
+We use blind `XSS Injection` to steal admin session cookie, and then exploiting `LFI` to achieve source code. From there we crack the password of `testuser`, and find `RCE` in `api_edit`, which let us gain a shell on `web` user.
 We find backup aes encrypted zip, we crack it and find the hash of `mark`'s password, which we crack. Then we exploit `/usr/local/bin/charcol` to achieve PE and get root shell.
 
 ### Recon
