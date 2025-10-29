@@ -3,6 +3,10 @@ layout: default
 title: Artificial
 ---
 
+## TL;DR
+
+Get reverse shell using malicious .h5 model. Crack the password of user gael, which we find inside `users.db`. Crack the password that we find inside `/var/backups/backrest_backup.tar.gz`, and use it to dump the content of `/root/root.txt`, using the local `backrest` webserver.
+
 ### Recon
 
 we start with `nmap`, using this command:

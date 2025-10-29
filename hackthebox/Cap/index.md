@@ -3,6 +3,10 @@ layout: default
 title: Cap
 ---
 
+## TL;DR
+
+Using IDOR to achieve ftp password from .pcap file, which is reused as `nathan` password. Escalating to root using known exploit on sudo version.
+
 ### Recon
 
 we start with `nmap`, using this command:

@@ -3,6 +3,10 @@ layout: default
 title: CodePartTwo
 ---
 
+## TL;DR
+
+Sandbox escaping from `js2py` using known exploit, and achieving shell. Crack password from `users.db` to get `marco`'s password. using `npbackup` to achieve root shell.
+
 ### Recon
 
 First we start with `nmap`, using this command:

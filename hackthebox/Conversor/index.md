@@ -3,6 +3,10 @@ layout: default
 title: Conversor
 ---
 
+## TL;DR
+
+
+
 ### Recon
 
 we start with `nmap`, using this command:
