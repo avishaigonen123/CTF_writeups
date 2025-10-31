@@ -3,6 +3,12 @@ layout: default
 title: Crocodile
 ---
 
+## TL;DR
+
+We get the password from anonymous ftp login, and then login in `/login.php`, which we find using `gobuster`
+
+### Recon
+
 first, we do `nmap` using this command:
 ```bash
 nmap -p- -sVC --min-rate=10000 $target
@@ -36,6 +42,8 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Unix
 ```
 
+### Login anonymously to ftp
+
 As we can see, the scan told us that we can log to `ftp` anonymously, and that there are files there.
 
 Let's connect using the user `anonymous`:
@@ -44,7 +52,7 @@ ftp anonymous@$target
 ```
 
 And then, we'll get the files, using the command `get`:
-```
+```bash
 ftp> get allowed.userlist
 local: allowed.userlist remote: allowed.userlist
 229 Entering Extended Passive Mode (|||41624|)
@@ -62,7 +70,7 @@ local: allowed.userlist.passwd remote: allowed.userlist.passwd
 ```
 
 when we open the files, we can find usernames:
-```
+```bash
 aron
 pwnmeow
 egotisticalsw
@@ -70,7 +78,7 @@ admin
 ```
 
 and also passwords:
-```
+```bash
 root
 Supersecretpassword1
 @BaASD&9032123sADS

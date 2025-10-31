@@ -3,6 +3,10 @@ layout: default
 title: Editor
 ---
 
+## TL;DR
+
+We get `RCE` using known exploit in `XWiki`. Then we find oliver's password inside `hibernate.cfg`. We escalate to root using known exploit on `ndsudo` binary.
+
 ### Recon
 
 we start with `nmap`, using this command:
@@ -50,7 +54,7 @@ First, we need to add `editor.htb` and `wiki.editor.htb` to our `/etc/hosts`:
 
 ### Get shell
 
-We can see the version of the xwiki is `XWiki Debian 15.10.8`, and when googling for exploits we can see this github repo https://github.com/gunzf0x/CVE-2025-24893.
+We can see the version of the xwiki is `XWiki Debian 15.10.8`, and when googling for exploits we can see this github repo [https://github.com/gunzf0x/CVE-2025-24893](https://github.com/gunzf0x/CVE-2025-24893).
 
 Let's download the script and try to get RCE, or in this case reverse shell:
 ```bash
@@ -152,7 +156,7 @@ oliver@editor:~$ find / -user root -perm /4000 2>/dev/null
 /usr/libexec/polkit-agent-helper-1
 ```
 
-I asked chatGPT for any well known PE vulnerabilites, and he pointed to me att ndsudo. I found this repo https://github.com/dollarboysushil/CVE-2024-32019-Netdata-ndsudo-PATH-Vulnerability-Privilege-Escalation, followed the instructions to make `nvme` using this C code:
+I asked chatGPT for any well known PE vulnerabilites, and he pointed to me at `ndsudo`. I found this repo [https://github.com/dollarboysushil/CVE-2024-32019-Netdata-ndsudo-PATH-Vulnerability-Privilege-Escalation](https://github.com/dollarboysushil/CVE-2024-32019-Netdata-ndsudo-PATH-Vulnerability-Privilege-Escalation), followed the instructions to make `nvme` using this C code:
 ```C
 #include <stdio.h>
 #include <stdlib.h>

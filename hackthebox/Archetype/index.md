@@ -114,7 +114,7 @@ impacket-mssqlclient ARCHETYPE/sql_svc@$target -windows-auth
 ```
 ![connect to mssql](image-3.png)
 
-I want to achieve reverse-shell, I read this article https://www.hackingarticles.in/mssql-for-pentester-command-execution-with-xp_cmdshell/, and it talks about *Enabling xp_cmdshell (Using impacket-mssqlclient)*.
+I want to achieve reverse-shell, I read this article [https://www.hackingarticles.in/mssql-for-pentester-command-execution-with-xp_cmdshell/](https://www.hackingarticles.in/mssql-for-pentester-command-execution-with-xp_cmdshell/), and it talks about *Enabling xp_cmdshell (Using impacket-mssqlclient)*.
 
 First we need to copy this line, to enable xp_cmdshell:
 ```sql

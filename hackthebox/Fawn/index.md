@@ -3,6 +3,12 @@ layout: default
 title: Fawn
 ---
 
+## TL;DR
+
+We login anonymously to ftp server and get the flag.
+
+### Recon
+
 First, we execute `nmap` to gather info:
 ```bash
 nmap -sVC -T4 $target
@@ -11,7 +17,7 @@ nmap -sVC -T4 $target
 ![nmap](image.png)
 
 As we can see, port 21 is opened, and has `ftp` service that is runing there:
-```
+```bash
 21/tcp open  ftp     vsftpd 3.0.3
 | ftp-anon: Anonymous FTP login allowed (FTP code 230)
 |_-rw-r--r--    1 0        0              32 Jun 04  2021 flag.txt
@@ -30,6 +36,8 @@ As we can see, port 21 is opened, and has `ftp` service that is runing there:
 |_End of status
 Service Info: OS: Unix
 ```
+
+### Login anonymously to ftp
 
 We want to try to login anonymously using `anonymous`, and maybe we won't need to supply any password.
 ```bash

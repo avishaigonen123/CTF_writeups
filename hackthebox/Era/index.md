@@ -3,6 +3,10 @@ layout: default
 title: Era
 ---
 
+## TL;DR
+
+We find hashes using `IDOR`, then we use another `IDOR` to reset security questions to `admin` user. We exploit vulnerable code inside `download.php` and achieve `RCE`, which gives us shell as `yuri`. Then we escalate to root by creating `monitor` and adding signature to this file, which is being checked and executed by root cronjob.
+
 ### Recon
 
 we start with `nmap`, using this command:
@@ -545,7 +549,7 @@ openssl asn1parse -inform DER -in text_sig_section.bin
 ```
 at the end it deletes `text_sig_section.bin`, but it isn't shown here.
 
-Okay, let's upload our reverse shell, we'll use again https://www.revshells.com/.
+Okay, let's upload our reverse shell, we'll use again [https://www.revshells.com/](https://www.revshells.com/).
 ```C
 #include <stdio.h>
 #include <sys/socket.h>

@@ -3,6 +3,10 @@ layout: default
 title: Soulmate
 ---
 
+## TL;DR
+
+We exploit known exploit on `crushftp` and create new user. We reset `Ben`'s password, and then upload webshell from his account. Then we connect to local ssh server using password from `/usr/local/lib/erlang_login/start.escript`, and execute commands on the `Eshell` we get, and by this way gain root privilege. 
+
 ### Recon
 
 we start with `nmap`, using this command:
@@ -72,12 +76,12 @@ Now, we access this page:
 We can detect the version by looking at the source code, and search for strings like `?v=` or `?version=` or `?build=`.
 after some search, we find this, `?v=11.W.657-2025_03_08_07_52`, so the version is `11.W.657`.
 
-I searched for `crushftp 11.W.657 exploits` and find this page: https://www.huntress.com/blog/crushftp-cve-2025-31161-auth-bypass-and-post-exploitation.
+I searched for `crushftp 11.W.657 exploits` and find this page: [https://www.huntress.com/blog/crushftp-cve-2025-31161-auth-bypass-and-post-exploitation](https://www.huntress.com/blog/crushftp-cve-2025-31161-auth-bypass-and-post-exploitation).
 I checked the poc in this website, and it worked, so it's vulnerable to this CVE. 
 
 ![poc hunterss](image-3.png)
 
-I found more advanced PoC, in this github repo https://github.com/Immersive-Labs-Sec/CVE-2025-31161.
+I found more advanced PoC, in this github repo [https://github.com/Immersive-Labs-Sec/CVE-2025-31161](https://github.com/Immersive-Labs-Sec/CVE-2025-31161).
 
 Let's use this to create a new user:
 ```bash
@@ -121,7 +125,7 @@ nc -nvlp 770
 
 ![upload webshell](image-7.png)
 
-Now, let's access the webshell we uploaded, in this url, http://soulmate.htb/php-reverse-shell.php
+Now, let's access the webshell we uploaded, in this url, `http://soulmate.htb/php-reverse-shell.php`
 
 ![get shell](image-8.png)
 

