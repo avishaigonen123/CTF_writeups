@@ -1,172 +1,126 @@
-// =========================
-// 🚀 Advanced Search with Fuse.js
-// =========================
+// =========================================
+// 🚀 Advanced Search using Web Worker
+// =========================================
 
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const resultsContainer = document.getElementById('results-container');
+    const baseUrl = window.location.origin + '/CTF_writeups';
 
-    let fuse;
-    let allResults = [];
-    let displayedCount = 0;
-    const batchSize = 10;
+    let allPosts = [];
+    let worker;
+    let debounceTimeout;
 
-    // 🔸 Better snippet generation (with multiple matches and context)
-    function getSnippet(post, query) {
-        const content = post.content;
-        const lowerContent = content.toLowerCase();
-        const lowerQuery = query.toLowerCase();
-        const queryWords = lowerQuery.split(/\s+/);
+    // ==============================
+    // 🧠 Initialize Web Worker
+    // ==============================
+    try {
+        worker = new Worker(baseUrl + '/assets/js/searchWorker.js');
+    } catch (err) {
+        console.error('Failed to start search worker:', err);
+        return;
+    }
 
-        // Collect all the matching positions
-        let matches = [];
-        queryWords.forEach(word => {
-            let index = -1;
-            while ((index = lowerContent.indexOf(word, index + 1)) !== -1) {
-                matches.push(index);
+    // ==============================
+    // 🔍 Handle Worker Responses
+    // ==============================
+    worker.onmessage = function (e) {
+        const results = e.data;
+        renderResults(results);
+    };
+
+    worker.onerror = function (err) {
+        console.error('Worker error:', err);
+    };
+
+    // ==============================
+    // 📦 Load search.json data
+    // ==============================
+    searchInput.disabled = true;
+    fetch(`${baseUrl}/search.json`)
+        .then(res => res.json())
+        .then(posts => {
+            allPosts = posts;
+            searchInput.disabled = false;
+            console.log(`✅ Loaded ${posts.length} posts for search`);
+        })
+        .catch(err => console.error('Error loading search index:', err));
+
+    // ==============================
+    // ⌨️ Debounced Search Input
+    // ==============================
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimeout);
+        const query = e.target.value;
+
+        debounceTimeout = setTimeout(() => {
+            if (query.trim()) {
+                worker.postMessage({ query, posts: allPosts });
+            } else {
+                resultsContainer.innerHTML = '';
             }
-        });
+        }, 250); // Wait 250ms after user stops typing
+    });
 
-        if (matches.length === 0) {
-            return content.slice(0, 150) + (content.length > 150 ? '...' : '');
+    // ==============================
+    // 🧩 Render Search Results
+    // ==============================
+    function renderResults(results) {
+        resultsContainer.innerHTML = '';
+
+        if (results.length === 0) {
+            resultsContainer.innerHTML = `<p style="color:#999;">No results found.</p>`;
+            return;
         }
 
-        // Create a snippet around the first match (with some context)
-        const matchIndex = matches[0];
-        const start = Math.max(0, matchIndex - 40);
-        const end = Math.min(content.length, matchIndex + 110);
-        let snippet = content.slice(start, end);
-
-        if (start > 0) snippet = '...' + snippet;
-        if (end < content.length) snippet += '...';
-        return snippet;
-    }
-
-    // ✨ Highlight matched text (all occurrences)
-    function highlightMatch(text, query) {
-        if (!query) return text;
-
-        const words = query.toLowerCase().split(/\s+/);
-        const regex = new RegExp(`(${words.join('|')})`, 'gi'); // Matches any of the words
-        return text.replace(regex, '<mark>$1</mark>');
-    }
-
-    // 📜 Render results with pagination
-    function renderResults(start = 0, count = batchSize) {
         const fragment = document.createDocumentFragment();
-        const slice = allResults.slice(start, start + count);
-
-        slice.forEach(result => {
-            const post = result.item;
+        results.slice(0, 50).forEach(post => { // limit to first 50
             const li = document.createElement('li');
-
-            let snippet = getSnippet(post, searchInput.value);
-            snippet = highlightMatch(snippet, searchInput.value); // Apply highlighting to snippet
+            li.style.marginBottom = '10px';
 
             li.innerHTML = `
                 <a href="${post.url}" style="color:#0f0; font-weight:600;">
-                    ${highlightMatch(post.title, searchInput.value)}  <!-- Apply highlighting to title -->
+                    ${highlight(post.title, searchInput.value)}
                 </a>
                 <div style="font-size:0.9em; color:#aaa; margin-top:4px;">
-                    ${snippet}
+                    ${makeSnippet(post.content, searchInput.value)}
                 </div>
             `;
             fragment.appendChild(li);
         });
 
         resultsContainer.appendChild(fragment);
-        displayedCount += slice.length;
-
-        const btn = document.getElementById('load-more-btn');
-        if (displayedCount < allResults.length) {
-            if (!btn) {
-                const loadMoreBtn = document.createElement('button');
-                loadMoreBtn.id = 'load-more-btn';
-                loadMoreBtn.textContent = 'Load More';
-                loadMoreBtn.style.marginTop = '10px';
-                loadMoreBtn.addEventListener('click', () => renderResults(displayedCount, batchSize));
-                resultsContainer.parentElement.appendChild(loadMoreBtn);
-            }
-        } else if (btn) {
-            btn.remove();
-        }
     }
 
-    // 🕵️ Perform search with exact matches first
-    function doSearch(query) {
-        displayedCount = 0;
-        resultsContainer.innerHTML = '';
+    // ==============================
+    // ✨ Helpers
+    // ==============================
 
-        if (!query.trim()) {
-            allResults = [];
-            const btn = document.getElementById('load-more-btn');
-            if (btn) btn.remove();
-            return;
-        }
-
-        if (!fuse) {
-            console.warn('Search index not ready yet');
-            return;
-        }
-
-        const lowerQuery = query.toLowerCase();
-        const queryWords = lowerQuery.split(/\s+/);  // Split query into individual words
-
-        // 1️⃣ Exact matches first: Find posts that contain **all** the words (in any order)
-        const bothWordsMatches = fuse._docs.filter(post => {
-            const postTitle = post.title.toLowerCase();
-            const postContent = post.content.toLowerCase();
-
-            // Check if post contains **every** word
-            return queryWords.every(word =>
-                postTitle.includes(word) || postContent.includes(word)
-            );
-        }).map(post => ({ item: post }));
-
-        // 2️⃣ Exact matches for individual words (for cases where not all words are found)
-        const exactMatches = fuse._docs.filter(post => 
-            post.title.toLowerCase().includes(lowerQuery) ||
-            post.content.toLowerCase().includes(lowerQuery)
-        ).map(post => ({ item: post }));
-
-        // 3️⃣ Fuzzy matches (to catch words that are close but not exact)
-        const fuzzyResults = fuse.search(query).filter(result => 
-            !exactMatches.some(exact => exact.item === result.item)
-        );
-
-        // Combine results: prioritize both-words matches, then exact, then fuzzy
-        allResults = [...bothWordsMatches, ...exactMatches, ...fuzzyResults];
-        renderResults();
+    function highlight(text, query) {
+        if (!query) return text;
+        const words = query.toLowerCase().split(/\s+/);
+        const regex = new RegExp(`(${words.join('|')})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
     }
 
-    // 🌍 Load search index (absolute path)
-    const baseUrl = window.location.origin + '/CTF_writeups';
-    searchInput.disabled = true;
+    function makeSnippet(content, query) {
+        const text = content || '';
+        const lower = text.toLowerCase();
+        const q = query.toLowerCase();
+        const idx = lower.indexOf(q);
 
-    fetch(`${baseUrl}/search.json`)
-        .then(res => res.json())
-        .then(posts => {
-            fuse = new Fuse(posts, {
-                includeMatches: true,
-                shouldSort: true,
-                threshold: 0.45,              // balanced fuzzy
-                distance: 1000,               // works well for longer writeups
-                minMatchCharLength: 3,        // ignores short noise
-                keys: [
-                    { name: 'title', weight: 0.6 },
-                    { name: 'content', weight: 0.4 }
-                ]
-            });
-            searchInput.disabled = false;
-        })
-        .catch(err => console.error('Error loading search.json', err));
+        if (idx === -1) return text.slice(0, 150) + (text.length > 150 ? '...' : '');
 
-    // ⌨️ Live search as user types
-    searchInput.addEventListener('input', () => {
-        doSearch(searchInput.value);
-    });
+        const start = Math.max(0, idx - 40);
+        const end = Math.min(text.length, idx + 110);
+        let snippet = text.slice(start, end);
 
-    // ⌨️ "/" focuses the search bar
+        if (start > 0) snippet = '...' + snippet;
+        if (end < text.length) snippet += '...';
+        return highlight(snippet, query);
+    }
+
+    // Shortcut: focus on search bar when pressing "/"
     document.addEventListener('keydown', (e) => {
         if (e.key === '/' && document.activeElement !== searchInput) {
             e.preventDefault();
