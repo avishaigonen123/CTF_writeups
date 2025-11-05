@@ -52,6 +52,7 @@ include:
   - ringzer0
   - pwnable.tw
   - hackthebox
+  - tryhackme
   - picoctf
   - webhacking.kr
   - lord-of-sql-injection
