@@ -3,7 +3,7 @@ layout: default
 title: Lookup
 ---
 
-### TL;DR
+## TL;DR
 
 We start with enumarating the usernames which exists in login portal, and then brute force the password of user `jose`. Then we exploit known vulnerability in elFinder to get reverse shell as `www-data`. From there we exploit `/usr/sbin/pwm` to achieve aviliable passwords from `/home/think/.passwords` for user `think`.
 After logging to `think` user via ssh, we exploit `/usr/bin/look` to get the root flag from `/root/root.txt`.
