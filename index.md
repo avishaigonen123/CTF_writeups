@@ -11,8 +11,8 @@ title: "CTF Writeups Home"
 {% assign wargames = wargames_string | split: "," %}
 {% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" %}
 {% assign filtered_pages = "" %}
-{% assign htb_count = 0 %}
-{% assign thm_count = 0 %}
+{% assign htb_count = -1 %}
+{% assign thm_count = -1 %}
 
 {% for p in md_pages %}
   {% assign parts = p.path | split: '/' %}
@@ -25,11 +25,11 @@ title: "CTF Writeups Home"
   {% endif %}
 
 
-  {% if first_part == "hackthebox" and file_name == "index.md" and parts.size == 2 %}
+  {% if first_part contains "hackthebox" and file_name == "index.md" %}
     {% assign htb_count = htb_count | plus: 1 %}
   {% endif %}
 
-  {% if first_part == "tryhackme" and file_name == "index.md" and parts.size == 2 %}
+  {% if first_part contains "tryhackme" and file_name == "index.md" %}
     {% assign thm_count = thm_count | plus: 1 %}
   {% endif %}
 {% endfor %}
@@ -38,8 +38,8 @@ title: "CTF Writeups Home"
 
 
 
-<!-- Main Counter Circle -->
-<div class="circle-counter" data-count="{{ filtered_pages + htb_count + thm_count | size }}">
+<!-- MAIN CIRCLE -->
+<div class="circle-counter" data-count="{{ filtered_pages | size }}">
   <svg>
     <defs>
       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -47,54 +47,61 @@ title: "CTF Writeups Home"
         <stop offset="100%" stop-color="#06b6d4"/>
       </linearGradient>
     </defs>
-    <circle class="bg" cx="100" cy="100" r="90"></circle>
-    <circle class="progress" cx="100" cy="100" r="90"></circle>
+    <circle class="bg" cx="130" cy="130" r="110"></circle>
+    <circle class="progress" cx="130" cy="130" r="110"></circle>
   </svg>
+
   <div class="text-wrapper">
     <div class="count">0</div>
     <div class="label">Writeups so far</div>
   </div>
 </div>
 
-<!-- HTB Circle Counter -->
-<div class="circle-counter small" data-count="{{ htb_count }}">
-  <svg>
-    <defs>
-      <linearGradient id="gradient-htb" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#2d3748"/>
-        <stop offset="100%" stop-color="#4a5568"/>
-      </linearGradient>
-    </defs>
-    <circle class="bg" cx="50" cy="50" r="45"></circle>
-    <circle class="progress" cx="50" cy="50" r="45"></circle>
-  </svg>
-  <div class="text-wrapper">
-    <!-- HTB Logo (Centering the logo in the circle) -->
-    <img src="/CTF_writeups/assets/hackthebox.svg" alt="HTB Logo" class="logo">
-    <div class="count">{{ htb_count }}</div>
-    <div class="label">HTB Machines</div>
+
+<!-- SMALL CIRCLES WRAPPER -->
+<div class="circles-wrapper">
+
+  <!-- HTB -->
+  <div class="circle-counter small" data-count="{{ htb_count }}">
+    <svg>
+      <defs>
+        <linearGradient id="gradient-htb" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2d3748"/>
+          <stop offset="100%" stop-color="#4a5568"/>
+        </linearGradient>
+      </defs>
+      <circle class="bg" cx="70" cy="70" r="65"></circle>
+      <circle class="progress" cx="70" cy="70" r="65" stroke="url(#gradient-htb)"></circle>
+    </svg>
+    <div class="text-wrapper">
+      <img src="/CTF_writeups/assets/hackthebox.svg" class="logo" alt="HTB">
+      <div class="count">{{ htb_count }}</div>
+      <div class="label">HTB Machines</div>
+    </div>
   </div>
+
+
+  <!-- THM -->
+  <div class="circle-counter small" data-count="{{ thm_count }}">
+    <svg>
+      <defs>
+        <linearGradient id="gradient-thm" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#fbbf24"/>
+          <stop offset="100%" stop-color="#fcdb61"/>
+        </linearGradient>
+      </defs>
+      <circle class="bg" cx="70" cy="70" r="65"></circle>
+      <circle class="progress" cx="70" cy="70" r="65" stroke="url(#gradient-thm)"></circle>
+    </svg>
+    <div class="text-wrapper">
+      <img src="/CTF_writeups/assets/tryhackme.svg" class="logo" alt="THM">
+      <div class="count">{{ thm_count }}</div>
+      <div class="label">THM Machines</div>
+    </div>
+  </div>
+
 </div>
 
-<!-- THM Circle Counter -->
-<div class="circle-counter small" data-count="{{ thm_count }}">
-  <svg>
-    <defs>
-      <linearGradient id="gradient-thm" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#fbbf24"/>
-        <stop offset="100%" stop-color="#fcdb61"/>
-      </linearGradient>
-    </defs>
-    <circle class="bg" cx="50" cy="50" r="45"></circle>
-    <circle class="progress" cx="50" cy="50" r="45"></circle>
-  </svg>
-  <div class="text-wrapper">
-    <!-- THM Logo (Centering the logo in the circle) -->
-    <img src="/CTF_writeups/assets/tryhackme.svg" alt="THM Logo" class="logo">
-    <div class="count">{{ thm_count }}</div>
-    <div class="label">THM Machines</div>
-  </div>
-</div>
 
 <!-- JS Link -->
 <script src="{{ '/assets/js/counter.js' | relative_url }}"></script>
