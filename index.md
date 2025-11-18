@@ -7,22 +7,43 @@ title: "CTF Writeups Home"
 
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
-{% assign wargames_string = "hackthebox,tryhackme,AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection %}
+{% assign wargames_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" %}
 {% assign wargames = wargames_string | split: "," %}
 {% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" %}
 {% assign filtered_pages = "" %}
+{% assign htb_thm_count = 0 %}
+
 {% for p in md_pages %}
-  {% assign first_part = p.path | split: '/' | first %}
-  {% assign file_name = p.path | split: '/' | last %}
+  {% assign parts = p.path | split: '/' %}
+  {% assign first_part = parts[0] %}
+  {% assign file_name = parts | last %}
+
+  {%- comment -%}
+  --- Handle classic wargames ---
+  {%- endcomment -%}
   {% if wargames contains first_part and file_name != "index.md" %}
     {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
   {% endif %}
+
+  {%- comment -%}
+  --- Handle HackTheBox / TryHackMe machine counting ---
+  Example path: hackthebox/machine1/index.md
+  Should count "machine1" as 1
+  {%- endcomment -%}
+  {% if (first_part == "hackthebox" or first_part == "tryhackme") 
+        and file_name == "index.md"
+        and parts.size == 2 %}
+    {% assign htb_thm_count = htb_thm_count | plus: 1 %}
+  {% endif %}
 {% endfor %}
+
 {% assign filtered_pages = filtered_pages | split: "," | reject: "" %}
 
 
-<div class="circle-counter" data-count="{{ filtered_pages | size }}">
-    <svg>
+
+<!-- Main Counter Circle -->
+<div class="circle-counter" data-count="{{ filtered_pages + htb_count + thm_count | size }}">
+  <svg>
     <defs>
       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="0%" stop-color="#3b82f6"/>
@@ -38,7 +59,53 @@ title: "CTF Writeups Home"
   </div>
 </div>
 
+<!-- HTB Circle Counter -->
+<div class="circle-counter small" data-count="{{ htb_count }}">
+  <svg>
+    <defs>
+      <linearGradient id="gradient-htb" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#2d3748"/>
+        <stop offset="100%" stop-color="#4a5568"/>
+      </linearGradient>
+    </defs>
+    <circle class="bg" cx="50" cy="50" r="45"></circle>
+    <circle class="progress" cx="50" cy="50" r="45"></circle>
+  </svg>
+  <div class="text-wrapper">
+    <!-- HTB Logo (Centering the logo in the circle) -->
+    <img src="/assets/hackthebox.svg" alt="HTB Logo" class="logo">
+    <div class="count">{{ htb_count }}</div>
+    <div class="label">HTB Machines</div>
+  </div>
+</div>
+
+<!-- THM Circle Counter -->
+<div class="circle-counter small" data-count="{{ thm_count }}">
+  <svg>
+    <defs>
+      <linearGradient id="gradient-thm" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#fbbf24"/>
+        <stop offset="100%" stop-color="#fcdb61"/>
+      </linearGradient>
+    </defs>
+    <circle class="bg" cx="50" cy="50" r="45"></circle>
+    <circle class="progress" cx="50" cy="50" r="45"></circle>
+  </svg>
+  <div class="text-wrapper">
+    <!-- THM Logo (Centering the logo in the circle) -->
+    <img src="/assets/tryhackme.svg" alt="THM Logo" class="logo">
+    <div class="count">{{ thm_count }}</div>
+    <div class="label">THM Machines</div>
+  </div>
+</div>
+
+<!-- JS Link -->
+<script src="{{ '/assets/js/counter.js' | relative_url }}"></script>
+
+<!-- CSS Link -->
 <link rel="stylesheet" href="{{ '/assets/css/counter.css' | relative_url }}">
+
+<!-- JS Link -->
 <script src="{{ '/assets/js/counter.js' | relative_url }}"></script>
 
 
