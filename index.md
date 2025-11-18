@@ -39,7 +39,7 @@ title: "CTF Writeups Home"
 
 
 <!-- MAIN CIRCLE -->
-<div class="circle-counter" data-count="{{ filtered_pages | size + htb_count + thm_count }}">
+<div class="circle-counter" data-count="{{ filtered_pages | size | plus: htb_count | plus: thm_count }}">
   <svg>
     <defs>
       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -70,8 +70,8 @@ title: "CTF Writeups Home"
           <stop offset="100%" stop-color="#4a5568"/>
         </linearGradient>
       </defs>
-      <circle class="bg" cx="70" cy="70" r="65"></circle>
-      <circle class="progress" cx="70" cy="70" r="65" stroke="url(#gradient-htb)"></circle>
+      <circle class="bg" cx="80" cy="80" r="65"></circle>
+      <circle class="progress" cx="80" cy="80" r="65" stroke="url(#gradient-htb)"></circle>
     </svg>
     <div class="text-wrapper">
       <img src="/CTF_writeups/assets/hackthebox.svg" class="logo" alt="HTB">
@@ -90,8 +90,8 @@ title: "CTF Writeups Home"
           <stop offset="100%" stop-color="#fcdb61"/>
         </linearGradient>
       </defs>
-      <circle class="bg" cx="70" cy="70" r="65"></circle>
-      <circle class="progress" cx="70" cy="70" r="65" stroke="url(#gradient-thm)"></circle>
+      <circle class="bg" cx="80" cy="80" r="65"></circle>
+      <circle class="progress" cx="80" cy="80" r="65" stroke="url(#gradient-thm)"></circle>
     </svg>
     <div class="text-wrapper">
       <img src="/CTF_writeups/assets/tryhackme.svg" class="logo" alt="THM">

@@ -154,7 +154,7 @@ COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 node    1501  www   18u  IPv6  33126      0t0  TCP *:tproxy (LISTEN)
 ```
 
-In this case, it is probably `node.js`, and this is actually the correct answer. we can also detect is easily when looking on the files.
+In this case, it is probably `node.js`, and this is actually the correct answer. we can also detect is easily when looking on the files.`
 
 ![detect node.js](image-14.png)
 
