@@ -69,22 +69,25 @@
 }
 
 
-/* ---------- SMALL CIRCLES (HTB / THM) ---------- */
+/* ---------- SMALL CIRCLES ---------- */
 .circle-counter.small {
   position: relative;
-  width: 140px;    /* bigger! */
-  height: 140px;
+  width: 160px;                /* Increased size */
+  height: 160px;
   background-color: #1c1f29;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 12px rgba(0,0,0,0.3);
-  transition: 0.3s ease;
+
+  /* SAME glow as big circle */
+  box-shadow: 0 0 25px rgba(0,0,0,0.35);
+  transition: 0.25s ease-in-out;
+  overflow: visible;           /* prevents SVG from clipping */
 }
 
 .circle-counter.small:hover {
-  box-shadow: 0 0 15px rgba(59,130,246,0.6);
+  box-shadow: 0 0 25px rgba(59,130,246,0.6);  /* same highlight as big circle */
 }
 
 .circle-counter.small svg {
@@ -93,21 +96,26 @@
   width: 100%;
   height: 100%;
   transform: rotate(-90deg);
+  overflow: visible;           /* makes the full circle visible */
 }
 
 .circle-counter.small .bg {
   fill: none;
   stroke: #334155;
-  stroke-width: 12;
+  stroke-width: 14;
 }
 
 .circle-counter.small .progress {
   fill: none;
-  stroke-width: 12;
+  stroke-width: 14;
   stroke-linecap: round;
-  stroke-dasharray: 408;  /* radius 65 */
-  stroke-dashoffset: 408;
-  filter: drop-shadow(0 0 6px rgba(59,130,246,0.8));
+
+  /* Larger geometry — full circle visible */
+  stroke-dasharray: 450;        /* for r = 72 */
+  stroke-dashoffset: 450;
+
+  /* SAME glowing highlight as big circle */
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.8));
 }
 
 .circle-counter.small .text-wrapper {
@@ -116,15 +124,18 @@
 }
 
 .circle-counter.small .logo {
-  width: 40px; 
-  height: 40px;
-  margin-bottom: 5px;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .circle-counter.small .count {
-  font-size: 1.4rem;
-  color: #dbeafe;            /* readable */
+  font-size: 1.6rem;
   font-weight: 700;
+  color: #dbeafe;
 }
 
 .circle-counter.small .label {

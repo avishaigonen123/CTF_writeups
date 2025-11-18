@@ -39,7 +39,7 @@ title: "CTF Writeups Home"
 
 
 <!-- MAIN CIRCLE -->
-<div class="circle-counter" data-count="{{ filtered_pages | size }}">
+<div class="circle-counter" data-count="{{ filtered_pages | size + htb_count + thm_count }}">
   <svg>
     <defs>
       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -76,7 +76,7 @@ title: "CTF Writeups Home"
     <div class="text-wrapper">
       <img src="/CTF_writeups/assets/hackthebox.svg" class="logo" alt="HTB">
       <div class="count">{{ htb_count }}</div>
-      <div class="label">HTB Machines</div>
+      <div class="label">HTB</div>
     </div>
   </div>
 
@@ -96,7 +96,7 @@ title: "CTF Writeups Home"
     <div class="text-wrapper">
       <img src="/CTF_writeups/assets/tryhackme.svg" class="logo" alt="THM">
       <div class="count">{{ thm_count }}</div>
-      <div class="label">THM Machines</div>
+      <div class="label">THM</div>
     </div>
   </div>
 
