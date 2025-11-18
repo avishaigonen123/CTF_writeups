@@ -11,7 +11,8 @@ title: "CTF Writeups Home"
 {% assign wargames = wargames_string | split: "," %}
 {% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" %}
 {% assign filtered_pages = "" %}
-{% assign htb_thm_count = 0 %}
+{% assign htb_count = 0 %}
+{% assign thm_count = 0 %}
 
 {% for p in md_pages %}
   {% assign parts = p.path | split: '/' %}
@@ -27,13 +28,14 @@ title: "CTF Writeups Home"
 
   {%- comment -%}
   --- Handle HackTheBox / TryHackMe machine counting ---
-  Example path: hackthebox/machine1/index.md
-  Should count "machine1" as 1
+  {% if the folder is inside hackthebox or tryhackme, count it %}
   {%- endcomment -%}
-  {% if (first_part == "hackthebox" or first_part == "tryhackme") 
-        and file_name == "index.md"
-        and parts.size == 2 %}
-    {% assign htb_thm_count = htb_thm_count | plus: 1 %}
+  {% if first_part == "hackthebox" and file_name == "index.md" and parts.size == 2 %}
+    {% assign htb_count = htb_count | plus: 1 %}
+  {% endif %}
+
+  {% if first_part == "tryhackme" and file_name == "index.md" and parts.size == 2 %}
+    {% assign thm_count = thm_count | plus: 1 %}
   {% endif %}
 {% endfor %}
 
@@ -73,7 +75,7 @@ title: "CTF Writeups Home"
   </svg>
   <div class="text-wrapper">
     <!-- HTB Logo (Centering the logo in the circle) -->
-    <img src="/assets/hackthebox.svg" alt="HTB Logo" class="logo">
+    <img src="/CTF_writeups/assets/hackthebox.svg" alt="HTB Logo" class="logo">
     <div class="count">{{ htb_count }}</div>
     <div class="label">HTB Machines</div>
   </div>
@@ -93,7 +95,7 @@ title: "CTF Writeups Home"
   </svg>
   <div class="text-wrapper">
     <!-- THM Logo (Centering the logo in the circle) -->
-    <img src="/assets/tryhackme.svg" alt="THM Logo" class="logo">
+    <img src="/CTF_writeups/assets/tryhackme.svg" alt="THM Logo" class="logo">
     <div class="count">{{ thm_count }}</div>
     <div class="label">THM Machines</div>
   </div>
