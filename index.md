@@ -19,17 +19,12 @@ title: "CTF Writeups Home"
   {% assign first_part = parts[0] %}
   {% assign file_name = parts | last %}
 
-  {%- comment -%}
-  --- Handle classic wargames ---
-  {%- endcomment -%}
+
   {% if wargames contains first_part and file_name != "index.md" %}
     {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
   {% endif %}
 
-  {%- comment -%}
-  --- Handle HackTheBox / TryHackMe machine counting ---
-  {% if the folder is inside hackthebox or tryhackme, count it %}
-  {%- endcomment -%}
+
   {% if first_part == "hackthebox" and file_name == "index.md" and parts.size == 2 %}
     {% assign htb_count = htb_count | plus: 1 %}
   {% endif %}
