@@ -62,7 +62,7 @@ title: "CTF Writeups Home"
 <div class="circles-wrapper">
 
   <!-- HTB -->
-  <div class="circle-counter small" data-count="{{ htb_count }}">
+  <a href="/CTF_writeups/hackthebox" class="circle-counter small" data-count="{{ htb_count }}">
     <svg>
       <defs>
         <linearGradient id="gradient-htb" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -78,11 +78,11 @@ title: "CTF Writeups Home"
       <div class="count">{{ htb_count }}</div>
       <div class="label">HTB</div>
     </div>
-  </div>
+  </a>
 
 
   <!-- THM -->
-  <div class="circle-counter small" data-count="{{ thm_count }}">
+  <a href="/CTF_writeups/tryhackme" class="circle-counter small" data-count="{{ thm_count }}">
     <svg>
       <defs>
         <linearGradient id="gradient-thm" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -100,7 +100,7 @@ title: "CTF Writeups Home"
     </div>
   </div>
 
-</div>
+</a>
 
 
 <!-- JS Link -->
