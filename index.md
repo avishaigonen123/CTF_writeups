@@ -82,7 +82,7 @@ title: "CTF Writeups Home"
 
 
   <!-- THM -->
-  <div class="circle-counter small" data-count="{{ thm_count }}" onclick="window.location='/CTF_writeups/hackthebox'">
+  <div class="circle-counter small" data-count="{{ thm_count }}" onclick="window.location='/CTF_writeups/tryhackme'">
     <svg>
       <defs>
         <linearGradient id="gradient-thm" x1="0%" y1="0%" x2="100%" y2="0%">
