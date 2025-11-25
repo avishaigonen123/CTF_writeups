@@ -9,11 +9,12 @@ title: Example
 
 ### Recon
 
-we start with `nmap`, using this command:
+we start with `rustscan`, using this command:
 ```bash
 
 ```
 
+### ...
 
 ### Privilege Escalation to Root
 
