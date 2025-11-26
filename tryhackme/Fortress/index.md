@@ -286,7 +286,70 @@ Maybe `t3mple_0f_y0ur_51n5` is an endpoint.
 
 Yay, we find another endpoint.
 
-Let's 
+Now, I looked for more hints, I tried to get `assets/style.css`:
+```bash
+┌──(agonen㉿kali)-[~/thm/Fortress]
+└─$ curl 'http://fortress:7331/assets/style.css'                                                            
+/*Am I a hint??
+
+        VGhpcyBpcyBqb3VybmV5IG9mIHRoZSBncmVhdCBtb25rcywgbWFraW5nIHRoaXMgZm9ydHJlc3MgYSBzYWNyZWQgd29ybGQsIGRlZmVuZGluZyB0aGUgdmVyeSBvd24gb2YgdGhlaXIga2luZHMsIGZyb20gd2hhdCBpdCBpcyB0byBiZSB1bmxlYXNoZWQuLi4gVGhlIG9ubHkgb25lIHdobyBjb3VsZCBzb2x2ZSB0aGVpciByaWRkbGUgd2lsbCBiZSBncmFudGVkIGEgS0VZIHRvIGVudGVyIHRoZSBmb3J0cmVzcyB3b3JsZC4gUmV0cmlldmUgdGhlIGtleSBieSBDT0xMSURJTkcgdGhvc2UgZ3VhcmRzIGFnYWluc3QgZWFjaCBvdGhlci4=
+*/
+
+<REDACTED>
+```
+
+![find /assets/style.css](image-8.png)
+
+So, I decoded this string:
+```bash
+┌──(agonen㉿kali)-[~/thm/Fortress]
+└─$ echo -e 'VGhpcyBpcyBqb3VybmV5IG9mIHRoZSBncmVhdCBtb25rcywgbWFraW5nIHRoaXMgZm9ydHJlc3MgYSBzYWNyZWQgd29ybGQsIGRlZmVuZGluZyB0aGUgdmVyeSBvd24gb2YgdGhlaXIga2luZHMsIGZyb20gd2hhdCBpdCBpcyB0byBiZSB1bmxlYXNoZWQuLi4gVGhlIG9ubHkgb25lIHdobyBjb3VsZCBzb2x2ZSB0aGVpciByaWRkbGUgd2lsbCBiZSBncmFudGVkIGEgS0VZIHRvIGVudGVyIHRoZSBmb3J0cmVzcyB3b3JsZC4gUmV0cmlldmUgdGhlIGtleSBieSBDT0xMSURJTkcgdGhvc2UgZ3VhcmRzIGFnYWluc3QgZWFjaCBvdGhlci4=' | base64 -d
+This is journey of the great monks, making this fortress a sacred world, defending the very own of their kinds, from what it is to be unleashed... The only one who could solve their riddle will be granted a KEY to enter the fortress world. Retrieve the key by COLLIDING those guards against each other.
+```
+
+Okay, I tried to get `http://fortress:7331/t3mple_0f_y0ur_51n5.html`:
+
+![http://fortress:7331/t3mple_0f_y0ur_51n5.html](image-9.png)
+
+Fine, if we'll check the source code, we can find this:
+```php
+<!--
+<?php
+require 'private.php';
+$badchar = '000000';
+if (isset($_GET['user']) and isset($_GET['pass'])) {
+    $test1 = (string)$_GET['user'];
+    $test2 = (string)$_GET['pass'];
+
+    $hex1 = bin2hex($test1);
+    $hex2 = bin2hex($test2);
+    
+
+    if ($test1 == $test2) {
+        print 'You can't cross the gates of the temple, GO AWAY!!.';
+    } 
+    
+    else if(strlen($test2) <= 500 and strlen($test1) <= 600){
+    	print "<pre>Nah, babe that ain't gonna work</pre>";
+    }
+
+    else if( strpos( $hex1, $badchar ) or strpos( $hex2, $badchar )){
+    	print '<pre>I feel pitty for you</pre>';
+    }
+    
+    else if (sha1($test1) === sha1($test2)) {
+      print "<pre>'Private Spot: '$spot</pre>";
+    } 
+    
+    else {
+        print '<center>Invalid password.</center>';
+    }
+}
+?>
+-->
+
+<!-- Don't believe what you see... This is not the actual door to the temple. -->
+```
 ### Privilege Escalation to Root
 
 
