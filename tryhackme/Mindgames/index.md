@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Example
+title: Mindgames
 ---
 
 ## TL;DR
