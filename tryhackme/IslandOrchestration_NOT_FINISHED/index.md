@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Example
+title: IslandOrchestration
 ---
 
 ## TL;DR
@@ -14,12 +14,18 @@ we start with `rustscan`, using this command:
 rustscan -a $target -- -sV -sC -oN nmap.txt -oX nmap.xml
 ```
 
+
+```bash
+```
+
+I added `islandorchestration.thm` to my `/etc/hosts`.
+
+### ...
+
+
 ```bash
 
 ```
-
-
-### ...
 
 ### Privilege Escalation to Root
 
