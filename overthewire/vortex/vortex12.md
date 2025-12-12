@@ -56,6 +56,10 @@ and then, create link to `/bin/sh` using this command:
 ln -sf /bin/sh "%d"
 ```
 
+```python
+{% include_relative scripts/level12/level12.py %}
+```
+
 finally :)
 
 ![image](./images/level12_4.png)
