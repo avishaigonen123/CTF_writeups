@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Example
+title: Chronicle
 ---
 
 ## TL;DR
