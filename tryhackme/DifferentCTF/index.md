@@ -1,11 +1,15 @@
 ---
 layout: default
-title: Example
+title: DifferentCTF
 ---
 
 ## TL;DR
 
+In this challenge we find the `ftp` credentials hidden inside the image we get at `announcements`. we login to the ftp service and find `wp-config.php`, which then leads us to `phpmyadmin`. There we can find subdomain `subdomain.adana.thm`, and upload webshell via `ftp`, to get `RCE` as user www-data.
 
+Net we brute force the password of user `hakanbey`, based on known prefix and given wordlist.
+
+Lastly, we reversing the SUID binary `/usr/bin/binary`, and find the password of root inside `root.jpg`.
 
 ### Recon
 
@@ -30,7 +34,7 @@ Service Info: OS: Unix
 ```
 I added `differentctf.thm` to my `/etc/hosts`.
 
-### ...
+### Find ftp credentials in steghide inside the image when the passphrase is from wordlist.txt
 
 I started with `ffuf`, to enumerate endpoints:
 ```bash
@@ -113,9 +117,6 @@ the file "austrailian-bulldog-ant.jpg.out" does already exist. overwrite ? (y/n)
 y
                                                                                                                                                                                              
 ┌──(agonen㉿kali)-[~/thm/DifferentCTF]
-└─$ 
-                                                                                                                                                                                             
-┌──(agonen㉿kali)-[~/thm/DifferentCTF]
 └─$ cat austrailian-bulldog-ant.jpg.out
 RlRQLUxPR0lOClVTRVI6IGhha2FuZnRwClBBU1M6IDEyM2FkYW5hY3JhY2s=
                                                                                                                                                                                              
@@ -135,7 +136,7 @@ USER: hakanftp
 PASS: 123adanacrack
 ```
 
-### ...
+### Find subdomain for phpmyadmin and add webshell to get RCE as user www-data
 
 I downloaded all files using `wget -m ftp://hakanftp@adana.thm/ --password 123adanacrack`.
 ![ftp](image-4.png)
@@ -260,7 +261,7 @@ www-data@ubuntu:/var/www/html$ cat wwe3bbfla4g.txt
 THM{343a7e2064a1d992c01ee201c346edff}
 ```
 
-### ...
+### Brute force password for user hakanbey
 
 I tried to find common ways to escalate privileges, but i didn't find nothing. I found the user `hakanbey`, however, i don't know its password.
 
@@ -359,7 +360,7 @@ hakanbey@ubuntu:~$ cat user.txt
 THM{8ba9d7715fe726332b7fc9bd00e67127}
 ```
 
-### Privilege Escalation to Root
+### Privilege Escalation to Root via reversing and password find hidden inside root.jpg
 
 we can find interesting files with SUID bit, when executing linpeas.sh.
 
@@ -386,6 +387,10 @@ Copy /root/root.jpg ==> /home/hakanbey/root.jpg
 ```
 
 ![hint](image-20.png)
+
+This is the image it copied for us:
+
+![root](./root.jpg)
 
 Using cyberchef, I took the bytes from `0x20`, and put it through hex and theb base85.
 [https://gchq.github.io/CyberChef/#recipe=From_Hex('Auto')To_Base85('!-u',false)&input=ZmVlOSA5ZDNkIDc5MTggNWZmYyA4MjZkIGRmMWMgNjlhYyBjMjc1](https://gchq.github.io/CyberChef/#recipe=From_Hex('Auto')To_Base85('!-u',false)&input=ZmVlOSA5ZDNkIDc5MTggNWZmYyA4MjZkIGRmMWMgNjlhYyBjMjc1)

@@ -140,6 +140,10 @@ title: "CTF Writeups Home"
       <a href="./websec.fr/" style="text-decoration: none; color: #16a085;"> Websec.fr</a>
     </li>
     <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+    <img src="./assets/websec_il.png" alt="icon" width="25" height="25" style="display:block;">
+      <a href="./websec.il/" style="text-decoration: none; color: #16a085;"> Websec.co.il</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
     <img src="./assets/pwnable.ico" alt="icon" width="25" height="25" style="display:block;">
       <a href="./pwnable.kr/" style="text-decoration: none; color: #16a085;"> Pwnable.kr</a>
     </li>
