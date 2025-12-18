@@ -1,11 +1,15 @@
 ---
 layout: default
-title: Example
+title: Spring
 ---
 
 ## TL;DR
 
+In this challenge, we find `.git` and use it to get access to secure endpoints, which gives us `RCE`.
 
+Next we brute force the password of `johnsmith` based on known pattern.
+
+Lastly we exploit arbitrary file write on the spring service, the log part, to get .ssh/authorized_keys override with our public key, which leads us to be able to login as root.
 
 ### Recon
 
@@ -72,7 +76,7 @@ PORT    STATE SERVICE  REASON         VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-### ...
+### Find .git on website and get RCE using spring access to /api endpoints
 
 I used `ffuf`, with recursion flag, and found there is `.git` available:
 ```bash
@@ -361,7 +365,7 @@ nobody@spring:/opt$ cat foothold.txt
 THM{dont_expose_.git_to_internet}
 ```
 
-### ...
+### Brute force johnsmith password based on known pattern
 
 Inside `env` we can find the password `PrettyS3cureKeystorePassword123.`.
 In addition, we got the password `PrettyS3cureSpringPassword123.`. I asked ChatGPT to give me list of other possible passwords, he gave me this list:
@@ -415,7 +419,7 @@ johnsmith@spring:~$ cat user.txt
 THM{this_is_still_password_reuse}
 ```
 
-### Privilege Escalation to Root
+### Privilege Escalation to Root using arbitrary file write by log service
 
 I've found the `spring` service:
 ```bash
