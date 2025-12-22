@@ -55,21 +55,17 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
   }
 
   .card-status.unfinished {
-  position: absolute;
-  top: 12px;                  /* distance from the top of the card */
-  left: 50%;                  /* center horizontally */
-  transform: translateX(-50%); /* adjust exact center */
-  background: rgba(255, 69, 0, 0.95);  /* bright red-orange */
-  color: #fff;
-  font-size: 1rem;            /* bigger text */
-  font-weight: 700;
-  padding: 6px 12px;          /* larger padding */
-  border-radius: 8px;
-  letter-spacing: 0.05em;
-  z-index: 2;                  /* above image */
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* optional: makes it pop */
-}
+    position: absolute;
+    top: 12px;
+    left: 50%;                  /* center horizontally */
+    background: rgba(238, 31, 8, 0.9);
+    color: #fff;
+    font-size: 1rem;            /* bigger text */
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+  }
 
 
 
