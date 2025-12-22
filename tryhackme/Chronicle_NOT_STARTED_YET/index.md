@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Chronicle
+not_finished: true
 ---
 
 ## TL;DR

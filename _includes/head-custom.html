@@ -11,17 +11,31 @@
   <ul id="results-container"></ul>
 </div>
 
-{% if page.toc %}
-  <div id="toc">
-    <h2>Table of Contents</h2>
-    {{ content }}
+<div id="layout-wrapper">
+  <aside id="toc-container">
+    <div id="toc">
+      <div class="toc-title">Contents</div>
+      <ul id="toc-list"></ul>
+    </div>
+  </aside>
+  {% if page.not_finished %}
+  <div class="unfinished-banner">
+    ⚠️ This writeup is incomplete — machine not fully solved.
   </div>
-{% endif %}
+  {% endif %}
+
+  <main id="main-content">
+    {{ content }}
+  </main>
+</div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/searchWorker.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/anchors.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
+<link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/github_markdown.css' | relative_url }}">

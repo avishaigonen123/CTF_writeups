@@ -55,6 +55,14 @@ pre {
   word-break: break-word;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
+pre::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 0.75rem;
+  color: #8b949e;
+}
 
 /* Optional: remove selection highlight background for code */
 code::selection, pre::selection {
@@ -219,6 +227,17 @@ h3::before {
   border-radius: 2px;
 }
 
+/* ===========================
+   🎨 SUBTITLE STYLE (h2)
+   =========================== */
+h2 {
+  font-size: 1.8rem;
+  margin-top: 2.5rem;
+  border-left: 4px solid #58a6ff;
+  padding-left: 0.75rem;
+}
+
+
 /* optional accent color variation (comment out if not needed)
 h3 {
   color: #79c0ff;
@@ -298,4 +317,30 @@ img.no-style {
   all: unset;
   display: inline-block;
   max-width: none;
+}
+
+
+blockquote {
+  background: linear-gradient(90deg, #161b22, #0d1117);
+  border-left: 4px solid #f59e0b;
+}
+
+/* ===========================
+   ⚠️ UNFINISHED BANNER
+   =========================== */
+
+.unfinished-banner {
+  background: repeating-linear-gradient(
+    45deg,
+    #2d2d2d,
+    #2d2d2d 10px,
+    #3a3a3a 10px,
+    #3a3a3a 20px
+  );
+  border-left: 4px solid #f59e0b;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  color: #facc15;
+  font-weight: 500;
 }

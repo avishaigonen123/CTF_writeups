@@ -49,6 +49,19 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
     font-size: 0.9rem;
     color: #bdc3c7;
   }
+
+  .card-status.unfinished {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #6b7280;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+
 </style>
 
 
@@ -85,6 +98,11 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
             <img src="{{ site.baseurl }}/assets/tryhackme.svg" alt="default image"
                  style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
           {% endif %}
+
+          {% if folder.not_finished %}
+             <div class="card-status unfinished">INCOMPLETE</div>
+          {% endif %}
+
           
           <h2>{{ folder_name | capitalize }}</h2>
           <p>Writeups for {{ folder_name | capitalize }} wargame</p>
