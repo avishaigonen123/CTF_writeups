@@ -104,8 +104,8 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
           {% endif %}
 
           {% assign incomplete = false %}
-          {% for f in site.static_files %}
-            {% if f.status == "incomplete" and f.path contains folder_name %}
+          {% for p in site.pages %}
+            {% if p.path contains folder_path and p.status == "incomplete" %}
               {% assign incomplete = true %}
             {% endif %}
           {% endfor %}
@@ -113,6 +113,7 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
           {% if incomplete %}
             <div class="card-status unfinished">INCOMPLETE</div>
           {% endif %}
+
 
 
           

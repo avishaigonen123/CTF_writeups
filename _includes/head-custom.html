@@ -1,10 +1,10 @@
 {% include back-link.html %}
 {% include head-meta.html %}
 
-
+<!-- 
 {% if page.toc %}
   <link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}">
-{% endif %}
+{% endif %} -->
 
 <link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/github_markdown.css' | relative_url }}">
@@ -14,13 +14,13 @@
 <script src="{{ '/assets/js/searchWorker.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/anchors.js' | relative_url }}"></script>
 
-{% if page.toc %}
+<!-- {% if page.toc %}
   <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
-{% endif %}
+{% endif %} -->
 
 
 <main class="page-main">
-  <article class="markdown-body">
+  <!-- <article class="markdown-body">
     {{ content }}
   </article>
    {% if page.toc %}
@@ -30,7 +30,7 @@
         <ul id="toc-list"></ul>
       </nav>
     </aside>
-    {% endif %}
+    {% endif %} -->
 
   {% if page.status == "incomplete" %}
     <div class="unfinished-banner">
