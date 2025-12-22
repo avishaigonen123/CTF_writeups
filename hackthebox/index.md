@@ -14,6 +14,7 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
   }
 
   .wargame-card {
+    position: relative;         /* needed for badge positioning */
     background-color: #34495e;
     color: #ecf0f1;
     border-radius: 10px;
@@ -22,7 +23,7 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
     text-decoration: none;
-    overflow: hidden;  /* Ensures the content stays inside the container */
+    overflow: hidden;           /* ensures content stays inside */
   }
 
   .wargame-card:hover {
@@ -33,8 +34,8 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
 
   .wargame-card img {
     width: 100%;
-    height: 400px;  /* Fixed height */
-    object-fit: cover;  /* Ensures the image covers the area without distortion */
+    height: 200px;             /* fixed height */
+    object-fit: cover;
     border-radius: 8px 8px 0 0;
     display: block;
     margin-bottom: 12px;
@@ -49,9 +50,25 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
     font-size: 0.9rem;
     color: #bdc3c7;
   }
+
+  /* INCOMPLETE badge */
+  .card-status.unfinished {
+    position: absolute;
+    top: 16px;                 /* slightly below top */
+    left: 50%;                 /* center horizontally */
+    transform: translateX(-50%);
+    background: rgba(238, 31, 8, 0.9);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 8px;
+    letter-spacing: 0.05em;
+    z-index: 2;                /* above image */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
 </style>
-
-
 
 <div class="wargame-container">
   {% assign seen = "" | split: "" %}
@@ -89,11 +106,9 @@ Welcome to the HackTheBox Wargames writeups hub. Choose a wargame below to view 
           
           {% if has_image %}
             <img src="{{ site.baseurl }}/{{ folder_path }}/wargame.png" 
-                 alt="{{ folder_name | capitalize }} wargame image"
-                 style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
+                 alt="{{ folder_name | capitalize }} wargame image">
           {% else %}
-            <img src="{{ site.baseurl }}/assets/hackthebox.svg" alt="default image"
-                 style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
+            <img src="{{ site.baseurl }}/assets/hackthebox.svg" alt="default image">
           {% endif %}
 
           {% if incomplete %}
