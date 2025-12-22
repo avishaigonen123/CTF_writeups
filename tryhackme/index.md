@@ -55,16 +55,23 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
   }
 
   .card-status.unfinished {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(107, 114, 128, 0.9);
-    color: #fff;
-    font-size: 0.7rem;
-    padding: 4px 8px;
-    border-radius: 6px;
-    letter-spacing: 0.05em;
-  }
+  position: absolute;
+  top: 12px;                  /* distance from the top of the card */
+  left: 50%;                  /* center horizontally */
+  transform: translateX(-50%); /* adjust exact center */
+  background: rgba(255, 69, 0, 0.95);  /* bright red-orange */
+  color: #fff;
+  font-size: 1rem;            /* bigger text */
+  font-weight: 700;
+  padding: 6px 12px;          /* larger padding */
+  border-radius: 8px;
+  letter-spacing: 0.05em;
+  z-index: 2;                  /* above image */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* optional: makes it pop */
+}
+
+
 
 </style>
 
@@ -72,51 +79,45 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
 
 <div class="wargame-container">
   {% assign seen = "" | split: "" %}
-  {% for folder in site.pages %}
-    {% if folder.path contains 'tryhackme/' and folder.path != 'tryhackme/index.md' %}
-      {% assign path_parts = folder.path | split: '/' %}
+
+  {% for page in site.pages %}
+    {% if page.path contains 'tryhackme/' and page.path != 'tryhackme/index.md' %}
+      {% assign path_parts = page.path | split: '/' %}
       {% assign folder_name = path_parts[1] %}
+
       {% unless seen contains folder_name %}
-        
-        {% capture folder_path %}tryhackme/{{ folder_name }}{% endcapture %}
-        
-        {% assign img_rel_path = folder_name | append: '/wargame.png' %}
+        {% assign folder_path = 'tryhackme/' | append: folder_name %}
+
+        {%- comment -%} Check if wargame.png exists {%- endcomment -%}
         {% assign has_image = false %}
-        
-        {% comment %}
-          Checking if wargame.png exists for the current folder.
-        {% endcomment %}
         {% for f in site.static_files %}
-          {% if f.path contains img_rel_path %}
+          {% if f.path contains folder_path and f.path contains 'wargame.png' %}
             {% assign has_image = true %}
             {% break %}
           {% endif %}
         {% endfor %}
 
-        <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
-          
-          {% if has_image %}
-            <img src="{{ site.baseurl }}/{{ folder_path }}/wargame.png" alt="{{ folder_name | capitalize }} wargame image"
-                 style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
-          {% else %}
-            <img src="{{ site.baseurl }}/assets/tryhackme.svg" alt="default image"
-                 style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
+        {%- comment -%} Check if any page in this folder has status: incomplete {%- endcomment -%}
+        {% assign incomplete = false %}
+        {% for p in site.pages %}
+          {% if p.path contains folder_path and p.status == "incomplete" %}
+            {% assign incomplete = true %}
+            {% break %}
           {% endif %}
+        {% endfor %}
 
-          {% assign incomplete = false %}
-          {% for p in site.pages %}
-            {% if p.path contains folder_path and p.status == "incomplete" %}
-              {% assign incomplete = true %}
-            {% endif %}
-          {% endfor %}
+        <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
+          {% if has_image %}
+            <img src="{{ site.baseurl }}/{{ folder_path }}/wargame.png" 
+                 alt="{{ folder_name | capitalize }} wargame image">
+          {% else %}
+            <img src="{{ site.baseurl }}/assets/tryhackme.svg" alt="default image">
+          {% endif %}
 
           {% if incomplete %}
             <div class="card-status unfinished">INCOMPLETE</div>
           {% endif %}
 
-
-
-          
           <h2>{{ folder_name | capitalize }}</h2>
           <p>Writeups for {{ folder_name | capitalize }} wargame</p>
         </a>
@@ -126,3 +127,4 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
     {% endif %}
   {% endfor %}
 </div>
+
