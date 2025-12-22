@@ -1,45 +1,18 @@
-
-<head>
-  {% include back-link.html %}
-  {% include head-meta.html %}
-</head>
-
-
-<!-- Global Search Bar -->
-<div id="search-container">
-  <input type="text" id="search-input" placeholder="Search CTF Writeups..." aria-label="Search CTF Writeups..." />
-  <ul id="results-container"></ul>
-</div>
-
-<div id="layout-wrapper">
-  {% if page.toc %}
-<aside class="page-sidebar">
-  <div id="toc">
-    <div class="toc-title">Contents</div>
-    <ul id="toc-list"></ul>
-  </div>
-</aside>
-{% endif %}
-
-{% if page.not_finished %}
-<div class="unfinished-banner">
-  ⚠️ This writeup is incomplete — machine not fully solved.
-</div>
-{% endif %}
-
-  {{ content }}
-</div>
-
+{% include back-link.html %}
+{% include head-meta.html %}
 
 {% if page.toc %}
-  <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
   <link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}">
 {% endif %}
 
+<link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/github_markdown.css' | relative_url }}">
 
 <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/searchWorker.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/anchors.js' | relative_url }}"></script>
-<link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/assets/css/github_markdown.css' | relative_url }}">
+
+{% if page.toc %}
+  <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
+{% endif %}
