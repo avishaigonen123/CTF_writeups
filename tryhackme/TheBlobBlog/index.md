@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Example
+title: TheBlobBlog
+status: incomplete
 ---
 
 ## TL;DR

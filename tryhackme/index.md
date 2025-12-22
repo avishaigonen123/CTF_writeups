@@ -54,7 +54,7 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
   position: relative;
   }
 
-  .card-status.unfinished {
+   .card-status.unfinished {
     position: absolute;
     top: 12px;
     left: 50%;                  /* center horizontally */
@@ -66,7 +66,6 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
     border-radius: 6px;
     letter-spacing: 0.05em;
   }
-
 
 
 </style>
