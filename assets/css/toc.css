@@ -1,27 +1,28 @@
 #layout-wrapper {
   display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 2rem;
+  grid-template-columns: 260px 1fr;
+  gap: 2.5rem;
 }
 
-#toc-container {
+.page-sidebar {
   position: sticky;
   top: 90px;
-  align-self: start;
-  height: fit-content;
 }
 
 #toc {
-  background: #0d1117;
+  background: linear-gradient(180deg, #0d1117, #010409);
   border: 1px solid #30363d;
-  border-radius: 8px;
-  padding: 1rem;
-  font-size: 0.9rem;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  font-size: 0.85rem;
 }
 
 .toc-title {
-  font-weight: 600;
-  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
   color: #58a6ff;
 }
 
@@ -33,18 +34,24 @@
 
 #toc-list li {
   margin: 0.35rem 0;
+  line-height: 1.3;
 }
 
 #toc-list a {
   color: #c9d1d9;
   text-decoration: none;
+  display: block;
+  padding: 2px 4px;
+  border-radius: 4px;
 }
 
 #toc-list a:hover {
+  background: #161b22;
   color: #58a6ff;
 }
 
 .toc-h3 {
   margin-left: 1rem;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  opacity: 0.85;
 }
