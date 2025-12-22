@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Chronicle
+status: incomplete
 ---
 
 ## TL;DR
