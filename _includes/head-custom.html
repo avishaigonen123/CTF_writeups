@@ -11,38 +11,35 @@
   <ul id="results-container"></ul>
 </div>
 
-<div class="page-layout">
+<div id="layout-wrapper">
+  {% if page.toc %}
+<aside class="page-sidebar">
+  <div id="toc">
+    <div class="toc-title">Contents</div>
+    <ul id="toc-list"></ul>
+  </div>
+</aside>
+{% endif %}
 
-  <aside class="page-sidebar">
-    <div id="toc">
-      <div class="toc-title">Contents</div>
-      <ul id="toc-list"></ul>
-    </div>
-  </aside>
+{% if page.not_finished %}
+<div class="unfinished-banner">
+  ⚠️ This writeup is incomplete — machine not fully solved.
+</div>
+{% endif %}
 
-  <section class="page-main">
-
-    {% if page.status == "incomplete" %}
-      <div class="unfinished-banner">
-        ⚠️ Writeup incomplete — machine not fully solved.
-      </div>
-    {% endif %}
-
-    {{ content }}
-
-  </section>
-
+  {{ content }}
 </div>
 
 
-
+{% if page.toc %}
+  <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
+  <link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}">
+{% endif %}
 
 
 <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/searchWorker.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/anchors.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
-<link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/github_markdown.css' | relative_url }}">
