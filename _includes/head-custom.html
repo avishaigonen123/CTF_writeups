@@ -17,3 +17,27 @@
 {% if page.toc %}
   <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
 {% endif %}
+
+<!-- Page Layout -->
+  <div id="layout-wrapper">
+
+    {% if page.toc %}
+    <aside class="page-sidebar">
+      <nav id="toc">
+        <div class="toc-title">Contents</div>
+        <ul id="toc-list"></ul>
+      </nav>
+    </aside>
+    {% endif %}
+
+    <main class="page-main">
+
+      {% if page.status == "incomplete" %}
+        <div class="unfinished-banner">
+          ⚠️ Writeup incomplete — machine not fully solved.
+        </div>
+      {% endif %}
+
+    </main>
+
+  </div>
