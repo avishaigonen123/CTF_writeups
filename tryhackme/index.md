@@ -105,7 +105,7 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
 
           {% assign incomplete = false %}
           {% for f in site.static_files %}
-            {% if f.path contains folder_path and f.path contains ".incomplete" %}
+            {% if f.status == "incomplete" and f.path contains folder_name %}
               {% assign incomplete = true %}
             {% endif %}
           {% endfor %}
