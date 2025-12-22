@@ -5,6 +5,7 @@ title: TryHackMe Writeups
 
 Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view detailed solutions.
 
+
 <style>
   .wargame-container {
     display: grid;
@@ -50,11 +51,7 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
     color: #bdc3c7;
   }
 
-  .wargame-card {
-  position: relative;
-  }
-
-   .card-status.unfinished {
+  .card-status.unfinished {
     position: absolute;
     top: 12px;
     left: 50%;                  /* center horizontally */
@@ -74,19 +71,22 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
 
 <div class="wargame-container">
   {% assign seen = "" | split: "" %}
-
-  {% for page in site.pages %}
-    {% if page.path contains 'tryhackme/' and page.path != 'tryhackme/index.md' %}
-      {% assign path_parts = page.path | split: '/' %}
+  {% for folder in site.pages %}
+    {% if folder.path contains 'tryhackme/' and folder.path != 'tryhackme/index.md' %}
+      {% assign path_parts = folder.path | split: '/' %}
       {% assign folder_name = path_parts[1] %}
-
       {% unless seen contains folder_name %}
-        {% assign folder_path = 'tryhackme/' | append: folder_name %}
-
-        {%- comment -%} Check if wargame.png exists {%- endcomment -%}
+        
+        {% capture folder_path %}tryhackme/{{ folder_name }}{% endcapture %}
+        
+        {% assign img_rel_path = folder_name | append: '/wargame.png' %}
         {% assign has_image = false %}
+        
+        {% comment %}
+          Checking if wargame.png exists for the current folder.
+        {% endcomment %}
         {% for f in site.static_files %}
-          {% if f.path contains folder_path and f.path contains 'wargame.png' %}
+          {% if f.path contains img_rel_path %}
             {% assign has_image = true %}
             {% break %}
           {% endif %}
@@ -102,11 +102,14 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
         {% endfor %}
 
         <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
+          
           {% if has_image %}
             <img src="{{ site.baseurl }}/{{ folder_path }}/wargame.png" 
-                 alt="{{ folder_name | capitalize }} wargame image">
+                 alt="{{ folder_name | capitalize }} wargame image"
+                 style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
           {% else %}
-            <img src="{{ site.baseurl }}/assets/tryhackme.svg" alt="default image">
+            <img src="{{ site.baseurl }}/assets/tryhackme.svg" alt="default image"
+                 style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
           {% endif %}
 
           {% if incomplete %}
@@ -122,4 +125,3 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
     {% endif %}
   {% endfor %}
 </div>
-
