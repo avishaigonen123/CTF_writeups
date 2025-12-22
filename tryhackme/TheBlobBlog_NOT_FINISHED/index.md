@@ -376,6 +376,9 @@ and take our reverse shell
 
 ![reverse shell](image-16.png)
 
+### ...
+
+need to find user flag and root flag.
 
 ### Privilege Escalation to Root
 
