@@ -11,23 +11,30 @@
   <ul id="results-container"></ul>
 </div>
 
-<div id="layout-wrapper">
-  <aside id="toc-container">
+<div class="page-layout">
+
+  <aside class="page-sidebar">
     <div id="toc">
       <div class="toc-title">Contents</div>
       <ul id="toc-list"></ul>
     </div>
   </aside>
-  {% if page.not_finished %}
-  <div class="unfinished-banner">
-    ⚠️ This writeup is incomplete — machine not fully solved.
-  </div>
-  {% endif %}
 
-  <main id="main-content">
+  <section class="page-main">
+
+    {% if page.status == "incomplete" %}
+      <div class="unfinished-banner">
+        ⚠️ Writeup incomplete — machine not fully solved.
+      </div>
+    {% endif %}
+
     {{ content }}
-  </main>
+
+  </section>
+
 </div>
+
+
 
 
 

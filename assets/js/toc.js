@@ -2,8 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const tocList = document.getElementById("toc-list");
   if (!tocList) return;
 
-  const headers = document.querySelectorAll("h2, h3");
-
+  const headers = Array.from(document.querySelectorAll("h2, h3"))
+  .filter(h => !h.closest("#toc"));
   headers.forEach(header => {
     if (!header.id) return;
 
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const a = document.createElement("a");
     a.href = `#${header.id}`;
-    a.textContent = header.textContent;
+    a.textContent = header.childNodes[0].textContent.trim();
 
     a.addEventListener("click", e => {
       e.preventDefault();
