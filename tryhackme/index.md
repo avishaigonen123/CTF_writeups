@@ -50,17 +50,21 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
     color: #bdc3c7;
   }
 
-  .card-status.unfinished {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #6b7280;
-  color: #fff;
-  font-size: 0.75rem;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
+  .wargame-card {
+  position: relative;
+  }
 
+  .card-status.unfinished {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(107, 114, 128, 0.9);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+  }
 
 </style>
 
@@ -99,9 +103,17 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
                  style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0; display:block; margin-bottom:12px;">
           {% endif %}
 
-          {% if folder.not_finished %}
-             <div class="card-status unfinished">INCOMPLETE</div>
+          {% assign incomplete = false %}
+          {% for f in site.static_files %}
+            {% if f.path contains folder_path and f.path contains ".incomplete" %}
+              {% assign incomplete = true %}
+            {% endif %}
+          {% endfor %}
+
+          {% if incomplete %}
+            <div class="card-status unfinished">INCOMPLETE</div>
           {% endif %}
+
 
           
           <h2>{{ folder_name | capitalize }}</h2>

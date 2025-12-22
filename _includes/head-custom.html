@@ -27,9 +27,18 @@
   </div>
   {% endif %}
 
-  <main id="main-content">
+  <section class="page-main">
+
+    {% if page.status == "incomplete" %}
+      <div class="unfinished-banner">
+        ⚠️ Writeup incomplete — machine not fully solved.
+      </div>
+    {% endif %}
+
     {{ content }}
-  </main>
+
+  </section>
+
 </div>
 
 
@@ -37,6 +46,8 @@
   <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
   <link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}">
 {% endif %}
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
