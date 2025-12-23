@@ -25,11 +25,11 @@ title: "CTF Writeups Home"
   {% endif %}
 
 
-  {% if first_part contains "hackthebox" and file_name == "index.md" %}
+  {% if first_part contains "hackthebox" and file_name == "index.md" and p.status != "incomplete" %}
     {% assign htb_count = htb_count | plus: 1 %}
   {% endif %}
 
-  {% if first_part contains "tryhackme" and file_name == "index.md" %}
+  {% if first_part contains "tryhackme" and file_name == "index.md" and p.status != "incomplete" %}
     {% assign thm_count = thm_count | plus: 1 %}
   {% endif %}
 {% endfor %}

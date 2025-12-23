@@ -1,10 +1,12 @@
 {% include back-link.html %}
 {% include head-meta.html %}
 
+{%- comment -%}
 <!-- 
 {% if page.toc %}
   <link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}">
 {% endif %} -->
+{%- endcomment -%}
 
 <link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/github_markdown.css' | relative_url }}">
@@ -14,12 +16,22 @@
 <script src="{{ '/assets/js/searchWorker.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/anchors.js' | relative_url }}"></script>
 
+{%- comment -%}
 <!-- {% if page.toc %}
   <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
 {% endif %} -->
+{%- endcomment -%}
+
 
 
 <main class="page-main">
+  <!-- Global Search Bar -->
+  <div id="search-container">
+    <input type="text" id="search-input" placeholder="Search CTF Writeups..." aria-label="Search CTF Writeups..." />
+    <ul id="results-container"></ul>
+  </div>
+
+  {%- comment -%}
   <!-- <article class="markdown-body">
     {{ content }}
   </article>
@@ -31,6 +43,8 @@
       </nav>
     </aside>
     {% endif %} -->
+    {%- endcomment -%}
+
 
   {% if page.status == "incomplete" %}
     <div class="unfinished-banner">
@@ -39,10 +53,6 @@
   {% endif %}
 </main>
 
-<!-- Global Search Bar -->
-<div id="search-container">
-  <input type="text" id="search-input" placeholder="Search CTF Writeups..." aria-label="Search CTF Writeups..." />
-  <ul id="results-container"></ul>
-</div>
+
 
   
