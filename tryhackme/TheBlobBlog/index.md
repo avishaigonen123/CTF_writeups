@@ -381,6 +381,8 @@ and take our reverse shell
 
 need to find user flag and root flag.
 
+I tried to restart the machine, to keep working it. for some reason, the machine isn't working (ip not responding)
+
 ### Privilege Escalation to Root
 
 
