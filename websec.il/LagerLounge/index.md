@@ -27,5 +27,5 @@ we logged in as admin and got the flag:
 ![flag](image-6.png)
 
 ```bash
-wscoil{l4g3r_$3$$10n$_4r3_4_b1t_bubb1y}
+wscoil{--------------------}
 ```
