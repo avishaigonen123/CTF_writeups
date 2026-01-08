@@ -56,5 +56,5 @@ Now, let's change the username to `admin` and sign the payload with our new key:
 
 And this is the flag we achieved
 ```bash
-wscoil{x_PutSomeMoreTahini_x}
+wscoil{----------------}
 ```
