@@ -3,7 +3,7 @@ layout: default
 title: Calculator
 ---
 
-In this challenge we meet some console where we can calculate arethmatic expressions.
+In this challenge we meet some console where we can calculate arithmetic expressions.
 
 ![console](./image1.png)
 
@@ -55,7 +55,8 @@ We can't use on the regular way like `.popen()`, becuase it's being blocked by s
 ''.__class__.__mro__[1].__subclasses__()[141].__init__.__globals__["po"+"pen"]("ls -la").read()
 ```
 
-![ls](./image5)
+![ls -la](./image5.png)
+
 
 and the response:
 ```bash

