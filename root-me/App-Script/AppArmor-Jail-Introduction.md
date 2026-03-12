@@ -73,12 +73,14 @@ We can see that it allows us to read all files `/** mrwlk`, and that all binary 
 Of course, it blocks the read permission from the `flag.txt`
 
 However, on the line before the last one, we can see the next rule:
+
 ```
    /lib/x86_64-linux-gnu/ld-*.so mrUx,  
 ```
 
 It says that these files **don't** inherit the `AppArmor` profile, rather have nothing.
 Since this is a linker, we can spawn a shell based on the linker there:
+
 ```bash
 app-script-ch27@2b2a697a0a0f:~$ ls -la /lib/x86_64-linux-gnu/ld*
 -rwxr-xr-x 1 root root 179152 May  3  2022 /lib/x86_64-linux-gnu/ld-2.27.so
