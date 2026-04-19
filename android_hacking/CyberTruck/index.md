@@ -3,7 +3,6 @@ layout: default
 title: CyberTruck
 ---
 First, we download the binary from [https://github.com/nowsecure/cybertruckchallenge19/tree/master/apk](https://github.com/nowsecure/cybertruckchallenge19/tree/master/apk).
-
 Now, let's install it on our emulator using adb:
 
 ```bash
@@ -59,7 +58,7 @@ Notice, this time we attach to the application after it already running, we now 
 frida -U -N org.nowsecure.cybertruck -l ./frida-script
 ```
 
-![](android_hacking/CyberTruck/images/CyberTruck-3.png)
+![](./images/CyberTruck-3.png)
 
 Now, we can find the first flag hardcoded inside the function `generateDynamicKey`:
 
@@ -105,7 +104,7 @@ function toHexString(byteArray) {
 Of course, don't forget to call the function `getDynamicFlag` inside the `Java.perform` function. 
 Then, when clicking the unlock, we can get the flag:
 
-![](android_hacking/CyberTruck/images/CyberTruck-4.png)
+![](./images/CyberTruck-4.png)
 
 Notice, we can achieve the flag also by not clicking:
 
@@ -125,11 +124,11 @@ So, the flag in hex is: **`046e04ff67535d25dfea022033fcaaf23606b95a5c07a8c6`**.
 
 For the second part, the code is found at `org.nowsecure.cybertruck.keygenerators.a`, we can see the key is obtained from a file, located at `/assets/ch2.key`:
 
-![](android_hacking/CyberTruck/images/CyberTruck-5.png)
+![](./images/CyberTruck-5.png)
 
 This isn't secured, let's simply go there and grab the key, which is **`d474_47_r357_mu57_pR073C73D700!!`**
 
-![](android_hacking/CyberTruck/images/CyberTruck-6.png)
+![](./images/CyberTruck-6.png)
 
 We'll use this function:
 
@@ -144,7 +143,7 @@ function getDynamicFlag2() {
 }
 ```
 
-![](android_hacking/CyberTruck/images/CyberTruck-7.png)
+![](./images/CyberTruck-7.png)
 
 The dynamic flag is **`512100f7cc50c76906d23181aff63f0d642b3d947f75d360b6b15447540e4f16`**
 
@@ -152,23 +151,23 @@ ____
 
 In part3 we can notice that the function is native function, loaded from `libnative-lib.so`, it loads the function `init`:
 
-![](android_hacking/CyberTruck/images/CyberTruck-8.png)
+![](./images/CyberTruck-8.png)
 
 Okay, now let's load this library into `ghidra`, I'm loading the arm version, because it decompiles it better than the x86 version.
 
 This is the decompiled init function we want to explore:
 
-![](android_hacking/CyberTruck/images/CyberTruck-9.png)
+![](./images/CyberTruck-9.png)
 
 I renamed several variables, let's access the hardcoded_key:
 
-![](android_hacking/CyberTruck/images/CyberTruck-10.png)
+![](./images/CyberTruck-10.png)
 
 Okay, so the first flag is **`Native_c0d3_1s_h4rd3r_To_r3vers3`**.
 
 Next, we can see the decryption method, where it xor the 32 key with some secret, and at the end the flag located inside "flag3":
 
-![](android_hacking/CyberTruck/images/CyberTruck-11.png)
+![](./images/CyberTruck-11.png)
 
 Okay, we need to somehow hook the function using frida, and try somehow to access the location of the flag itself, which can be accessed from the stack.
 
@@ -205,11 +204,11 @@ function hookInit(){
 
 Now, we can see that we actually get the hardcoded flag:
 
-![](android_hacking/CyberTruck/images/CyberTruck-12.png)
+![](./images/CyberTruck-12.png)
 
 Okay, next we want to hook the address of the local variable `flag` that is found on the local stack:
 
-![](android_hacking/CyberTruck/images/CyberTruck-13.png)
+![](./images/CyberTruck-13.png)
 
 So, in our case we need to access the address of stack location - 0xa8.
 
@@ -236,7 +235,7 @@ So, another way we can use is to hook specific line of code, and then access spe
 
 In our case, we would like to hook the line where it finish calculating the flag, and read the content of the register:
 
-![](android_hacking/CyberTruck/images/CyberTruck-14.png)
+![](./images/CyberTruck-14.png)
 
 So, this will be the code:
 

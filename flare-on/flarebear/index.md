@@ -8,12 +8,12 @@ First, let's install the apk `flarebear.apk` on our android emulator:
 adb install flarebear.apk
 ```
 
-![](flarebear.png)
+![](./images/flarebear.png)
 Okay, let's create our bear and check for functionalities.  
 First, we'll call our bear **kobi**. 
 
 Now, we can see that we have 3 operations: Feed Play and Clean.
-![](flarebear-2.png)
+![](./images/flarebear-2.png)
 After feeding the bear, he pooped and we need to clean his poo.
 
 Fine, now let's start investigating the code using `jadx-gui`.
@@ -40,7 +40,7 @@ The interesting activity is `FlareBearActivity`.
 
 We can see there is some operation that is called `danceWithFlag()`, which probably shows the flag somehow:
 
-![](flarebear-3.png)
+![](./images/flarebear-3.png)
 
 This function is being called inside `setMood`if the code passes some checks:
 ```java
@@ -61,7 +61,7 @@ Let's try to simply summon the `danceWithFlag` function using Frida.
 
 We can see the package name is `com.fireeye.flarebeer`:
 
-![](flarebear-4.png)
+![](./images/flarebear-4.png)
 
 This will be our script for frida, to create instance of `FlareBearActivity` and then call the function `danceWithFlag`
 
@@ -79,9 +79,9 @@ Java.perform(function() {
 
 However, this won't work, because the password that is required to decrypt the flag is based on some parameters that can be obtained only using the normal flow of the program:
 
-![](SCR-20260414-rhjd.png)
+![](./images/SCR-20260414-rhjd.png)
 
-![432](flarebear-5.png)
+![432](./images/flarebear-5.png)
 
 Okay, we can see that the function `danceWithFlag` is being called from `setMood`, which is being called from `clean` (simply click the clean button on the UI).
 
@@ -179,5 +179,5 @@ Now, let's create new bear.
 
 We'll feed him 8 times, then play with him 4 times, and lastly clean after him 2 times.
 
-![](flarebear-6.png)
+![](./images/flarebear-6.png)
 We got the flag which is **`th4h_was_be4rly_a_chall3nge@flare-on.com`**
