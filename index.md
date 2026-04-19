@@ -9,7 +9,7 @@ title: "CTF Writeups Home"
 
 {% assign wargames_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection,hacker101,android_hacking,flare-on" %}
 {% assign wargames = wargames_string | split: "," %}
-{% assign filtered_pages = md_pages | where_exp: "p", "p.path contains '.md' and not p.path contains 'example'" %}
+{% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md' and not p.path contains 'example'" %}
 {% assign filtered_pages = "" %}
 {% assign htb_count = -1 %}
 {% assign thm_count = -1 %}
