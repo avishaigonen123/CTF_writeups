@@ -49,7 +49,7 @@ Welcome to the Flare-On Ctf's hub. Choose ctf below to view detailed solutions.
       {% assign path_parts = folder.path | split: '/' %}
       {% assign folder_name = path_parts[1] %}
       {% unless seen contains folder_name %}
-        {% capture folder_path %}/{{ folder_name }}{% endcapture %}
+        {% capture folder_path %}flare-on/{{ folder_name }}{% endcapture %}
         <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
           <h2>{{ folder_name | capitalize }}</h2>
           <p>Writeups for {{ folder_name | capitalize }} wargame</p>
