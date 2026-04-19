@@ -72,3 +72,5 @@ drwxrwxr-x 1 coil coil 4096 Jan 19 14:54 templates
 ```
 
 In order to read, we'll simply execute the command `cat flag.txt`, same as `ls -la`.
+
+

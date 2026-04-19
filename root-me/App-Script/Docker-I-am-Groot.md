@@ -33,7 +33,7 @@ root@h3yd0ck3r:~# mount /dev/sda1 /tmp/LOL
 ```
 
 After doing that, we can simply access all files via `/tmp/LOL`.
-![[Pasted image 20260310141837.png]]
+![Pasted image 20260310141837.png](./images/images/Pasted image 20260310141837.png)
 
 Grab the password:
 ```bash

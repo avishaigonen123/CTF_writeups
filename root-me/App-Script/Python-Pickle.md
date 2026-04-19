@@ -5,19 +5,19 @@ title: Python-Pickle
 In this challenge we only get this URL: `http://challenge02.root-me.org:60005/`.
 This is the first request:
 
-![[Pasted image 20260311154154.png]]
+![Pasted image 20260311154154.png](./images/images/Pasted image 20260311154154.png)
 
 We can see this is `BaseHTTP` server, running on `Python/2.7.7`.
 It says we need to first `AUTH`, since this is upper letters, I guess this meant to be the http method:
-![[Pasted image 20260311154314.png]]
+![Pasted image 20260311154314.png](./images/images/Pasted image 20260311154314.png)
 
 Now, we got `unknown user group: /`, remember we've been told we need to authenticate as `admin`. Let's try give it instead of `/`, rather `admin`:
 
-![[Pasted image 20260311154418.png]]
+![Pasted image 20260311154418.png](./images/images/Pasted image 20260311154418.png)
 
 Now, it says: `Can't find 'Authenticate' header`, let's add this header:
 
-![[Pasted image 20260311154459.png]]
+![Pasted image 20260311154459.png](./images/images/Pasted image 20260311154459.png)
 
 We got as response this error message:
 ```
@@ -58,18 +58,18 @@ Let's create our pickle, and copy it for sending:
 
 Now, send the pickle:
 
-![[Pasted image 20260311154950.png]]
+![Pasted image 20260311154950.png](./images/images/Pasted image 20260311154950.png)
 
 I checked the webhook, to verify we got the request from the server:
 
-![[Pasted image 20260311155008.png]]
+![Pasted image 20260311155008.png](./images/images/Pasted image 20260311155008.png)
 
 Okay, now spawn reverse shell. I'm using [https://pinggy.io/](https://pinggy.io/) to create port tunneling:
 ```bash
 ssh -p 443 -R0:127.0.0.1:1337 tcp@free.pinggy.io
 ```
 
-![[Pasted image 20260311155136.png]]
+![Pasted image 20260311155136.png](./images/images/Pasted image 20260311155136.png)
 
 The full new hostname and port: `tcp://omtuv-164-138-117-211.a.free.pinggy.link:35321`
 Now, create the reverse shell payload using [https://www.revshells.com/](https://www.revshells.com/):
@@ -83,11 +83,11 @@ nc -nvlp 1337
 ```
 
 and send the encoded pickle payload:
-![[Pasted image 20260311155513.png]]
+![Pasted image 20260311155513.png](./images/images/Pasted image 20260311155513.png)
 
 We got the reverse shell:
 
-![[Pasted image 20260311155540.png]]
+![Pasted image 20260311155540.png](./images/images/Pasted image 20260311155540.png)
 
 Let's read the password:
 ```bash

@@ -72,7 +72,7 @@ So, full path will be `/challenge/app-script/ch23/.passwd` and full payload:
 Now, create temp folder, put the payload inside file and execute the exploit.
 Don't forget to add `+x` to your folder, because you want to able the script to access your temp folder, to read `test.tex`.
 
-![[Pasted image 20260310093605.png]]
+![Pasted image 20260310093605.png](./images/images/Pasted image 20260310093605.png)
 
 The result pdf is at `/tmp/tmp.Gi5Mi3l6AH/main.pdf`, however, we can't open it on the remote machine, since it doesn't have GUI.
 
@@ -81,10 +81,10 @@ We'll use `scp` to copy the file to our local machine:
 scp -P 2222 app-script-ch23@challenge02.root-me.org:/tmp/tmp.Gi5Mi3l6AH/main.pdf .
 ```
 
-![[Pasted image 20260310094808.png]]
+![Pasted image 20260310094808.png](./images/images/Pasted image 20260310094808.png)
 
 Then, open it using `xdg-open main.pdf`.
 
-![[Pasted image 20260310094722.png]]
+![Pasted image 20260310094722.png](./images/images/Pasted image 20260310094722.png)
 
 So, the flag is **LaTeX_1nput_1s_n0t_v3ry_s3kur3**.

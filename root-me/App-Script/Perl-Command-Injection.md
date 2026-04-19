@@ -82,7 +82,7 @@ sub process_file {
 We can see it uses the function `open(F, $file)` on the input we give.
 This can be vulnerable, if we give `|` and then some command, it executes the command and pipe the output to the stdout.
 
-![[Pasted image 20260310172223.png]]
+![Pasted image 20260310172223.png](./images/images/Pasted image 20260310172223.png)
 
 We can simply give the input `|cat .passwd`, and grab the password, in our case **PerlCanDoBetterThanYouThink**
 

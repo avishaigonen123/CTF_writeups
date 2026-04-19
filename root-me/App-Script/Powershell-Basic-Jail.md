@@ -3,7 +3,8 @@ layout: default
 title: Powershell-Basic-Jail
 ---
 First step was trying some basic commands, I noticed that letters were missing:
-![[Pasted image 20260311135305.png]]
+
+![Pasted image 20260311135305.png](./images/images/Pasted image 20260311135305.png)
 
 As you can see, the letter `h` is missing. I gave it list of all ascii_letters, using python snippet:
 ```python

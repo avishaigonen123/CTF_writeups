@@ -54,7 +54,7 @@ crw--w----  1 app-script-ch21  tty  136,  4 Mar 11 15:54 4
 
 we can see that our exact pts is `/dev/pts/3`.
 
-![[Pasted image 20260311165507.png]]
+![Pasted image 20260311165507.png](./images/images/Pasted image 20260311165507.png)
 
 Let's add write permissions to others on our pts:
 ```bash

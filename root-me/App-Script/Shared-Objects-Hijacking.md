@@ -48,7 +48,7 @@ gcc -shared -fPIC -o libutils1.so evil.c
 
 and then execute to get shell as higher user, and grab the password:
 
-![[Pasted image 20260311234406.png]]
+![Pasted image 20260311234406.png](./images/images/Pasted image 20260311234406.png)
 
 ```bash
 level1-cracked@sojack:~$ cat .passwd
@@ -89,7 +89,7 @@ Dynamic section at offset 0x2dd8 contains 28 entries:
 
 As we can see, `RPATH` is set to look at `/home/level2/libs/`. Let's add our evil shared object to this folder, which we'll create too. Same steps as level1.
 
-![[Pasted image 20260312000313.png]]
+![Pasted image 20260312000313.png](./images/images/Pasted image 20260312000313.png)
 
 ```bash
 level2-cracked@sojack:~$ cat .passwd
@@ -121,7 +121,7 @@ level3@sojack:~$ ls -la /usr/lib/libutils3.so
 
 We are the owner of the file, let's put our new cute shared object there
 
-![[Pasted image 20260312000945.png]]
+![Pasted image 20260312000945.png](./images/images/Pasted image 20260312000945.png)
 
 ```bash
 level3-cracked@sojack:~$ cat .passwd
@@ -177,7 +177,7 @@ Hello world
 
 It works, now let's generate our malicious shared object:
 
-![[Pasted image 20260312002300.png]]
+![Pasted image 20260312002300.png](./images/images/Pasted image 20260312002300.png)
 
 ```bash
 level4-cracked@sojack:/home/level4$ cat .passwd
@@ -218,7 +218,7 @@ I know it goes through all `*.conf` files under `/etc/ld.so.conf.d/`, so the loa
 
 Let's create our malicious shared object:
 
-![[Pasted image 20260312003135.png]]
+![Pasted image 20260312003135.png](./images/images/Pasted image 20260312003135.png)
 
 The reason it is still not working, because we need to update the cache of the loader, using the command `ldconfig`:
 
@@ -237,7 +237,7 @@ level5@sojack:~$ ldd ./level5
         /lib64/ld-linux-x86-64.so.2 (0x00007fcc1083a000)
 ```
 
-![[Pasted image 20260312003330.png]]
+![Pasted image 20260312003330.png](./images/images/Pasted image 20260312003330.png)
 
 ```bash
 level5-cracked@sojack:~$ cat .passwd
@@ -248,11 +248,11 @@ and the last password **ld.so.conf_should_stay_standard_Congrats_btw_the_chall_i
 
 We also got this cute `gg.txt`:
 
-![[Pasted image 20260312003414.png]]
+![Pasted image 20260312003414.png](./images/images/Pasted image 20260312003414.png)
 
 Okay, now concating the passwords to get the final password **76e244e666995b9dbfe175a5144a9a4ca0a4a999bb45f1165c017fa4c65e143b**
 
-![[Pasted image 20260312003608.png]]
+![Pasted image 20260312003608.png](./images/images/Pasted image 20260312003608.png)
 
 We also have `sudo` permission and can read the flag at `/passwd`:
 ```bash

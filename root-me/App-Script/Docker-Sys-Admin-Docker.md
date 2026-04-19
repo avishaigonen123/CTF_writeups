@@ -74,7 +74,7 @@ sh -c "echo \$\$ > /tmp/cgrp/x/cgroup.procs"
 cat /output
 ```
 
-![[Pasted image 20260311183725.png]]
+![Pasted image 20260311183725.png](./images/images/Pasted image 20260311183725.png)
 
 Finally, simply read the output from `/output` 
 ```bash

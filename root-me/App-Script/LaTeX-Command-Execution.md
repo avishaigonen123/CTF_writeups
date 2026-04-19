@@ -71,7 +71,7 @@ drwx--x--- 3 app-script-ch24-cracked app-script-ch24         4096 Dec 10  2021 .
 -r-------- 1 app-script-ch24-cracked app-script-ch24-cracked   42 Dec 10  2021 .passwd
 ```
 
-![[Pasted image 20260310212931.png]]
+![Pasted image 20260310212931.png](./images/images/Pasted image 20260310212931.png)
 
 the flag is located at `/challenge/app-script/ch24/flag_is_here/512cba42fe46c1f346996b51fa053b15fba17baefa038d434381aa68bba6/.passwd`
 

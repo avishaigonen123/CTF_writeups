@@ -4,7 +4,7 @@ title: SSH-Agent-Hijacking
 ---
 When we logged in to the server, we can see every minute we get some message from our freind:
 
-![[Pasted image 20260312140112.png]]
+![Pasted image 20260312140112.png](./images/images/Pasted image 20260312140112.png)
 
 I tested the `user-agent`, and created one of my own, to see how it works.
 First, You execute the next command:
@@ -67,7 +67,7 @@ do
 done
 ```
 
-![[Pasted image 20260312141847.png]]
+![Pasted image 20260312141847.png](./images/images/Pasted image 20260312141847.png)
 
 ```bash
 root@root-me:~# cat .flag ;echo

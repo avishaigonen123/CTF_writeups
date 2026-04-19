@@ -7,9 +7,9 @@ title: "CTF Writeups Home"
 
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
-{% assign wargames_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection" %}
+{% assign wargames_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection,hacker101,android_hacking,flare-on" %}
 {% assign wargames = wargames_string | split: "," %}
-{% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" %}
+{% assign filtered_pages = md_pages | where_exp: "p", "p.path contains '.md' and not p.path contains 'example'" %}
 {% assign filtered_pages = "" %}
 {% assign htb_count = -1 %}
 {% assign thm_count = -1 %}
@@ -166,6 +166,18 @@ title: "CTF Writeups Home"
     <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
       <img src="./assets/tryhackme.svg" alt="icon" width="25" height="25" style="display:block;">
       <a href="./tryhackme/" style="text-decoration: none; color: #16a085; font-weight:500;">TryHackMe</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+      <img src="./assets/android_hacking.webp" alt="icon" width="25" height="25" style="display:block;">
+      <a href="./android_hacking/" style="text-decoration: none; color: #16a085; font-weight:500;">Android Hacking</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+      <img src="./assets/hacker101.png" alt="icon" width="25" height="25" style="display:block;">
+      <a href="./hacker101/" style="text-decoration: none; color: #16a085; font-weight:500;">Hacker 101</a>
+    </li>
+    <li style="margin-bottom: 12px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; transition: background-color 0.3s; display:flex; align-items:center; gap:8px;">
+      <img src="./assets/flare-on.jpeg" alt="icon" width="25" height="25" style="display:block;">
+      <a href="./flare-on/" style="text-decoration: none; color: #16a085; font-weight:500;">Flare-On</a>
     </li>
 
   </ul>

