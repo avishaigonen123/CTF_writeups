@@ -3,7 +3,7 @@ layout: default
 title: hpAndro
 ---
 
-Welcome to the HpAndro Ctf's hub. Choose ctf below to view detailed solutions.
+Welcome to the InjuredAndroid's hub. Choose ctf below to view detailed solutions.
 
 <style>
   .wargame-container {
@@ -45,11 +45,11 @@ Welcome to the HpAndro Ctf's hub. Choose ctf below to view detailed solutions.
 <div class="wargame-container">
   {% assign seen = "" | split: "" %}
   {% for folder in site.pages %}
-    {% if folder.path contains 'hpAndro/' and folder.path != 'hpAndro/index.md' %}
+    {% if folder.path contains 'InjuredAndroid/' and folder.path != 'InjuredAndroid/index.md' %}
       {% assign path_parts = folder.path | split: '/' %}
       {% assign folder_name = path_parts[1] %}
       {% unless seen contains folder_name %}
-        {% capture folder_path %}hpAndro/{{ folder_name }}{% endcapture %}
+        {% capture folder_path %}InjuredAndroid/{{ folder_name }}{% endcapture %}
         <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
           <h2>{{ folder_name | capitalize }}</h2>
           <p>Writeups for {{ folder_name | capitalize }} wargame</p>

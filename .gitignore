@@ -5,3 +5,4 @@ vendor/
 # root-me/
 .vscode/*
 .obsidian/
+.DS_Store
