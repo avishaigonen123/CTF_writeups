@@ -1,6 +1,6 @@
 ---
 layout: default
-title: hpAndro
+title: InjuredAndroid
 ---
 
 Welcome to the InjuredAndroid's hub. Choose ctf below to view detailed solutions.
@@ -45,7 +45,7 @@ Welcome to the InjuredAndroid's hub. Choose ctf below to view detailed solutions
 <div class="wargame-container">
   {% assign seen = "" | split: "" %}
   {% for folder in site.pages %}
-    {% if folder.path contains 'InjuredAndroid/' and folder.path != 'InjuredAndroid/index.md' %}
+    {% if folder.path contains 'InjuredAndroid/' and folder.path not contains 'InjuredAndroid/index.md' %}
       {% assign path_parts = folder.path | split: '/' %}
       {% assign folder_name = path_parts[1] %}
       {% unless seen contains folder_name %}
