@@ -42,20 +42,26 @@ Welcome to the InjuredAndroid's hub. Choose ctf below to view detailed solutions
   }
 </style>
 
+{% assign base_path = 'android_hacking/InjuredAndroid/' %}
+
 <div class="wargame-container">
   {% assign seen = "" | split: "" %}
-  {% for folder in site.pages %}
-    {% if folder.path contains 'InjuredAndroid/' and folder.path not contains 'InjuredAndroid/index.md' %}
-      {% assign path_parts = folder.path | split: '/' %}
-      {% assign folder_name = path_parts[1] %}
+
+  {% for page in site.pages %}
+    {% if page.path contains base_path and page.path != base_path | append: 'index.md' %}
+
+      {% assign path_parts = page.path | split: '/' %}
+      {% assign folder_name = path_parts[2] %}
+
       {% unless seen contains folder_name %}
-        {% capture folder_path %}InjuredAndroid/{{ folder_name }}{% endcapture %}
-        <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
+        <a class="wargame-card" href="{{ site.baseurl }}/{{ base_path }}{{ folder_name }}/">
           <h2>{{ folder_name | capitalize }}</h2>
-          <p>Writeups for {{ folder_name | capitalize }} wargame</p>
+          <p>Writeups for {{ folder_name | capitalize }}</p>
         </a>
+
         {% assign seen = seen | push: folder_name %}
       {% endunless %}
+
     {% endif %}
   {% endfor %}
 </div>
