@@ -48,7 +48,8 @@ Welcome to the AllSafe's hub. Choose ctf below to view detailed solutions.
   {% assign seen = "" | split: "" %}
 
   {% for page in site.pages %}
-	{% if page.path contains base_path and page.name != 'index.md' %}
+    {% if page.path contains base_path and page.path != base_path | append: 'index.md' %}
+
       {% assign path_parts = page.path | split: '/' %}
       {% assign folder_name = path_parts[2] %}
 
