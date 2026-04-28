@@ -1,9 +1,9 @@
 ---
 layout: default
-title: InjuredAndroid
+title: AllSafe
 ---
 
-Welcome to the InjuredAndroid's hub. Choose ctf below to view detailed solutions.
+Welcome to the AllSafe's hub. Choose ctf below to view detailed solutions.
 
 <style>
   .wargame-container {
@@ -42,13 +42,13 @@ Welcome to the InjuredAndroid's hub. Choose ctf below to view detailed solutions
   }
 </style>
 
-{% assign base_path = 'android_hacking/InjuredAndroid/' %}
+{% assign base_path = 'android_hacking/AllSafe/' %}
 
 <div class="wargame-container">
   {% assign seen = "" | split: "" %}
 
   {% for page in site.pages %}
-    {% if page.path contains base_path and page.path != base_path | append: 'index.md' %}
+	{% if page.path contains base_path and page.name != 'index.md' %}
       {% assign path_parts = page.path | split: '/' %}
       {% assign folder_name = path_parts[2] %}
 
