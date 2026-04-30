@@ -2,7 +2,7 @@
 layout: default
 title: File Provider
 ---
-First, let's have a look on the `AndroidManifest.xml` file:
+2First, let's have a look on the `AndroidManifest.xml` file:
 
 ![](images/index.png)
 
