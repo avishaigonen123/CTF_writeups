@@ -31,6 +31,7 @@ echo "Root enabled!"
 After installing the app, I tried to execute it, and got this error message:
 
 ![400](images/index-1.png)
+
 It detects I'm using unrooted device, let's open the source code using jadx and find what is blocking me.
 
 First, we need to install the apk, In order to find the package name we'll use `friad-ps -Ua`:
@@ -81,9 +82,11 @@ We can see first requests to the hostname `api.yuvital.com`.
 I add it to the scope window, to intercept only requests from this domain and subdomains:
 
 ![](images/index-10.png)
+
 I signed in to the application, now we can start playing :)
 
 ![400](images/index-11.png)
+
 I want to understand how the steps works, like how it updates the server with the steps I've done. For that, i need device that actually detects the steps I'm making, and send it up. I can try to mock it with the emulator, but I don't have power to do this...
 
 Since I've already rooted my samsung a14, which I don't use anymore, and can simply play on this device. 
