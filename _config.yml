@@ -27,35 +27,27 @@ plugins:
   - jekyll-redirect-from
 
 
-# SEO Configuration
-seo:
-  description: "Avishai's CTF Writeups - A collection of writeups, challenges, and solutions from CTFs."
-  keywords:
-    - "CTF"
-    - "writeups"
-    - "security"
-    - "hacking"
-  image: "/favicon.ico" # Set a default image for social media
+# Removed: a `seo:` block and a `categories:` list. Neither was consumed by
+# anything - jekyll-seo-tag reads the top-level title/description/url above, and
+# the plugin that would have read `categories:` is not on the GitHub Pages
+# whitelist. They only made the config look like it configured something.
 
-# Define categories in your _config.yml
-categories:
-  - "Web Exploitation"
-  - "Crypto"
-  - "Binary Exploitation"
-  
+# Removed: paginate / paginate_path. jekyll-paginate only paginates _posts,
+# and this site has no _posts directory, so it emitted a build warning
+# ("Pagination is enabled, but I couldn't find an index.html page to use as the
+# pagination template") and generated nothing.
 
-paginate: 10
-paginate_path: "/page:num/"
-
-# 🧠 ADD THIS SECTION 👇
+# include: only rescues paths Jekyll would otherwise skip, i.e. ones whose name
+# starts with "." or "_". It does NOT control what gets published: websec.il,
+# stuff and utils are all absent from this list and all publish fine. The list
+# below is therefore belt-and-braces for ordinary directories, and the toctf /
+# pwnable.tw entries that pointed at directories which do not exist are gone.
 include:
   - overthewire
   - pwnable.kr
   - ringzer0
-  - pwnable.tw
   - hackthebox
   - tryhackme
-  - picoctf
   - webhacking.kr
   - lord-of-sql-injection
   - trythis0ne
@@ -65,5 +57,7 @@ include:
   - flare-on
   - hacker101
   - android_hacking
+  - websec.il
+  - assets/
 
   - assets/  
