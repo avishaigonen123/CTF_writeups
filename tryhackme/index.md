@@ -72,56 +72,49 @@ Welcome to the TryHackMe Wargames writeups hub. Choose a wargame below to view d
 </style>
 
 <div class="wargame-container">
-  {% assign seen = "" | split: "" %}
-  {% for folder in site.pages %}
-    {% if folder.path contains 'tryhackme/' and folder.path != 'tryhackme/index.md' %}
-      {% assign path_parts = folder.path | split: '/' %}
-      {% assign folder_name = path_parts[1] %}
-      {% unless seen contains folder_name %}
-        
-        {% capture folder_path %}tryhackme/{{ folder_name }}{% endcapture %}
-        
-        {% assign img_rel_path = folder_name | append: '/wargame.png' %}
-        {% assign has_image = false %}
-        
-        {% comment %}
-          Checking if wargame.png exists for the current folder.
-        {% endcomment %}
-        {% for f in site.static_files %}
-          {% if f.path contains img_rel_path %}
-            {% assign has_image = true %}
-            {% break %}
-          {% endif %}
-        {% endfor %}
+  {%- comment -%}
+    Precomputed ONCE for the page, not once per machine.
 
-        {%- comment -%} Check if any page in this folder has status: incomplete {%- endcomment -%}
-        {% assign incomplete = false %}
-        {% for p in site.pages %}
-          {% if p.path contains folder_path and p.status == "incomplete" %}
-            {% assign incomplete = true %}
-            {% break %}
-          {% endif %}
-        {% endfor %}
+    The original nested a full scan of site.static_files inside the per-machine
+    loop, purely to test whether wargame.png exists - on the order of 100,000
+    string comparisons - and the loop body emitted a blank line for every
+    non-matching iteration. That whitespace is where this page's size came from
+    (847 KB for hackthebox, 7.7 MB for tryhackme). Joining the static paths once
+    turns the inner test into a single substring check, and the whitespace
+    control on the tags removes the per-iteration blank lines.
 
-        <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">
-          
-          {% if has_image %}
-            <img src="{{ site.baseurl }}/{{ folder_path }}/wargame.png" 
-                 alt="{{ folder_name | capitalize }} wargame image">
-          {% else %}
-            <img src="{{ site.baseurl }}/assets/tryhackme.svg" alt="default image">
-          {% endif %}
+    Nothing visible changes: same cards, same order, same images, same badges.
+  {%- endcomment -%}
+  {%- assign static_blob = site.static_files | map: "path" | join: "|" -%}
 
-          {% if incomplete %}
-            <div class="card-status unfinished">INCOMPLETE</div>
-          {% endif %}
+  {%- comment -%}
+    Names of machines holding at least one page marked incomplete, also resolved
+    once rather than re-scanning site.pages for every card.
+  {%- endcomment -%}
+  {%- assign incomplete_blob = "|" -%}
+  {%- for p in site.pages -%}
+    {%- if p.path contains 'tryhackme/' and p.status == "incomplete" -%}
+      {%- assign pp = p.path | split: "/" -%}
+      {%- assign incomplete_blob = incomplete_blob | append: pp[1] | append: "|" -%}
+    {%- endif -%}
+  {%- endfor -%}
 
-          <h2>{{ folder_name | capitalize }}</h2>
-          <p>Writeups for {{ folder_name | capitalize }} wargame</p>
-        </a>
-
-        {% assign seen = seen | push: folder_name %}
-      {% endunless %}
-    {% endif %}
-  {% endfor %}
+  {%- assign seen = "" | split: "" -%}
+  {%- for folder in site.pages -%}
+    {%- if folder.path contains 'tryhackme/' and folder.path != 'tryhackme/index.md' -%}
+      {%- assign path_parts = folder.path | split: '/' -%}
+      {%- assign folder_name = path_parts[1] -%}
+      {%- unless seen contains folder_name -%}
+        {%- capture folder_path -%}tryhackme/{{ folder_name }}{%- endcapture -%}
+        {%- assign img_rel_path = folder_name | append: '/wargame.png' -%}
+        {%- assign has_image = false -%}
+        {%- if static_blob contains img_rel_path -%}{%- assign has_image = true -%}{%- endif -%}
+        {%- assign marker = "|" | append: folder_name | append: "|" -%}
+        {%- assign incomplete = false -%}
+        {%- if incomplete_blob contains marker -%}{%- assign incomplete = true -%}{%- endif -%}
+        <a class="wargame-card" href="{{ site.baseurl }}/{{ folder_path }}/">{%- if has_image -%}<img src="{{ site.baseurl }}/{{ folder_path }}/wargame.png" alt="{{ folder_name | capitalize }} wargame image">{%- else -%}<img src="{{ site.baseurl }}/assets/tryhackme.svg" alt="default image">{%- endif -%}{%- if incomplete -%}<div class="card-status unfinished">INCOMPLETE</div>{%- endif -%}<h2>{{ folder_name | capitalize }}</h2><p>Writeups for {{ folder_name | capitalize }} wargame</p></a>
+        {%- assign seen = seen | push: folder_name -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
 </div>

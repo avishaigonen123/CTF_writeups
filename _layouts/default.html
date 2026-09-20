@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    {% include head-custom.html %}
+    <link rel="stylesheet" href="{{ '/assets/css/theme-override.css' | relative_url }}">
+{% seo %}
+  </head>
+
+  <body>
+
+    {%- comment -%}
+      This layout overrides the one in pages-themes/hacker (Jekyll prefers a
+      repo _layouts/ over the theme's). It exists to replace the theme's very
+      tall header - title, tagline and a GitHub button stacked, then a divider -
+      which cost roughly 500px at the top of all 687 writeup pages.
+
+      Every id and class the site's own CSS and JS depend on is preserved:
+      #a-title, #downloads, .btn-github, .container, #main_content, .page-main,
+      #search-container, #search-input, #results-container, .back-container,
+      #back-link, .unfinished-banner. Renaming any of them breaks search,
+      back-link.js, anchors.js or github_markdown.css silently.
+    {%- endcomment -%}
+
+    <header id="site-header">
+      <div class="container header-inner">
+        <a id="a-title" href="{{ '/' | relative_url }}">
+          <h1>{{ site.title | default: site.github.repository_name }}</h1>
+        </a>
+
+        {%- comment -%}
+          The search UI lives here rather than inside head-custom.html. It used
+          to be emitted from <head>, which browsers reparent into <body> - it
+          worked by accident. It is deliberately placed in the layout now.
+        {%- endcomment -%}
+        <div id="search-container">
+          <input type="text" id="search-input" placeholder="Search writeups..."
+                 aria-label="Search CTF writeups" autocomplete="off">
+          <ul id="results-container"></ul>
+        </div>
+
+        <section id="downloads">
+          <a class="btn btn-portfolio" href="https://avishaigonen123.github.io/">
+            <span class="icon icon-user"></span>Portfolio
+          </a>
+          <a href="{{ site.github.repository_url }}" class="btn btn-github">
+            <span class="icon"></span>GitHub
+          </a>
+        </section>
+      </div>
+    </header>
+
+    {%- comment -%}
+      Kept out of the sticky bar: the tagline is useful context on the home page
+      and noise on the other 686, so it only renders there. Hidden from view but
+      present for search engines on every page.
+    {%- endcomment -%}
+    <p class="site-tagline {% if page.url != '/' %}visually-hidden{% endif %}">
+      {{ site.description | default: site.github.project_tagline }}
+    </p>
+
+    <div class="container">
+      <main class="page-main">
+        {% include back-link.html %}
+
+        {% if page.status == "incomplete" %}
+          <div class="unfinished-banner">
+            ⚠️ Writeup incomplete - machine not fully solved.
+          </div>
+        {% endif %}
+
+        <section id="main_content">
+          {{ content }}
+        </section>
+      </main>
+    </div>
+
+  </body>
+</html>

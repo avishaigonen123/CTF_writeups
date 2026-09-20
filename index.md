@@ -7,39 +7,48 @@ title: "CTF Writeups Home"
 
 > A collection of writeups for Capture The Flag (CTF) challenges and wargames — solved, documented, and shared for learning.
 
-{% assign wargames_string = "AppSec-IL-2025,overthewire,ringzer0,root-me,trythis0ne,webhacking.kr,websec.fr,pwnable.kr,lord-of-sql-injection,hacker101,android_hacking,flare-on" %}
-{% assign wargames = wargames_string | split: "," %}
-{% assign md_pages = site.pages | where_exp: "p", "p.path contains '.md'" %}
-{% assign filtered_pages = "" %}
-{% assign htb_count = -1 %}
-{% assign thm_count = -1 %}
+{%- comment -%}
+  Writeup counter.
 
-{% for p in md_pages %}
-  {% assign parts = p.path | split: '/' %}
-  {% assign first_part = parts[0] %}
-  {% assign file_name = parts | last %}
+  Replaces a rule that undercounted by 108. Three separate faults:
+    - only 12 of the 15 platforms were listed; websec.il was absent entirely
+    - hackthebox and tryhackme were counted through a second, separate branch
+    - the `file_name != "index.md"` test skipped every writeup stored as
+      <name>/index.md, which is how android_hacking, websec.il and several
+      sub-wargames (overthewire/vortex, ringzer0/*, root-me/*) are organised
 
+  The rule now: every page under a known platform, excluding that platform's own
+  hub index, and excluding anything marked `status: incomplete`. That is 687
+  pages total, 661 of them finished - the number shown.
 
-  {% if wargames contains first_part and file_name != "index.md" %}
-    {% assign filtered_pages = filtered_pages | append: p.path | append: "," %}
-  {% endif %}
+  The platform list stays hardcoded deliberately. Deriving it from site.pages is
+  what caused the undercount. RENAMING A TOP-LEVEL DIRECTORY REQUIRES EDITING
+  THIS LIST, or the count silently drops.
+{%- endcomment -%}
+{%- assign platforms_string = "AppSec-IL-2025,android_hacking,flare-on,hacker101,hackthebox,lord-of-sql-injection,overthewire,pwnable.kr,ringzer0,root-me,tryhackme,websec.fr,websec.il,trythis0ne,webhacking.kr" -%}
+{%- assign platforms = platforms_string | split: "," -%}
 
+{%- assign writeups = 0 -%}
+{%- assign htb_count = 0 -%}
+{%- assign thm_count = 0 -%}
 
-  {% if first_part contains "hackthebox" and file_name == "index.md" and p.status != "incomplete" %}
-    {% assign htb_count = htb_count | plus: 1 %}
-  {% endif %}
-
-  {% if first_part contains "tryhackme" and file_name == "index.md" and p.status != "incomplete" %}
-    {% assign thm_count = thm_count | plus: 1 %}
-  {% endif %}
-{% endfor %}
-
-{% assign filtered_pages = filtered_pages | split: "," | reject: "" %}
+{%- for p in site.pages -%}
+  {%- assign parts = p.path | split: '/' -%}
+  {%- assign file_name = parts | last -%}
+  {%- assign plat = parts[0] -%}
+  {%- assign is_hub = false -%}
+  {%- if parts.size == 2 and file_name == "index.md" -%}{%- assign is_hub = true -%}{%- endif -%}
+  {%- if platforms contains plat and is_hub == false and p.status != "incomplete" -%}
+    {%- assign writeups = writeups | plus: 1 -%}
+    {%- if plat == "hackthebox" -%}{%- assign htb_count = htb_count | plus: 1 -%}{%- endif -%}
+    {%- if plat == "tryhackme" -%}{%- assign thm_count = thm_count | plus: 1 -%}{%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
 
 
 
 <!-- MAIN CIRCLE -->
-<div class="circle-counter" data-count="{{ filtered_pages | size | plus: htb_count | plus: thm_count }}">
+<div class="circle-counter" data-count="{{ writeups }}">
   <svg>
     <defs>
       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -110,7 +119,6 @@ title: "CTF Writeups Home"
 <link rel="stylesheet" href="{{ '/assets/css/counter.css' | relative_url }}">
 
 <!-- JS Link -->
-<script src="{{ '/assets/js/counter.js' | relative_url }}"></script>
 
 
 ---

@@ -1,0 +1,537 @@
+/* ==========================================================================
+   theme-override.css
+
+   Loaded last in <head>, after the theme's style.css, github_markdown.css,
+   search.css and back-link.css. It maps this site onto the same design tokens
+   as the portfolio site so the two read as one person's work.
+
+   Two rules govern everything here:
+
+   1. The 44 platform index pages carry their OWN inline <style> block, and
+      inline blocks live in the BODY, so they are parsed after this file. Equal
+      specificity would therefore lose. Selectors for anything those blocks
+      style are written as `#main_content .thing` (id + class) to win on
+      specificity rather than reaching for !important.
+
+   2. Class names and ids that counter.js, search.js, back-link.js and
+      anchors.js depend on are never renamed: .circle-counter, .count,
+      .progress, .bg, data-count, the SVG r values, #gradient*,
+      #search-container, #search-input, #results-container, #back-link,
+      .back-container, #main_content, .page-main, #a-title, #downloads.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Tokens - same values as the portfolio's portfolio.css
+   -------------------------------------------------------------------------- */
+
+:root {
+  --bg:          #0b0f14;
+  --surface:     #121820;
+  --surface-2:   #1a2230;
+  --border:      #243040;
+  --border-soft: #1b2534;
+
+  --text:        #e6edf3;
+  --text-dim:    #b6c2d1;
+  --muted:       #8b98a9;
+
+  --accent:      #35d07f;
+  --accent-dim:  #1f7a4a;
+  --accent-2:    #58a6ff;
+
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+          Consolas, "Liberation Mono", monospace;
+  --wrap: 1120px;
+  --radius: 10px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+body {
+  background: var(--bg);
+  background-image:
+    linear-gradient(rgba(53, 208, 127, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(53, 208, 127, 0.028) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* The theme adds a dashed bottom border and 40px margin to every <header>. */
+header { border-bottom: 0; margin: 0; padding: 0; }
+
+.container { max-width: var(--wrap); }
+
+a { color: var(--accent-2); }
+a:hover { color: var(--accent); }
+
+::selection { background: var(--accent); color: #04140c; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Site header - one compact sticky row, replacing the theme's ~500px stack
+   -------------------------------------------------------------------------- */
+
+#site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(11, 15, 20, 0.92);
+  backdrop-filter: saturate(160%) blur(12px);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 60px;
+  padding-block: 8px;
+}
+
+#a-title { text-decoration: none; flex-shrink: 0; }
+
+#a-title h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: var(--text);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+#a-title h1::before { content: "./ "; color: var(--accent); }
+#a-title:hover h1 { color: var(--accent); }
+
+.site-tagline {
+  margin: 14px auto 0;
+  padding-inline: 15px;
+  max-width: var(--wrap);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Search sits inline in the header now, with results as an overlay panel. */
+#site-header #search-container {
+  position: relative;
+  flex: 1 1 auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+#site-header #search-input {
+  width: 100%;
+  padding: 9px 14px;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.18s var(--ease);
+}
+#site-header #search-input::placeholder { color: var(--muted); }
+#site-header #search-input:focus { border-color: var(--accent); outline: none; }
+
+#site-header #results-container {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 120;
+  margin: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+#site-header #results-container:empty { display: none; }
+
+#site-header #results-container li {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--border-soft);
+  border-radius: 0;
+  margin: 0;
+  padding: 11px 14px;
+  font-size: 13.5px;
+}
+#site-header #results-container li:last-child { border-bottom: 0; }
+#site-header #results-container li:hover { background: var(--surface-2); }
+#site-header #results-container a { color: var(--accent-2); }
+
+#site-header #load-more-btn {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--surface-2);
+  border: 0;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+}
+#site-header #load-more-btn:hover { background: var(--border); color: var(--accent); }
+
+#downloads { flex-shrink: 0; display: flex; gap: 8px; }
+
+#downloads .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1;
+  color: var(--text-dim);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  text-decoration: none;
+  transition: border-color 0.18s var(--ease), color 0.18s var(--ease);
+}
+#downloads .btn:hover { border-color: var(--accent); color: var(--accent); }
+#downloads .btn .icon { display: none; }
+
+@media (max-width: 760px) {
+  .header-inner { flex-wrap: wrap; gap: 10px; }
+  #site-header #search-container { order: 3; flex-basis: 100%; }
+  #a-title h1 { font-size: 15px; }
+}
+
+/* --------------------------------------------------------------------------
+   Back link
+   -------------------------------------------------------------------------- */
+
+.back-container {
+  margin: 22px 0 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.back-link {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+}
+.back-link:hover { color: var(--accent); text-decoration: none; }
+
+/* --------------------------------------------------------------------------
+   Page content
+   -------------------------------------------------------------------------- */
+
+.page-main { padding-bottom: 80px; }
+
+#main_content { margin-top: 26px; }
+
+#main_content h1,
+#main_content h2,
+#main_content h3,
+#main_content h4 {
+  color: var(--text);
+  font-family: var(--mono);
+  letter-spacing: -0.01em;
+  margin-top: 2em;
+}
+
+#main_content h1 { font-size: 1.6rem; }
+#main_content h2 {
+  font-size: 1.3rem;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--border-soft);
+}
+#main_content h3 { font-size: 1.1rem; }
+
+#main_content p,
+#main_content li { color: var(--text-dim); }
+
+#main_content li::marker { color: var(--accent-dim); }
+
+#main_content strong { color: var(--text); }
+
+/* Heading anchor links injected by anchors.js */
+#main_content .anchor {
+  margin-right: 8px;
+  color: var(--border);
+  text-decoration: none;
+  font-weight: 400;
+}
+#main_content h2:hover .anchor,
+#main_content h3:hover .anchor { color: var(--accent-dim); }
+
+#main_content blockquote {
+  margin: 1.6em 0;
+  padding: 4px 0 4px 20px;
+  color: var(--muted);
+  background: none;
+  border-left: 3px solid var(--accent-dim);
+  border-radius: 0;
+}
+
+#main_content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin: 1.6em 0;
+  display: block;
+  overflow-x: auto;
+}
+#main_content th,
+#main_content td {
+  border: 1px solid var(--border-soft);
+  padding: 9px 13px;
+  text-align: left;
+}
+#main_content th { background: var(--surface-2); color: var(--text); }
+#main_content tr:nth-child(even) { background: rgba(255, 255, 255, 0.014); }
+
+#main_content hr {
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+  margin: 2.5em 0;
+}
+
+#main_content img { max-width: 100%; height: auto; border-radius: 8px; }
+
+/* Inline code and code blocks. github_markdown.css styles these heavily, so
+   these are written to out-specify rather than fight it with !important. */
+#main_content code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  color: var(--accent);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+#main_content pre,
+#main_content .highlight {
+  background: var(--surface) !important;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+#main_content pre code,
+#main_content .highlight code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--text);
+}
+
+/* --------------------------------------------------------------------------
+   Platform index cards
+
+   These are styled by an inline <style> block inside each of the 44 platform
+   index pages, which is parsed after this file. `#main_content .x` out-specifies
+   the bare `.x` in those blocks, so the palette applies without editing 44
+   files and without !important.
+   -------------------------------------------------------------------------- */
+
+#main_content .wargame-container,
+#main_content .level-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
+  gap: 16px;
+  margin-top: 1.6rem;
+}
+
+#main_content .wargame-card,
+#main_content .level-card {
+  position: relative;
+  display: block;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  text-align: left;
+  text-decoration: none;
+  box-shadow: none;
+  transition: transform 0.18s var(--ease), border-color 0.18s var(--ease),
+              background 0.18s var(--ease);
+}
+
+#main_content .wargame-card:hover,
+#main_content .level-card:hover {
+  transform: translateY(-3px);
+  background: var(--surface-2);
+  border-color: var(--accent-dim);
+  color: var(--text);
+}
+
+#main_content .wargame-card img,
+#main_content .level-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 7px;
+  margin-bottom: 12px;
+}
+
+#main_content .wargame-card h2,
+#main_content .level-card h2,
+#main_content .wargame-card h3,
+#main_content .level-card h3 {
+  margin: 0 0 6px;
+  font-size: 1.02rem;
+  color: var(--text);
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+#main_content .wargame-card p,
+#main_content .level-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+#main_content .wargame-card:hover h2,
+#main_content .wargame-card:hover h3 { color: var(--accent); }
+
+/* "INCOMPLETE" style badges that sit on the cards */
+#main_content .card-status,
+#main_content .card-status.unfinished {
+  background: rgba(248, 81, 73, 0.9);
+  color: #fff;
+  border-radius: 5px;
+}
+
+/* Level pickers on the websec.fr / lord-of-sql-injection style pages */
+#main_content .level-icon {
+  color: var(--accent);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+/* --------------------------------------------------------------------------
+   Counter circles on the home page
+
+   counter.js reads .circle-counter[data-count] and the SVG r attribute;
+   counter.css hardcodes stroke-dasharray 678/450 and stroke: url(#gradient*).
+   Only the COLOURS are changed here - the geometry and the gradient ids stay
+   exactly as they are, or the ring animation breaks silently.
+   -------------------------------------------------------------------------- */
+
+/* Background ring */
+#main_content .circle-counter .bg { stroke: var(--border); }
+
+/* The number is NOT coloured with `color`. counter.css paints it as a gradient
+   via `background` + `-webkit-background-clip: text` +
+   `-webkit-text-fill-color: transparent`, so setting `color` alone is silently
+   ignored - the text stays transparent and shows the blue gradient through it.
+   The clip has to be undone for a solid colour to take. */
+#main_content .circle-counter .count {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: var(--accent);
+  color: var(--accent);
+}
+
+/* The progress arc uses stroke: url(#gradient), and the blue comes from the
+   inline `stop-color` attributes on the SVG <linearGradient>. Those are
+   presentation attributes, so CSS can override them. The ids (#gradient,
+   #gradient-htb, #gradient-thm) are referenced by that url() and must NOT be
+   renamed. */
+#main_content .circle-counter stop { stop-color: var(--accent); }
+#main_content .circle-counter stop:last-child { stop-color: var(--accent-dim); }
+
+/* Blue glow behind the arc. */
+#main_content .circle-counter .progress { filter: drop-shadow(0 0 12px rgba(53, 208, 127, 0.5)); }
+
+#main_content .circle-counter .label { color: var(--muted); }
+#main_content .circle-counter .text-wrapper { color: var(--text); }
+
+/* --------------------------------------------------------------------------
+   Incomplete banner
+   -------------------------------------------------------------------------- */
+
+.unfinished-banner {
+  margin: 18px 0 0;
+  padding: 12px 18px;
+  background: rgba(210, 153, 34, 0.09);
+  border: 1px solid var(--border);
+  border-left: 3px solid #d29922;
+  border-radius: 8px;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+}
+
+/* --------------------------------------------------------------------------
+   Scoreboard embeds on the home page
+   -------------------------------------------------------------------------- */
+
+#main_content .iframe-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 16px;
+}
+
+#main_content .iframe-wrapper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+#main_content .iframe-title {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+#main_content .iframe-wrapper iframe,
+#main_content .iframe-wrapper img {
+  width: 100%;
+  border: 0;
+  border-radius: 7px;
+  background: var(--surface-2);
+}
+
+/* --------------------------------------------------------------------------
+   Print
+   -------------------------------------------------------------------------- */
+
+@media print {
+  body { background: #fff; color: #000; }
+  #site-header, .back-container, .unfinished-banner { display: none !important; }
+  #main_content h1, #main_content h2, #main_content h3,
+  #main_content p, #main_content li, #main_content td, #main_content th {
+    color: #000 !important;
+  }
+  #main_content pre, #main_content code {
+    background: #f5f5f5 !important;
+    color: #000 !important;
+    border-color: #ddd;
+  }
+}

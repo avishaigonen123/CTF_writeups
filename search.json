@@ -2,12 +2,23 @@
 layout: none
 ---
 [
-  {% assign pages = site.pages | where_exp: "p", "p.title" %}
+  {%- comment -%}
+  Excerpt only. This previously indexed each page's ENTIRE rendered text, which
+  made the file 10.3 MB - 99.6% of it content, with a single entry (the
+  tryhackme index) holding 6.9 MB on its own. Browsers fetch this on first
+  search, so it was the slowest thing on the site by a wide margin.
+
+  Truncating to 400 characters of stripped text takes the file to roughly
+  280 KB. Search still matches on title and opening text, which is what people
+  actually search for. Do not restore the full content without also splitting
+  the index per platform.
+{%- endcomment -%}
+{% assign pages = site.pages | where_exp: "p", "p.title" %}
   {% for post in pages %}
     {
       "title": "{{ post.title | escape }}",
       "url": "{{ post.url | relative_url }}",
-      "content": {{ post.content | strip_html | strip_newlines | jsonify }}
+      "content": {{ post.content | strip_html | strip_newlines | strip | truncate: 400 | jsonify }}
     }{% unless forloop.last %},{% endunless %}
   {% endfor %}
 ]

@@ -1,6 +1,12 @@
-<div class="back-container">
-  <a id="back-link" class="back-link" href="#">← Back</a>
-</div>
+{%- comment -%}
+  Just the markup. The stylesheet and script moved into head-custom.html,
+  alongside the other head assets - this include is now rendered inside <body>,
+  where dropping a <link> and a <script> mid-document was never correct.
 
-<script src="{{ '/assets/js/back-link.js' | relative_url }}"></script>
-<link rel="stylesheet" href="{{ '/assets/css/back-link.css' | relative_url }}">
+  back-link.js is now DOM-ready guarded, so it no longer depends on running
+  immediately after this div exists. Before that guard, moving the script
+  anywhere earlier would have thrown on `getElementById('back-link').href`.
+{%- endcomment -%}
+<div class="back-container">
+  <a id="back-link" class="back-link" href="{{ '/' | relative_url }}">← Back</a>
+</div>

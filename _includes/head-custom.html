@@ -1,58 +1,24 @@
-{% include back-link.html %}
-{% include head-meta.html %}
-
 {%- comment -%}
-<!-- 
-{% if page.toc %}
-  <link rel="stylesheet" href="{{ '/assets/css/toc.css' | relative_url }}">
-{% endif %} -->
+  Head assets only.
+
+  This file used to also emit BODY markup - <main class="page-main">, the search
+  container, the back-link div and the incomplete banner - while being included
+  from <head>. Browsers reparent that into <body>, which is why the search bar
+  worked at all. It was invalid HTML that happened to function. The markup now
+  lives in _layouts/default.html where it belongs; this file keeps the tags that
+  genuinely belong in <head>.
+
+  Removed while here: a Fuse.js CDN script. It was fetched on all 4,264 pages
+  and never called - search.js does plain substring matching in a Web Worker.
 {%- endcomment -%}
+
+{% include head-meta.html %}
 
 <link rel="stylesheet" href="{{ '/assets/css/search.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/github_markdown.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/back-link.css' | relative_url }}">
 
-<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/searchWorker.js' | relative_url }}"></script>
 <script src="{{ '/assets/js/anchors.js' | relative_url }}"></script>
-
-{%- comment -%}
-<!-- {% if page.toc %}
-  <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
-{% endif %} -->
-{%- endcomment -%}
-
-
-
-<main class="page-main">
-  <!-- Global Search Bar -->
-  <div id="search-container">
-    <input type="text" id="search-input" placeholder="Search CTF Writeups..." aria-label="Search CTF Writeups..." />
-    <ul id="results-container"></ul>
-  </div>
-
-  {%- comment -%}
-  <!-- <article class="markdown-body">
-    {{ content }}
-  </article>
-   {% if page.toc %}
-    <aside class="page-sidebar">
-      <nav id="toc">
-        <div class="toc-title">Contents</div>
-        <ul id="toc-list"></ul>
-      </nav>
-    </aside>
-    {% endif %} -->
-    {%- endcomment -%}
-
-
-  {% if page.status == "incomplete" %}
-    <div class="unfinished-banner">
-      ⚠️ Writeup incomplete — machine not fully solved.
-    </div>
-  {% endif %}
-</main>
-
-
-
-  
+<script src="{{ '/assets/js/back-link.js' | relative_url }}"></script>
